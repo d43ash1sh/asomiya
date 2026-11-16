@@ -182,6 +182,11 @@ npm run build       # tsup → dist/
 See [CONTRIBUTING.md](CONTRIBUTING.md). Changes to the vocabulary are especially welcome from native
 Assamese speakers. Several keywords are marked _provisional_ in the [glossary](docs/KEYWORDS.md).
 
+## Authors & Contributors
+
+- **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh)) — Creator
+- **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh)) — Collaborator & Contributor
+
 ## Acknowledgements
 
 The idea of a playful language with native-language keywords was inspired by

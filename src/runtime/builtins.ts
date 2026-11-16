@@ -1,0 +1,105 @@
+import { runtimeError } from '../errors/runtime-error';
+import { BUILTIN_NAMES } from '../language/glossary';
+import { typeName, type ValueKind } from '../language/types';
+import { assameseDigitsToAscii, graphemes } from '../lexer/unicode';
+import { displayValue } from './display';
+import {
+  NULL,
+  num,
+  str,
+  type BuiltinContext,
+  type BuiltinFunctionValue,
+  type ListValue,
+  type NumberValue,
+  type StringValue,
+  type Value,
+} from './values';
+
+function builtin(
+  name: string,
+  minArgs: number,
+  maxArgs: number,
+  call: BuiltinFunctionValue['call'],
+): BuiltinFunctionValue {
+  return { kind: 'function', variant: 'builtin', name, minArgs, maxArgs, call };
+}
+
+function argAt(args: readonly Value[], index: number): Value {
+  return args[index] ?? NULL;
+}
+
+function typeError(
+  name: string,
+  index: number,
+  expected: readonly ValueKind[],
+  got: Value,
+  ctx: BuiltinContext,
+): never {
+  throw runtimeError(
+    'R014',
+    { name, position: index + 1, expected, got: got.kind },
+    ctx.argSpans[index] ?? ctx.callSpan,
+  );
+}
+
+const ASCII_NUMBER = /^-?[0-9]+(\.[0-9]+)?$/;
+const ASSAMESE_NUMBER = /^-?[০-৯]+(\.[০-৯]+)?$/u;
+
+/** Parses "২৪", "-3.5" … Returns null for anything that isn't a plain decimal number. */
+export function parseNumberText(text: string): number | null {
+  const trimmed = text.trim();
+  if (!ASCII_NUMBER.test(trimmed) && !ASSAMESE_NUMBER.test(trimmed)) return null;
+  return Number(assameseDigitsToAscii(trimmed));
+}
+
+const length = builtin(BUILTIN_NAMES.length, 1, 1, (args, ctx) => {
+  const x = argAt(args, 0);
+  if (x.kind === 'string') return num(graphemes(x.value).length);
+  if (x.kind === 'list') return num(x.elements.length);
+  return typeError(BUILTIN_NAMES.length, 0, ['string', 'list'], x, ctx);
+});
+
+const typeOf = builtin(BUILTIN_NAMES.typeOf, 1, 1, (args) =>
+  str(typeName(argAt(args, 0).kind, 'as')),
+);
+
+const toNumber = builtin(BUILTIN_NAMES.toNumber, 1, 1, (args, ctx): NumberValue | typeof NULL => {
+  const x = argAt(args, 0);
+  if (x.kind === 'number') return x;
+  if (x.kind === 'string') {
+    const parsed = parseNumberText(x.value);
+    return parsed === null ? NULL : num(parsed);
+  }
+  return typeError(BUILTIN_NAMES.toNumber, 0, ['string', 'number'], x, ctx);
+});
+
+const toText = builtin(BUILTIN_NAMES.toText, 1, 1, (args, ctx): StringValue =>
+  str(displayValue(argAt(args, 0), ctx.digits)),
+);
+
+const toInteger = builtin(BUILTIN_NAMES.toInteger, 1, 1, (args, ctx) => {
+  const x = argAt(args, 0);
+  if (x.kind !== 'number') return typeError(BUILTIN_NAMES.toInteger, 0, ['number'], x, ctx);
+  return num(Math.trunc(x.value) + 0); // `+ 0` turns -0 into 0
+});
+
+const append = builtin(BUILTIN_NAMES.append, 2, 2, (args, ctx) => {
+  const target = argAt(args, 0);
+  if (target.kind !== 'list') return typeError(BUILTIN_NAMES.append, 0, ['list'], target, ctx);
+  (target satisfies ListValue).elements.push(argAt(args, 1));
+  return NULL;
+});
+
+const input = builtin(BUILTIN_NAMES.input, 0, 1, (args, ctx) => {
+  if (ctx.readLine === null) throw runtimeError('R015', {}, ctx.callSpan);
+  const prompt = args[0];
+  if (prompt !== undefined) ctx.write(displayValue(prompt, ctx.digits));
+  const line = ctx.readLine();
+  return line === null ? NULL : str(line);
+});
+
+/** All built-ins, keyed by their (already NFC) names. */
+export function createBuiltins(): ReadonlyMap<string, BuiltinFunctionValue> {
+  const all = [length, typeOf, toNumber, toText, toInteger, append, input];
+  return new Map(all.map((fn) => [fn.name.normalize('NFC'), fn]));
+}

@@ -12,94 +12,134 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap"
     />
     <link rel="stylesheet" href="style.css" />
     <script src="app.js" defer></script>
   </head>
   <body>
-    <header class="top">
-      <div class="brand">
-        <h1>অসমীয়া <span class="brand-sub">প্লেগ্ৰাউণ্ড</span></h1>
-        <p class="tagline">
-          অসমীয়া ভাষাত প্ৰগ্ৰাম লিখক আৰু ব্ৰাউজাৰতে চলাওক · Assamese programming, in your browser
-        </p>
-      </div>
-      <nav class="links" aria-label="Project links">
-        <a href="https://github.com/d43ash1sh/asomiya" rel="noopener">GitHub</a>
-        <a href="https://www.npmjs.com/package/asomiya" rel="noopener">npm</a>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="অসমীয়া প্লেগ্ৰাউণ্ড">
+        <span class="logo" aria-hidden="true">অ</span>
+        <span class="brand-name">অসমীয়া</span>
+        <span class="brand-tag">Playground</span>
+      </a>
+      <nav class="nav" aria-label="Project links">
         <a href="https://github.com/d43ash1sh/asomiya/blob/main/README.as.md" rel="noopener"
           >নিৰ্দেশিকা</a
         >
+        <a href="https://github.com/d43ash1sh/asomiya" rel="noopener">GitHub</a>
+        <a href="https://www.npmjs.com/package/asomiya" rel="noopener">npm</a>
+        <button
+          id="theme"
+          class="icon-button"
+          type="button"
+          aria-label="Toggle dark mode"
+          title="Theme"
+        >
+          <span aria-hidden="true">◐</span>
+        </button>
       </nav>
     </header>
 
-    <div class="toolbar" role="toolbar" aria-label="Playground controls">
-      <button id="run" class="primary" type="button" title="চলাওক (Ctrl/⌘ + Enter)">
-        ▶ চলাওক <span class="hint">Ctrl+Enter</span>
-      </button>
-      <label class="field">
-        <span>উদাহৰণ</span>
-        <select id="examples"></select>
-      </label>
-      <label class="field">
-        <span>ভুলৰ ভাষা</span>
-        <select id="lang">
-          <option value="as">অসমীয়া</option>
-          <option value="en">English</option>
-        </select>
-      </label>
-      <label class="field">
-        <span>অংক</span>
-        <select id="digits">
-          <option value="assamese">০১২৩</option>
-          <option value="ascii">0123</option>
-        </select>
-      </label>
-      <button id="share" type="button" title="Copy a link to this program">🔗 শ্বেয়াৰ</button>
-    </div>
-
-    <main class="workspace">
-      <section class="pane editor-pane" aria-labelledby="editor-label">
-        <div class="pane-head">
-          <h2 id="editor-label">প্ৰগ্ৰাম <span class="en">program.asom</span></h2>
+    <main class="layout">
+      <section class="card editor-card" aria-label="Program editor">
+        <div class="card-head">
+          <div class="file">
+            <span class="file-dot" aria-hidden="true"></span>
+            program.asom
+          </div>
+          <div class="actions">
+            <label class="select">
+              <span class="visually-hidden">উদাহৰণ (examples)</span>
+              <select id="examples"></select>
+            </label>
+            <button
+              id="share"
+              class="button ghost"
+              type="button"
+              title="Copy a link to this program"
+            >
+              শ্বেয়াৰ
+            </button>
+            <button id="run" class="button primary" type="button" title="চলাওক (Ctrl/⌘ + Enter)">
+              <span aria-hidden="true">▶</span> চলাওক
+              <kbd class="kbd">⌘↵</kbd>
+            </button>
+          </div>
         </div>
-        <textarea
-          id="editor"
-          spellcheck="false"
-          autocapitalize="off"
-          autocomplete="off"
-          wrap="off"
-          aria-label="Program source"
-        ></textarea>
+        <div class="editor">
+          <div id="gutter" class="gutter" aria-hidden="true"></div>
+          <textarea
+            id="editor"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            wrap="off"
+            aria-label="Program source"
+          ></textarea>
+        </div>
       </section>
 
-      <section class="side">
-        <section class="pane" aria-labelledby="output-label">
-          <div class="pane-head">
-            <h2 id="output-label">ফলাফল <span class="en">output</span></h2>
-            <span id="status" class="status" aria-live="polite"></span>
+      <aside class="side">
+        <section class="card output-card" aria-labelledby="output-title">
+          <div class="card-head">
+            <h2 id="output-title">ফলাফল</h2>
+            <div class="actions">
+              <span id="status" class="pill" aria-live="polite" hidden></span>
+              <div class="segmented" role="radiogroup" aria-label="Error message language">
+                <label title="ভুলৰ বাৰ্তা অসমীয়াত">
+                  <input type="radio" name="lang" value="as" checked /><span>অ</span>
+                </label>
+                <label title="Error messages in English">
+                  <input type="radio" name="lang" value="en" /><span>EN</span>
+                </label>
+              </div>
+              <div class="segmented" role="radiogroup" aria-label="Digits">
+                <label title="অসমীয়া অংক">
+                  <input type="radio" name="digits" value="assamese" checked /><span>০</span>
+                </label>
+                <label title="ASCII digits">
+                  <input type="radio" name="digits" value="ascii" /><span>0</span>
+                </label>
+              </div>
+              <button id="clear" class="button ghost small" type="button">মচক</button>
+            </div>
           </div>
           <pre id="output" class="output" aria-live="polite"></pre>
         </section>
 
-        <section class="pane input-pane" aria-labelledby="stdin-label">
-          <div class="pane-head">
-            <h2 id="stdin-label">ইনপুট <span class="en">for সোধা(), one line each</span></h2>
-          </div>
-          <textarea id="stdin" spellcheck="false" rows="3" aria-label="Program input"></textarea>
-        </section>
-
-        <details class="pane cheatsheet">
-          <summary>মূল শব্দ আৰু ফাংচন <span class="en">keywords &amp; built-ins</span></summary>
-          <dl id="keywords" class="keywords"></dl>
+        <details class="card fold" open>
+          <summary>
+            <span>ইনপুট</span>
+            <span class="muted">সোধা()-য়ে ইয়াৰ পৰা এটা এটাকৈ শাৰী পঢ়ে</span>
+          </summary>
+          <textarea
+            id="stdin"
+            class="stdin"
+            spellcheck="false"
+            rows="3"
+            placeholder="প্ৰতি শাৰীত এটা উত্তৰ…"
+            aria-label="Program input"
+          ></textarea>
         </details>
-      </section>
+
+        <details class="card fold">
+          <summary>
+            <span>মূল শব্দ</span>
+            <span class="muted">ক্লিক কৰিলে এডিটৰত সোমাব</span>
+          </summary>
+          <div id="keywords" class="chips"></div>
+        </details>
+      </aside>
     </main>
 
-    <footer class="foot">
-      <code>npm install -g asomiya</code> · MIT · সকলো প্ৰগ্ৰাম আপোনাৰ ব্ৰাউজাৰতে চলে, কোনো চাৰ্ভাৰলৈ
-      নাযায়।
+    <footer class="footer">
+      <span>Made by <strong>Debashish</strong> &amp; <strong>Arnab Sharma</strong></span>
+      <span class="dot" aria-hidden="true">·</span>
+      <a href="https://github.com/d43ash1sh/asomiya/blob/main/LICENSE" rel="noopener">MIT</a>
+      <span class="dot" aria-hidden="true">·</span>
+      <code>npm install -g asomiya</code>
     </footer>
   </body>
 </html>

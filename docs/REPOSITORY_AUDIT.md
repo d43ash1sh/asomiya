@@ -40,7 +40,9 @@ install.
 ### 2. Code quality
 
 - Strict mode (`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`) and zero `any`.
-  There are **no type assertions**, `@ts-` comments or `eslint-disable` comments anywhere.
+  `src/` has **no type assertions**, and nothing in the repository uses `@ts-` or `eslint-disable`
+  comments. (Correction: the tests do use `as { … }` on `JSON.parse` results, which is justified
+  because `JSON.parse` is untyped. The original search pattern missed that form.)
 - **No debug statements** and no `TODO`/`FIXME` markers.
 - **No value-level import cycles.** One type-only cycle, `runtime/values.ts` ↔
   `runtime/environment.ts`, is justified: a function value's closure has type `Environment`.

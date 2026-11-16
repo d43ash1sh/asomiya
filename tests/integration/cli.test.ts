@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -118,7 +118,10 @@ describe('options', () => {
   });
 
   it('--version and --help', () => {
-    expect(cli(['--version']).stdout.trim()).toBe('0.1.0');
+    const { version } = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as {
+      version: string;
+    };
+    expect(cli(['--version']).stdout.trim()).toBe(version);
     const help = cli(['--help']);
     expect(help.status).toBe(0);
     expect(help.stdout).toContain('run');

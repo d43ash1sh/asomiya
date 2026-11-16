@@ -260,6 +260,11 @@ REPLত কাঁড় চাবিৰে (arrow key) আগৰ শাৰী �
 যেন লাগিলে অনুগ্ৰহ কৰি জনাওক। বিশেষকৈ শব্দকোষত "provisional" বুলি চিহ্নিত শব্দবোৰৰ ক্ষেত্ৰত।
 বিতং: [CONTRIBUTING.md](CONTRIBUTING.md)।
 
+## নিৰ্মাতা আৰু সহযোগী
+
+- **দেবাশীষ বৰদলৈ** ([@d43ash1sh](https://github.com/d43ash1sh)) — নিৰ্মাতা
+- **অৰ্ণৱ শৰ্মা** ([@arnabsmh](https://github.com/arnabsmh)) — সহযোগী আৰু অৱদানকাৰী
+
 ## অনুজ্ঞাপত্ৰ
 
 [MIT](LICENSE)

@@ -27,7 +27,7 @@ export function formatDiagnostic(d: Diagnostic, options: FormatOptions): string 
   const lines = [`${label} [${d.code}]: ${message}`];
   lines.push(`  --> ${fileName ?? '<input>'}:${line}:${column}`);
 
-  const sourceLine = source?.split(/\r?\n/)[line - 1];
+  const sourceLine = source?.split(/\r\n|\r|\n/)[line - 1];
   if (sourceLine !== undefined) {
     const gutter = String(line).length;
     const pad = ' '.repeat(gutter);

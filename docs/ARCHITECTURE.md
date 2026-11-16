@@ -37,7 +37,10 @@ output via host callbacks (write / readLine)
 | `src/runtime/interpreter.ts` | The evaluator.                                                                 |
 | `src/errors/*`               | Diagnostic types, bilingual message catalogue, error classes, pretty-printer.  |
 | `src/run.ts`                 | `runSource()`: one-call convenience API.                                       |
-| `src/cli/*`                  | Command-line interface, REPL, synchronous stdin reader.                        |
+| `src/runtime/limits.ts`      | Maximum text/list sizes and the per-size step cost.                            |
+| `src/cli/io.ts`              | Synchronous line reader (stdin) and synchronous writers (stdout/stderr).       |
+| `src/cli/repl.ts`            | REPL: `ReplSession` (terminal-independent logic) and `runRepl` (the loop).     |
+| `src/cli/*`                  | Command-line entry point, file runner, CLI messages.                           |
 
 ## Key design decisions
 
@@ -82,6 +85,25 @@ The `incomplete` flag marks errors caused only by input ending early (an open `{
 - **Call-depth limit** (default 500) turns runaway recursion into R009. If an embedder raises it beyond
   what the JS stack allows, the resulting `RangeError` becomes R018. It never surfaces as a crash.
 - **Parser nesting limit** (256) protects the recursive-descent parser from pathological input (P010).
+- **Size limits** (`src/runtime/limits.ts`): text up to 10,000,000 code units, lists up to 1,000,000
+  elements (R019). The step budget bounds time, but a single `ল = ল + ল` doubles memory, so without
+  these a short program could exhaust the heap. That is a fatal V8 error that no handler can catch.
+  Work proportional to a value's size also costs extra steps.
+- **Built-ins are read-only**: they live in a read-only scope that programs can shadow with `ধৰা`
+  but not reassign (R020).
+
+### CLI and REPL I/O
+
+The interpreter is synchronous, so the CLI is too. `SyncLineReader` performs blocking reads on
+stdin and splits lines on raw bytes before UTF-8 decoding. Output goes through `createWriter`, which
+uses `fs.writeSync` so a prompt is on screen before the next blocking read. On a Windows console it
+uses `process.stdout.write` instead, so Node's console encoding handles Assamese.
+
+The REPL reads lines with the same `SyncLineReader`, not Node's `readline`. `readline` redraws the
+input line (`ESC[1G ESC[0J` + prompt + line) using column widths that disagree with how terminals
+render Assamese spacing vowel signs (া, ী …), and its redraws erased the prompt and earlier output.
+With plain reads the terminal handles echo and editing itself. Because there is a single reader,
+`সোধা` works inside the REPL. The trade-off is that the REPL has no arrow-key history.
 
 ## Embedding
 
@@ -106,5 +128,5 @@ interpreter.run(parse('কোৱা(১০ * ১০)')); // prints 100
 2. Grammar: update `docs/GRAMMAR.md`, then `ast.ts` and `parser.ts`.
 3. Semantics: update `docs/LANGUAGE_SPEC.md`, then `interpreter.ts`.
 4. Errors: add codes to `diagnostic.ts` and `messages.ts` (the compiler enforces both languages), then
-   regenerate the sample section of `docs/ERRORS.md`.
+   add an example to `scripts/generate-error-docs.mjs` and run `npm run docs:errors`.
 5. Tests for every new path, plus an example program if user-visible.

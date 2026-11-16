@@ -221,3 +221,15 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **অসমীয়া:** প্ৰগ্ৰামটো অতি গভীৰলৈ সোমাই গ'ল আৰু ইন্টাৰপ্ৰেটাৰৰ ষ্টেক শেষ হ'ল; ৰিকাৰ্চনৰ গভীৰতা কমাওক
 - **English:** Nesting too deep: the interpreter ran out of stack space; reduce the recursion depth
 - **Example:** `very deep recursion with a raised --max-depth`
+
+### R019
+
+- **অসমীয়া:** তালিকাখন অতি দীঘল হ'ল — সৰ্বোচ্চ দৈৰ্ঘ্য ১০০০০০০
+- **English:** List is too long — the maximum length is 1000000
+- **Example:** `ধৰা ল = [১]; যেতিয়ালৈকে (সঁচা) { ল = ল + ল }`
+
+### R020
+
+- **অসমীয়া:** "দৈৰ্ঘ্য" এটা অন্তৰ্নিৰ্মিত ফাংচন; ইয়াক সলনি কৰিব নোৱাৰি (নিজৰ বাবে "ধৰা দৈৰ্ঘ্য = …" লিখক)
+- **English:** "দৈৰ্ঘ্য" is a built-in and cannot be reassigned (declare your own with "ধৰা")
+- **Example:** `দৈৰ্ঘ্য = ৫`

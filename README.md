@@ -118,8 +118,19 @@ Errors show the code, an Assamese message, the location, and the offending line:
   |        ^
 ```
 
-In the REPL, an open `{` or `(` waits for more lines. `.সহায়` / `.help` shows help, and
-`.প্ৰস্থান` / `.exit` or Ctrl+D quits.
+In the REPL, a complete statement runs as soon as you press Enter, and an open `{` or `(` waits
+for more lines. `সোধা` works in the REPL too: it reads the next line you type.
+
+| REPL command                | Effect                                 |
+| --------------------------- | -------------------------------------- |
+| `.সহায়` / `.help`           | show help                              |
+| `.বাতিল` / `.cancel`        | discard an unfinished multi-line input |
+| `.প্ৰস্থান` / `.exit`, Ctrl+D | quit                                   |
+| Ctrl+C                      | quit immediately, even mid-program     |
+
+The REPL deliberately has no arrow-key history. Line editors (such as Node's `readline`) redraw
+the line using column arithmetic that does not match how terminals draw Assamese, which garbled the
+screen, so input is left to the terminal itself.
 
 ## Examples
 

@@ -2,7 +2,7 @@ import { runtimeError } from '../errors/runtime-error';
 import { BUILTIN_NAMES } from '../language/glossary';
 import { typeName, type ValueKind } from '../language/types';
 import { assameseDigitsToAscii, graphemes } from '../lexer/unicode';
-import { displayValue } from './display';
+import { MAX_LIST_LENGTH } from './limits';
 import {
   NULL,
   num,
@@ -46,7 +46,7 @@ const ASCII_NUMBER = /^-?[0-9]+(\.[0-9]+)?$/;
 const ASSAMESE_NUMBER = /^-?[০-৯]+(\.[০-৯]+)?$/u;
 
 /** Parses "২৪", "-3.5" … Returns null for anything that isn't a plain decimal number. */
-export function parseNumberText(text: string): number | null {
+function parseNumberText(text: string): number | null {
   const trimmed = text.trim();
   if (!ASCII_NUMBER.test(trimmed) && !ASSAMESE_NUMBER.test(trimmed)) return null;
   return Number(assameseDigitsToAscii(trimmed));
@@ -54,7 +54,10 @@ export function parseNumberText(text: string): number | null {
 
 const length = builtin(BUILTIN_NAMES.length, 1, 1, (args, ctx) => {
   const x = argAt(args, 0);
-  if (x.kind === 'string') return num(graphemes(x.value).length);
+  if (x.kind === 'string') {
+    ctx.chargeFor(x.value.length);
+    return num(graphemes(x.value).length);
+  }
   if (x.kind === 'list') return num(x.elements.length);
   return typeError(BUILTIN_NAMES.length, 0, ['string', 'list'], x, ctx);
 });
@@ -74,7 +77,7 @@ const toNumber = builtin(BUILTIN_NAMES.toNumber, 1, 1, (args, ctx): NumberValue 
 });
 
 const toText = builtin(BUILTIN_NAMES.toText, 1, 1, (args, ctx): StringValue =>
-  str(displayValue(argAt(args, 0), ctx.digits)),
+  str(ctx.display(argAt(args, 0))),
 );
 
 const toInteger = builtin(BUILTIN_NAMES.toInteger, 1, 1, (args, ctx) => {
@@ -86,6 +89,9 @@ const toInteger = builtin(BUILTIN_NAMES.toInteger, 1, 1, (args, ctx) => {
 const append = builtin(BUILTIN_NAMES.append, 2, 2, (args, ctx) => {
   const target = argAt(args, 0);
   if (target.kind !== 'list') return typeError(BUILTIN_NAMES.append, 0, ['list'], target, ctx);
+  if (target.elements.length >= MAX_LIST_LENGTH) {
+    throw runtimeError('R019', { type: 'list', limit: MAX_LIST_LENGTH }, ctx.callSpan);
+  }
   (target satisfies ListValue).elements.push(argAt(args, 1));
   return NULL;
 });
@@ -93,7 +99,7 @@ const append = builtin(BUILTIN_NAMES.append, 2, 2, (args, ctx) => {
 const input = builtin(BUILTIN_NAMES.input, 0, 1, (args, ctx) => {
   if (ctx.readLine === null) throw runtimeError('R015', {}, ctx.callSpan);
   const prompt = args[0];
-  if (prompt !== undefined) ctx.write(displayValue(prompt, ctx.digits));
+  if (prompt !== undefined) ctx.write(ctx.display(prompt));
   const line = ctx.readLine();
   return line === null ? NULL : str(line);
 });

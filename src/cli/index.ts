@@ -4,9 +4,9 @@ import { LANGUAGE } from '../language/config';
 import type { MessageLanguage } from '../language/types';
 import { DEFAULT_MAX_CALL_DEPTH, DEFAULT_MAX_STEPS } from '../runtime/interpreter';
 import { CLI_MESSAGES } from './messages';
-import { startRepl } from './repl';
-import { EXIT_USAGE_ERROR, runFile, type ExecutionSettings } from './run-file';
-import { SyncLineReader } from './stdin';
+import { createWriter, SyncLineReader } from './io';
+import { runRepl } from './repl';
+import { EXIT_USAGE_ERROR, runFile, type CliIO, type ExecutionSettings } from './run-file';
 
 interface RawOptions {
   readonly lang: MessageLanguage;
@@ -56,7 +56,17 @@ function addExecutionOptions(command: Command): Command {
     );
 }
 
-export async function main(argv: readonly string[]): Promise<number> {
+/** Real terminal I/O. Both streams are written synchronously, so output and prompts appear in order. */
+function processIO(): CliIO {
+  const reader = new SyncLineReader();
+  return {
+    stdout: createWriter(1),
+    stderr: createWriter(2),
+    readLine: () => reader.readLine(),
+  };
+}
+
+export function main(argv: readonly string[]): number {
   let exitCode = 0;
   const program = new Command()
     .name(LANGUAGE.cliName)
@@ -71,24 +81,19 @@ export async function main(argv: readonly string[]): Promise<number> {
       .description(`run a source file (*${LANGUAGE.fileExtension})`)
       .argument('<file>', 'path to the program'),
   ).action((file: string, options: RawOptions) => {
-    const reader = new SyncLineReader();
-    exitCode = runFile(file, settingsFrom(options), {
-      stdout: (text) => process.stdout.write(text),
-      stderr: (text) => process.stderr.write(text),
-      readLine: () => reader.readLine(),
-    });
+    exitCode = runFile(file, settingsFrom(options), processIO());
   });
 
   addExecutionOptions(
     program
       .command('repl', { isDefault: true })
       .description('start the interactive prompt (default)'),
-  ).action(async (options: RawOptions) => {
-    await startRepl(settingsFrom(options));
+  ).action((options: RawOptions) => {
+    exitCode = runRepl(settingsFrom(options), processIO());
   });
 
   try {
-    await program.parseAsync(argv, { from: 'user' });
+    program.parse(argv, { from: 'user' });
   } catch (error) {
     if (error instanceof CommanderError) {
       // --help and --version "fail" with exit code 0.
@@ -99,14 +104,10 @@ export async function main(argv: readonly string[]): Promise<number> {
   return exitCode;
 }
 
-main(process.argv.slice(2)).then(
-  (code) => {
-    process.exitCode = code;
-  },
-  (error: unknown) => {
-    process.stderr.write(
-      `internal error: ${error instanceof Error ? (error.stack ?? error.message) : String(error)}\n`,
-    );
-    process.exitCode = 70;
-  },
-);
+try {
+  process.exitCode = main(process.argv.slice(2));
+} catch (error) {
+  const detail = error instanceof Error ? (error.stack ?? error.message) : String(error);
+  process.stderr.write(`internal error: ${detail}\n`);
+  process.exitCode = 70;
+}

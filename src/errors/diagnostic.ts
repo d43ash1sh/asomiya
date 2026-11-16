@@ -59,6 +59,8 @@ export interface DiagnosticParams {
   R016: Record<string, never>;
   R017: { readonly op: string; readonly type: ValueKind };
   R018: Record<string, never>;
+  R019: { readonly type: 'string' | 'list'; readonly limit: number };
+  R020: { readonly name: string };
 }
 
 export type DiagnosticCode = keyof DiagnosticParams;

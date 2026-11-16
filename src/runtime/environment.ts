@@ -6,9 +6,12 @@ import type { Value } from './values';
 export class Environment {
   private readonly bindings = new Map<string, Value>();
   readonly parent: Environment | null;
+  /** Bindings of a read-only scope (the built-ins) can be shadowed but not reassigned. */
+  private readonly readOnly: boolean;
 
-  constructor(parent: Environment | null = null) {
+  constructor(parent: Environment | null = null, readOnly = false) {
     this.parent = parent;
+    this.readOnly = readOnly;
   }
 
   /** Declares `name` in this scope. Re-declaring in the same scope is an error unless allowed. */
@@ -29,6 +32,7 @@ export class Environment {
   assign(name: string, value: Value, span: Span): void {
     const owner = this.find(name);
     if (owner === null) throw runtimeError('R001', { name }, span);
+    if (owner.readOnly) throw runtimeError('R020', { name }, span);
     owner.bindings.set(name, value);
   }
 
@@ -36,9 +40,5 @@ export class Environment {
   private find(name: string): Environment | null {
     if (this.bindings.has(name)) return this;
     return this.parent === null ? null : this.parent.find(name);
-  }
-
-  hasOwn(name: string): boolean {
-    return this.bindings.has(name);
   }
 }

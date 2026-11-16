@@ -97,10 +97,16 @@ export class Lexer {
     return cp === undefined ? '' : String.fromCodePoint(cp);
   }
 
+  /** A line break is \n, \r\n (counted at its \n) or a lone \r (classic Mac line endings). */
+  private atLineBreak(ahead = 0): boolean {
+    const ch = this.peek(ahead);
+    return ch === '\n' || (ch === '\r' && this.peek(ahead + 1) !== '\n');
+  }
+
   private advance(): string {
     const ch = this.peek();
     this.offset += ch.length;
-    if (ch === '\n') {
+    if (ch === '\n' || (ch === '\r' && this.peek() !== '\n')) {
       this.line++;
       this.column = 1;
     } else {
@@ -128,7 +134,7 @@ export class Lexer {
     const ch = this.peek();
     const start = this.position();
 
-    if (ch === '\n') {
+    if (this.atLineBreak()) {
       this.advance();
       this.pushNewline(start);
       return;
@@ -138,7 +144,7 @@ export class Lexer {
       return;
     }
     if (ch === '/' && this.peek(1) === '/') {
-      while (!this.atEnd() && this.peek() !== '\n') this.advance();
+      while (!this.atEnd() && !this.atLineBreak()) this.advance();
       return;
     }
     if (ch === '/' && this.peek(1) === '*') {
@@ -193,7 +199,7 @@ export class Lexer {
     let value = '';
     for (;;) {
       const ch = this.peek();
-      if (ch === '' || ch === '\n') {
+      if (ch === '' || ch === '\n' || ch === '\r') {
         throw lexerError('L002', {}, this.spanFrom(start));
       }
       if (ch === '"') {
@@ -204,9 +210,13 @@ export class Lexer {
         const escStart = this.position();
         this.advance();
         const next = this.peek();
+        if (next === '' || next === '\n' || next === '\r') {
+          // `"…\` at the end of a line: the string is unterminated, not a bad escape.
+          throw lexerError('L002', {}, this.spanFrom(start));
+        }
         const decoded = ESCAPES[next];
         if (decoded === undefined) {
-          if (next !== '' && next !== '\n') this.advance();
+          this.advance();
           throw lexerError('L004', { sequence: next }, this.spanFrom(escStart));
         }
         this.advance();

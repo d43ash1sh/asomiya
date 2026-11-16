@@ -49,7 +49,8 @@ These are **not** keywords yet. They are listed here so they are not given confl
 
 ## Built-in functions — অন্তৰ্নিৰ্মিত ফাংচন
 
-Built-ins are ordinary names, not keywords. A program can shadow them with its own declarations.
+Built-ins are ordinary names, not keywords. A program can shadow them with its own `ধৰা` declaration,
+but cannot reassign them (R020).
 
 | Name     | Meaning     | Behaviour                                                                   |
 | -------- | ----------- | --------------------------------------------------------------------------- |

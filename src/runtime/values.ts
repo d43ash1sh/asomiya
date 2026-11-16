@@ -43,7 +43,10 @@ export type DigitStyle = 'assamese' | 'ascii';
 export interface BuiltinContext {
   readonly callSpan: Span;
   readonly argSpans: readonly Span[];
-  readonly digits: DigitStyle;
+  /** Display form of a value, enforcing the text-length limit. */
+  readonly display: (value: Value) => string;
+  /** Charges extra execution steps for work proportional to `size`. */
+  readonly chargeFor: (size: number) => void;
   readonly write: (text: string) => void;
   readonly readLine: (() => string | null) | null;
 }
@@ -63,8 +66,8 @@ export type Value =
   NumberValue | StringValue | BooleanValue | NullValue | ListValue | FunctionValue;
 
 export const NULL: NullValue = { kind: 'null' };
-export const TRUE: BooleanValue = { kind: 'boolean', value: true };
-export const FALSE: BooleanValue = { kind: 'boolean', value: false };
+const TRUE: BooleanValue = { kind: 'boolean', value: true };
+const FALSE: BooleanValue = { kind: 'boolean', value: false };
 
 export const num = (value: number): NumberValue => ({ kind: 'number', value });
 export const str = (value: string): StringValue => ({
@@ -74,8 +77,17 @@ export const str = (value: string): StringValue => ({
 export const bool = (value: boolean): BooleanValue => (value ? TRUE : FALSE);
 export const list = (elements: Value[]): ListValue => ({ kind: 'list', elements });
 
-/** Structural equality for lists, identity for functions, value equality otherwise. No coercion. */
-export function valuesEqual(a: Value, b: Value, seen: Set<ListValue> = new Set()): boolean {
+/**
+ * Structural equality for lists, identity for functions, value equality otherwise. No coercion.
+ * `visit` is called once per list element compared, so the caller can charge execution steps:
+ * lists that share references can make this exponential.
+ */
+export function valuesEqual(
+  a: Value,
+  b: Value,
+  visit: () => void = () => undefined,
+  seen: Set<ListValue> = new Set(),
+): boolean {
   switch (a.kind) {
     case 'number':
     case 'string':
@@ -91,8 +103,9 @@ export function valuesEqual(a: Value, b: Value, seen: Set<ListValue> = new Set()
       if (a.elements.length !== b.elements.length) return false;
       seen.add(a);
       const equal = a.elements.every((el, i) => {
+        visit();
         const other = b.elements[i];
-        return other !== undefined && valuesEqual(el, other, seen);
+        return other !== undefined && valuesEqual(el, other, visit, seen);
       });
       seen.delete(a);
       return equal;

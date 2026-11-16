@@ -13,8 +13,9 @@ import type {
   UnaryExpression,
 } from '../parser/ast';
 import { createBuiltins } from './builtins';
-import { displayValue, reprValue } from './display';
+import { DisplayTooLongError, displayValue, reprValue } from './display';
 import { Environment } from './environment';
+import { MAX_LIST_LENGTH, MAX_TEXT_LENGTH, SIZE_COST_DIVISOR } from './limits';
 import {
   NULL,
   bool,
@@ -76,7 +77,7 @@ export class Interpreter {
     this.digits = options.digits ?? 'assamese';
     this.allowTopLevelRedeclaration = options.allowTopLevelRedeclaration ?? false;
 
-    const builtinScope = new Environment(null);
+    const builtinScope = new Environment(null, true);
     for (const [name, fn] of createBuiltins()) {
       builtinScope.declare(name, fn, { start: zero, end: zero });
     }
@@ -102,29 +103,63 @@ export class Interpreter {
         }
       }
     } catch (error) {
-      // The call-depth limit normally fires first, but a raised limit can still exhaust the
-      // host stack. Report that as a language error, never as a JS crash.
-      if (error instanceof RangeError) {
-        throw runtimeError('R018', {}, this.lastCallSpan ?? program.span);
-      }
-      throw error;
+      throw this.translateHostError(error, this.lastCallSpan ?? program.span);
     }
     return last;
   }
 
-  /** Display form of a value under this interpreter's digit style. */
-  display(value: Value): string {
-    return displayValue(value, this.digits);
+  /**
+   * The REPL's echo form of a value (text quoted). Like everything else, it reports limits as
+   * language errors instead of letting a host exception escape.
+   */
+  describe(value: Value, span: Span): string {
+    try {
+      return reprValue(value, this.digits, MAX_TEXT_LENGTH);
+    } catch (error) {
+      if (error instanceof DisplayTooLongError) {
+        throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
+      }
+      throw this.translateHostError(error, span);
+    }
   }
 
-  repr(value: Value): string {
-    return reprValue(value, this.digits);
+  /**
+   * The limits normally fire first, but some host failures can still surface: a raised call-depth
+   * limit can exhaust the JS stack. Report them as language errors, never as a JS crash.
+   */
+  private translateHostError(error: unknown, span: Span): unknown {
+    if (!(error instanceof RangeError)) return error;
+    if (/Invalid string length/.test(error.message)) {
+      return runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
+    }
+    if (/Invalid array length/.test(error.message)) {
+      return runtimeError('R019', { type: 'list', limit: MAX_LIST_LENGTH }, span);
+    }
+    return runtimeError('R018', {}, span);
+  }
+
+  /** Display form used by কোৱা, পাঠ() and `+`; enforces the text-length limit. */
+  private show(value: Value, span: Span): string {
+    try {
+      return displayValue(value, this.digits, MAX_TEXT_LENGTH);
+    } catch (error) {
+      if (error instanceof DisplayTooLongError) {
+        throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
+      }
+      throw error;
+    }
   }
 
   private tick(span: Span): void {
     if (++this.steps > this.maxSteps) {
       throw runtimeError('R008', { limit: this.maxSteps }, span);
     }
+  }
+
+  /** Charges steps for work proportional to `size` (copying, scanning). */
+  private charge(size: number, span: Span): void {
+    this.steps += Math.floor(size / SIZE_COST_DIVISOR);
+    this.tick(span);
   }
 
   // ── statements ──────────────────────────────────────────────────────
@@ -193,7 +228,7 @@ export class Interpreter {
           value: statement.value === null ? NULL : this.evaluate(statement.value, env),
         };
       case 'PrintStatement': {
-        const parts = statement.args.map((arg) => this.display(this.evaluate(arg, env)));
+        const parts = statement.args.map((arg) => this.show(this.evaluate(arg, env), arg.span));
         this.write(parts.join(' ') + '\n');
         return NORMAL;
       }
@@ -259,15 +294,34 @@ export class Interpreter {
 
     switch (op) {
       case '==':
-        return bool(valuesEqual(left, right));
-      case '!=':
-        return bool(!valuesEqual(left, right));
+      case '!=': {
+        const visit = () => {
+          this.tick(expression.operatorSpan);
+        };
+        const equal = valuesEqual(left, right, visit);
+        return bool(op === '==' ? equal : !equal);
+      }
       case '+':
         if (left.kind === 'number' && right.kind === 'number') return num(left.value + right.value);
         if (left.kind === 'string' || right.kind === 'string') {
-          return str(this.display(left) + this.display(right));
+          const span = expression.operatorSpan;
+          const text = this.show(left, span) + this.show(right, span);
+          if (text.length > MAX_TEXT_LENGTH) {
+            throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
+          }
+          this.charge(text.length, span);
+          return str(text);
         }
         if (left.kind === 'list' && right.kind === 'list') {
+          const length = left.elements.length + right.elements.length;
+          if (length > MAX_LIST_LENGTH) {
+            throw runtimeError(
+              'R019',
+              { type: 'list', limit: MAX_LIST_LENGTH },
+              expression.operatorSpan,
+            );
+          }
+          this.charge(length, expression.operatorSpan);
           return list([...left.elements, ...right.elements]);
         }
         break;
@@ -320,6 +374,7 @@ export class Interpreter {
       return object.elements[i] ?? NULL;
     }
     if (object.kind === 'string') {
+      this.charge(object.value.length, expression.span);
       const parts = graphemes(object.value);
       const i = this.checkIndex(indexValue, parts.length, expression.index.span);
       return str(parts[i] ?? '');
@@ -329,12 +384,21 @@ export class Interpreter {
 
   private checkIndex(value: Value, length: number, span: Span): number {
     if (value.kind !== 'number' || !Number.isInteger(value.value)) {
-      throw runtimeError('R011', { value: this.repr(value) }, span);
+      throw runtimeError('R011', { value: this.shortRepr(value) }, span);
     }
     if (value.value < 0 || value.value >= length) {
       throw runtimeError('R010', { index: value.value, length }, span);
     }
     return value.value;
+  }
+
+  /** A bounded echo form for error messages. */
+  private shortRepr(value: Value): string {
+    try {
+      return reprValue(value, this.digits, 60);
+    } catch {
+      return '…';
+    }
   }
 
   private assign(expression: AssignmentExpression, env: Environment): Value {
@@ -374,7 +438,10 @@ export class Interpreter {
       const ctx: BuiltinContext = {
         callSpan: expression.span,
         argSpans: expression.args.map((a) => a.span),
-        digits: this.digits,
+        display: (value) => this.show(value, expression.span),
+        chargeFor: (size) => {
+          this.charge(size, expression.span);
+        },
         write: this.write,
         readLine: this.readLine,
       };

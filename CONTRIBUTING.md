@@ -37,10 +37,19 @@ Node.js 20+ is required.
    agree.
 3. Update examples and docs that use the old word.
 
+## Error messages
+
+Every diagnostic code needs an Assamese and an English message in `src/errors/messages.ts` (the
+compiler enforces this). After adding one, add an example to `scripts/generate-error-docs.mjs` and run
+`npm run docs:errors` to regenerate `docs/ERRORS.md`. A test fails if a code is missing there.
+
 ## Tests
 
 - `tests/lexer`, `tests/parser`, `tests/runtime`, `tests/unicode`: unit tests.
 - `tests/integration`: runs the built CLI (`dist/cli.js`) as a real process. `npm test` builds it first.
+- `tests/integration/repl-tty.test.ts`: types into the REPL through a real pseudo-terminal
+  (`tests/fixtures/pty-driver.py`). Needs Python 3 and is skipped on Windows.
+- `tests/regression`: one test per bug found in an audit.
 - When you add an example program, add its expected output to `tests/integration/cli.test.ts`.
 
 ## Commit style

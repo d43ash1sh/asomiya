@@ -13,10 +13,10 @@ const SPACE_SEPARATOR = /^\p{Zs}$/u;
 const ASSAMESE_ZERO = 0x09e6;
 const ASSAMESE_NINE = 0x09ef;
 
-export const ASCII_APOSTROPHE = "'";
-export const RIGHT_SINGLE_QUOTE = '’';
+const ASCII_APOSTROPHE = "'";
+const RIGHT_SINGLE_QUOTE = '’';
 export const DANDA = '।';
-export const BYTE_ORDER_MARK = '﻿';
+const BYTE_ORDER_MARK = '﻿';
 
 export function isIdentifierStart(ch: string): boolean {
   return IDENT_START.test(ch);

@@ -88,8 +88,8 @@ Newlines end statements. A few rules keep this predictable:
 ## Lexical grammar
 
 ```ebnf
-NEWLINE     = "\n" | "\r\n" ;
-whitespace  = " " | "\t" | "\r" | U+FEFF | any Unicode space separator (Zs) ;
+NEWLINE     = "\n" | "\r\n" | "\r" ;
+whitespace  = " " | "\t" | "\r" (only before "\n") | U+FEFF | any Unicode space separator (Zs) ;
 comment     = "//" , { any char except newline }
             | "/*" , { any char } , "*/" ;           (* block comments do not nest *)
 

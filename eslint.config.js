@@ -1,12 +1,14 @@
 // @ts-check
 import js from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-  { ignores: ['dist/', 'node_modules/', 'coverage/'] },
+// `tseslint.config()` is deprecated in favour of ESLint core's `defineConfig()`.
+export default defineConfig(
+  globalIgnores(['dist/', 'node_modules/', 'coverage/']),
   js.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
+  tseslint.configs.strictTypeChecked,
   {
     languageOptions: {
       globals: globals.node,
@@ -24,7 +26,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/*.js'],
+    files: ['**/*.js', '**/*.mjs'],
     extends: [tseslint.configs.disableTypeChecked],
   },
 );

@@ -7,7 +7,8 @@ vocabulary, with the meaning of every keyword, is in [KEYWORDS.md](KEYWORDS.md).
 
 ## 1. Source files
 
-- Source is UTF-8 text. A leading byte-order mark is ignored.
+- Source is UTF-8 text. A leading byte-order mark is ignored. Lines may end with `\n`, `\r\n` or a
+  lone `\r`.
 - The file extension is **`.asom`**. `.as` is already used by ActionScript and AngelScript, and `.asm`
   is assembly language, so editors and GitHub would mis-highlight either. The CLI runs any file it is
   given, whatever the extension.
@@ -32,6 +33,7 @@ When a value is printed with `কোৱা`, joined to a পাঠ with `+`, or 
 - Numbers use **Assamese digits** by default: `১০ + ২০` prints `৩০`. The host can choose ASCII digits
   instead (`--ascii-digits` on the CLI). Integers have no decimal point. Other numbers use the shortest
   round-trip form, e.g. `০.৫`.
+- Very large or very small numbers use exponent notation with a Latin `e`, such as `১e+২২`.
 - `সঁচা`, `মিছা` and `খালী` print as those words.
 - A পাঠ prints as-is at top level. Inside a list it is quoted: `["ক", ১]`.
 - A list that contains itself prints the inner reference as `[…]`.
@@ -50,7 +52,8 @@ When a value is printed with `কোৱা`, joined to a পাঠ with `+`, or 
   first call.
 
 Built-in functions live in a scope outside the program's global scope, so a program may declare its own
-`দৈৰ্ঘ্য` and shadow the built-in.
+`দৈৰ্ঘ্য` and shadow the built-in. A built-in itself can't be reassigned: `দৈৰ্ঘ্য = ৫` without `ধৰা`
+is an error (R020).
 
 ## 4. Operators
 
@@ -128,13 +131,27 @@ inside a function that is itself inside a loop.
 - `কোৱা(ক, খ, …)` prints its arguments' display forms separated by single spaces, then a newline.
   `কোৱা()` prints an empty line. `কোৱা` is a keyword, not a function value.
 - `সোধা()` / `সোধা(প্ৰশ্ন)` prints the optional prompt without a newline, then reads one line. It returns
-  the line without its line ending, or `খালী` at end of input.
+  the line without its line ending, or `খালী` at end of input. In the REPL it reads the next line typed
+  at the prompt.
 
 ## 8. Execution limits
 
 The interpreter counts **steps**: one for each statement executed and each expression evaluated. When a
 run exceeds the budget (default 10,000,000 steps; set by the host) it stops with R008. This protects
 against accidental infinite loops. A call-depth limit (R009) protects against runaway recursion.
+
+Operations whose work grows with the size of a value (joining text or lists, indexing or measuring
+text, comparing lists) cost one extra step per 64 items, so the budget also bounds hidden work.
+
+Values have a maximum size, so a program can't exhaust the host's memory (R019):
+
+| Value    | Maximum length               |
+| -------- | ---------------------------- |
+| `পাঠ`    | 10,000,000 UTF-16 code units |
+| `তালিকা` | 1,000,000 elements           |
+
+The display form of a value counts against the text limit too, so printing a list that holds many
+references to the same sub-list fails cleanly instead of building an enormous string.
 
 ## 9. Safety
 

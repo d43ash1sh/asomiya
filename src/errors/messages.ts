@@ -190,6 +190,18 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: () =>
       `Nesting too deep: the interpreter ran out of stack space; reduce the recursion depth`,
   },
+  R019: {
+    as: (p) =>
+      `${p.type === 'string' ? 'পাঠটো' : 'তালিকাখন'} অতি দীঘল হ'ল — সৰ্বোচ্চ দৈৰ্ঘ্য ${n(p.limit)}`,
+    en: (p) =>
+      `${p.type === 'string' ? 'Text' : 'List'} is too long — the maximum length is ${p.limit}`,
+  },
+  R020: {
+    as: (p) =>
+      `"${p.name}" এটা অন্তৰ্নিৰ্মিত ফাংচন; ইয়াক সলনি কৰিব নোৱাৰি (নিজৰ বাবে "${keywordWord('let')} ${p.name} = …" লিখক)`,
+    en: (p) =>
+      `"${p.name}" is a built-in and cannot be reassigned (declare your own with "${keywordWord('let')}")`,
+  },
 };
 
 export const PHASE_LABELS: Readonly<Record<Phase, Readonly<Record<MessageLanguage, string>>>> = {

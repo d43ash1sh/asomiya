@@ -183,7 +183,68 @@ describe('errors and exit codes', () => {
   });
 });
 
+describe('limits through the CLI', () => {
+  it('stops an infinite loop with the default budget', () => {
+    const result = cli(['run', tempProgram('যেতিয়ালৈকে (সঁচা) { }\n')]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[R008]');
+  });
+
+  it('stops runaway recursion and honours --max-depth', () => {
+    const file = tempProgram('ফাংচন ফ(ন) { ঘূৰাইদিয়া ফ(ন + ১) }\nফ(০)\n');
+    expect(cli(['run', file]).stderr).toContain("ফাংচন মতাৰ গভীৰতা ৫০০ পাৰ হ'ল");
+    expect(cli(['run', file, '--max-depth', '20']).stderr).toContain('গভীৰতা ২০ পাৰ');
+  });
+
+  it('turns a memory-hungry program into an error, not a crash', () => {
+    const file = tempProgram('ধৰা ল = [১]\nযেতিয়ালৈকে (সঁচা) { ল = ল + ল }\n');
+    const result = cli(['run', file]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[R019]');
+  });
+});
+
+describe('malformed source files', () => {
+  it('reports a stray vowel sign with its code point', () => {
+    const result = cli(['run', tempProgram('ধৰা ক = া\n')]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('[L007]');
+    expect(result.stderr).toContain('U+09BE');
+  });
+
+  it('runs a file that starts with a byte-order mark and uses CRLF', () => {
+    const result = cli(['run', tempProgram('\uFEFFকোৱা("ক")\r\nকোৱা("খ")\r\n')]);
+    expect(result.stdout).toBe('ক\nখ\n');
+    expect(result.status).toBe(0);
+  });
+
+  it('reports an unterminated string', () => {
+    const result = cli(['run', tempProgram('কোৱা("অসম\n')]);
+    expect(result.stderr).toContain('[L002]');
+    expect(result.status).toBe(1);
+  });
+
+  it('handles an empty file', () => {
+    const result = cli(['run', tempProgram('')]);
+    expect(result).toMatchObject({ stdout: '', stderr: '', status: 0 });
+  });
+});
+
 describe('REPL over a pipe', () => {
+  it('reads input with সোধা from the same stdin as the REPL', () => {
+    const input = ['ধৰা নাম = সোধা("নাম? ")', 'দেবাশীষ', 'কোৱা("নমস্কাৰ, " + নাম)', ''].join('\n');
+    const result = cli([], input);
+    expect(result.stdout).toContain('নাম? ');
+    expect(result.stdout).toContain('নমস্কাৰ, দেবাশীষ');
+  });
+
+  it('writes errors to stderr and exits 0 at end of input', () => {
+    const result = cli([], 'কোৱা(১ / ০)\n');
+    expect(result.stderr).toContain('[R004]');
+    expect(result.stdout).toContain('বিদায়!');
+    expect(result.status).toBe(0);
+  });
+
   it('evaluates lines, keeps state and handles multi-line input', () => {
     const input = ['ধৰা ক = ২', 'ক * ২১', 'যদি (ক > ১) {', '  কোৱা("ডাঙৰ")', '}', '.exit', ''].join(
       '\n',

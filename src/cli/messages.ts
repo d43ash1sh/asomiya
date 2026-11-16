@@ -25,8 +25,8 @@ export const CLI_MESSAGES: Readonly<Record<MessageLanguage, CliMessages>> = {
       [
         'যিকোনো বাক্য লিখি Enter টিপক। { খোলা থাকিলে পৰৱৰ্তী শাৰীৰ বাবে অপেক্ষা কৰা হয়।',
         '  .সহায়  (.help)   এই সহায়',
-        '  .প্ৰস্থান (.exit)   ওলাই যাওক',
-        'Ctrl+C আধৰুৱা ইনপুট বাতিল কৰে।',
+        '  .বাতিল  (.cancel)  আধৰুৱা বাক্য বাতিল কৰক',
+        '  .প্ৰস্থান (.exit)   ওলাই যাওক (Ctrl+D বা Ctrl+Cও চলে)',
       ].join('\n'),
     replBye: () => 'বিদায়!',
   },
@@ -42,8 +42,8 @@ export const CLI_MESSAGES: Readonly<Record<MessageLanguage, CliMessages>> = {
       [
         'Type any statement and press Enter. An open { waits for more lines.',
         '  .help  (.সহায়)    show this help',
-        '  .exit  (.প্ৰস্থান)  quit',
-        'Ctrl+C discards unfinished input.',
+        '  .cancel (.বাতিল)   discard an unfinished multi-line statement',
+        '  .exit  (.প্ৰস্থান)  quit (Ctrl+D or Ctrl+C also work)',
       ].join('\n'),
     replBye: () => 'Bye!',
   },

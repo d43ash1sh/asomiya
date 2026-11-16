@@ -6,7 +6,8 @@ export default defineConfig({
   target: 'node20',
   platform: 'node',
   dts: { entry: { index: 'src/index.ts' } },
-  sourcemap: true,
+  // No source maps in the package: they would ship every source file a second time (REA release audit).
+  sourcemap: false,
   clean: true,
   splitting: true,
 });

@@ -1,10 +1,9 @@
-import { createInterface } from 'node:readline';
 import { AsomiyaError } from '../errors/asomiya-error';
 import { formatDiagnostic } from '../errors/format';
 import { parse } from '../parser/parser';
 import { Interpreter } from '../runtime/interpreter';
-import type { ExecutionSettings } from './run-file';
 import { CLI_MESSAGES } from './messages';
+import { EXIT_OK, type CliIO, type ExecutionSettings } from './run-file';
 
 export const PROMPT = 'অসমীয়া> ';
 export const CONTINUATION_PROMPT = '   ...> ';
@@ -12,28 +11,34 @@ export const CONTINUATION_PROMPT = '   ...> ';
 export type ReplResult =
   | { readonly kind: 'continue' }
   | { readonly kind: 'exit' }
-  | { readonly kind: 'done'; readonly output: string; readonly error: string | null };
+  | {
+      readonly kind: 'done';
+      /** The echoed value of a bare expression (text quoted), or help text. */
+      readonly echo: string | null;
+      /** A formatted diagnostic, if the input failed. */
+      readonly error: string | null;
+    };
 
 const EXIT_COMMANDS = new Set(['.exit', '.প্ৰস্থান']);
 const HELP_COMMANDS = new Set(['.help', '.সহায়']);
+const CANCEL_COMMANDS = new Set(['.cancel', '.বাতিল']);
 
 /**
  * The REPL's logic, independent of any terminal: feed it lines, get back what to show.
+ * Program output (কোৱা, and the prompt of সোধা) goes straight to `io.stdout` while the
+ * statement runs, so it appears before `সোধা` waits for input.
  * Variables persist between inputs; top-level re-declaration is allowed.
  */
 export class ReplSession {
   private readonly interpreter: Interpreter;
   private readonly settings: ExecutionSettings;
   private pending = '';
-  private output = '';
 
-  constructor(settings: ExecutionSettings) {
+  constructor(settings: ExecutionSettings, io: Pick<CliIO, 'stdout' | 'readLine'>) {
     this.settings = settings;
     this.interpreter = new Interpreter({
-      write: (text) => {
-        this.output += text;
-      },
-      readLine: null,
+      write: io.stdout,
+      readLine: io.readLine,
       digits: settings.digits,
       maxSteps: settings.maxSteps,
       maxCallDepth: settings.maxCallDepth,
@@ -45,34 +50,29 @@ export class ReplSession {
     return this.pending !== '';
   }
 
-  /** Discards a partially-entered statement. */
-  cancel(): void {
-    this.pending = '';
-  }
-
   feed(line: string): ReplResult {
     const trimmed = line.trim().normalize('NFC');
+    if (CANCEL_COMMANDS.has(trimmed)) {
+      this.pending = ''; // discard an unfinished multi-line statement
+      return { kind: 'done', echo: null, error: null };
+    }
     if (!this.isContinuing) {
       if (EXIT_COMMANDS.has(trimmed)) return { kind: 'exit' };
       if (HELP_COMMANDS.has(trimmed)) {
-        return {
-          kind: 'done',
-          output: CLI_MESSAGES[this.settings.lang].replHelp() + '\n',
-          error: null,
-        };
+        return { kind: 'done', echo: CLI_MESSAGES[this.settings.lang].replHelp(), error: null };
       }
     }
 
     const source = this.pending + line + '\n';
-    this.output = '';
     try {
-      const result = this.interpreter.run(parse(source));
+      const program = parse(source);
       this.pending = '';
-      let output = this.output;
-      if (result !== undefined && result.kind !== 'null') {
-        output += this.interpreter.repr(result) + '\n';
-      }
-      return { kind: 'done', output, error: null };
+      const result = this.interpreter.run(program);
+      const echo =
+        result === undefined || result.kind === 'null'
+          ? null
+          : this.interpreter.describe(result, program.span);
+      return { kind: 'done', echo, error: null };
     } catch (error) {
       if (!(error instanceof AsomiyaError)) throw error;
       if (error.diagnostic.incomplete) {
@@ -85,52 +85,43 @@ export class ReplSession {
         source,
         fileName: '<repl>',
       });
-      return { kind: 'done', output: this.output, error: message + '\n' };
+      return { kind: 'done', echo: null, error: message };
     }
   }
 }
 
-export function startRepl(settings: ExecutionSettings): Promise<void> {
+/**
+ * Runs the interactive prompt until end of input or `.প্ৰস্থান`.
+ *
+ * Input is read with a plain blocking line read, not Node's `readline` line editor. `readline`
+ * redraws the line on screen using its own column arithmetic, which does not match how
+ * terminals draw Assamese (spacing vowel signs such as া and ী), so its redraws could erase the
+ * prompt and earlier output. A plain read leaves echo and editing to the terminal, which renders
+ * Assamese correctly. It also lets `সোধা` share standard input with the REPL.
+ *
+ * Ctrl+D (end of input) quits. Ctrl+C interrupts and quits, including a running program.
+ * `.বাতিল` discards an unfinished multi-line statement.
+ */
+export function runRepl(settings: ExecutionSettings, io: CliIO): number {
   const t = CLI_MESSAGES[settings.lang];
-  const session = new ReplSession(settings);
-  const rl = createInterface({ input: process.stdin, output: process.stdout, prompt: PROMPT });
+  const session = new ReplSession(settings, io);
+  io.stdout(t.replBanner() + '\n');
 
-  process.stdout.write(t.replBanner() + '\n');
-  rl.prompt();
-
-  rl.on('line', (line) => {
+  for (;;) {
+    io.stdout(session.isContinuing ? CONTINUATION_PROMPT : PROMPT);
+    const line = io.readLine?.() ?? null;
+    if (line === null) {
+      io.stdout('\n' + t.replBye() + '\n');
+      return EXIT_OK;
+    }
     const result = session.feed(line);
-    switch (result.kind) {
-      case 'exit':
-        rl.close();
-        return;
-      case 'continue':
-        rl.setPrompt(CONTINUATION_PROMPT);
-        break;
-      case 'done':
-        process.stdout.write(result.output);
-        if (result.error !== null) process.stderr.write(result.error);
-        rl.setPrompt(PROMPT);
-        break;
+    if (result.kind === 'exit') {
+      io.stdout(t.replBye() + '\n');
+      return EXIT_OK;
     }
-    rl.prompt();
-  });
-
-  rl.on('SIGINT', () => {
-    if (session.isContinuing) {
-      session.cancel();
-      process.stdout.write('\n');
-      rl.setPrompt(PROMPT);
-      rl.prompt();
-    } else {
-      rl.close();
+    if (result.kind === 'done') {
+      if (result.echo !== null) io.stdout(result.echo + '\n');
+      if (result.error !== null) io.stderr(result.error + '\n');
     }
-  });
-
-  return new Promise((resolve) => {
-    rl.on('close', () => {
-      process.stdout.write(t.replBye() + '\n');
-      resolve();
-    });
-  });
+  }
 }

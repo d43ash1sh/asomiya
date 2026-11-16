@@ -40,7 +40,7 @@ It is a **toy**: small, readable, and well tested, not fast or feature-complete.
 Requires Node.js 20 or newer.
 
 ```sh
-npm install -g asomiya        # once published
+npm install -g asomiya
 # or, from a clone of this repository:
 npm install
 npm run build

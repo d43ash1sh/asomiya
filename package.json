@@ -12,6 +12,14 @@
   ],
   "license": "MIT",
   "author": "Debashish Bordoloi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d43ash1sh/asomiya.git"
+  },
+  "homepage": "https://github.com/d43ash1sh/asomiya#readme",
+  "bugs": {
+    "url": "https://github.com/d43ash1sh/asomiya/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,7 +30,7 @@
     }
   },
   "bin": {
-    "asomiya": "./dist/cli.js"
+    "asomiya": "dist/cli.js"
   },
   "files": [
     "dist",

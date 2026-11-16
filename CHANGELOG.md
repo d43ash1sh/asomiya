@@ -4,11 +4,31 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.1.0] — 2026-11-17
 
-Stabilisation release from the repository audit (see `docs/FINAL_AUDIT_REPORT.md`). No syntax changes.
+First published release. It includes the initial implementation and the fixes from the repository
+audit (see `docs/FINAL_AUDIT_REPORT.md`).
 
-### Fixed
+### Language
+
+- Keywords: `ধৰা`, `কোৱা`, `যদি`, `নহ'লে` (also `নহলে`, `নহ’লে`), `যেতিয়ালৈকে`, `ৰখা`, `ফাংচন`,
+  `ঘূৰাইদিয়া`, `সঁচা`, `মিছা`, `খালী`, `আৰু`, `বা`.
+- Types: number, text, boolean, null, list, function (first-class, closures).
+- Operators: `+ - * / %`, `== != < <= > >=`, `&& || !` with short-circuiting; precedence as in
+  `docs/GRAMMAR.md`.
+- Assamese (`০-৯`) and ASCII digits; numbers print in Assamese digits by default.
+- Unicode identifiers with NFC normalisation; grapheme-aware text length and indexing.
+- Statements end at a newline, `;` or `।`; comments `//` and `/* */`.
+- Built-ins: `দৈৰ্ঘ্য`, `প্ৰকাৰ`, `সংখ্যা`, `পাঠ`, `পূৰ্ণাংক`, `সংযোজন`, `সোধা`.
+- Execution step budget (R008), call-depth limit (R009), parser nesting limit (P010).
+
+### Tooling
+
+- `asomiya run <file>` and an interactive REPL, with Assamese/English diagnostics.
+- File extension `.asom`.
+- Library API: `runSource`, `Interpreter`, `parse`, `tokenize`, `formatDiagnostic`.
+
+### Fixed during the pre-release audit
 
 - **REPL:** replaced Node's `readline` line editor, whose redraws garbled the screen with Assamese
   input, with plain synchronous line reads. Output appears immediately and the prompt is never
@@ -37,26 +57,3 @@ Stabilisation release from the repository audit (see `docs/FINAL_AUDIT_REPORT.md
 - The npm package no longer ships source maps.
 - vitest 3.2.7 → 4.1.12 (fixes critical advisories in vitest/tinypool; dev-only).
 - ESLint config uses ESLint core's `defineConfig()` instead of the deprecated `tseslint.config()`.
-
-## [0.1.0] — 2026-11-17
-
-First release.
-
-### Language
-
-- Keywords: `ধৰা`, `কোৱা`, `যদি`, `নহ'লে` (also `নহলে`, `নহ’লে`), `যেতিয়ালৈকে`, `ৰখা`, `ফাংচন`,
-  `ঘূৰাইদিয়া`, `সঁচা`, `মিছা`, `খালী`, `আৰু`, `বা`.
-- Types: number, text, boolean, null, list, function (first-class, closures).
-- Operators: `+ - * / %`, `== != < <= > >=`, `&& || !` with short-circuiting; precedence as in
-  `docs/GRAMMAR.md`.
-- Assamese (`০-৯`) and ASCII digits; numbers print in Assamese digits by default.
-- Unicode identifiers with NFC normalisation; grapheme-aware text length and indexing.
-- Statements end at a newline, `;` or `।`; comments `//` and `/* */`.
-- Built-ins: `দৈৰ্ঘ্য`, `প্ৰকাৰ`, `সংখ্যা`, `পাঠ`, `পূৰ্ণাংক`, `সংযোজন`, `সোধা`.
-- Execution step budget (R008), call-depth limit (R009), parser nesting limit (P010).
-
-### Tooling
-
-- `asomiya run <file>` and an interactive REPL, with Assamese/English diagnostics.
-- File extension `.asom`.
-- Library API: `runSource`, `Interpreter`, `parse`, `tokenize`, `formatDiagnostic`.

@@ -45,7 +45,12 @@
 Node.js ২০ বা তাতকৈ নতুন সংস্কৰণ লাগিব।
 
 ```sh
-# এই ৰিপজিটৰীৰ পৰা:
+npm install -g asomiya
+```
+
+বা এই ৰিপজিটৰীৰ পৰা:
+
+```sh
 npm install
 npm run build
 npm link        # তাৰ পিছত `asomiya` কমাণ্ড ব্যৱহাৰ কৰিব পাৰিব

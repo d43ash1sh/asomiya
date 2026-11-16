@@ -28,6 +28,7 @@ jobs:
       - run: npm run format:check
       - run: npm test
       - run: npm run build
+      - run: npm run playground:build
       - name: Smoke-test the packed CLI
         shell: bash
         run: |

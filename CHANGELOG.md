@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Browser playground** at https://d43ash1sh.github.io/asomiya/ runs the real interpreter
+  client-side. It has the bundled examples, an input box for `সোধা`, Assamese/English errors, a digit
+  style option, share links and a keyword cheat sheet. It deploys to GitHub Pages from `main`.
+
 ## [0.1.0] — 2026-11-17
 
 First published release. It includes the initial implementation and the fixes from the repository

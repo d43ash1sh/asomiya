@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="as">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>অসমীয়া প্লেগ্ৰাউণ্ড</title>
+    <meta
+      name="description"
+      content="Write and run programs in অসমীয়া, a programming language in Assamese, right in your browser."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <h1>অসমীয়া <span class="brand-sub">প্লেগ্ৰাউণ্ড</span></h1>
+        <p class="tagline">
+          অসমীয়া ভাষাত প্ৰগ্ৰাম লিখক আৰু ব্ৰাউজাৰতে চলাওক · Assamese programming, in your browser
+        </p>
+      </div>
+      <nav class="links" aria-label="Project links">
+        <a href="https://github.com/d43ash1sh/asomiya" rel="noopener">GitHub</a>
+        <a href="https://www.npmjs.com/package/asomiya" rel="noopener">npm</a>
+        <a href="https://github.com/d43ash1sh/asomiya/blob/main/README.as.md" rel="noopener"
+          >নিৰ্দেশিকা</a
+        >
+      </nav>
+    </header>
+
+    <div class="toolbar" role="toolbar" aria-label="Playground controls">
+      <button id="run" class="primary" type="button" title="চলাওক (Ctrl/⌘ + Enter)">
+        ▶ চলাওক <span class="hint">Ctrl+Enter</span>
+      </button>
+      <label class="field">
+        <span>উদাহৰণ</span>
+        <select id="examples"></select>
+      </label>
+      <label class="field">
+        <span>ভুলৰ ভাষা</span>
+        <select id="lang">
+          <option value="as">অসমীয়া</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>অংক</span>
+        <select id="digits">
+          <option value="assamese">০১২৩</option>
+          <option value="ascii">0123</option>
+        </select>
+      </label>
+      <button id="share" type="button" title="Copy a link to this program">🔗 শ্বেয়াৰ</button>
+    </div>
+
+    <main class="workspace">
+      <section class="pane editor-pane" aria-labelledby="editor-label">
+        <div class="pane-head">
+          <h2 id="editor-label">প্ৰগ্ৰাম <span class="en">program.asom</span></h2>
+        </div>
+        <textarea
+          id="editor"
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="off"
+          wrap="off"
+          aria-label="Program source"
+        ></textarea>
+      </section>
+
+      <section class="side">
+        <section class="pane" aria-labelledby="output-label">
+          <div class="pane-head">
+            <h2 id="output-label">ফলাফল <span class="en">output</span></h2>
+            <span id="status" class="status" aria-live="polite"></span>
+          </div>
+          <pre id="output" class="output" aria-live="polite"></pre>
+        </section>
+
+        <section class="pane input-pane" aria-labelledby="stdin-label">
+          <div class="pane-head">
+            <h2 id="stdin-label">ইনপুট <span class="en">for সোধা(), one line each</span></h2>
+          </div>
+          <textarea id="stdin" spellcheck="false" rows="3" aria-label="Program input"></textarea>
+        </section>
+
+        <details class="pane cheatsheet">
+          <summary>মূল শব্দ আৰু ফাংচন <span class="en">keywords &amp; built-ins</span></summary>
+          <dl id="keywords" class="keywords"></dl>
+        </details>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <code>npm install -g asomiya</code> · MIT · সকলো প্ৰগ্ৰাম আপোনাৰ ব্ৰাউজাৰতে চলে, কোনো চাৰ্ভাৰলৈ
+      নাযায়।
+    </footer>
+  </body>
+</html>

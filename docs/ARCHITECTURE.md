@@ -105,6 +105,26 @@ render Assamese spacing vowel signs (া, ী …), and its redraws erased the p
 With plain reads the terminal handles echo and editing itself. Because there is a single reader,
 `সোধা` works inside the REPL. The trade-off is that the REPL has no arrow-key history.
 
+## Browser playground
+
+`playground/` is a static site that bundles the same interpreter for the browser. Nothing in
+`src/` outside `src/cli/` uses Node APIs, so no special build of the language is needed.
+
+| Path                         | Responsibility                                                   |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `playground/src/runner.ts`   | Runs a program; `সোধা` reads the input box line by line. No DOM. |
+| `playground/src/share.ts`    | `#code=` share links (base64url UTF-8). No DOM.                  |
+| `playground/src/examples.ts` | `examples/*.asom`, bundled as text.                              |
+| `playground/src/main.ts`     | DOM wiring: editor, toolbar, output, cheat sheet.                |
+| `playground/public/`         | `index.html` and `style.css`, copied as-is.                      |
+
+- **Build:** `npm run playground:build` writes `site/` (`tsup.playground.config.ts`, IIFE bundle).
+- **Deploy:** `.github/workflows/pages.yml` publishes `site/` to GitHub Pages on every push to `main`.
+- **Execution:** programs run on the page's main thread. The step budget stops a runaway program
+  in about a second.
+- **Input:** `সোধা` reads from the input box rather than prompting, because a synchronous read is not
+  possible in a worker without cross-origin isolation, which GitHub Pages cannot enable.
+
 ## Embedding
 
 ```ts

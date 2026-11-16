@@ -22,5 +22,13 @@
     "resolveJsonModule": true,
     "noEmit": true
   },
-  "include": ["src", "tests", "tsup.config.ts", "vitest.config.ts", "eslint.config.js"]
+  "include": [
+    "src",
+    "tests",
+    "playground/src/asom.d.ts",
+    "tsup.config.ts",
+    "tsup.playground.config.ts",
+    "vitest.config.ts",
+    "eslint.config.js"
+  ]
 }

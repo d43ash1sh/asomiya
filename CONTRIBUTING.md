@@ -37,6 +37,12 @@ Node.js 20+ is required.
    agree.
 3. Update examples and docs that use the old word.
 
+## Playground
+
+`npm run playground:serve` builds `site/` and serves it at <http://localhost:8080> (needs Python 3).
+Keep logic out of `playground/src/main.ts`: put it in a DOM-free module and test it in
+`tests/playground/`.
+
 ## Error messages
 
 Every diagnostic code needs an Assamese and an English message in `src/errors/messages.ts` (the

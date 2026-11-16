@@ -4,6 +4,8 @@
 all in Assamese. A real lexer, parser and interpreter, written in TypeScript, run the programs.
 
 > অসমীয়াত পঢ়ক → [README.as.md](README.as.md)
+>
+> **Try it in your browser → [https://d43ash1sh.github.io/asomiya/](https://d43ash1sh.github.io/asomiya/)**, no installation needed.
 
 ```
 ধৰা নাম = "দেবাশীষ"
@@ -144,6 +146,15 @@ screen, so input is left to the terminal itself.
 | [`functions.asom`](examples/functions.asom)       | functions, recursion, higher-order, closures |
 | [`lists.asom`](examples/lists.asom)               | lists, grapheme-aware text indexing          |
 | [`greet.asom`](examples/greet.asom)               | reading input with `সোধা`                    |
+
+## Playground
+
+The [online playground](https://d43ash1sh.github.io/asomiya/) runs the real interpreter in your browser, and nothing is sent to a
+server. It has the examples built in, an input box that `সোধা` reads from (one line per call),
+Assamese or English error messages, and share links that carry the program in the URL.
+
+To build and preview it locally: `npm run playground:serve` (needs Python 3), then open
+<http://localhost:8080>.
 
 ## Use as a library
 

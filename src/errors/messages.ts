@@ -67,6 +67,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     as: (p) => `"${p.char}" (${codePoint(p.char)}) চিহ্নটোৰ আগত কোনো আখৰ নাই`,
     en: (p) => `Combining mark "${p.char}" (${codePoint(p.char)}) has no base letter before it`,
   },
+  L008: {
+    as: (p) =>
+      `অদৃশ্য নিয়ন্ত্ৰণ আখৰ ${codePoint(p.char)} পাঠ বা মন্তব্যত ব্যৱহাৰ কৰিব নোৱাৰি (ই ক'ডটো যিদৰে দেখা যায় তাতকৈ বেলেগ দেখুৱাব পাৰে)`,
+    en: (p) =>
+      `Invisible control character ${codePoint(p.char)} is not allowed in text or comments (it can make code look different from what runs)`,
+  },
 
   P001: {
     as: (p) => `ইয়াত "${p.expected}" আশা কৰা হৈছিল, কিন্তু পোৱা গ'ল ${found(p.found, 'as')}`,

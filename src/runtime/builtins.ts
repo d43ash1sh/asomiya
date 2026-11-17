@@ -2,7 +2,7 @@ import { runtimeError } from '../errors/runtime-error';
 import { BUILTIN_NAMES, BUILTIN_ROMAN, type BuiltinKey } from '../language/glossary';
 import { ROMAN_TYPE_NAMES, typeName, type ValueKind } from '../language/types';
 import { assameseDigitsToAscii, graphemes } from '../lexer/unicode';
-import { MAX_LIST_LENGTH } from './limits';
+import { MAX_LIST_LENGTH, MAX_TEXT_LENGTH } from './limits';
 import {
   NULL,
   num,
@@ -102,7 +102,12 @@ const input = builtin(BUILTIN_NAMES.input, 0, 1, (args, ctx) => {
   const prompt = args[0];
   if (prompt !== undefined) ctx.write(ctx.display(prompt));
   const line = ctx.readLine();
-  return line === null ? NULL : str(line);
+  if (line === null) return NULL;
+  // Input is text like any other, so it obeys the same size limit.
+  if (line.length > MAX_TEXT_LENGTH) {
+    throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, ctx.callSpan);
+  }
+  return str(line);
 });
 
 /** All built-ins, keyed by their (already NFC) names. */

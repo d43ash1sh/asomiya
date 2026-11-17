@@ -14,7 +14,7 @@
   "author": "Debashish Bordoloi",
   "contributors": [
     {
-      "name": "Arnab Sharma",
+      "name": "Arnab Sharmah",
       "url": "https://github.com/arnabsmh"
     }
   ],
@@ -50,7 +50,8 @@
     "README.md",
     "README.as.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "SECURITY.md"
   ],
   "engines": {
     "node": ">=20"

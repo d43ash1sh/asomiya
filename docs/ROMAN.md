@@ -25,13 +25,18 @@ _Oxom_ for অসম). So no single spelling can be "100% correct".
 
 1. **Several spellings are accepted for each word.** The first one in each list below is the
    preferred spelling, used in suggestions and in the docs. The others work the same way.
-2. **Keywords ignore case.** `Jodi`, `JODI` and `jodi` all mean যদি.
+2. **Roman spellings are lower-case only.** `jodi` means যদি, but `Jodi` or `Misha` are ordinary
+   names you can use for variables. Built-in names work the same way.
 3. **Near-misses get a suggestion.** If you type a word that is close to a keyword or built-in but
    isn't accepted, the error tells you what you probably meant:
 
    ```
    চলোৱাৰ সময়ৰ ভুল [R001]: "kowaa" নামৰ কোনো চলক ঘোষণা কৰা হোৱা নাই — আপুনি kowa (কোৱা) লিখিব বিচাৰিছিল নেকি?
+   বাক্য-গঠনৰ ভুল [P007]: … পোৱা গ'ল "{" — আপুনি jodi (যদি) লিখিব বিচাৰিছিল নেকি?
    ```
+
+   This works for a misspelt function call (`kowaa(…)`) and for a misspelt keyword at the start of
+   a statement (`jodii (…) {`, `dhoraa x = 1`, `fangchun f() {`, `} nohol {`).
 
 The spellings live in one place, [`src/language/glossary.ts`](../src/language/glossary.ts) (the
 `roman` field of each keyword, and `BUILTIN_ROMAN`). To accept another spelling, add it there.
@@ -75,8 +80,19 @@ Built-in names are case-sensitive, like other names.
 
 - Numbers print with 0-9 when the program's keywords are in English letters (`kowa(10 + 20)` prints
   `30`). Programs in Assamese script keep ০-৯. `--ascii-digits` / `--assamese-digits` force a style.
-- `সঁচা`, `মিছা`, `খালী` and type names still print in Assamese.
+- Values print in Roman too: `kowa(xosa, misa, khali)` prints `xosa misa khali`, and `prokar()`
+  returns `xonkhya`, `path`, `xosa-misa`, `khali`, `talika` or `fangchon`. Programs in Assamese script
+  keep `সঁচা`, `মিছা`, `খালী` and `সংখ্যা` ….
+- A program counts as "written in Roman" if **any** keyword in it is romanised. In the REPL, the
+  switch lasts for the rest of the session.
 - Error messages are in Assamese (or English with `--lang en`).
+
+## Words you can't use as names
+
+Because the Roman spellings are keywords, these lower-case words can't be variable or function
+names any more: every spelling in the keyword table above (for example `ba`, `aru`, `misa`, `khali`,
+`jodi`). A program written for 0.1.x that used one of them as a name needs a new name. Capitalised
+forms (`Ba`, `Misa`) are still fine.
 
 ## Status
 

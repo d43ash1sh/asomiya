@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { MESSAGES } from '../src/errors/messages';
 import { LANGUAGE } from '../src/language/config';
-import { BUILTIN_NAMES, KEYWORD_GLOSSARY } from '../src/language/glossary';
+import { BUILTIN_NAMES, BUILTIN_ROMAN, KEYWORD_GLOSSARY } from '../src/language/glossary';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const read = (path: string) => readFileSync(join(ROOT, path), 'utf8');
@@ -20,6 +20,15 @@ describe('documentation stays in sync with the code', () => {
     for (const name of Object.values(BUILTIN_NAMES)) {
       expect(doc, name).toContain(`\`${name}\``);
     }
+  });
+
+  it('docs/ROMAN.md lists every romanised spelling', () => {
+    const doc = read('docs/ROMAN.md');
+    const spellings = [
+      ...KEYWORD_GLOSSARY.flatMap((entry) => entry.roman),
+      ...Object.values(BUILTIN_ROMAN).flat(),
+    ];
+    for (const spelling of spellings) expect(doc, spelling).toContain(`\`${spelling}\``);
   });
 
   it('docs/ERRORS.md documents every diagnostic code', () => {

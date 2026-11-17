@@ -118,3 +118,16 @@ escape      = "\" , ( "n" | "t" | "r" | '"' | "\" ) ;
    NFC** and `’` is replaced with `'`. So `য়` written as one code point (U+09DF) or as two (U+09AF
    U+09BC) is the same name.
 3. Source positions (line and column) always refer to the original, un-normalised text.
+4. Keywords also have romanised spellings (`jodi` = `যদি`, see [ROMAN.md](ROMAN.md)). They are
+   matched exactly and are lower-case only, so `Jodi` is an ordinary identifier.
+5. ZWJ (U+200D) and ZWNJ (U+200C) may appear in an identifier only right after an Assamese
+   character, where they shape conjuncts (`ক্‍ষ`). Elsewhere they are an error (L001), so two names
+   that look the same are the same name.
+
+### Characters not allowed in text or comments
+
+Strings and comments may contain any character except invisible controls: C0 controls other than
+tab, DEL, C1 controls, the bidirectional controls (U+061C, U+200E, U+200F, U+202A–U+202E,
+U+2066–U+2069) and U+2028/U+2029. These can make code display differently from how it runs
+("Trojan Source") or send escape sequences to a terminal, so they are an error (L008). Use the
+escapes `\n`, `\t`, `\r` instead.

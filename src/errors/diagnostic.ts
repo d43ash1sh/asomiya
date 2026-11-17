@@ -19,6 +19,7 @@ export interface DiagnosticParams {
   L005: { readonly text: string };
   L006: { readonly text: string };
   L007: { readonly char: string };
+  L008: { readonly char: string };
   // ── syntax ───────────────────────────────────────────────
   P001: { readonly expected: string; readonly found: Found };
   P002: { readonly found: Found };

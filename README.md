@@ -205,6 +205,7 @@ Assamese speakers. Several keywords are marked _provisional_ in the [glossary](d
 
 - **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh)) — Creator
 - **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh)) — Collaborator & Contributor
+- **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah)) — Collaborator & Contributor
 
 ## Acknowledgements
 

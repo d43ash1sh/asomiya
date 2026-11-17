@@ -64,11 +64,14 @@ let worker: Worker | null = null;
 let runId = 0;
 let timer: ReturnType<typeof setTimeout> | undefined;
 
-/** worker.js sits next to this script; resolving from it works at any base path. */
-const WORKER_URL = new URL(
-  'worker.js',
+/**
+ * worker.js sits next to this script; resolving from it works at any base path. It reuses this
+ * script's ?v= fingerprint so a deploy never pairs a new page with a cached old worker.
+ */
+const SCRIPT_URL = new URL(
   document.currentScript instanceof HTMLScriptElement ? document.currentScript.src : location.href,
 );
+const WORKER_URL = new URL(`worker.js${SCRIPT_URL.search}`, SCRIPT_URL);
 
 function getWorker(): Worker {
   if (worker !== null) return worker;

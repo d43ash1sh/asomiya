@@ -1,4 +1,6 @@
 // Page shell: <head>, top navigation, sidebar, table of contents and footer.
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync } from 'node:fs';
 import { SITE, SOCIAL } from '../site.config.mjs';
 import { UI } from '../content/ui.mjs';
 import { esc, rel } from './html.mjs';
@@ -23,7 +25,26 @@ const CSP = [
 ].join('; ');
 
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Anek+Bangla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap';
+  'https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Anek+Bangla:wght@400;500;600;700&display=swap';
+
+const ROOT = new URL('../', import.meta.url);
+const fingerprints = new Map();
+
+/**
+ * URL of a static asset with a content hash (`assets/site.js?v=1a2b3c4d`), so browsers fetch the
+ * new file after a deploy instead of a stale cached copy.
+ */
+function asset(page, path) {
+  if (!fingerprints.has(path)) {
+    const source = path === 'assets/styles.css' ? 'styles.css' : `dist/${path}`;
+    const file = new URL(source, ROOT);
+    const hash = existsSync(file)
+      ? createHash('sha256').update(readFileSync(file)).digest('hex').slice(0, 10)
+      : 'dev';
+    fingerprints.set(path, hash);
+  }
+  return `${rel(page.url, path)}?v=${fingerprints.get(path)}`;
+}
 
 /** Path of a page in the other language. */
 export function otherLangPath(path, lang) {
@@ -56,7 +77,7 @@ function header(page, lang) {
   <div class="topnav-inner">
     <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="drawer" aria-label="${esc(t.menu)}">${icon('menu')}</button>
     <a class="brand" href="${home}" aria-label="Asomiya — ${esc(t.homeLabel)}">
-      ${logo(30)}
+      ${logo(34)}
       <span class="brand-name">asomiya</span>
       <span class="brand-version">${esc(SITE.version)}</span>
     </a>
@@ -115,7 +136,7 @@ function footer(page, lang, sections) {
   <div class="weave" aria-hidden="true"></div>
   <div class="footer-inner">
     <div class="foot-brand">
-      <a class="brand" href="${rel(page.url, lang === 'as' ? 'as/' : '')}">${logo(30)}<span class="brand-name">asomiya</span></a>
+      <a class="brand" href="${rel(page.url, lang === 'as' ? 'as/' : '')}">${logo(34)}<span class="brand-name">asomiya</span></a>
       <p>${esc(t.footerTagline)}</p>
       <div class="socials">${socials}</div>
     </div>
@@ -205,9 +226,9 @@ export function renderPage({
   } else {
     main = body;
   }
-  const scripts = [`<script src="${rel(page.url, 'assets/site.js')}" defer></script>`];
+  const scripts = [`<script src="${asset(page, 'assets/site.js')}" defer></script>`];
   if (layout === 'playground') {
-    scripts.push(`<script src="${rel(page.url, 'assets/playground.js')}" defer></script>`);
+    scripts.push(`<script src="${asset(page, 'assets/playground.js')}" defer></script>`);
   }
   return `<!doctype html>
 <html lang="${lang}" data-script="${scriptDefault}">
@@ -226,14 +247,13 @@ export function renderPage({
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:url" content="${canonical}" />
     <meta name="twitter:card" content="summary" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#121624" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0d1210" />
     <link rel="icon" href="${rel(page.url, 'favicon.svg')}" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="${FONTS}" />
-    <link rel="stylesheet" href="${rel(page.url, 'assets/styles.css')}" />
-    <script src="${rel(page.url, 'assets/theme.js')}"></script>
+    <link rel="stylesheet" href="${asset(page, 'assets/styles.css')}" />
+    <script src="${asset(page, 'assets/theme.js')}"></script>
     ${scripts.join('\n    ')}
   </head>
   <body class="layout-${layout}">

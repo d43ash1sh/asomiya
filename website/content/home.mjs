@@ -4,8 +4,13 @@ import { icon } from '../lib/icons.mjs';
 
 const S = {
   en: {
-    news: 'New in 0.2: write it in English letters too',
-    tagline: 'Write code in Assamese.',
+    news: 'New: write in English letters',
+    title: 'The programming language<br />that speaks Assamese.',
+    note: 'Free and open source. Runs in your browser.',
+    more: 'Learn more',
+    demoTitle: 'Small language.<br />Real programs.',
+    demoSub:
+      'Variables, conditions, loops and functions, written in Assamese script or in English letters. Every example on this site runs: press Try it.',
     sub: 'Asomiya is a programming language whose keywords, numbers and error messages are in Assamese. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead. Learn to program in the language you think in.',
     start: 'Start learning',
     playground: 'Open the playground',
@@ -75,8 +80,13 @@ const S = {
     meet: 'Meet the team',
   },
   as: {
-    news: '০.২ ত নতুন: ইংৰাজী আখৰতো লিখিব পাৰি',
-    tagline: 'Write code in Assamese.',
+    news: 'নতুন: ইংৰাজী আখৰত লিখক',
+    title: 'অসমীয়া কোৱা<br />এটা প্ৰগ্ৰামিং ভাষা।',
+    note: 'বিনামূলীয়া আৰু মুক্ত উৎস। ব্ৰাউজাৰতে চলে।',
+    more: 'অধিক জানক',
+    demoTitle: 'সৰু ভাষা।<br />সঁচা প্ৰগ্ৰাম।',
+    demoSub:
+      'চলক, চৰ্ত, লুপ আৰু ফাংচন, অসমীয়া লিপি বা ইংৰাজী আখৰত লিখা। এই ছাইটৰ প্ৰতিটো উদাহৰণ চলে: চলাই চাওক টিপক।',
     sub: 'অসমীয়া এটা প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। যি ভাষাত ভাবে, সেই ভাষাতে প্ৰগ্ৰামিং শিকক।',
     start: 'শিকিবলৈ আৰম্ভ কৰক',
     playground: 'প্লেগ্ৰাউণ্ড খোলক',
@@ -183,26 +193,61 @@ jetialoike (k <= 5) {
 
 const ASSAMESE_DIGITS = ['১', '২', '৩'];
 
+/** The Assamese alphabet, used for the animated letter field in the hero. */
+const ALPHABET = [...'অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযৰলৱশষসহ', 'ক্ষ', 'ড়', 'ঢ়', 'য়'];
+const COLS = 16;
+const ROWS = 7;
+
+/**
+ * A grid of Assamese letters that light up in slow diagonal waves (CSS only: each letter gets a
+ * delay class from its diagonal, because inline styles are blocked by the Content Security Policy).
+ * অ আ ক খ, the letters of the logo, glow gold.
+ */
+function letterField() {
+  const cells = [];
+  for (let r = 0; r < ROWS; r += 1) {
+    for (let c = 0; c < COLS; c += 1) {
+      const letter = ALPHABET[(r * 7 + c * 3) % ALPHABET.length];
+      const gold = ['অ', 'আ', 'ক', 'খ'].includes(letter) ? ' g' : '';
+      cells.push(`<span class="d${(r + c) % 12}${gold}">${letter}</span>`);
+    }
+  }
+  return `<div class="letter-field" aria-hidden="true" lang="as">${cells.join('')}</div>`;
+}
+
 function body(lang) {
   const s = S[lang];
   return (h) => `
 <section class="hero">
-  <div class="hero-inner">
+  ${letterField()}
+  <div class="hero-bottom">
     <div class="hero-text">
-      <a class="news" href="${h.link('learn/english-letters/')}">${s.news}</a>
-      <h1 class="hero-title">
-        <span class="hero-as" lang="as">ক’ড লিখক<br />অসমীয়াত।</span>
-        <span class="hero-en" lang="en">${s.tagline}</span>
-      </h1>
+      <h1 class="hero-title">${s.title}</h1>
       <p class="hero-sub">${s.sub}</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="${h.link('learn/')}">${s.start}</a>
-        <a class="btn btn-secondary" href="${h.playground}">${icon('play')}${s.playground}</a>
+    </div>
+    <div class="hero-side">
+      <p class="hero-note">${s.note}</p>
+      <div class="hero-row">
+        <p class="install">
+          <code>npm install -g asomiya</code>
+          <button class="code-btn" type="button" data-copy="npm install -g asomiya" data-copied="${h.t.copied}" aria-label="${h.t.copy}">${icon('copy')}</button>
+        </p>
+        <a class="btn btn-primary" href="${h.link('learn/')}">${s.start}<span aria-hidden="true">›</span></a>
       </div>
-      <p class="install">
-        <code><span class="prompt">$</span> npm install -g asomiya</code>
-        <button class="code-btn" type="button" data-copy="npm install -g asomiya" data-copied="${h.t.copied}" aria-label="${h.t.copy}">${icon('copy')}</button>
-      </p>
+    </div>
+  </div>
+  <a class="scroll-hint" href="#demo">${s.more}</a>
+</section>
+
+<section class="section" id="demo">
+  <div class="split">
+    <div>
+      <h2>${s.demoTitle}</h2>
+      <p class="lead">${s.demoSub}</p>
+      <div class="actions">
+        <a class="btn btn-secondary" href="${h.playground}">${icon('play')}${s.playground}</a>
+        <a class="btn btn-ghost" href="${h.link('learn/english-letters/')}">${s.news}</a>
+      </div>
     </div>
     <figure class="hero-code">
       <div class="window"><span></span><span></span><span></span><em>hello.asom</em></div>

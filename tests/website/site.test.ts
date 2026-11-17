@@ -62,10 +62,10 @@ describe('website links', () => {
     for (const { file, html } of pages) {
       for (const [, attr = ''] of html.matchAll(/(?:href|src)="([^"]*)"/g)) {
         if (/^(https?:|mailto:|#|data:)/.test(attr)) continue;
-        const path = attr.split('#')[0] ?? '';
+        const path = attr.split('#')[0]?.split('?')[0] ?? '';
         if (path === '') continue;
         const base = attr.startsWith('/') ? OUT : dirname(file);
-        let target = join(base, attr.startsWith('/') ? path.slice(1) : path);
+        let target = join(base, path.startsWith('/') ? path.slice(1) : path);
         if (path.endsWith('/') || path === './') target = join(target, 'index.html');
         // Built by tsup into assets/, which this test doesn't run.
         if (target.startsWith(join(OUT, 'assets')) && target.endsWith('.js')) continue;

@@ -423,7 +423,18 @@ ${h.table(
 ${h.example('ধৰা বয়স = ২০\nকোৱা(বয়স >= ১৮ আৰু বয়স < ৬০)\nকোৱা(!(বয়স > ১০))', 'dhora boyox = 20\nkowa(boyox >= 18 aru boyox < 60)\nkowa(!(boyox > 10))')}
 <p><code>আৰু</code> and <code>বা</code> stop early: if the left side already decides the answer, the right side isn’t evaluated.</p>
 ${h.h2('precedence', 'Precedence')}
-<p>From strongest to weakest: <code>!</code> and unary <code>-</code> · <code>* / %</code> · <code>+ -</code> · <code>&lt; &lt;= &gt; &gt;=</code> · <code>== !=</code> · <code>আৰু</code> · <code>বা</code> · <code>=</code>. When in doubt, use brackets.</p>`,
+<p>From strongest to weakest:</p>
+<ol>
+  <li><code>!</code> and unary <code>-</code></li>
+  <li><code>* / %</code></li>
+  <li><code>+ -</code></li>
+  <li><code>&lt; &lt;= &gt; &gt;=</code></li>
+  <li><code>== !=</code></li>
+  <li><code>আৰু</code></li>
+  <li><code>বা</code></li>
+  <li><code>=</code></li>
+</ol>
+<p>When in doubt, use brackets.</p>`,
     as: (h) => `
 ${h.h2('arithmetic', 'গাণিতিক')}
 ${h.table(
@@ -453,7 +464,18 @@ ${h.table(
 ${h.example('ধৰা বয়স = ২০\nকোৱা(বয়স >= ১৮ আৰু বয়স < ৬০)\nকোৱা(!(বয়স > ১০))', 'dhora boyox = 20\nkowa(boyox >= 18 aru boyox < 60)\nkowa(!(boyox > 10))')}
 <p>বাওঁফালৰ অংশই উত্তৰ ঠিক কৰি দিলে <code>আৰু</code> আৰু <code>বা</code>-এ সোঁফালৰ অংশ চলায়েই নাই।</p>
 ${h.h2('precedence', 'অগ্ৰাধিকাৰ')}
-<p>আটাইতকৈ শক্তিশালীৰ পৰা দুৰ্বললৈ: <code>!</code> আৰু একক <code>-</code> · <code>* / %</code> · <code>+ -</code> · <code>&lt; &lt;= &gt; &gt;=</code> · <code>== !=</code> · <code>আৰু</code> · <code>বা</code> · <code>=</code>। সন্দেহ হ’লে বন্ধনী ব্যৱহাৰ কৰক।</p>`,
+<p>আটাইতকৈ শক্তিশালীৰ পৰা দুৰ্বললৈ:</p>
+<ol>
+  <li><code>!</code> আৰু একক <code>-</code></li>
+  <li><code>* / %</code></li>
+  <li><code>+ -</code></li>
+  <li><code>&lt; &lt;= &gt; &gt;=</code></li>
+  <li><code>== !=</code></li>
+  <li><code>আৰু</code></li>
+  <li><code>বা</code></li>
+  <li><code>=</code></li>
+</ol>
+<p>সন্দেহ হ’লে বন্ধনী ব্যৱহাৰ কৰক।</p>`,
   },
 };
 

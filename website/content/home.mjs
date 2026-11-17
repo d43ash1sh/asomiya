@@ -4,54 +4,42 @@ import { icon } from '../lib/icons.mjs';
 
 const S = {
   en: {
-    pill: 'New in 0.2: write it in English letters',
-    title: 'Code in <span class="grad">অসমীয়া</span>.',
-    sub: 'Asomiya is a programming language where the keywords, numbers and error messages are in Assamese. Prefer English letters? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead. Learn to code in the language you think in.',
-    start: 'Get started',
+    news: 'New in 0.2: write it in English letters too',
+    tagline: 'Write code in Assamese.',
+    sub: 'Asomiya is a programming language whose keywords, numbers and error messages are in Assamese. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead. Learn to program in the language you think in.',
+    start: 'Start learning',
     playground: 'Open the playground',
-    stats: [
-      ['2', 'scripts: অসমীয়া and English letters'],
-      ['14', 'keywords, all in Assamese'],
-      ['330+', 'automated tests'],
-      ['MIT', 'free and open source'],
-    ],
-    featuresTitle: 'Everything you need to start programming',
-    featuresSub: 'A small, friendly language with a real interpreter behind it.',
+    featuresTitle: 'Small enough to learn in an afternoon',
+    featuresSub: 'A friendly language with a real interpreter behind it.',
     features: [
       [
-        'অ',
         'Assamese everywhere',
-        'Keywords, built-in functions, error messages and even numbers: <code>১০ + ২০</code> prints <code>৩০</code>.',
+        'Keywords, built-in functions and error messages are Assamese words. Even numbers: <code>১০ + ২০</code> prints <code>৩০</code>.',
       ],
       [
-        'Aa',
         'Or type in English letters',
-        '<code>dhora</code>, <code>kowa</code>, <code>jodi</code> … Several common spellings work, because everyone types Assamese differently.',
+        '<code>dhora</code>, <code>kowa</code>, <code>jodi</code>. Several common spellings work for each word, because everyone types Assamese differently.',
       ],
       [
-        '?!',
         'Errors that teach',
-        'Every error has a code, a clear message in Assamese or English, and points at the exact spot. Typos get a “did you mean” hint.',
+        'Every error has a code, says what went wrong in Assamese or English, and points at the exact spot. Typos get a “did you mean” hint.',
       ],
       [
-        '{ }',
         'A real language',
-        'Variables, conditions, loops, functions, recursion, closures, lists and input. Not a translator: a real lexer, parser and interpreter.',
+        'Variables, conditions, loops, functions, recursion, closures, lists and input, run by a real lexer, parser and interpreter.',
       ],
       [
-        '▶',
-        'Runs everywhere',
-        'In your browser with the playground, in the terminal with the CLI and REPL, or inside your JavaScript app as a library.',
+        'Runs anywhere',
+        'In the browser playground, in your terminal with the CLI and REPL, or inside a JavaScript app as a library.',
       ],
       [
-        '🛡',
-        'Safe by design',
-        'Programs can’t touch your files or the network. Infinite loops and deep recursion are stopped, so anyone’s code is safe to run.',
+        'Safe to run',
+        'Programs can’t touch your files or the network, and endless loops are stopped. Anyone’s code is safe to try.',
       ],
     ],
     twoTitle: 'One language, two ways to write it',
     twoSub:
-      'Both tabs below are the same program. Pick the one you like. The whole site remembers your choice.',
+      'Both tabs hold the same program. Pick the one you like and every example on the site follows your choice.',
     twoPoints: [
       [
         'Assamese script',
@@ -59,75 +47,69 @@ const S = {
       ],
       [
         'English letters',
-        'No Assamese keyboard? Write <code>dhora</code>, <code>kowa</code>, <code>jodi</code>. Numbers print as <code>123</code>.',
+        'Write <code>dhora</code>, <code>kowa</code>, <code>jodi</code> on any keyboard. Numbers print as <code>123</code>.',
       ],
-      ['Mix them', 'Both scripts work in the same program, so you can switch whenever you like.'],
+      [
+        'Both at once',
+        'The two scripts work together in one program, so you can switch whenever you like.',
+      ],
     ],
     errorsTitle: 'Mistakes are part of learning',
     errorsSub:
-      'When something goes wrong, Asomiya tells you what happened, where it happened, and often how to fix it, in plain Assamese or English.',
-    errorsLink: 'Read about errors',
+      'When something goes wrong, Asomiya tells you what happened, where, and often how to fix it.',
+    errorsLink: 'How to read errors',
     stepsTitle: 'Start in three steps',
     steps: [
-      ['Install', 'Install Node.js 20 or newer, then the <code>asomiya</code> command.'],
-      ['Write', 'Save your program in a file that ends with <code>.asom</code>.'],
-      ['Run', 'Run it with <code>asomiya run</code>, or skip all of this and use the playground.'],
+      ['Install', 'Install Node.js 20 or newer, then run <code>npm install -g asomiya</code>.'],
+      ['Write', 'Save your program in a file ending in <code>.asom</code>.'],
+      [
+        'Run',
+        'Run it with <code>asomiya run hello.asom</code>. Or skip all three and use the playground.',
+      ],
     ],
-    communityTitle: 'Built in Assam, open to everyone',
-    communitySub:
-      'Asomiya is made by a small team and shaped by everyone who speaks Assamese. Suggest a better word, report a bug, or add a feature.',
+    install: 'Installation guide',
+    teamTitle: 'Made in Assam',
+    teamSub:
+      'Built by a small team and shaped by everyone who speaks Assamese. Suggest a better word, report a bug, or add a feature.',
     star: 'Star on GitHub',
     meet: 'Meet the team',
   },
   as: {
-    pill: '০.২ ত নতুন: ইংৰাজী আখৰত লিখক',
-    title: '<span class="grad">অসমীয়া</span> ভাষাত ক’ড লিখক।',
-    sub: 'অসমীয়া এটা প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। ইংৰাজী আখৰত লিখিবলৈ সহজ পায় নেকি? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। যি ভাষাত ভাবে, সেই ভাষাতে প্ৰগ্ৰামিং শিকক।',
-    start: 'আৰম্ভ কৰক',
+    news: '০.২ ত নতুন: ইংৰাজী আখৰতো লিখিব পাৰি',
+    tagline: 'Write code in Assamese.',
+    sub: 'অসমীয়া এটা প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। যি ভাষাত ভাবে, সেই ভাষাতে প্ৰগ্ৰামিং শিকক।',
+    start: 'শিকিবলৈ আৰম্ভ কৰক',
     playground: 'প্লেগ্ৰাউণ্ড খোলক',
-    stats: [
-      ['২', 'লিপি: অসমীয়া আৰু ইংৰাজী আখৰ'],
-      ['১৪', 'মূল শব্দ, সকলো অসমীয়াত'],
-      ['৩৩০+', 'স্বয়ংক্ৰিয় পৰীক্ষা'],
-      ['MIT', 'বিনামূলীয়া আৰু মুক্ত উৎস'],
-    ],
-    featuresTitle: 'প্ৰগ্ৰামিং আৰম্ভ কৰিবলৈ যি লাগে সকলো',
-    featuresSub: 'সৰু, সহজ এটা ভাষা, যাৰ পিছত আছে এটা সঁচা ইণ্টাৰপ্ৰেটাৰ।',
+    featuresTitle: 'এটা আবেলিতে শিকিব পৰা সৰু ভাষা',
+    featuresSub: 'সহজ ভাষা, যাৰ পিছত আছে এটা সঁচা ইণ্টাৰপ্ৰেটাৰ।',
     features: [
       [
-        'অ',
         'সকলোতে অসমীয়া',
-        'মূল শব্দ, অন্তৰ্নিৰ্মিত ফাংচন, ভুলৰ বাৰ্তা, আনকি সংখ্যাও: <code>১০ + ২০</code> য়ে <code>৩০</code> দেখুৱায়।',
+        'মূল শব্দ, অন্তৰ্নিৰ্মিত ফাংচন আৰু ভুলৰ বাৰ্তা অসমীয়া শব্দ। সংখ্যাও: <code>১০ + ২০</code>-য়ে <code>৩০</code> দেখুৱায়।',
       ],
       [
-        'Aa',
         'ইংৰাজী আখৰতো লিখিব পাৰি',
-        '<code>dhora</code>, <code>kowa</code>, <code>jodi</code> … প্ৰতিটো শব্দৰ কেইবাটাও প্ৰচলিত বানান চলে, কাৰণ সকলোৱে অসমীয়া বেলেগ বেলেগকৈ লিখে।',
+        '<code>dhora</code>, <code>kowa</code>, <code>jodi</code>। প্ৰতিটো শব্দৰ কেইবাটাও প্ৰচলিত বানান চলে, কাৰণ সকলোৱে অসমীয়া বেলেগ বেলেগকৈ লিখে।',
       ],
       [
-        '?!',
         'ভুলৰ পৰা শিকিব পাৰি',
-        'প্ৰতিটো ভুলৰ এটা ক’ড আছে, অসমীয়া বা ইংৰাজীত স্পষ্ট বাৰ্তা আছে, আৰু ঠিক ক’ত ভুল হৈছে দেখুৱায়। বানান ভুল হ’লে শুদ্ধ শব্দটোও কয়।',
+        'প্ৰতিটো ভুলৰ এটা ক’ড আছে, অসমীয়া বা ইংৰাজীত কি ভুল হ’ল কয়, আৰু ঠিক ক’ত দেখুৱায়। বানান ভুল হ’লে শুদ্ধ শব্দটোও কয়।',
       ],
       [
-        '{ }',
         'এটা সঁচা ভাষা',
-        'চলক, চৰ্ত, লুপ, ফাংচন, ৰিকাৰ্চন, ক্ল’জাৰ, তালিকা আৰু ইনপুট। অনুবাদক নহয়: সঁচা লেক্সাৰ, পাৰ্চাৰ আৰু ইণ্টাৰপ্ৰেটাৰ।',
+        'চলক, চৰ্ত, লুপ, ফাংচন, ৰিকাৰ্চন, ক্ল’জাৰ, তালিকা আৰু ইনপুট, যিবোৰ চলায় সঁচা লেক্সাৰ, পাৰ্চাৰ আৰু ইণ্টাৰপ্ৰেটাৰে।',
       ],
       [
-        '▶',
         'সকলোতে চলে',
-        'প্লেগ্ৰাউণ্ডৰ জৰিয়তে ব্ৰাউজাৰত, CLI আৰু REPL ৰ জৰিয়তে টাৰ্মিনেলত, বা লাইব্ৰেৰী হিচাপে আপোনাৰ JavaScript এপত।',
+        'ব্ৰাউজাৰৰ প্লেগ্ৰাউণ্ডত, CLI আৰু REPL ৰে টাৰ্মিনেলত, বা লাইব্ৰেৰী হিচাপে JavaScript এপৰ ভিতৰত।',
       ],
       [
-        '🛡',
-        'সুৰক্ষিত',
-        'প্ৰগ্ৰামে আপোনাৰ ফাইল বা নেটৱৰ্ক চুব নোৱাৰে। অন্তহীন লুপ আৰু গভীৰ ৰিকাৰ্চন বন্ধ কৰা হয়, সেয়েহে যিকোনো ক’ড চলোৱাটো নিৰাপদ।',
+        'চলাবলৈ নিৰাপদ',
+        'প্ৰগ্ৰামে আপোনাৰ ফাইল বা নেটৱৰ্ক চুব নোৱাৰে, আৰু অন্তহীন লুপ বন্ধ কৰা হয়। যিকোনো ক’ড নিৰাপদে চলাই চাব পাৰি।',
       ],
     ],
     twoTitle: 'এটা ভাষা, লিখাৰ দুটা উপায়',
-    twoSub:
-      'তলৰ দুয়োটা টেবত একেটা প্ৰগ্ৰাম। যিটো ভাল লাগে বাছি লওক। গোটেই ছাইটটোৱে আপোনাৰ বাছনি মনত ৰাখিব।',
+    twoSub: 'দুয়োটা টেবত একেটা প্ৰগ্ৰাম। যিটো ভাল লাগে বাছি লওক, ছাইটৰ প্ৰতিটো উদাহৰণে সেইটোকে মানিব।',
     twoPoints: [
       [
         'অসমীয়া লিপি',
@@ -135,23 +117,29 @@ const S = {
       ],
       [
         'ইংৰাজী আখৰ',
-        'অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। সংখ্যা <code>123</code> হিচাপে দেখা যায়।',
+        'যিকোনো কীব’ৰ্ডত <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। সংখ্যা <code>123</code> হিচাপে দেখা যায়।',
       ],
-      ['মিহলাই লিখক', 'একেটা প্ৰগ্ৰামতে দুয়োটা লিপি চলে, যেতিয়া ইচ্ছা সলনি কৰিব পাৰে।'],
+      ['একেলগে দুয়োটা', 'একেটা প্ৰগ্ৰামতে দুয়োটা লিপি চলে, যেতিয়া ইচ্ছা সলনি কৰিব পাৰে।'],
     ],
     errorsTitle: 'ভুল কৰাটো শিকাৰে অংশ',
-    errorsSub:
-      'কিবা ভুল হ’লে অসমীয়াই কয় কি হ’ল, ক’ত হ’ল, আৰু প্ৰায়েই কেনেকৈ শুধৰাব, সহজ অসমীয়া বা ইংৰাজীত।',
-    errorsLink: 'ভুলৰ বিষয়ে পঢ়ক',
+    errorsSub: 'কিবা ভুল হ’লে অসমীয়াই কয় কি হ’ল, ক’ত হ’ল, আৰু প্ৰায়েই কেনেকৈ শুধৰাব।',
+    errorsLink: 'ভুলৰ বাৰ্তা কেনেকৈ পঢ়িব',
     stepsTitle: 'তিনিটা খোজত আৰম্ভ কৰক',
     steps: [
-      ['ইনষ্টল', 'Node.js ২০ বা নতুন সংস্কৰণ ইনষ্টল কৰক, তাৰ পিছত <code>asomiya</code> কমাণ্ডটো।'],
-      ['লিখক', 'প্ৰগ্ৰামটো <code>.asom</code> ত শেষ হোৱা এটা ফাইলত সাঁচি থওক।'],
-      ['চলাওক', '<code>asomiya run</code> ৰে চলাওক, বা এইবোৰ একো নকৰি প্লেগ্ৰাউণ্ড ব্যৱহাৰ কৰক।'],
+      [
+        'ইনষ্টল',
+        'Node.js ২০ বা নতুন সংস্কৰণ ইনষ্টল কৰক, তাৰ পিছত <code>npm install -g asomiya</code> চলাওক।',
+      ],
+      ['লিখক', 'প্ৰগ্ৰামটো <code>.asom</code>-ত শেষ হোৱা ফাইলত সাঁচি থওক।'],
+      [
+        'চলাওক',
+        '<code>asomiya run hello.asom</code> দি চলাওক। বা এই তিনিওটা এৰি প্লেগ্ৰাউণ্ড ব্যৱহাৰ কৰক।',
+      ],
     ],
-    communityTitle: 'অসমত নিৰ্মিত, সকলোৰে বাবে মুকলি',
-    communitySub:
-      'অসমীয়া এটা সৰু দলে বনাইছে, আৰু অসমীয়া কোৱা সকলোৱে ইয়াক গঢ় দিছে। এটা ভাল শব্দৰ পৰামৰ্শ দিয়ক, ভুল জনাওক, বা নতুন সুবিধা যোগ কৰক।',
+    install: 'ইনষ্টল কৰাৰ নিৰ্দেশিকা',
+    teamTitle: 'অসমত নিৰ্মিত',
+    teamSub:
+      'এটা সৰু দলে বনাইছে, আৰু অসমীয়া কোৱা সকলোৱে গঢ় দিছে। এটা ভাল শব্দৰ পৰামৰ্শ দিয়ক, ভুল জনাওক, বা নতুন সুবিধা যোগ কৰক।',
     star: 'GitHub ত ষ্টাৰ দিয়ক',
     meet: 'দলটোৰ সৈতে চিনাকি হওক',
   },
@@ -193,58 +181,54 @@ jetialoike (k <= 5) {
     k = k + 1
 }`;
 
+const ASSAMESE_DIGITS = ['১', '২', '৩'];
+
 function body(lang) {
   const s = S[lang];
   return (h) => `
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <a class="pill" href="${h.link('learn/english-letters/')}"><span class="pill-dot"></span>${s.pill}${icon('arrow')}</a>
-      <h1 class="hero-title">${s.title}</h1>
+      <a class="news" href="${h.link('learn/english-letters/')}">${s.news}</a>
+      <h1 class="hero-title">
+        <span class="hero-as" lang="as">ক’ড লিখক<br />অসমীয়াত।</span>
+        <span class="hero-en" lang="en">${s.tagline}</span>
+      </h1>
       <p class="hero-sub">${s.sub}</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="${h.link('learn/')}">${s.start}${icon('arrow')}</a>
+      <div class="actions">
+        <a class="btn btn-primary" href="${h.link('learn/')}">${s.start}</a>
         <a class="btn btn-secondary" href="${h.playground}">${icon('play')}${s.playground}</a>
       </div>
-      <div class="install">
+      <p class="install">
         <code><span class="prompt">$</span> npm install -g asomiya</code>
         <button class="code-btn" type="button" data-copy="npm install -g asomiya" data-copied="${h.t.copied}" aria-label="${h.t.copy}">${icon('copy')}</button>
-      </div>
+      </p>
     </div>
-    <div class="hero-code">
+    <figure class="hero-code">
       <div class="window"><span></span><span></span><span></span><em>hello.asom</em></div>
       ${h.example(HELLO_AS, HELLO_ROMAN)}
-    </div>
+    </figure>
   </div>
-</section>
-
-<section class="stats">
-  ${s.stats.map(([n, label]) => `<div><strong>${n}</strong><span>${label}</span></div>`).join('')}
 </section>
 
 <section class="section">
-  <div class="section-head">
+  <header class="section-head">
     <h2>${s.featuresTitle}</h2>
     <p>${s.featuresSub}</p>
-  </div>
-  <div class="features">
-    ${s.features
-      .map(
-        ([glyph, title, text]) =>
-          `<div class="feature"><span class="feature-icon" aria-hidden="true">${glyph}</span><h3>${title}</h3><p>${text}</p></div>`,
-      )
-      .join('')}
-  </div>
+  </header>
+  <ul class="features">
+    ${s.features.map(([title, text]) => `<li><h3>${title}</h3><p>${text}</p></li>`).join('')}
+  </ul>
 </section>
 
-<section class="section section-alt">
+<section class="band">
   <div class="split">
     <div>
       <h2>${s.twoTitle}</h2>
-      <p class="section-lead">${s.twoSub}</p>
-      <ul class="checklist">
-        ${s.twoPoints.map(([title, text]) => `<li>${icon('check')}<div><strong>${title}</strong><p>${text}</p></div></li>`).join('')}
-      </ul>
+      <p class="lead">${s.twoSub}</p>
+      <dl class="points">
+        ${s.twoPoints.map(([title, text]) => `<div><dt>${title}</dt><dd>${text}</dd></div>`).join('')}
+      </dl>
     </div>
     <div>${h.example(LOOP_AS, LOOP_ROMAN)}</div>
   </div>
@@ -254,32 +238,32 @@ function body(lang) {
   <div class="split split-reverse">
     <div>
       <h2>${s.errorsTitle}</h2>
-      <p class="section-lead">${s.errorsSub}</p>
-      <a class="text-link" href="${h.link('learn/errors/')}">${s.errorsLink}${icon('arrow')}</a>
+      <p class="lead">${s.errorsSub}</p>
+      <a class="text-link" href="${h.link('learn/errors/')}">${s.errorsLink}</a>
     </div>
     <div>${h.example('কোৱা("নমস্কাৰ")\nকোৱা(নাম)', 'kowa("Nomoskar")\nkowaa("Oxom")', { expectError: true })}</div>
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="section-head"><h2>${s.stepsTitle}</h2></div>
+<section class="band">
+  <header class="section-head">
+    <h2>${s.stepsTitle}</h2>
+  </header>
   <ol class="steps">
-    ${s.steps.map(([title, text], i) => `<li><span class="step-n">${lang === 'as' ? '১২৩'[i] : i + 1}</span><h3>${title}</h3><p>${text}</p></li>`).join('')}
+    ${s.steps.map(([title, text], i) => `<li><span class="step-n" aria-hidden="true">${ASSAMESE_DIGITS[i]}</span><h3>${title}</h3><p>${text}</p></li>`).join('')}
   </ol>
-  <div class="steps-cta">
-    <a class="btn btn-primary" href="${h.link('learn/installation/')}">${s.start}${icon('arrow')}</a>
-  </div>
+  <p class="center"><a class="text-link" href="${h.link('learn/installation/')}">${s.install}</a></p>
 </section>
 
-<section class="section community-band">
-  <div class="section-head">
-    <h2>${s.communityTitle}</h2>
-    <p>${s.communitySub}</p>
-  </div>
-  <div class="avatars">
-    ${TEAM.map((m) => `<div class="avatar-card"><span class="avatar" aria-hidden="true">${m.initials}</span><strong>${m.name[lang]}</strong><span>${m.role[lang]}</span></div>`).join('')}
-  </div>
-  <div class="hero-cta center">
+<section class="section team-band">
+  <header class="section-head">
+    <h2>${s.teamTitle}</h2>
+    <p>${s.teamSub}</p>
+  </header>
+  <ul class="people">
+    ${TEAM.map((m) => `<li><span class="avatar" aria-hidden="true">${m.initials}</span><strong>${m.name[lang]}</strong><span>${m.role[lang]}</span></li>`).join('')}
+  </ul>
+  <div class="actions center">
     <a class="btn btn-primary" href="${SITE.repo}" target="_blank" rel="noopener noreferrer">${icon('github')}${s.star}</a>
     <a class="btn btn-secondary" href="${h.link('community/')}">${s.meet}</a>
   </div>

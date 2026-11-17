@@ -92,7 +92,7 @@ function body(lang) {
 <section class="section narrow">
   <h2 id="team">${s.team}</h2>
   ${team(lang)}
-  <p class="center"><a class="text-link" href="${SITE.repo}/graphs/contributors" target="_blank" rel="noopener noreferrer">${s.contributors}${icon('arrow')}</a></p>
+  <p class="center"><a class="text-link" href="${SITE.repo}/graphs/contributors" target="_blank" rel="noopener noreferrer">${s.contributors}</a></p>
 </section>
 <section class="section narrow">
   <h2 id="follow">${s.follow}</h2>

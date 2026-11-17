@@ -2,7 +2,7 @@
 import { SITE, SOCIAL } from '../site.config.mjs';
 import { UI } from '../content/ui.mjs';
 import { esc, rel } from './html.mjs';
-import { icon } from './icons.mjs';
+import { icon, logo } from './icons.mjs';
 
 /**
  * Content Security Policy. GitHub Pages can't send headers, so it goes in a <meta> tag. Only our
@@ -23,7 +23,7 @@ const CSP = [
 ].join('; ');
 
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap';
+  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Anek+Bangla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap';
 
 /** Path of a page in the other language. */
 export function otherLangPath(path, lang) {
@@ -52,12 +52,13 @@ function header(page, lang) {
   const home = rel(page.url, lang === 'as' ? 'as/' : '');
   const other = rel(page.url, otherLangPath(page.basePath, lang));
   return `<header class="topnav">
+  <div class="weave" aria-hidden="true"></div>
   <div class="topnav-inner">
     <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="drawer" aria-label="${esc(t.menu)}">${icon('menu')}</button>
     <a class="brand" href="${home}" aria-label="Asomiya — ${esc(t.homeLabel)}">
-      <span class="brand-mark" aria-hidden="true">অ</span>
-      <span class="brand-name">Asomiya</span>
-      <span class="brand-version">v${esc(SITE.version)}</span>
+      ${logo(30)}
+      <span class="brand-name">asomiya</span>
+      <span class="brand-version">${esc(SITE.version)}</span>
     </a>
     <nav class="topnav-links" aria-label="${esc(t.mainNav)}">${navLinks(page, lang)}</nav>
     <div class="topnav-actions">
@@ -111,9 +112,10 @@ function footer(page, lang, sections) {
     )
     .join('');
   return `<footer class="footer">
+  <div class="weave" aria-hidden="true"></div>
   <div class="footer-inner">
     <div class="foot-brand">
-      <a class="brand" href="${rel(page.url, lang === 'as' ? 'as/' : '')}"><span class="brand-mark" aria-hidden="true">অ</span><span class="brand-name">Asomiya</span></a>
+      <a class="brand" href="${rel(page.url, lang === 'as' ? 'as/' : '')}">${logo(30)}<span class="brand-name">asomiya</span></a>
       <p>${esc(t.footerTagline)}</p>
       <div class="socials">${socials}</div>
     </div>
@@ -224,7 +226,8 @@ export function renderPage({
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:url" content="${canonical}" />
     <meta name="twitter:card" content="summary" />
-    <meta name="theme-color" content="#c8102e" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121624" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="${rel(page.url, 'favicon.svg')}" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

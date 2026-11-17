@@ -26,6 +26,19 @@ const PATHS = {
     '<path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/>',
 };
 
+/**
+ * The Asomiya mark: a japi (the Assamese sun hat) drawn as a code caret ^, with a woven gold band
+ * and a text cursor beneath. Colours come from CSS (.logo-*), so it follows the theme.
+ */
+export function logo(size = 32) {
+  return `<svg class="logo" viewBox="0 0 48 48" width="${size}" height="${size}" aria-hidden="true" focusable="false">
+  <path class="logo-japi" d="M24 10.5 46 29.2c.7.6.3 1.8-.7 1.8H2.7c-1 0-1.4-1.2-.7-1.8z"/>
+  <path class="logo-band" d="M9.5 26.6 24 15.2l14.5 11.4" stroke-width="2.6" stroke-dasharray="3.4 2.2" stroke-linejoin="round"/>
+  <circle class="logo-knob" cx="24" cy="10.4" r="2.1"/>
+  <rect class="logo-cursor" x="17" y="36" width="14" height="3.8" rx="1.9"/>
+</svg>`;
+}
+
 export function icon(name, extraClass = '') {
   const paths = PATHS[name];
   if (paths === undefined) throw new Error(`Unknown icon: ${name}`);

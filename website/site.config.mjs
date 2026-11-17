@@ -14,7 +14,7 @@ export const SITE = {
 export const SOCIAL = {
   github: 'https://github.com/d43ash1sh',
   instagram: 'https://www.instagram.com/debashish.docx/',
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/debashishbordoloi',
   x: '',
   youtube: '',
 };

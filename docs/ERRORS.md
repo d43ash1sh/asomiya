@@ -50,6 +50,12 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **English:** Combining mark "া" (U+09BE) has no base letter before it
 - **Example:** `ধৰা ক = া`
 
+### L008
+
+- **অসমীয়া:** অদৃশ্য নিয়ন্ত্ৰণ আখৰ U+202E পাঠ বা মন্তব্যত ব্যৱহাৰ কৰিব নোৱাৰি (ই ক'ডটো যিদৰে দেখা যায় তাতকৈ বেলেগ দেখুৱাব পাৰে)
+- **English:** Invisible control character U+202E is not allowed in text or comments (it can make code look different from what runs)
+- **Example:** `কোৱা("abc<U+202E>cba")`
+
 ## Syntax errors — বাক্য-গঠনৰ ভুল (`P`)
 
 ### P001
@@ -111,6 +117,12 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **অসমীয়া:** প্ৰগ্ৰামটোৰ গঠন অতি গভীৰ: ২৫৬তকৈ বেছি স্তৰৰ বন্ধনী বা ব্লক
 - **English:** Program is nested too deeply: more than 256 levels of brackets or blocks
 - **Example:** `(((((… ৩০০ levels …)))))`
+
+### P011
+
+- **অসমীয়া:** "আগবাঢ়া" কেৱল "যেতিয়ালৈকে" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি
+- **English:** "আগবাঢ়া" (continue) can only be used inside a loop
+- **Example:** `আগবাঢ়া  (outside a loop)`
 
 ## Runtime errors — চলোৱাৰ সময়ৰ ভুল (`R`)
 

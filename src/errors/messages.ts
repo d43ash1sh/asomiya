@@ -67,6 +67,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     as: (p) => `"${p.char}" (${codePoint(p.char)}) চিহ্নটোৰ আগত কোনো আখৰ নাই`,
     en: (p) => `Combining mark "${p.char}" (${codePoint(p.char)}) has no base letter before it`,
   },
+  L008: {
+    as: (p) =>
+      `অদৃশ্য নিয়ন্ত্ৰণ আখৰ ${codePoint(p.char)} পাঠ বা মন্তব্যত ব্যৱহাৰ কৰিব নোৱাৰি (ই ক'ডটো যিদৰে দেখা যায় তাতকৈ বেলেগ দেখুৱাব পাৰে)`,
+    en: (p) =>
+      `Invisible control character ${codePoint(p.char)} is not allowed in text or comments (it can make code look different from what runs)`,
+  },
 
   P001: {
     as: (p) => `ইয়াত "${p.expected}" আশা কৰা হৈছিল, কিন্তু পোৱা গ'ল ${found(p.found, 'as')}`,
@@ -94,9 +100,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `Duplicate parameter "${p.name}"`,
   },
   P007: {
-    as: (p) => `বাক্যৰ পিছত নতুন শাৰী বা ";" লাগিব, কিন্তু পোৱা গ'ল ${found(p.found, 'as')}`,
+    as: (p) =>
+      `বাক্যৰ পিছত নতুন শাৰী বা ";" লাগিব, কিন্তু পোৱা গ'ল ${found(p.found, 'as')}` +
+      (p.suggestion === undefined ? '' : ` — আপুনি ${p.suggestion} লিখিব বিচাৰিছিল নেকি?`),
     en: (p) =>
-      `Expected a line break or ";" after the statement, but found ${found(p.found, 'en')}`,
+      `Expected a line break or ";" after the statement, but found ${found(p.found, 'en')}` +
+      (p.suggestion === undefined ? '' : ` — did you mean ${p.suggestion}?`),
   },
   P008: {
     as: (p) =>
@@ -112,10 +121,21 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `Program is nested too deeply: more than ${p.limit} levels of brackets or blocks`,
   },
 
+  P011: {
+    as: () =>
+      `"${keywordWord('continue')}" কেৱল "${keywordWord('while')}" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
+    en: () => `"${keywordWord('continue')}" (continue) can only be used inside a loop`,
+  },
+
   R001: {
     as: (p) =>
-      `"${p.name}" নামৰ কোনো চলক ঘোষণা কৰা হোৱা নাই (প্ৰথমে "${keywordWord('let')} ${p.name} = …" লিখক)`,
-    en: (p) => `Undefined variable "${p.name}" (declare it first with "${keywordWord('let')}")`,
+      p.suggestion === undefined
+        ? `"${p.name}" নামৰ কোনো চলক ঘোষণা কৰা হোৱা নাই (প্ৰথমে "${keywordWord('let')} ${p.name} = …" লিখক)`
+        : `"${p.name}" নামৰ কোনো চলক ঘোষণা কৰা হোৱা নাই — আপুনি ${p.suggestion} লিখিব বিচাৰিছিল নেকি?`,
+    en: (p) =>
+      p.suggestion === undefined
+        ? `Undefined variable "${p.name}" (declare it first with "${keywordWord('let')}")`
+        : `Undefined variable "${p.name}" — did you mean ${p.suggestion}?`,
   },
   R002: {
     as: (p) => `"${p.name}" এই পৰিসৰত ইতিমধ্যে ঘোষণা কৰা হৈছে`,

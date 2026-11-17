@@ -4,6 +4,54 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] — 2026-11-18
+
+### Added
+
+- **Romanised Assamese.** Every keyword and built-in can also be written in English letters, the
+  way Assamese is typed in chats (`dhora`, `kowa`, `jodi`, `nohole`, `xosa` …). Because there is no
+  standard romanisation, several common spellings are accepted per word. Roman spellings are
+  lower-case only, so capitalised names (`Jodi`, `Misha`) stay usable. Both scripts can be mixed in
+  one program. See `docs/ROMAN.md`.
+- An undefined name that is close to a romanised keyword or built-in now gets a suggestion:
+  `"kowaa" … did you mean kowa (কোৱা)?` (R001). A misspelt keyword at the start of a statement
+  (`jodii (…) {`, `dhoraa x`) gets one too (P007).
+- **`আগবাঢ়া` (continue)**, Roman `aagbara`: skips to the next loop iteration. Outside a loop it is
+  a syntax error (P011).
+- `examples/roman.asom`, also in the playground.
+- Programs written in English letters print numbers with 0-9; Assamese-script programs keep ০-৯.
+  New `--assamese-digits` flag, and an **Auto** digit option (the default) in the playground.
+- Programs written in English letters also print `xosa`/`misa`/`khali`, and `prokar()` returns
+  Roman type names (`xonkhya`, `path`, `talika` …).
+
+### Changed
+
+- Website and playground moved to **https://asomiya.codes**.
+- Siddhartha Borah ([@siddharthaborah](https://github.com/siddharthaborah)) is listed in
+  `contributors`.
+
+### Breaking
+
+- The lower-case Roman spellings (`ba`, `aru`, `misa`, `khali`, `jodi` …) are now keywords, so 0.1.x
+  programs that used them as variable names must rename them.
+
+### Security
+
+- **Denial of service:** text length and indexing used `Intl.Segmenter`, which is quadratic in V8.
+  A single long string (from a program, `সোধা` input or a shared playground link) could freeze the
+  CLI or the browser tab for minutes. Text is now segmented in chunks, so this is linear (1 000 000
+  characters: >60 s before, ~0.4 s now).
+- **Trojan Source / terminal escapes:** invisible control characters (bidi overrides, ESC, NUL, …)
+  are rejected in strings and comments (new error **L008**). Diagnostics show any control character
+  as a visible symbol (␛, �) and clip very long names and lines, so a crafted file can't send escape
+  sequences to the terminal through an error message or file name.
+- ZWJ/ZWNJ are allowed in names only after Assamese characters, so `naam` and `na‍am` can't be two
+  different names that look the same.
+- Playground: added a Content Security Policy (only its own script may run; no network access) and
+  `no-referrer`.
+- CI: GitHub Actions are pinned to commit SHAs, checkout no longer keeps the token, the Pages
+  publish permission is limited to the deploy job, and CI now also runs on the `beta` branch.
+
 ## [0.1.1] — 2026-11-17
 
 ### Added

@@ -3,13 +3,13 @@ import {
   Interpreter,
   formatDiagnostic,
   parse,
-  type DigitStyle,
+  type DigitSetting,
   type MessageLanguage,
 } from '../../src/index';
 
 export interface RunSettings {
   readonly lang: MessageLanguage;
-  readonly digits: DigitStyle;
+  readonly digits: DigitSetting;
   /** Text that সোধা reads from, one line per call. */
   readonly stdin: string;
 }

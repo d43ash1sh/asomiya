@@ -4,6 +4,7 @@ import { tokenize } from '../lexer/lexer';
 import { spanFrom, type Token } from '../lexer/token';
 import { PUNCTUATION_TEXT, type PunctuationTokenType, type TokenType } from '../lexer/token-types';
 import { isLetter } from '../lexer/unicode';
+import { suggestRoman } from '../language/roman';
 import type {
   BlockStatement,
   Expression,
@@ -47,6 +48,7 @@ export class Parser {
     return {
       kind: 'Program',
       body,
+      roman: this.tokens.some((t) => t.type !== 'Identifier' && LATIN_START.test(t.lexeme)),
       span: first === undefined ? eof.span : spanFrom(first.span, eof.span),
     };
   }
@@ -135,7 +137,14 @@ export class Parser {
       }
       // A statement that ends in a block (`যদি … { }`, `ফাংচন … { }`) needs no separator.
       if (this.previous().type === 'RightBrace') continue;
-      throw parserError('P007', { found: describe(next) }, next.span);
+      const suggestion = misspeltKeyword(statements[statements.length - 1]);
+      throw parserError(
+        'P007',
+        suggestion === undefined
+          ? { found: describe(next) }
+          : { found: describe(next), suggestion },
+        next.span,
+      );
     }
     return statements;
   }
@@ -168,6 +177,11 @@ export class Parser {
         this.advance();
         if (this.loopDepth === 0) throw parserError('P004', {}, token.span);
         return { kind: 'BreakStatement', span: token.span };
+      }
+      case 'Continue': {
+        this.advance();
+        if (this.loopDepth === 0) throw parserError('P011', {}, token.span);
+        return { kind: 'ContinueStatement', span: token.span };
       }
       case 'Return': {
         this.advance();
@@ -450,6 +464,20 @@ function describe(token: Token): Found {
   if (token.type === 'Newline') return { kind: 'newline' };
   return { kind: 'token', text: token.lexeme };
 }
+
+/**
+ * `jodii (x) { … }`, `dhoraa x = 1`, `fangchun f() { … }` parse as a bare name (or a call) followed
+ * by something unexpected. If that name is close to a romanised keyword, suggest it.
+ */
+function misspeltKeyword(statement: Statement | undefined): string | undefined {
+  if (statement?.kind !== 'ExpressionStatement') return undefined;
+  let expr = statement.expression;
+  if (expr.kind === 'CallExpression') expr = expr.callee;
+  return expr.kind === 'Identifier' ? suggestRoman(expr.name, true) : undefined;
+}
+
+/** Keyword lexemes are either Assamese script or romanised; this spots the romanised ones. */
+const LATIN_START = /^[A-Za-z]/;
 
 export function parse(source: string): Program {
   return new Parser(tokenize(source)).parseProgram();

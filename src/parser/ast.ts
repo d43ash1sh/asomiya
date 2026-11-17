@@ -130,6 +130,10 @@ export interface BreakStatement extends Node {
   readonly kind: 'BreakStatement';
 }
 
+export interface ContinueStatement extends Node {
+  readonly kind: 'ContinueStatement';
+}
+
 export interface ReturnStatement extends Node {
   readonly kind: 'ReturnStatement';
   readonly value: Expression | null;
@@ -156,6 +160,7 @@ export type Statement =
   | IfStatement
   | WhileStatement
   | BreakStatement
+  | ContinueStatement
   | ReturnStatement
   | PrintStatement
   | BlockStatement
@@ -164,4 +169,6 @@ export type Statement =
 export interface Program extends Node {
   readonly kind: 'Program';
   readonly body: readonly Statement[];
+  /** True if any keyword is written in Latin letters (dhora, kowa …). */
+  readonly roman: boolean;
 }

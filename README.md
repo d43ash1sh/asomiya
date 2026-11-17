@@ -1,100 +1,176 @@
+<div align="center">
+
 # অসমীয়া · Asomiya
 
-**A small programming language written in Assamese.** Keywords, names, numerals and error messages are
-all in Assamese. A real lexer, parser and interpreter, written in TypeScript, run the programs.
+**A programming language in Assamese.**<br>
+Write real programs in অসমীয়া script, or in English letters the way you type Assamese in chats.
 
-> অসমীয়াত পঢ়ক → [README.as.md](README.as.md)
->
-> **Try it in your browser → [https://d43ash1sh.github.io/asomiya/](https://d43ash1sh.github.io/asomiya/)**, no installation needed.
+[![npm version](https://img.shields.io/npm/v/asomiya.svg)](https://www.npmjs.com/package/asomiya)
+[![npm downloads](https://img.shields.io/npm/dm/asomiya.svg)](https://www.npmjs.com/package/asomiya)
+[![CI](https://github.com/d43ash1sh/asomiya/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/d43ash1sh/asomiya/actions/workflows/ci.yml)
+[![node](https://img.shields.io/node/v/asomiya.svg)](https://nodejs.org)
+[![license](https://img.shields.io/npm/l/asomiya.svg)](https://github.com/d43ash1sh/asomiya/blob/main/LICENSE)
 
-```
-ধৰা নাম = "দেবাশীষ"
-ধৰা বয়স = ২৪
+[Website & Playground](https://asomiya.codes) ·
+[Documentation](#documentation) ·
+[Examples](#examples) ·
+[Report a bug](https://github.com/d43ash1sh/asomiya/issues) ·
+[অসমীয়াত পঢ়ক](https://github.com/d43ash1sh/asomiya/blob/main/README.as.md)
 
-কোৱা("নমস্কাৰ, " + নাম)
-কোৱা("মোৰ বয়স " + বয়স)
-
-যদি (বয়স >= ১৮) {
-    কোৱা("মই এজন প্ৰাপ্তবয়স্ক")
-} নহ'লে {
-    কোৱা("মই এতিয়াও সৰু")
-}
-```
+</div>
 
 ```
-$ asomiya run examples/hello.asom
-নমস্কাৰ, দেবাশীষ
-মোৰ বয়স ২৪
-মই এজন প্ৰাপ্তবয়স্ক
+ধৰা নাম = "দেবাশীষ"                      dhora naam = "Debashish"
+ধৰা বয়স = ২৪                             dhora boyox = 24
+
+কোৱা("নমস্কাৰ, " + নাম)                  kowa("Nomoskar, " + naam)
+
+যদি (বয়স >= ১৮) {                        jodi (boyox >= 18) {
+    কোৱা("মই এজন প্ৰাপ্তবয়স্ক")               kowa("moi dangor")
+} নহ'লে {                                } nohole {
+    কোৱা("মই এতিয়াও সৰু")                     kowa("moi xoru")
+}                                        }
 ```
 
-## Why?
+The two programs above are the same program: one in Assamese script, one in English letters.
 
-Programming languages almost always borrow English for their keywords. Asomiya shows that nothing about
-lexing, parsing or evaluation depends on that. Variables can be called `বয়স`, loops can be written
-with `যেতিয়ালৈকে`, and `১০ + ২০` prints `৩০`. It is meant for teaching programming to Assamese
-speakers, and for showing how a language implementation works.
+## Try it now
 
-It is a **toy**: small, readable, and well tested, not fast or feature-complete.
+**No install needed:** open the playground at **[asomiya.codes](https://asomiya.codes)** and press ▶.
 
-## Install
-
-Requires Node.js 20 or newer.
+Or install the command-line tool:
 
 ```sh
 npm install -g asomiya
-# or, from a clone of this repository:
-npm install
-npm run build
-npm link                      # makes the `asomiya` command available
+asomiya            # start the interactive REPL
 ```
+
+## Features
+
+- **Assamese everywhere.** Keywords, built-ins, error messages, and numbers (`১০ + ২০` prints `৩০`).
+- **Or type in English letters.** `dhora`, `kowa`, `jodi`, `nohole` … with several common spellings
+  for each word, because romanised Assamese has no single standard spelling.
+- **Helpful errors.** Every error has a code, a message in Assamese or English, and points at the
+  exact spot. Typos get a hint: `kowaa` → _did you mean `kowa` (কোৱা)?_
+- **A real language.** Variables, conditions, loops, functions, recursion, closures, lists and
+  input. A real lexer, parser and interpreter, written in TypeScript.
+- **Runs anywhere.** A CLI and REPL for Node.js 20+, a browser playground, and a library API.
+- **Safe to run other people's code.** Programs can't touch files or the network, and loops,
+  recursion and memory are limited. See [SECURITY.md](https://github.com/d43ash1sh/asomiya/blob/main/SECURITY.md).
+- **Well tested.** Over 300 tests, run on Linux, macOS and Windows.
+
+## Installation
+
+Requires [Node.js](https://nodejs.org) 20 or newer.
+
+```sh
+npm install -g asomiya
+```
+
+This installs the `asomiya` command. To use Asomiya as a library in a project instead:
+
+```sh
+npm install asomiya
+```
+
+> **`asomiya: command not found`?** You probably ran `npm install asomiya` without `-g`. Use
+> `npm install -g asomiya`, or run it once with `npx asomiya`.
 
 ## Quick start
 
-```sh
-asomiya run examples/hello.asom     # run a file
-asomiya                             # interactive REPL
-asomiya --help
+Save this as `hello.asom`:
+
+```
+কোৱা("নমস্কাৰ, অসম!")
 ```
 
-Source files use the `.asom` extension. (`.as` already belongs to ActionScript/AngelScript, and `.asm`
-to assembly.)
+Run it:
+
+```sh
+asomiya run hello.asom
+```
+
+Start the REPL and type code line by line:
+
+```sh
+asomiya
+```
+
+Source files use the `.asom` extension.
 
 ## The language in five minutes
 
-| Concept         | Asomiya                                             |
-| --------------- | --------------------------------------------------- |
-| variable        | `ধৰা ক = ৫`                                         |
-| reassign        | `ক = ক + ১`                                         |
-| print           | `কোৱা("মান:", ক)`                                   |
-| if / else       | `যদি (ক > ১) { … } নহ'লে যদি (…) { … } নহ'লে { … }` |
-| while           | `যেতিয়ালৈকে (ক < ১০) { … }`                         |
-| break           | `ৰখা`                                               |
-| function        | `ফাংচন যোগ(ক, খ) { ঘূৰাইদিয়া ক + খ }`                |
-| true/false/null | `সঁচা` `মিছা` `খালী`                                 |
-| and / or / not  | `আৰু` (or `&&`), `বা` (or `\|\|`), `!`               |
-| list            | `ধৰা ল = [১, ২, ৩]`, `ল[০]`, `সংযোজন(ল, ৪)`         |
-| comment         | `// line` and `/* block */`                         |
+| Concept         | Assamese script                      | English letters                             |
+| --------------- | ------------------------------------ | ------------------------------------------- |
+| variable        | `ধৰা ক = ৫`                          | `dhora k = 5`                               |
+| print           | `কোৱা("মান:", ক)`                    | `kowa("man:", k)`                           |
+| if / else       | `যদি (ক > ১) { … } নহ'লে { … }`      | `jodi (k > 1) { … } nohole { … }`           |
+| while loop      | `যেতিয়ালৈকে (ক < ১০) { … }`          | `jetialoike (k < 10) { … }`                 |
+| break           | `ৰখা`                                | `rokha`                                     |
+| continue        | `আগবাঢ়া`                             | `aagbara`                                   |
+| function        | `ফাংচন যোগ(ক, খ) { ঘূৰাইদিয়া ক + খ }` | `fangchon jog(k, kh) { ghuraidiya k + kh }` |
+| true/false/null | `সঁচা` `মিছা` `খালী`                  | `xosa` `misa` `khali`                       |
+| and / or / not  | `আৰু` / `বা` / `!`                    | `aru` / `ba` / `!`                          |
+| list            | `ধৰা ল = [১, ২, ৩]`, `ল[০]`          | `dhora l = [1, 2, 3]`, `l[0]`               |
+| comment         | `// line` and `/* block */`          | same                                        |
 
-- **Numbers** can be written with Assamese (`২৪`) or ASCII (`24`) digits and print in Assamese by
-  default (`--ascii-digits` switches this).
+- **Numbers** can be written with Assamese (`২৪`) or ASCII (`24`) digits. Programs in Assamese
+  script print `২৪`; programs in English letters print `24`.
 - **Text** uses double quotes. `+` joins text with any value. Length and indexing count whole
   characters, so `দৈৰ্ঘ্য("নাম")` is `২`.
-- **Conditions must be `সঁচা` or `মিছা`.** There is no truthiness.
+- **Conditions must be true or false** (`সঁচা`/`মিছা`). There is no "truthiness".
 - **Statements** end at a newline, `;`, or the danda `।`.
 
-**Built-in functions:** `দৈৰ্ঘ্য` (length), `প্ৰকাৰ` (type), `সংখ্যা` (to number), `পাঠ` (to text),
-`পূৰ্ণাংক` (truncate), `সংযোজন` (append), `সোধা` (read a line of input).
+### Built-in functions
 
-Full details:
+| Assamese       | English letters  | What it does                                |
+| -------------- | ---------------- | ------------------------------------------- |
+| `দৈৰ্ঘ্য(x)`     | `doirghyo(x)`    | length of text or a list                    |
+| `প্ৰকাৰ(x)`     | `prokar(x)`      | the type of a value, as text                |
+| `সংখ্যা(x)`     | `xonkhya(x)`     | text → number (`খালী` if it isn't a number) |
+| `পাঠ(x)`       | `path(x)`        | any value → text                            |
+| `পূৰ্ণাংক(x)`    | `purnanko(x)`    | drop the decimal part                       |
+| `সংযোজন(l, x)` | `xonjojon(l, x)` | add `x` to the end of list `l`              |
+| `সোধা(q)`      | `xudha(q)`       | ask a question and read one line of input   |
 
-- [Language specification](docs/LANGUAGE_SPEC.md): types, operators, scoping, semantics
-- [Grammar](docs/GRAMMAR.md): EBNF, precedence table, lexical rules
-- [Keyword glossary](docs/KEYWORDS.md): what every word means and why it was chosen
-- [Error reference](docs/ERRORS.md): every error code in Assamese and English
-- [Architecture](docs/ARCHITECTURE.md): how the interpreter is built
+### English letters: how spelling works
 
-## CLI
+Everyone types Assamese differently, so Asomiya accepts several spellings for each word:
+`kowa`, `kuwa`, `kua` and `koa` all mean কোৱা; `xosa`, `hosa` and `sosa` all mean সঁচা.
+Roman keywords are lower-case only, so `Jodi` or `Misha` can still be names. The full list is in
+the [Roman spelling guide](https://github.com/d43ash1sh/asomiya/blob/main/docs/ROMAN.md).
+
+## Examples
+
+A leap-year checker, in English letters:
+
+```
+fangchon adhibarxa(boxor) {
+    jodi (boxor % 400 == 0) { ghuraidiya xosa }
+    nohole jodi (boxor % 100 == 0) { ghuraidiya misa }
+    ghuraidiya boxor % 4 == 0
+}
+
+dhora boxor = xonkhya(xudha("Boxor likhok: "))
+jodi (adhibarxa(boxor)) { kowa(boxor, "adhibarxa") } nohole { kowa(boxor, "adhibarxa nohoy") }
+```
+
+More in the [`examples/`](https://github.com/d43ash1sh/asomiya/tree/main/examples) folder (also
+built into the playground):
+
+| File                | Shows                                        |
+| ------------------- | -------------------------------------------- |
+| `hello.asom`        | variables, joining text, if/else             |
+| `variables.asom`    | types, reassignment, scope, separators       |
+| `arithmetic.asom`   | precedence, decimals, conversions            |
+| `conditionals.asom` | else-if chains, logic words, nesting         |
+| `loops.asom`        | while, break, nested loops                   |
+| `functions.asom`    | functions, recursion, higher-order, closures |
+| `lists.asom`        | lists, Assamese-aware text indexing          |
+| `greet.asom`        | reading input with `সোধা`                    |
+| `roman.asom`        | the same language in English letters         |
+
+## Command-line usage
 
 ```
 asomiya run <file> [options]   run a program
@@ -103,14 +179,15 @@ asomiya --version | --help
 
 Options:
   -l, --lang <as|en>   language for error messages (default: as)
-  --ascii-digits       print numbers with 0-9 instead of ০-৯
+  --ascii-digits       always print numbers with 0-9
+  --assamese-digits    always print numbers with ০-৯
   --max-steps <n>      execution step budget, 0 = unlimited (default: 10000000)
   --max-depth <n>      maximum function call depth (default: 500)
 ```
 
 Exit codes: `0` success, `1` the program had an error, `2` usage error or unreadable file.
 
-Errors show the code, an Assamese message, the location, and the offending line:
+Errors show a code, a message, the location and the line:
 
 ```
 চলোৱাৰ সময়ৰ ভুল [R001]: "খ" নামৰ কোনো চলক ঘোষণা কৰা হোৱা নাই (প্ৰথমে "ধৰা খ = …" লিখক)
@@ -120,41 +197,26 @@ Errors show the code, an Assamese message, the location, and the offending line:
   |        ^
 ```
 
-In the REPL, a complete statement runs as soon as you press Enter, and an open `{` or `(` waits
-for more lines. `সোধা` works in the REPL too: it reads the next line you type.
+### REPL
 
-| REPL command                | Effect                                 |
+A complete statement runs when you press Enter. An open `{` or `(` waits for more lines, and
+`সোধা` reads the next line you type.
+
+| Command                     | Effect                                 |
 | --------------------------- | -------------------------------------- |
 | `.সহায়` / `.help`           | show help                              |
 | `.বাতিল` / `.cancel`        | discard an unfinished multi-line input |
 | `.প্ৰস্থান` / `.exit`, Ctrl+D | quit                                   |
 | Ctrl+C                      | quit immediately, even mid-program     |
 
-The REPL deliberately has no arrow-key history. Line editors (such as Node's `readline`) redraw
-the line using column arithmetic that does not match how terminals draw Assamese, which garbled the
-screen, so input is left to the terminal itself.
-
-## Examples
-
-| File                                              | Shows                                        |
-| ------------------------------------------------- | -------------------------------------------- |
-| [`hello.asom`](examples/hello.asom)               | variables, concatenation, if/else            |
-| [`variables.asom`](examples/variables.asom)       | types, reassignment, scope, separators       |
-| [`arithmetic.asom`](examples/arithmetic.asom)     | precedence, decimals, conversions            |
-| [`conditionals.asom`](examples/conditionals.asom) | else-if chains, logic words, nesting         |
-| [`loops.asom`](examples/loops.asom)               | while, break, nested loops                   |
-| [`functions.asom`](examples/functions.asom)       | functions, recursion, higher-order, closures |
-| [`lists.asom`](examples/lists.asom)               | lists, grapheme-aware text indexing          |
-| [`greet.asom`](examples/greet.asom)               | reading input with `সোধা`                    |
+The REPL has no arrow-key history on purpose: line editors redraw the line with column arithmetic
+that doesn't match how terminals draw Assamese, which garbled the screen.
 
 ## Playground
 
-The [online playground](https://d43ash1sh.github.io/asomiya/) runs the real interpreter in your browser, and nothing is sent to a
-server. It has the examples built in, an input box that `সোধা` reads from (one line per call),
-Assamese or English error messages, and share links that carry the program in the URL.
-
-To build and preview it locally: `npm run playground:serve` (needs Python 3), then open
-<http://localhost:8080>.
+**[asomiya.codes](https://asomiya.codes)** runs the real interpreter in your browser. Nothing is
+sent to a server. It has the examples built in, an input box for `সোধা`, Assamese or English
+errors, a digit-style switch, and share links that carry your program in the URL.
 
 ## Use as a library
 
@@ -163,30 +225,65 @@ import { runSource } from 'asomiya';
 
 const { output, error } = runSource('কোৱা(১০ + ২০)');
 console.log(output); // ৩০
+
+runSource('kowa(10 + 20)').output; // "30\n"
 ```
 
-See [Architecture → Embedding](docs/ARCHITECTURE.md#embedding).
+See [Architecture → Embedding](https://github.com/d43ash1sh/asomiya/blob/main/docs/ARCHITECTURE.md#embedding).
 
-## Development
+## Documentation
+
+| Guide                                                                                          | What's in it                                |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| [Language specification](https://github.com/d43ash1sh/asomiya/blob/main/docs/LANGUAGE_SPEC.md) | types, operators, scoping, semantics        |
+| [Grammar](https://github.com/d43ash1sh/asomiya/blob/main/docs/GRAMMAR.md)                      | EBNF, precedence table, lexical rules       |
+| [Keyword glossary](https://github.com/d43ash1sh/asomiya/blob/main/docs/KEYWORDS.md)            | what every word means and why it was chosen |
+| [Roman spelling guide](https://github.com/d43ash1sh/asomiya/blob/main/docs/ROMAN.md)           | writing Asomiya in English letters          |
+| [Error reference](https://github.com/d43ash1sh/asomiya/blob/main/docs/ERRORS.md)               | every error code, in Assamese and English   |
+| [Architecture](https://github.com/d43ash1sh/asomiya/blob/main/docs/ARCHITECTURE.md)            | how the interpreter is built                |
+| [Changelog](https://github.com/d43ash1sh/asomiya/blob/main/CHANGELOG.md)                       | what changed in each version                |
+
+## Why Asomiya?
+
+Programming languages almost always borrow English for their keywords. Asomiya shows that nothing
+about lexing, parsing or running code depends on that. Variables can be called `বয়স`, loops can be
+written with `যেতিয়ালৈকে`, and `১০ + ২০` prints `৩০`. It's made for teaching programming to
+Assamese speakers in their own language, and for showing how a programming language works inside.
+
+It's a **small, educational language**: readable and well tested, not fast or feature-complete.
+
+## Contributing
+
+Contributions are welcome, especially from native Assamese speakers: if a keyword, spelling or
+error message sounds unnatural, please [open an issue](https://github.com/d43ash1sh/asomiya/issues).
+Several keywords are still marked _provisional_ in the glossary. See
+[CONTRIBUTING.md](https://github.com/d43ash1sh/asomiya/blob/main/CONTRIBUTING.md).
+
+### Running tests
 
 ```sh
+git clone https://github.com/d43ash1sh/asomiya.git
+cd asomiya
 npm install
-npm test            # vitest: unit + integration (builds the CLI first)
-npm run typecheck   # tsc --noEmit, strict
-npm run lint        # eslint (type-aware, no `any`, no eval)
-npm run format      # prettier
-npm run check       # all of the above
-npm run build       # tsup → dist/
+npm test            # unit + integration tests
+npm run check       # typecheck, lint, format and tests
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Changes to the vocabulary are especially welcome from native
-Assamese speakers. Several keywords are marked _provisional_ in the [glossary](docs/KEYWORDS.md).
+## Security
 
-## Authors & Contributors
+To report a security problem, please use
+[GitHub's private vulnerability reporting](https://github.com/d43ash1sh/asomiya/security/advisories/new)
+instead of a public issue. See [SECURITY.md](https://github.com/d43ash1sh/asomiya/blob/main/SECURITY.md).
 
-- **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh)) — Creator
-- **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh)) — Collaborator & Contributor
-- **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah)) — Collaborator & Contributor
+## People
+
+|                                                                               |                            |
+| ----------------------------------------------------------------------------- | -------------------------- |
+| **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh))           | Creator                    |
+| **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                  | Collaborator & Contributor |
+| **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah)) | Collaborator & Contributor |
+
+See all [contributors on GitHub](https://github.com/d43ash1sh/asomiya/graphs/contributors).
 
 ## Acknowledgements
 
@@ -196,4 +293,4 @@ implementation.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/d43ash1sh/asomiya/blob/main/LICENSE) © Debashish Bordoloi and contributors

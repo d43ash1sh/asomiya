@@ -24,7 +24,7 @@ export {
 } from './runtime/interpreter';
 export { Environment } from './runtime/environment';
 export { displayValue, reprValue, formatNumber } from './runtime/display';
-export type { Value, DigitStyle } from './runtime/values';
+export type { Value, DigitStyle, DigitSetting } from './runtime/values';
 
 export { AsomiyaError } from './errors/asomiya-error';
 export { LexerError } from './errors/lexer-error';

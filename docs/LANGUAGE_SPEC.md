@@ -30,8 +30,9 @@ vocabulary, with the meaning of every keyword, is in [KEYWORDS.md](KEYWORDS.md).
 
 When a value is printed with `কোৱা`, joined to a পাঠ with `+`, or converted with `পাঠ(…)`:
 
-- Numbers use **Assamese digits** by default: `১০ + ২০` prints `৩০`. The host can choose ASCII digits
-  instead (`--ascii-digits` on the CLI). Integers have no decimal point. Other numbers use the shortest
+- Numbers use **Assamese digits** by default: `১০ + ২০` prints `৩০`. A program whose keywords are
+  written in Latin letters (`kowa(10 + 20)`) prints ASCII digits (`30`). The host can force either
+  style (`--ascii-digits` / `--assamese-digits` on the CLI). Integers have no decimal point. Other numbers use the shortest
   round-trip form, e.g. `০.৫`.
 - Very large or very small numbers use exponent notation with a Latin `e`, such as `১e+২২`.
 - `সঁচা`, `মিছা` and `খালী` print as those words.
@@ -109,6 +110,11 @@ and must be a `সঁচা-মিছা`.
 
 Leaves the innermost enclosing loop immediately. It is a syntax error outside a loop (P004), including
 inside a function that is itself inside a loop.
+
+### 5.4 `আগবাঢ়া`
+
+Skips the rest of the current iteration of the innermost enclosing loop; the condition is checked
+again as usual. Same placement rules as `ৰখা` (P011 outside a loop).
 
 ## 6. Functions
 

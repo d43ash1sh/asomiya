@@ -19,6 +19,7 @@ export interface DiagnosticParams {
   L005: { readonly text: string };
   L006: { readonly text: string };
   L007: { readonly char: string };
+  L008: { readonly char: string };
   // ── syntax ───────────────────────────────────────────────
   P001: { readonly expected: string; readonly found: Found };
   P002: { readonly found: Found };
@@ -26,12 +27,13 @@ export interface DiagnosticParams {
   P004: Record<string, never>;
   P005: Record<string, never>;
   P006: { readonly name: string };
-  P007: { readonly found: Found };
+  P007: { readonly found: Found; readonly suggestion?: string };
   P008: { readonly role: NameRole; readonly found: Found };
   P009: { readonly keyword: string };
   P010: { readonly limit: number };
+  P011: Record<string, never>;
   // ── runtime ──────────────────────────────────────────────
-  R001: { readonly name: string };
+  R001: { readonly name: string; readonly suggestion?: string };
   R002: { readonly name: string };
   R003: { readonly op: string; readonly left: ValueKind; readonly right: ValueKind };
   R004: Record<string, never>;

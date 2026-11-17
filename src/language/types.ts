@@ -12,6 +12,16 @@ export const TYPE_NAMES: Readonly<Record<ValueKind, Readonly<Record<MessageLangu
   function: { as: 'ফাংচন', en: 'function' },
 };
 
+/** Type names as প্ৰকাৰ / prokar returns them in programs written in Roman letters. */
+export const ROMAN_TYPE_NAMES: Readonly<Record<ValueKind, string>> = {
+  number: 'xonkhya',
+  string: 'path',
+  boolean: 'xosa-misa',
+  null: 'khali',
+  list: 'talika',
+  function: 'fangchon',
+};
+
 export function typeName(kind: ValueKind, lang: MessageLanguage): string {
   return TYPE_NAMES[kind][lang];
 }

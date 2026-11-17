@@ -1,8 +1,8 @@
 import { runtimeError } from '../errors/runtime-error';
-import { BUILTIN_NAMES } from '../language/glossary';
-import { typeName, type ValueKind } from '../language/types';
+import { BUILTIN_NAMES, BUILTIN_ROMAN, type BuiltinKey } from '../language/glossary';
+import { ROMAN_TYPE_NAMES, typeName, type ValueKind } from '../language/types';
 import { assameseDigitsToAscii, graphemes } from '../lexer/unicode';
-import { MAX_LIST_LENGTH } from './limits';
+import { MAX_LIST_LENGTH, MAX_TEXT_LENGTH } from './limits';
 import {
   NULL,
   num,
@@ -62,9 +62,10 @@ const length = builtin(BUILTIN_NAMES.length, 1, 1, (args, ctx) => {
   return typeError(BUILTIN_NAMES.length, 0, ['string', 'list'], x, ctx);
 });
 
-const typeOf = builtin(BUILTIN_NAMES.typeOf, 1, 1, (args) =>
-  str(typeName(argAt(args, 0).kind, 'as')),
-);
+const typeOf = builtin(BUILTIN_NAMES.typeOf, 1, 1, (args, ctx) => {
+  const kind = argAt(args, 0).kind;
+  return str(ctx.roman ? ROMAN_TYPE_NAMES[kind] : typeName(kind, 'as'));
+});
 
 const toNumber = builtin(BUILTIN_NAMES.toNumber, 1, 1, (args, ctx): NumberValue | typeof NULL => {
   const x = argAt(args, 0);
@@ -101,11 +102,31 @@ const input = builtin(BUILTIN_NAMES.input, 0, 1, (args, ctx) => {
   const prompt = args[0];
   if (prompt !== undefined) ctx.write(ctx.display(prompt));
   const line = ctx.readLine();
-  return line === null ? NULL : str(line);
+  if (line === null) return NULL;
+  // Input is text like any other, so it obeys the same size limit.
+  if (line.length > MAX_TEXT_LENGTH) {
+    throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, ctx.callSpan);
+  }
+  return str(line);
 });
 
 /** All built-ins, keyed by their (already NFC) names. */
 export function createBuiltins(): ReadonlyMap<string, BuiltinFunctionValue> {
-  const all = [length, typeOf, toNumber, toText, toInteger, append, input];
-  return new Map(all.map((fn) => [fn.name.normalize('NFC'), fn]));
+  const byKey: Readonly<Record<BuiltinKey, BuiltinFunctionValue>> = {
+    length,
+    typeOf,
+    toNumber,
+    toText,
+    toInteger,
+    append,
+    input,
+  };
+  const out = new Map<string, BuiltinFunctionValue>();
+  for (const key of Object.keys(byKey) as BuiltinKey[]) {
+    const fn = byKey[key];
+    out.set(fn.name.normalize('NFC'), fn);
+    // Romanised names (BUILTIN_ROMAN) call the same function; messages use the Assamese name.
+    for (const spelling of BUILTIN_ROMAN[key]) out.set(spelling, fn);
+  }
+  return out;
 }

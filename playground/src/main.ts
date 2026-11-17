@@ -1,7 +1,7 @@
 import {
   BUILTIN_NAMES,
   KEYWORD_GLOSSARY,
-  type DigitStyle,
+  type DigitSetting,
   type MessageLanguage,
 } from '../../src/index';
 import { EXAMPLES } from './examples';
@@ -72,8 +72,9 @@ function currentLang(): MessageLanguage {
   return radioValue('lang') === 'en' ? 'en' : 'as';
 }
 
-function currentDigits(): DigitStyle {
-  return radioValue('digits') === 'ascii' ? 'ascii' : 'assamese';
+function currentDigits(): DigitSetting {
+  const value = radioValue('digits');
+  return value === 'ascii' || value === 'assamese' ? value : 'auto';
 }
 
 // ── output ────────────────────────────────────────────────────────────────
@@ -220,7 +221,9 @@ function chip(word: string, meaning: string): HTMLButtonElement {
 }
 
 function buildReference(): void {
-  const keywords = KEYWORD_GLOSSARY.map((k) => chip(k.word, k.concept));
+  const keywords = KEYWORD_GLOSSARY.map((k) =>
+    chip(k.word, k.roman[0] === undefined ? k.concept : `${k.concept} · ${k.roman[0]}`),
+  );
   const builtins = Object.keys(BUILTIN_NAMES)
     .filter(isBuiltinKey)
     .map((key) => chip(`${BUILTIN_NAMES[key]}()`, BUILTIN_HELP[key]));

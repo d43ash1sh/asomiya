@@ -24,6 +24,7 @@ import {
   str,
   valuesEqual,
   type BuiltinContext,
+  type DigitSetting,
   type DigitStyle,
   type Value,
 } from './values';
@@ -40,7 +41,8 @@ export interface InterpreterOptions {
   /** Execution budget per `run` call. `Infinity` disables the limit. */
   readonly maxSteps?: number;
   readonly maxCallDepth?: number;
-  readonly digits?: DigitStyle;
+  /** Default `auto`. */
+  readonly digits?: DigitSetting;
   /** Lets top-level `ধৰা` re-declare a name (useful in the REPL). */
   readonly allowTopLevelRedeclaration?: boolean;
 }
@@ -49,10 +51,12 @@ export interface InterpreterOptions {
 type Completion =
   | { readonly type: 'normal' }
   | { readonly type: 'break' }
+  | { readonly type: 'continue' }
   | { readonly type: 'return'; readonly value: Value };
 
 const NORMAL: Completion = { type: 'normal' };
 const BREAK: Completion = { type: 'break' };
+const CONTINUE: Completion = { type: 'continue' };
 
 /**
  * A tree-walking evaluator. It only ever calls back to the host through `write` and `readLine`.
@@ -63,7 +67,10 @@ export class Interpreter {
   private readonly readLine: (() => string | null) | null;
   private readonly maxSteps: number;
   private readonly maxCallDepth: number;
-  private readonly digits: DigitStyle;
+  private readonly digitSetting: DigitSetting;
+  private digits: DigitStyle;
+  /** Set once a program written in Roman letters runs (sticky, like `digits`, for the REPL). */
+  private roman = false;
   private readonly allowTopLevelRedeclaration: boolean;
   private steps = 0;
   private callDepth = 0;
@@ -74,7 +81,8 @@ export class Interpreter {
     this.readLine = options.readLine ?? null;
     this.maxSteps = options.maxSteps ?? DEFAULT_MAX_STEPS;
     this.maxCallDepth = options.maxCallDepth ?? DEFAULT_MAX_CALL_DEPTH;
-    this.digits = options.digits ?? 'assamese';
+    this.digitSetting = options.digits ?? 'auto';
+    this.digits = this.digitSetting === 'ascii' ? 'ascii' : 'assamese';
     this.allowTopLevelRedeclaration = options.allowTopLevelRedeclaration ?? false;
 
     const builtinScope = new Environment(null, true);
@@ -89,6 +97,9 @@ export class Interpreter {
    * Returns the value of the last top-level expression statement, if any.
    */
   run(program: Program): Value | undefined {
+    // In `auto` mode, a Roman-script program switches to 0-9 (and stays there, e.g. in a REPL).
+    if (program.roman) this.roman = true;
+    if (this.digitSetting === 'auto' && program.roman) this.digits = 'ascii';
     this.steps = 0;
     this.callDepth = 0;
     let last: Value | undefined;
@@ -114,7 +125,7 @@ export class Interpreter {
    */
   describe(value: Value, span: Span): string {
     try {
-      return reprValue(value, this.digits, MAX_TEXT_LENGTH);
+      return reprValue(value, this.digits, MAX_TEXT_LENGTH, this.roman);
     } catch (error) {
       if (error instanceof DisplayTooLongError) {
         throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
@@ -141,7 +152,7 @@ export class Interpreter {
   /** Display form used by কোৱা, পাঠ() and `+`; enforces the text-length limit. */
   private show(value: Value, span: Span): string {
     try {
-      return displayValue(value, this.digits, MAX_TEXT_LENGTH);
+      return displayValue(value, this.digits, MAX_TEXT_LENGTH, this.roman);
     } catch (error) {
       if (error instanceof DisplayTooLongError) {
         throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
@@ -217,11 +228,14 @@ export class Interpreter {
           const completion = this.executeBlock(statement.body.body, new Environment(env));
           if (completion.type === 'break') break;
           if (completion.type === 'return') return completion;
+          // 'continue' needs nothing: the body has already stopped, so re-check the condition.
         }
         return NORMAL;
       }
       case 'BreakStatement':
         return BREAK;
+      case 'ContinueStatement':
+        return CONTINUE;
       case 'ReturnStatement':
         return {
           type: 'return',
@@ -395,7 +409,7 @@ export class Interpreter {
   /** A bounded echo form for error messages. */
   private shortRepr(value: Value): string {
     try {
-      return reprValue(value, this.digits, 60);
+      return reprValue(value, this.digits, 60, this.roman);
     } catch {
       return '…';
     }
@@ -444,6 +458,7 @@ export class Interpreter {
         },
         write: this.write,
         readLine: this.readLine,
+        roman: this.roman,
       };
       return callee.call(args, ctx);
     }

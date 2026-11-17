@@ -1,5 +1,5 @@
 import type { MessageLanguage } from '../language/types';
-import { graphemes } from '../lexer/unicode';
+import { graphemes, visibleControls } from '../lexer/unicode';
 import { phaseOf, type Diagnostic } from './diagnostic';
 import { PHASE_LABELS, renderMessage } from './messages';
 
@@ -19,15 +19,28 @@ export interface FormatOptions {
  *    3 | কোৱা(ক)
  *      |      ^
  */
+const MAX_MESSAGE = 400;
+const MAX_EXCERPT = 1000;
+
+function clip(text: string, max: number): string {
+  const chars = Array.from(text);
+  return chars.length <= max ? text : `${chars.slice(0, max - 1).join('')}…`;
+}
+
 export function formatDiagnostic(d: Diagnostic, options: FormatOptions): string {
   const { lang, source, fileName } = options;
   const label = PHASE_LABELS[phaseOf(d.code)][lang];
-  const message = renderMessage(d.code, d.params, lang);
+  // Messages quote source text (names, tokens). Make controls visible and keep huge names short,
+  // so a crafted program can't send escape sequences to the terminal or flood it.
+  const message = clip(visibleControls(renderMessage(d.code, d.params, lang)), MAX_MESSAGE);
   const { line, column } = d.span.start;
   const lines = [`${label} [${d.code}]: ${message}`];
-  lines.push(`  --> ${fileName ?? '<input>'}:${line}:${column}`);
+  lines.push(`  --> ${visibleControls(fileName ?? '<input>')}:${line}:${column}`);
 
-  const sourceLine = source?.split(/\r\n|\r|\n/)[line - 1];
+  const rawLine = source?.split(/\r\n|\r|\n/)[line - 1];
+  // Very long lines (minified or generated input) are not echoed.
+  const sourceLine =
+    rawLine === undefined || rawLine.length > MAX_EXCERPT ? undefined : visibleControls(rawLine);
   if (sourceLine !== undefined) {
     const gutter = String(line).length;
     const pad = ' '.repeat(gutter);

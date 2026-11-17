@@ -9,7 +9,10 @@ import {
   isAssameseDigit,
   isCombiningMark,
   isDigit,
+  isBengaliScript,
+  isHiddenControl,
   isIdentifierPart,
+  isJoiner,
   isIdentifierStart,
   isLetter,
   isWhitespace,
@@ -144,7 +147,10 @@ export class Lexer {
       return;
     }
     if (ch === '/' && this.peek(1) === '/') {
-      while (!this.atEnd() && !this.atLineBreak()) this.advance();
+      while (!this.atEnd() && !this.atLineBreak()) {
+        this.rejectHiddenControl();
+        this.advance();
+      }
       return;
     }
     if (ch === '/' && this.peek(1) === '*') {
@@ -186,12 +192,22 @@ export class Lexer {
       if (this.atEnd()) {
         throw lexerError('L003', {}, this.spanFrom(start), true);
       }
+      this.rejectHiddenControl();
       this.advance();
     }
     this.advance();
     this.advance();
     // A comment that spans lines separates statements just like a newline would.
     if (this.line !== startLine) this.pushNewline(start);
+  }
+
+  /** Strings and comments may hold any text except invisible controls (see isHiddenControl). */
+  private rejectHiddenControl(): void {
+    const ch = this.peek();
+    if (!isHiddenControl(ch)) return;
+    const at = this.position();
+    this.advance();
+    throw lexerError('L008', { char: ch }, this.spanFrom(at));
   }
 
   private scanString(start: Position): void {
@@ -206,6 +222,7 @@ export class Lexer {
         this.advance();
         break;
       }
+      this.rejectHiddenControl();
       if (ch === '\\') {
         const escStart = this.position();
         this.advance();
@@ -263,7 +280,11 @@ export class Lexer {
     this.advance();
     for (;;) {
       const ch = this.peek();
-      if (isIdentifierPart(ch)) {
+      if (isJoiner(ch) && !isBengaliScript(this.source[this.offset - 1] ?? '')) {
+        // ZWJ/ZWNJ only shape Assamese conjuncts; elsewhere they would make `na‍am` and `naam`
+        // look identical but be different names.
+        break;
+      } else if (isIdentifierPart(ch)) {
         this.advance();
       } else if (isWordApostrophe(ch) && isLetter(this.peek(1))) {
         this.advance(); // নহ'লে, হ'ব …

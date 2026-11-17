@@ -17,6 +17,7 @@ statement      = varDecl
                | ifStmt
                | whileStmt
                | breakStmt
+               | continueStmt
                | returnStmt
                | printStmt
                | block
@@ -28,6 +29,7 @@ ifStmt         = "যদি" , expression , block , [ { NEWLINE } , elseKw , ( i
 elseKw         = "নহ'লে" | "নহলে" ;
 whileStmt      = "যেতিয়ালৈকে" , expression , block ;
 breakStmt      = "ৰখা" ;                    (* only inside a loop *)
+continueStmt   = "আগবাঢ়া" ;                 (* only inside a loop *)
 returnStmt     = "ঘূৰাইদিয়া" , [ expression ] ; (* only inside a function *)
 printStmt      = "কোৱা" , "(" , [ exprList ] , ")" ;
 block          = "{" , statementList , "}" ;

@@ -51,10 +51,12 @@ export interface InterpreterOptions {
 type Completion =
   | { readonly type: 'normal' }
   | { readonly type: 'break' }
+  | { readonly type: 'continue' }
   | { readonly type: 'return'; readonly value: Value };
 
 const NORMAL: Completion = { type: 'normal' };
 const BREAK: Completion = { type: 'break' };
+const CONTINUE: Completion = { type: 'continue' };
 
 /**
  * A tree-walking evaluator. It only ever calls back to the host through `write` and `readLine`.
@@ -223,11 +225,14 @@ export class Interpreter {
           const completion = this.executeBlock(statement.body.body, new Environment(env));
           if (completion.type === 'break') break;
           if (completion.type === 'return') return completion;
+          // 'continue' needs nothing: the body has already stopped, so re-check the condition.
         }
         return NORMAL;
       }
       case 'BreakStatement':
         return BREAK;
+      case 'ContinueStatement':
+        return CONTINUE;
       case 'ReturnStatement':
         return {
           type: 'return',

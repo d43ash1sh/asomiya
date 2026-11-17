@@ -14,6 +14,8 @@ All notable changes to this project are documented here. The format follows
   Both scripts can be mixed in one program. See `docs/ROMAN.md`.
 - An undefined name that is close to a romanised keyword or built-in now gets a suggestion:
   `"kowaa" … did you mean kowa (কোৱা)?` (R001).
+- **`আগবাঢ়া` (continue)**, Roman `aagbara`: skips to the next loop iteration. Outside a loop it is
+  a syntax error (P011).
 - `examples/roman.asom`, also in the playground.
 - Programs written in English letters print numbers with 0-9; Assamese-script programs keep ০-৯.
   New `--assamese-digits` flag, and an **Auto** digit option (the default) in the playground.

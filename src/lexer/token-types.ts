@@ -9,6 +9,7 @@ export type SimpleTokenType =
   | 'Function'
   | 'Return'
   | 'Break'
+  | 'Continue'
   | 'True'
   | 'False'
   | 'Null'

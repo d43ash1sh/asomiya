@@ -11,6 +11,7 @@ const TOKEN_FOR_KEYWORD: Readonly<Record<KeywordId, SimpleTokenType>> = {
   function: 'Function',
   return: 'Return',
   break: 'Break',
+  continue: 'Continue',
   true: 'True',
   false: 'False',
   null: 'Null',

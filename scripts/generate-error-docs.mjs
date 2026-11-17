@@ -21,6 +21,7 @@ const samples = {
   P008: [{ role: 'variable', found: tok('=') }, 'ধৰা = ৫'],
   P009: [{ keyword: 'যদি' }, 'ধৰা যদি = ৫'],
   P010: [{ limit: 256 }, '(((((… ৩০০ levels …)))))'],
+  P011: [{}, 'আগবাঢ়া  (outside a loop)'],
   R001: [{ name: 'খ' }, 'কোৱা(খ)  (খ never declared)'],
   R002: [{ name: 'ক' }, 'ধৰা ক = ১; ধৰা ক = ২'],
   R003: [{ op: '-', left: 'string', right: 'number' }, '"ক" - ১'],

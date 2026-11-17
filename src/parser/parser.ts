@@ -170,6 +170,11 @@ export class Parser {
         if (this.loopDepth === 0) throw parserError('P004', {}, token.span);
         return { kind: 'BreakStatement', span: token.span };
       }
+      case 'Continue': {
+        this.advance();
+        if (this.loopDepth === 0) throw parserError('P011', {}, token.span);
+        return { kind: 'ContinueStatement', span: token.span };
+      }
       case 'Return': {
         this.advance();
         if (this.functionDepth === 0) throw parserError('P005', {}, token.span);

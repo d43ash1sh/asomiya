@@ -30,6 +30,7 @@ export interface DiagnosticParams {
   P008: { readonly role: NameRole; readonly found: Found };
   P009: { readonly keyword: string };
   P010: { readonly limit: number };
+  P011: Record<string, never>;
   // ── runtime ──────────────────────────────────────────────
   R001: { readonly name: string; readonly suggestion?: string };
   R002: { readonly name: string };

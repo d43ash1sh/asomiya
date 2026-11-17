@@ -12,6 +12,7 @@ export type KeywordId =
   | 'function'
   | 'return'
   | 'break'
+  | 'continue'
   | 'true'
   | 'false'
   | 'null'
@@ -110,6 +111,15 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     concept: 'break out of a loop',
     meaning: '"stop / halt"',
     status: 'stable',
+  },
+  {
+    id: 'continue',
+    word: 'আগবাঢ়া',
+    aliases: [],
+    roman: ['aagbara', 'agbara', 'agobara', 'aagbaara', 'agbarha'],
+    concept: 'skip to the next loop iteration',
+    meaning: '"go ahead / move forward" (imperative of আগবাঢ়)',
+    status: 'provisional',
   },
   {
     id: 'true',

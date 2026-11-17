@@ -21,6 +21,7 @@ This glossary is the source of truth for the language vocabulary. The same data 
 | `ফাংচন`      | function declaration        | Loanword ("function"), widely understood in Assamese technical writing.                                  | provisional |
 | `ঘূৰাইদিয়া`   | return from a function      | "give back". Standard spelling is two words (ঘূৰাই দিয়া); written as one token here.                      | provisional |
 | `ৰখা`        | break out of a loop         | "stop / halt" (imperative of ৰখ).                                                                        | stable      |
+| `আগবাঢ়া`     | skip to the next iteration  | "go ahead / move forward" (imperative of আগবাঢ়).                                                         | provisional |
 | `সঁচা`        | boolean true                | "true".                                                                                                  | stable      |
 | `মিছা`       | boolean false               | "false / untrue".                                                                                        | stable      |
 | `খালী`       | null (absence of a value)   | "empty".                                                                                                 | stable      |
@@ -47,7 +48,6 @@ These are **not** keywords yet. They are listed here so they are not given confl
 | Candidate | Possible meaning                              |
 | --------- | --------------------------------------------- |
 | `নহয়`     | logical NOT (currently only `!` is supported) |
-| `আগবাঢ়া`  | continue (skip to the next loop iteration)    |
 | `প্ৰতিটো`  | for-each loop                                 |
 
 ## Built-in functions — অন্তৰ্নিৰ্মিত ফাংচন

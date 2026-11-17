@@ -112,6 +112,12 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **English:** Program is nested too deeply: more than 256 levels of brackets or blocks
 - **Example:** `(((((… ৩০০ levels …)))))`
 
+### P011
+
+- **অসমীয়া:** "আগবাঢ়া" কেৱল "যেতিয়ালৈকে" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি
+- **English:** "আগবাঢ়া" (continue) can only be used inside a loop
+- **Example:** `আগবাঢ়া  (outside a loop)`
+
 ## Runtime errors — চলোৱাৰ সময়ৰ ভুল (`R`)
 
 ### R001

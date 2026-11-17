@@ -48,6 +48,7 @@ The spellings live in one place, [`src/language/glossary.ts`](../src/language/gl
 | `ফাংচন`      | `fangchon`, `phangchon`, `fanchon`                                    | function |
 | `ঘূৰাইদিয়া`   | `ghuraidiya`, `ghuraidia`                                             | return   |
 | `ৰখা`        | `rokha`, `rakha`                                                      | break    |
+| `আগবাঢ়া`     | `aagbara`, `agbara`, `agobara`, `aagbaara`, `agbarha`                 | continue |
 | `সঁচা`        | `xosa`, `xocha`, `hosa`, `sosa`, `socha`, `sacha`                     | true     |
 | `মিছা`       | `misa`, `micha`, `misha`                                              | false    |
 | `খালী`       | `khali`, `khaali`                                                     | null     |

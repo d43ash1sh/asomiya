@@ -111,6 +111,11 @@ and must be a `সঁচা-মিছা`.
 Leaves the innermost enclosing loop immediately. It is a syntax error outside a loop (P004), including
 inside a function that is itself inside a loop.
 
+### 5.4 `আগবাঢ়া`
+
+Skips the rest of the current iteration of the innermost enclosing loop; the condition is checked
+again as usual. Same placement rules as `ৰখা` (P011 outside a loop).
+
 ## 6. Functions
 
 ```

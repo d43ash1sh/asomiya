@@ -112,6 +112,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `Program is nested too deeply: more than ${p.limit} levels of brackets or blocks`,
   },
 
+  P011: {
+    as: () =>
+      `"${keywordWord('continue')}" কেৱল "${keywordWord('while')}" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
+    en: () => `"${keywordWord('continue')}" (continue) can only be used inside a loop`,
+  },
+
   R001: {
     as: (p) =>
       p.suggestion === undefined

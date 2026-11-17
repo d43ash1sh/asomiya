@@ -4,7 +4,7 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [0.2.0-beta.0] — 2026-11-17 (beta)
+## [0.2.0] — 2026-11-18
 
 ### Added
 
@@ -23,6 +23,12 @@ All notable changes to this project are documented here. The format follows
   New `--assamese-digits` flag, and an **Auto** digit option (the default) in the playground.
 - Programs written in English letters also print `xosa`/`misa`/`khali`, and `prokar()` returns
   Roman type names (`xonkhya`, `path`, `talika` …).
+
+### Changed
+
+- Website and playground moved to **https://asomiya.codes**.
+- Siddhartha Borah ([@siddharthaborah](https://github.com/siddharthaborah)) is listed in
+  `contributors`.
 
 ### Breaking
 

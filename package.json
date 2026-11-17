@@ -1,28 +1,44 @@
 {
   "name": "asomiya",
-  "version": "0.2.0-beta.0",
-  "description": "অসমীয়া — an educational programming language written in Assamese, with a TypeScript interpreter.",
+  "version": "0.2.0",
+  "description": "অসমীয়া — a programming language in Assamese. Write code in Assamese script or in English letters (dhora, kowa, jodi). Interpreter, REPL and browser playground.",
   "keywords": [
     "assamese",
     "অসমীয়া",
+    "asomiya",
     "programming-language",
+    "assamese-programming-language",
+    "romanized-assamese",
     "interpreter",
     "toy-language",
-    "education"
+    "education",
+    "learn-to-code",
+    "repl",
+    "cli",
+    "typescript",
+    "unicode",
+    "indic"
   ],
   "license": "MIT",
-  "author": "Debashish Bordoloi",
+  "author": {
+    "name": "Debashish Bordoloi",
+    "url": "https://github.com/d43ash1sh"
+  },
   "contributors": [
     {
       "name": "Arnab Sharmah",
       "url": "https://github.com/arnabsmh"
+    },
+    {
+      "name": "Siddhartha Borah",
+      "url": "https://github.com/siddharthaborah"
     }
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/d43ash1sh/asomiya.git"
   },
-  "homepage": "https://d43ash1sh.github.io/asomiya/",
+  "homepage": "https://asomiya.codes",
   "bugs": {
     "url": "https://github.com/d43ash1sh/asomiya/issues"
   },

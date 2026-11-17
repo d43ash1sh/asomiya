@@ -2,7 +2,7 @@
 
 > Read in English → [README.md](README.md)
 >
-> **ব্ৰাউজাৰতে চলাই চাওক → [https://d43ash1sh.github.io/asomiya/](https://d43ash1sh.github.io/asomiya/)**। একো ইনষ্টল কৰিব নালাগে।
+> **ব্ৰাউজাৰতে চলাই চাওক → [https://asomiya.codes](https://asomiya.codes)**। একো ইনষ্টল কৰিব নালাগে।
 
 ## এইটো কি?
 
@@ -203,7 +203,7 @@ jodi (naam != "") { kowa("Nomoskar, " + naam) } nohole { kowa("naam nai") }
 
 ## অনলাইন প্লেগ্ৰাউণ্ড
 
-[প্লেগ্ৰাউণ্ডত](https://d43ash1sh.github.io/asomiya/) প্ৰগ্ৰাম লিখি ব্ৰাউজাৰতে চলাব পাৰি। প্ৰগ্ৰামটো আপোনাৰ কম্পিউটাৰতে চলে, কোনো
+[প্লেগ্ৰাউণ্ডত](https://asomiya.codes) প্ৰগ্ৰাম লিখি ব্ৰাউজাৰতে চলাব পাৰি। প্ৰগ্ৰামটো আপোনাৰ কম্পিউটাৰতে চলে, কোনো
 চাৰ্ভাৰলৈ নাযায়। তাত উদাহৰণবোৰ আছে, `সোধা`ৰ বাবে এটা ইনপুট বাকচ আছে (প্ৰতিবাৰ মাতিলে এটা শাৰী পঢ়ে),
 আৰু প্ৰগ্ৰামটো লিংক হিচাপে আনক পঠিয়াব পাৰি।
 
@@ -280,6 +280,7 @@ REPLত কাঁড় চাবিৰে (arrow key) আগৰ শাৰী �
 
 - **দেবাশীষ বৰদলৈ** ([@d43ash1sh](https://github.com/d43ash1sh)) — নিৰ্মাতা
 - **অৰ্ণৱ শৰ্মা** ([@arnabsmh](https://github.com/arnabsmh)) — সহযোগী আৰু অৱদানকাৰী
+- **সিদ্ধাৰ্থ বৰা** ([@siddharthaborah](https://github.com/siddharthaborah)) — সহযোগী আৰু অৱদানকাৰী
 
 ## অনুজ্ঞাপত্ৰ
 

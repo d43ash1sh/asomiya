@@ -24,6 +24,7 @@ import {
   str,
   valuesEqual,
   type BuiltinContext,
+  type DigitSetting,
   type DigitStyle,
   type Value,
 } from './values';
@@ -40,7 +41,8 @@ export interface InterpreterOptions {
   /** Execution budget per `run` call. `Infinity` disables the limit. */
   readonly maxSteps?: number;
   readonly maxCallDepth?: number;
-  readonly digits?: DigitStyle;
+  /** Default `auto`. */
+  readonly digits?: DigitSetting;
   /** Lets top-level `ধৰা` re-declare a name (useful in the REPL). */
   readonly allowTopLevelRedeclaration?: boolean;
 }
@@ -63,7 +65,8 @@ export class Interpreter {
   private readonly readLine: (() => string | null) | null;
   private readonly maxSteps: number;
   private readonly maxCallDepth: number;
-  private readonly digits: DigitStyle;
+  private readonly digitSetting: DigitSetting;
+  private digits: DigitStyle;
   private readonly allowTopLevelRedeclaration: boolean;
   private steps = 0;
   private callDepth = 0;
@@ -74,7 +77,8 @@ export class Interpreter {
     this.readLine = options.readLine ?? null;
     this.maxSteps = options.maxSteps ?? DEFAULT_MAX_STEPS;
     this.maxCallDepth = options.maxCallDepth ?? DEFAULT_MAX_CALL_DEPTH;
-    this.digits = options.digits ?? 'assamese';
+    this.digitSetting = options.digits ?? 'auto';
+    this.digits = this.digitSetting === 'ascii' ? 'ascii' : 'assamese';
     this.allowTopLevelRedeclaration = options.allowTopLevelRedeclaration ?? false;
 
     const builtinScope = new Environment(null, true);
@@ -89,6 +93,8 @@ export class Interpreter {
    * Returns the value of the last top-level expression statement, if any.
    */
   run(program: Program): Value | undefined {
+    // In `auto` mode, a Roman-script program switches to 0-9 (and stays there, e.g. in a REPL).
+    if (this.digitSetting === 'auto' && program.roman) this.digits = 'ascii';
     this.steps = 0;
     this.callDepth = 0;
     let last: Value | undefined;

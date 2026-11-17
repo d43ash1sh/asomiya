@@ -164,4 +164,6 @@ export type Statement =
 export interface Program extends Node {
   readonly kind: 'Program';
   readonly body: readonly Statement[];
+  /** True if any keyword is written in Latin letters (dhora, kowa …). */
+  readonly roman: boolean;
 }

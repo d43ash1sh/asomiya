@@ -36,7 +36,7 @@ describe('romanised keywords', () => {
       '}',
       'kowa(karok(n), i, khali, misa ba xosa)',
     ].join('\n');
-    expect(run(source)).toBe('১২০ ৩ খালী সঁচা\n');
+    expect(run(source)).toBe('120 3 খালী সঁচা\n');
   });
 
   it('mixes freely with Assamese script', () => {
@@ -44,11 +44,26 @@ describe('romanised keywords', () => {
   });
 
   it('keeps ordinary Latin names usable as variables', () => {
-    expect(run('dhora x = 1\ndhora naam = "A"\nkowa(x, naam)')).toBe('১ A\n');
+    expect(run('dhora x = 1\ndhora naam = "A"\nkowa(x, naam)')).toBe('1 A\n');
   });
 
   it('cannot use a Roman keyword as a variable name', () => {
     expect(fail('dhora jodi = 1').diagnostic.code).toBe('P009');
+  });
+});
+
+describe('digits for romanised programs', () => {
+  it('prints 0-9 when keywords are in English letters', () => {
+    expect(run('dhora i = 1\nkowa("number", i + 1)')).toBe('number 2\n');
+  });
+
+  it('keeps ০-৯ for Assamese-script programs, even with ASCII digits in the source', () => {
+    expect(run('ধৰা x = 1\nকোৱা(x + 1)')).toBe('২\n');
+  });
+
+  it('respects an explicit digit setting', () => {
+    expect(run('kowa(5)', { digits: 'assamese' })).toBe('৫\n');
+    expect(run('কোৱা(৫)', { digits: 'ascii' })).toBe('5\n');
   });
 });
 
@@ -59,7 +74,7 @@ describe('romanised built-ins', () => {
       'xonjojon(l, 3)',
       'kowa(doirghyo(l), prokar(l), xonkhya("৪২") + 1, path(7) + "!", purnanko(3.9))',
     ].join('\n');
-    expect(run(source)).toBe('৩ তালিকা ৪৩ ৭! ৩\n');
+    expect(run(source)).toBe('3 তালিকা 43 7! 3\n');
   });
 
   it('xudha reads input', () => {

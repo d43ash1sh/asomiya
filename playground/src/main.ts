@@ -1,7 +1,7 @@
 import {
   BUILTIN_NAMES,
   KEYWORD_GLOSSARY,
-  type DigitStyle,
+  type DigitSetting,
   type MessageLanguage,
 } from '../../src/index';
 import { EXAMPLES } from './examples';
@@ -72,8 +72,9 @@ function currentLang(): MessageLanguage {
   return radioValue('lang') === 'en' ? 'en' : 'as';
 }
 
-function currentDigits(): DigitStyle {
-  return radioValue('digits') === 'ascii' ? 'ascii' : 'assamese';
+function currentDigits(): DigitSetting {
+  const value = radioValue('digits');
+  return value === 'ascii' || value === 'assamese' ? value : 'auto';
 }
 
 // ── output ────────────────────────────────────────────────────────────────

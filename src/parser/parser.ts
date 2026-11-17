@@ -47,6 +47,7 @@ export class Parser {
     return {
       kind: 'Program',
       body,
+      roman: this.tokens.some((t) => t.type !== 'Identifier' && LATIN_START.test(t.lexeme)),
       span: first === undefined ? eof.span : spanFrom(first.span, eof.span),
     };
   }
@@ -450,6 +451,9 @@ function describe(token: Token): Found {
   if (token.type === 'Newline') return { kind: 'newline' };
   return { kind: 'token', text: token.lexeme };
 }
+
+/** Keyword lexemes are either Assamese script or romanised; this spots the romanised ones. */
+const LATIN_START = /^[A-Za-z]/;
 
 export function parse(source: string): Program {
   return new Parser(tokenize(source)).parseProgram();

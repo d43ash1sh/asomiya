@@ -70,10 +70,11 @@ Built-in names are case-sensitive, like other names.
 | `সংযোজন` | `xonjojon`, `sonjojon`, `sanjojan`          | append      |
 | `সোধা`   | `xudha`, `sudha`, `xodha`, `sodha`          | read a line |
 
-## What stays in Assamese
+## Output
 
-- Output: `সঁচা`, `মিছা`, `খালী` and type names print in Assamese, and numbers print in Assamese
-  digits unless you pass `--ascii-digits`.
+- Numbers print with 0-9 when the program's keywords are in English letters (`kowa(10 + 20)` prints
+  `30`). Programs in Assamese script keep ০-৯. `--ascii-digits` / `--assamese-digits` force a style.
+- `সঁচা`, `মিছা`, `খালী` and type names still print in Assamese.
 - Error messages are in Assamese (or English with `--lang en`).
 
 ## Status

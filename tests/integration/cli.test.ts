@@ -25,7 +25,7 @@ function tempProgram(source: string | Buffer): string {
 
 const EXPECTED: Record<string, string> = {
   'hello.asom': 'নমস্কাৰ, দেবাশীষ\nমোৰ বয়স ২৪\nমই এজন প্ৰাপ্তবয়স্ক\n',
-  'roman.asom': 'Nomoskar, Debashish\nmoi ejon praptoboyosko\n1-10 jugfol: ৫৫\n৪২\nসঁচা ৪\n',
+  'roman.asom': 'Nomoskar, Debashish\nmoi ejon praptoboyosko\n1-10 jugfol: 55\n42\nসঁচা 4\n',
   'functions.asom': '৩০\n৫! = ১২০\nফিবোনাচি(১৫) = ৬১০\n২০\nগণক: ৩\n',
   'variables.asom': [
     'গুৱাহাটী পাঠ',

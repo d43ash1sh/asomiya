@@ -11,6 +11,7 @@ import { EXIT_USAGE_ERROR, runFile, type CliIO, type ExecutionSettings } from '.
 interface RawOptions {
   readonly lang: MessageLanguage;
   readonly asciiDigits?: boolean;
+  readonly assameseDigits?: boolean;
   readonly maxSteps: number;
   readonly maxDepth: number;
 }
@@ -28,7 +29,12 @@ function parseCount(flag: string, allowZero: boolean) {
 function settingsFrom(options: RawOptions): ExecutionSettings {
   return {
     lang: options.lang,
-    digits: options.asciiDigits === true ? 'ascii' : 'assamese',
+    digits:
+      options.asciiDigits === true
+        ? 'ascii'
+        : options.assameseDigits === true
+          ? 'assamese'
+          : 'auto',
     maxSteps: options.maxSteps === 0 ? Number.POSITIVE_INFINITY : options.maxSteps,
     maxCallDepth: options.maxDepth,
   };
@@ -41,7 +47,11 @@ function addExecutionOptions(command: Command): Command {
         .choices(['as', 'en'])
         .default('as'),
     )
-    .option('--ascii-digits', 'print numbers with 0-9 instead of ০-৯')
+    .option('--ascii-digits', 'always print numbers with 0-9')
+    .option(
+      '--assamese-digits',
+      'always print numbers with ০-৯ (default: ০-৯, or 0-9 for programs in English letters)',
+    )
     .option(
       '--max-steps <n>',
       'execution step budget (0 = unlimited)',

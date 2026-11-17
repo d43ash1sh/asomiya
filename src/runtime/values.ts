@@ -39,6 +39,12 @@ export interface UserFunctionValue {
 
 export type DigitStyle = 'assamese' | 'ascii';
 
+/**
+ * How numbers are printed. `auto` uses Assamese digits, except for programs whose keywords are
+ * written in Latin letters (dhora, kowa …), which get 0-9.
+ */
+export type DigitSetting = DigitStyle | 'auto';
+
 /** What a built-in may touch. Built-ins get nothing else from the host. */
 export interface BuiltinContext {
   readonly callSpan: Span;

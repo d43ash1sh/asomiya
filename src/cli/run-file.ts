@@ -4,7 +4,7 @@ import { formatDiagnostic } from '../errors/format';
 import type { MessageLanguage } from '../language/types';
 import { parse } from '../parser/parser';
 import { Interpreter } from '../runtime/interpreter';
-import type { DigitStyle } from '../runtime/values';
+import type { DigitSetting } from '../runtime/values';
 import { CLI_MESSAGES } from './messages';
 
 export const EXIT_OK = 0;
@@ -21,7 +21,7 @@ export interface CliIO {
 
 export interface ExecutionSettings {
   readonly lang: MessageLanguage;
-  readonly digits: DigitStyle;
+  readonly digits: DigitSetting;
   readonly maxSteps: number;
   readonly maxCallDepth: number;
 }

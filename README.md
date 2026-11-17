@@ -76,8 +76,9 @@ to assembly.)
 | list            | `ধৰা ল = [১, ২, ৩]`, `ল[০]`, `সংযোজন(ল, ৪)`         |
 | comment         | `// line` and `/* block */`                         |
 
-- **Numbers** can be written with Assamese (`২৪`) or ASCII (`24`) digits and print in Assamese by
-  default (`--ascii-digits` switches this).
+- **Numbers** can be written with Assamese (`২৪`) or ASCII (`24`) digits. They print in Assamese
+  digits, except in programs written in English letters (`dhora`, `kowa` …), which print 0-9.
+  `--ascii-digits` and `--assamese-digits` force one style.
 - **Text** uses double quotes. `+` joins text with any value. Length and indexing count whole
   characters, so `দৈৰ্ঘ্য("নাম")` is `২`.
 - **Conditions must be `সঁচা` or `মিছা`.** There is no truthiness.
@@ -118,7 +119,8 @@ asomiya --version | --help
 
 Options:
   -l, --lang <as|en>   language for error messages (default: as)
-  --ascii-digits       print numbers with 0-9 instead of ০-৯
+  --ascii-digits       always print numbers with 0-9
+  --assamese-digits    always print numbers with ০-৯
   --max-steps <n>      execution step budget, 0 = unlimited (default: 10000000)
   --max-depth <n>      maximum function call depth (default: 500)
 ```

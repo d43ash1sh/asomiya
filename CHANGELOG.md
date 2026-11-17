@@ -15,6 +15,8 @@ All notable changes to this project are documented here. The format follows
 - An undefined name that is close to a romanised keyword or built-in now gets a suggestion:
   `"kowaa" … did you mean kowa (কোৱা)?` (R001).
 - `examples/roman.asom`, also in the playground.
+- Programs written in English letters print numbers with 0-9; Assamese-script programs keep ০-৯.
+  New `--assamese-digits` flag, and an **Auto** digit option (the default) in the playground.
 
 ## [0.1.1] — 2026-11-17
 

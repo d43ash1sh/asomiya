@@ -105,25 +105,31 @@ render Assamese spacing vowel signs (া, ী …), and its redraws erased the p
 With plain reads the terminal handles echo and editing itself. Because there is a single reader,
 `সোধা` works inside the REPL. The trade-off is that the REPL has no arrow-key history.
 
-## Browser playground
+## Website and playground
 
-`playground/` is a static site that bundles the same interpreter for the browser. Nothing in
-`src/` outside `src/cli/` uses Node APIs, so no special build of the language is needed.
+`website/` is the source of https://asomiya.codes: a static site with the docs and the browser
+playground, in English (`/`) and Assamese (`/as/`). It bundles the same interpreter for the browser.
+Nothing in `src/` outside `src/cli/` uses Node APIs, so no special build of the language is needed.
 
-| Path                         | Responsibility                                                   |
-| ---------------------------- | ---------------------------------------------------------------- |
-| `playground/src/runner.ts`   | Runs a program; `সোধা` reads the input box line by line. No DOM. |
-| `playground/src/share.ts`    | `#code=` share links (base64url UTF-8). No DOM.                  |
-| `playground/src/examples.ts` | `examples/*.asom`, bundled as text.                              |
-| `playground/src/main.ts`     | DOM wiring: editor, toolbar, output, cheat sheet.                |
-| `playground/public/`         | `index.html` and `style.css`, copied as-is.                      |
+| Path                      | Responsibility                                                       |
+| ------------------------- | -------------------------------------------------------------------- |
+| `website/build.mjs`       | Generates every page (both languages), the sitemap and the 404 page. |
+| `website/content/`        | Page content. Code samples are run at build time and must not fail.  |
+| `website/lib/`            | Layout, helpers, syntax highlighting (with the real lexer), icons.   |
+| `website/src/playground/` | DOM-free modules: runner, `#code=` share links, bundled examples.    |
+| `website/src/client/`     | Browser scripts: theme, menus, script tabs, playground, Web Worker.  |
+| `website/styles.css`      | The whole stylesheet (light and dark themes).                        |
 
-- **Build:** `npm run playground:build` writes `site/` (`tsup.playground.config.ts`, IIFE bundle).
-- **Deploy:** `.github/workflows/pages.yml` publishes `site/` to GitHub Pages on every push to `main`.
-- **Execution:** programs run on the page's main thread. The step budget stops a runaway program
-  in about a second.
-- **Input:** `সোধা` reads from the input box rather than prompting, because a synchronous read is not
-  possible in a worker without cross-origin isolation, which GitHub Pages cannot enable.
+- **Build:** `npm run website:build` writes `website/dist/` (`tsup.website.config.ts` for the
+  browser bundles, then `website/build.mjs` for the HTML).
+- **Deploy:** `.github/workflows/pages.yml` publishes `website/dist/` to GitHub Pages on every push
+  to `main`.
+- **Execution:** playground programs run in a Web Worker, so the page never freezes; Stop
+  terminates the worker. The step budget still ends runaway programs after about a second.
+- **Input:** `সোধা` reads from the input box, one line per call.
+- **Security:** every page carries a strict Content Security Policy (no inline scripts, no network
+  access); output is inserted as text, never HTML; shared links are never run automatically.
+  `tests/website/` checks these rules on every build.
 
 ## Embedding
 

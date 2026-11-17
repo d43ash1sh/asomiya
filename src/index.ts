@@ -2,6 +2,7 @@ export { LANGUAGE, type LanguageConfig } from './language/config';
 export {
   KEYWORD_GLOSSARY,
   BUILTIN_NAMES,
+  BUILTIN_ROMAN,
   type KeywordEntry,
   type KeywordId,
 } from './language/glossary';

@@ -1,12 +1,12 @@
-import arithmetic from '../../examples/arithmetic.asom';
-import conditionals from '../../examples/conditionals.asom';
-import functions from '../../examples/functions.asom';
-import greet from '../../examples/greet.asom';
-import hello from '../../examples/hello.asom';
-import lists from '../../examples/lists.asom';
-import loops from '../../examples/loops.asom';
-import roman from '../../examples/roman.asom';
-import variables from '../../examples/variables.asom';
+import arithmetic from '../../../examples/arithmetic.asom';
+import conditionals from '../../../examples/conditionals.asom';
+import functions from '../../../examples/functions.asom';
+import greet from '../../../examples/greet.asom';
+import hello from '../../../examples/hello.asom';
+import lists from '../../../examples/lists.asom';
+import loops from '../../../examples/loops.asom';
+import roman from '../../../examples/roman.asom';
+import variables from '../../../examples/variables.asom';
 
 export interface Example {
   /** File name in examples/. */

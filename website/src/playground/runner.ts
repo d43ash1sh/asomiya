@@ -5,7 +5,7 @@ import {
   parse,
   type DigitSetting,
   type MessageLanguage,
-} from '../../src/index';
+} from '../../../src/index';
 
 export interface RunSettings {
   readonly lang: MessageLanguage;

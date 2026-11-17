@@ -4,6 +4,23 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Website** (`website/`, deployed to https://asomiya.codes): home page, a 14-page tutorial, a
+  reference (keywords, built-ins, every error code, CLI, JavaScript API, limits), a community page,
+  and the playground. Every page is in English and Assamese, every code sample has Assamese-script
+  and English-letter versions, and every sample is run when the site is built.
+- The playground now runs programs in a Web Worker with a **Stop** button, so the page never
+  freezes.
+
+### Security
+
+- Website: strict Content Security Policy on every page (no inline scripts, no network access),
+  share links are size-limited and never run automatically, and tests check these rules plus every
+  internal link on each build.
+
 ## [0.2.0] — 2026-11-18
 
 ### Added

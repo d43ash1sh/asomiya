@@ -10,7 +10,11 @@ export function encodeSource(source: string): string {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
+/** Longest fragment accepted (≈ 150 KB of source). Larger links are ignored, not decoded. */
+export const MAX_SHARED_LENGTH = 200_000;
+
 export function decodeSource(encoded: string): string | null {
+  if (encoded.length > MAX_SHARED_LENGTH) return null;
   try {
     const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
     const binary = atob(base64);

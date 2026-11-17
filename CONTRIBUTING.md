@@ -39,9 +39,9 @@ Node.js 20+ is required.
 
 ## Playground
 
-`npm run playground:serve` builds `site/` and serves it at <http://localhost:8080> (needs Python 3).
-Keep logic out of `playground/src/main.ts`: put it in a DOM-free module and test it in
-`tests/playground/`.
+`npm run website:serve` builds the website (`website/`) and serves it at <http://localhost:8080>
+(needs Python 3). See [website/README.md](website/README.md). Keep logic out of the DOM scripts:
+put it in a DOM-free module and test it in `tests/website/`.
 
 ## Error messages
 

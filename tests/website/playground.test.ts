@@ -1,9 +1,9 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { EXAMPLES } from '../../playground/src/examples';
-import { runProgram } from '../../playground/src/runner';
-import { decodeSource, encodeSource, fromHash, toHash } from '../../playground/src/share';
+import { EXAMPLES } from '../../website/src/playground/examples';
+import { runProgram } from '../../website/src/playground/runner';
+import { decodeSource, encodeSource, fromHash, toHash } from '../../website/src/playground/share';
 
 const ROOT = resolve(import.meta.dirname, '../..');
 const defaults = { lang: 'as', digits: 'assamese', stdin: '' } as const;

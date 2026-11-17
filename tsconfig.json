@@ -25,9 +25,9 @@
   "include": [
     "src",
     "tests",
-    "playground/src/asom.d.ts",
+    "website/src/playground/asom.d.ts",
     "tsup.config.ts",
-    "tsup.playground.config.ts",
+    "tsup.website.config.ts",
     "vitest.config.ts",
     "eslint.config.js"
   ]

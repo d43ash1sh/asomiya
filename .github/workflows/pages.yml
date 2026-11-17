@@ -1,6 +1,6 @@
 name: Playground
 
-# Builds the browser playground (playground/ → site/) and publishes it to GitHub Pages.
+# Builds the website (website/ → website/dist/) and publishes it to GitHub Pages.
 # One-time setup: repository Settings → Pages → Build and deployment → Source: "GitHub Actions".
 
 on:
@@ -29,10 +29,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run playground:build
+      - run: npm run website:build
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
-          path: site
+          path: website/dist
 
   deploy:
     needs: build

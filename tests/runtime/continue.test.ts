@@ -3,7 +3,9 @@ import { failCode, run, types } from '../helpers';
 
 describe('আগবাঢ়া (continue)', () => {
   it('lexes in both scripts', () => {
-    expect(types('আগবাঢ়া aagbara Agbara')).toEqual(['Continue', 'Continue', 'Continue']);
+    expect(types('আগবাঢ়া aagbara agbara')).toEqual(['Continue', 'Continue', 'Continue']);
+    // Romanised keywords are lower-case only; `Agbara` is an ordinary name.
+    expect(types('Agbara')).toEqual(['Identifier']);
   });
 
   it('skips the rest of the iteration', () => {

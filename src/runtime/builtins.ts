@@ -1,6 +1,6 @@
 import { runtimeError } from '../errors/runtime-error';
 import { BUILTIN_NAMES, BUILTIN_ROMAN, type BuiltinKey } from '../language/glossary';
-import { typeName, type ValueKind } from '../language/types';
+import { ROMAN_TYPE_NAMES, typeName, type ValueKind } from '../language/types';
 import { assameseDigitsToAscii, graphemes } from '../lexer/unicode';
 import { MAX_LIST_LENGTH } from './limits';
 import {
@@ -62,9 +62,10 @@ const length = builtin(BUILTIN_NAMES.length, 1, 1, (args, ctx) => {
   return typeError(BUILTIN_NAMES.length, 0, ['string', 'list'], x, ctx);
 });
 
-const typeOf = builtin(BUILTIN_NAMES.typeOf, 1, 1, (args) =>
-  str(typeName(argAt(args, 0).kind, 'as')),
-);
+const typeOf = builtin(BUILTIN_NAMES.typeOf, 1, 1, (args, ctx) => {
+  const kind = argAt(args, 0).kind;
+  return str(ctx.roman ? ROMAN_TYPE_NAMES[kind] : typeName(kind, 'as'));
+});
 
 const toNumber = builtin(BUILTIN_NAMES.toNumber, 1, 1, (args, ctx): NumberValue | typeof NULL => {
   const x = argAt(args, 0);

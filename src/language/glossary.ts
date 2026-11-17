@@ -30,7 +30,7 @@ export interface KeywordEntry {
   /**
    * Spellings in Latin letters (romanised Assamese, as typed in chats). There is no standard
    * romanisation, so several common spellings are accepted; the first is the preferred one.
-   * Matching ignores ASCII case. See docs/ROMAN.md.
+   * Lower-case only and case-sensitive, so `Jodi` or `Misha` can still be names. See docs/ROMAN.md.
    */
   readonly roman: readonly string[];
   readonly concept: string;

@@ -69,6 +69,8 @@ export class Interpreter {
   private readonly maxCallDepth: number;
   private readonly digitSetting: DigitSetting;
   private digits: DigitStyle;
+  /** Set once a program written in Roman letters runs (sticky, like `digits`, for the REPL). */
+  private roman = false;
   private readonly allowTopLevelRedeclaration: boolean;
   private steps = 0;
   private callDepth = 0;
@@ -96,6 +98,7 @@ export class Interpreter {
    */
   run(program: Program): Value | undefined {
     // In `auto` mode, a Roman-script program switches to 0-9 (and stays there, e.g. in a REPL).
+    if (program.roman) this.roman = true;
     if (this.digitSetting === 'auto' && program.roman) this.digits = 'ascii';
     this.steps = 0;
     this.callDepth = 0;
@@ -122,7 +125,7 @@ export class Interpreter {
    */
   describe(value: Value, span: Span): string {
     try {
-      return reprValue(value, this.digits, MAX_TEXT_LENGTH);
+      return reprValue(value, this.digits, MAX_TEXT_LENGTH, this.roman);
     } catch (error) {
       if (error instanceof DisplayTooLongError) {
         throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
@@ -149,7 +152,7 @@ export class Interpreter {
   /** Display form used by কোৱা, পাঠ() and `+`; enforces the text-length limit. */
   private show(value: Value, span: Span): string {
     try {
-      return displayValue(value, this.digits, MAX_TEXT_LENGTH);
+      return displayValue(value, this.digits, MAX_TEXT_LENGTH, this.roman);
     } catch (error) {
       if (error instanceof DisplayTooLongError) {
         throw runtimeError('R019', { type: 'string', limit: MAX_TEXT_LENGTH }, span);
@@ -406,7 +409,7 @@ export class Interpreter {
   /** A bounded echo form for error messages. */
   private shortRepr(value: Value): string {
     try {
-      return reprValue(value, this.digits, 60);
+      return reprValue(value, this.digits, 60, this.roman);
     } catch {
       return '…';
     }
@@ -455,6 +458,7 @@ export class Interpreter {
         },
         write: this.write,
         readLine: this.readLine,
+        roman: this.roman,
       };
       return callee.call(args, ctx);
     }

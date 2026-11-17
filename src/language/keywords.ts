@@ -23,7 +23,7 @@ function buildKeywordTable(): ReadonlyMap<string, SimpleTokenType> {
   const table = new Map<string, SimpleTokenType>();
   for (const entry of KEYWORD_GLOSSARY) {
     for (const spelling of [entry.word, ...entry.aliases, ...entry.roman]) {
-      const key = normalizeIdentifier(spelling).toLowerCase();
+      const key = normalizeIdentifier(spelling);
       if (table.has(key)) {
         throw new Error(`Duplicate keyword spelling in glossary: ${spelling}`);
       }
@@ -38,8 +38,16 @@ export const KEYWORDS: ReadonlyMap<string, SimpleTokenType> = buildKeywordTable(
 
 /** Looks up an already-normalised identifier. */
 export function keywordTokenType(normalizedName: string): SimpleTokenType | undefined {
-  // Lower-casing only affects Latin letters, so `Jodi`, `JODI` and `jodi` are all যদি.
-  return KEYWORDS.get(normalizedName.toLowerCase());
+  // Case-sensitive: `jodi` is যদি, while `Jodi` (a name) stays an ordinary identifier.
+  return KEYWORDS.get(normalizedName);
+}
+
+/** Preferred romanised spelling of a keyword (used as output by programs written in Roman). */
+export function keywordRoman(id: KeywordId): string {
+  const entry = KEYWORD_GLOSSARY.find((e) => e.id === id);
+  const word = entry?.roman[0];
+  if (word === undefined) throw new Error(`No romanised spelling for keyword: ${id}`);
+  return word;
 }
 
 /** Canonical spelling of a keyword, for diagnostics. */

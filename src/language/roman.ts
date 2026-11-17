@@ -10,6 +10,7 @@ const LATIN_NAME = /^[A-Za-z_'][A-Za-z0-9_']*$/;
 interface Candidate {
   /** A spelling that is accepted. */
   readonly spelling: string;
+  readonly keyword: boolean;
   /** What to suggest: the preferred Roman spelling and the Assamese word. */
   readonly suggestion: string;
 }
@@ -20,7 +21,7 @@ function buildCandidates(): readonly Candidate[] {
     const preferred = entry.roman[0];
     if (preferred === undefined) continue;
     for (const spelling of entry.roman) {
-      out.push({ spelling, suggestion: `${preferred} (${entry.word})` });
+      out.push({ spelling, keyword: true, suggestion: `${preferred} (${entry.word})` });
     }
   }
   for (const key of Object.keys(BUILTIN_ROMAN) as BuiltinKey[]) {
@@ -28,7 +29,7 @@ function buildCandidates(): readonly Candidate[] {
     const preferred = spellings[0];
     if (preferred === undefined) continue;
     for (const spelling of spellings) {
-      out.push({ spelling, suggestion: `${preferred} (${BUILTIN_NAMES[key]})` });
+      out.push({ spelling, keyword: false, suggestion: `${preferred} (${BUILTIN_NAMES[key]})` });
     }
   }
   return out;
@@ -59,7 +60,7 @@ function editDistance(a: string, b: string, limit: number): number {
  * For a Latin-script name that isn't defined, the closest romanised keyword or built-in, e.g.
  * `kowaa` → `kowa (কোৱা)`. Returns undefined when nothing is close enough.
  */
-export function suggestRoman(name: string): string | undefined {
+export function suggestRoman(name: string, keywordsOnly = false): string | undefined {
   // One- and two-letter names (x, i, ab) are ordinary variables, not misspelt keywords.
   if (name.length < 3 || !LATIN_NAME.test(name)) return undefined;
   const lower = name.toLowerCase();
@@ -68,6 +69,7 @@ export function suggestRoman(name: string): string | undefined {
   let best: Candidate | undefined;
   let bestDistance = limit + 1;
   for (const candidate of CANDIDATES) {
+    if (keywordsOnly && !candidate.keyword) continue;
     const d = editDistance(lower, candidate.spelling, limit);
     if (d < bestDistance) {
       best = candidate;

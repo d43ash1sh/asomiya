@@ -1,5 +1,5 @@
-import { keywordWord } from '../language/keywords';
-import { typeName } from '../language/types';
+import { keywordRoman, keywordWord } from '../language/keywords';
+import { ROMAN_TYPE_NAMES, typeName } from '../language/types';
 import { asciiDigitsToAssamese } from '../lexer/unicode';
 import type { DigitStyle, ListValue, Value } from './values';
 
@@ -45,7 +45,13 @@ class Renderer {
   constructor(
     private readonly digits: DigitStyle,
     private readonly maxLength: number,
+    /** Print সঁচা/মিছা/খালী as xosa/misa/khali (programs written in Roman letters). */
+    private readonly roman: boolean,
   ) {}
+
+  private word(id: 'true' | 'false' | 'null'): string {
+    return this.roman ? keywordRoman(id) : keywordWord(id);
+  }
 
   push(text: string): void {
     this.length += text.length;
@@ -62,14 +68,16 @@ class Renderer {
         this.push(quoteStrings ? quote(value.value) : value.value);
         return;
       case 'boolean':
-        this.push(keywordWord(value.value ? 'true' : 'false'));
+        this.push(this.word(value.value ? 'true' : 'false'));
         return;
       case 'null':
-        this.push(keywordWord('null'));
+        this.push(this.word('null'));
         return;
-      case 'function':
-        this.push(`<${typeName('function', 'as')} ${value.name}>`);
+      case 'function': {
+        const fn = this.roman ? ROMAN_TYPE_NAMES.function : typeName('function', 'as');
+        this.push(`<${fn} ${value.name}>`);
         return;
+      }
       case 'list': {
         if (this.seen.has(value)) {
           this.push('[…]');
@@ -98,8 +106,9 @@ function renderValue(
   digits: DigitStyle,
   quoteStrings: boolean,
   maxLength: number,
+  roman: boolean,
 ): string {
-  const renderer = new Renderer(digits, maxLength);
+  const renderer = new Renderer(digits, maxLength, roman);
   renderer.render(value, quoteStrings);
   return renderer.toString();
 }
@@ -112,8 +121,9 @@ export function displayValue(
   value: Value,
   digits: DigitStyle,
   maxLength = Number.POSITIVE_INFINITY,
+  roman = false,
 ): string {
-  return renderValue(value, digits, false, maxLength);
+  return renderValue(value, digits, false, maxLength, roman);
 }
 
 /** The form used by the REPL to echo results. Text is quoted so "১" and ১ look different. */
@@ -121,6 +131,7 @@ export function reprValue(
   value: Value,
   digits: DigitStyle,
   maxLength = Number.POSITIVE_INFINITY,
+  roman = false,
 ): string {
-  return renderValue(value, digits, true, maxLength);
+  return renderValue(value, digits, true, maxLength, roman);
 }

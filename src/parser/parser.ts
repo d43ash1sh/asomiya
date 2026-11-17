@@ -4,6 +4,7 @@ import { tokenize } from '../lexer/lexer';
 import { spanFrom, type Token } from '../lexer/token';
 import { PUNCTUATION_TEXT, type PunctuationTokenType, type TokenType } from '../lexer/token-types';
 import { isLetter } from '../lexer/unicode';
+import { suggestRoman } from '../language/roman';
 import type {
   BlockStatement,
   Expression,
@@ -136,7 +137,14 @@ export class Parser {
       }
       // A statement that ends in a block (`যদি … { }`, `ফাংচন … { }`) needs no separator.
       if (this.previous().type === 'RightBrace') continue;
-      throw parserError('P007', { found: describe(next) }, next.span);
+      const suggestion = misspeltKeyword(statements[statements.length - 1]);
+      throw parserError(
+        'P007',
+        suggestion === undefined
+          ? { found: describe(next) }
+          : { found: describe(next), suggestion },
+        next.span,
+      );
     }
     return statements;
   }
@@ -455,6 +463,17 @@ function describe(token: Token): Found {
   if (token.type === 'EOF') return { kind: 'eof' };
   if (token.type === 'Newline') return { kind: 'newline' };
   return { kind: 'token', text: token.lexeme };
+}
+
+/**
+ * `jodii (x) { … }`, `dhoraa x = 1`, `fangchun f() { … }` parse as a bare name (or a call) followed
+ * by something unexpected. If that name is close to a romanised keyword, suggest it.
+ */
+function misspeltKeyword(statement: Statement | undefined): string | undefined {
+  if (statement?.kind !== 'ExpressionStatement') return undefined;
+  let expr = statement.expression;
+  if (expr.kind === 'CallExpression') expr = expr.callee;
+  return expr.kind === 'Identifier' ? suggestRoman(expr.name, true) : undefined;
 }
 
 /** Keyword lexemes are either Assamese script or romanised; this spots the romanised ones. */

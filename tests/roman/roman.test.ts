@@ -18,9 +18,9 @@ describe('romanised keywords', () => {
     }
   });
 
-  it('ignores ASCII case', () => {
-    expect(types('Jodi JODI jodi')).toEqual(['If', 'If', 'If']);
-    expect(run('KOWA(Xosa)')).toBe('সঁচা\n');
+  it('is case-sensitive, so capitalised names such as Jodi or Misha stay ordinary names', () => {
+    expect(types('jodi Jodi JODI')).toEqual(['If', 'Identifier', 'Identifier']);
+    expect(run('dhora Jodi = "Jodi"\ndhora Misha = 1\nkowa(Jodi, Misha)')).toBe('Jodi 1\n');
   });
 
   it('runs a whole program in Roman letters', () => {
@@ -36,7 +36,7 @@ describe('romanised keywords', () => {
       '}',
       'kowa(karok(n), i, khali, misa ba xosa)',
     ].join('\n');
-    expect(run(source)).toBe('120 3 খালী সঁচা\n');
+    expect(run(source)).toBe('120 3 khali xosa\n');
   });
 
   it('mixes freely with Assamese script', () => {
@@ -74,11 +74,25 @@ describe('romanised built-ins', () => {
       'xonjojon(l, 3)',
       'kowa(doirghyo(l), prokar(l), xonkhya("৪২") + 1, path(7) + "!", purnanko(3.9))',
     ].join('\n');
-    expect(run(source)).toBe('3 তালিকা 43 7! 3\n');
+    expect(run(source)).toBe('3 talika 43 7! 3\n');
   });
 
   it('xudha reads input', () => {
     expect(run('kowa(xudha())', { readLine: () => 'Oxom' })).toBe('Oxom\n');
+  });
+});
+
+describe('output words for romanised programs', () => {
+  it('prints xosa/misa/khali and Roman type names', () => {
+    expect(run('kowa(xosa, misa, khali, [xosa])')).toBe('xosa misa khali [xosa]\n');
+    expect(run('kowa(prokar(1), prokar("a"), prokar(xosa), prokar(khali), prokar([]))')).toBe(
+      'xonkhya path xosa-misa khali talika\n',
+    );
+    expect(run('fangchon f() { }\nkowa(f)')).toBe('<fangchon f>\n');
+  });
+
+  it('keeps Assamese words for Assamese-script programs', () => {
+    expect(run('কোৱা(সঁচা, খালী, প্ৰকাৰ(১))')).toBe('সঁচা খালী সংখ্যা\n');
   });
 });
 
@@ -95,6 +109,24 @@ describe('did you mean …?', () => {
     expect(suggestRoman('b')).toBeUndefined();
     expect(suggestRoman('total')).toBeUndefined();
     expect(suggestRoman('অজ্ঞাত')).toBeUndefined();
+  });
+
+  it('suggests keywords for typos at the start of a statement', () => {
+    const cases: [string, string][] = [
+      ['dhora x = 5\njodii (x > 1) { kowa(1) }', 'jodi (যদি)'],
+      ['dhoraa x = 5', 'dhora (ধৰা)'],
+      ['fangchun f() { ghuraidiya 1 }', 'fangchon (ফাংচন)'],
+      ['jodi (xosa) { kowa(1) } nohol { kowa(2) }', "nohole (নহ'লে)"],
+    ];
+    for (const [source, suggestion] of cases) {
+      const { diagnostic } = fail(source);
+      expect(diagnostic.code, source).toBe('P007');
+      expect(diagnostic.params, source).toMatchObject({ suggestion });
+    }
+  });
+
+  it('does not suggest keywords for ordinary statements', () => {
+    expect(fail('dhora x = 1\nx x').diagnostic.params).not.toHaveProperty('suggestion');
   });
 
   it('adds the suggestion to the undefined-variable error', () => {

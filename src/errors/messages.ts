@@ -94,9 +94,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `Duplicate parameter "${p.name}"`,
   },
   P007: {
-    as: (p) => `বাক্যৰ পিছত নতুন শাৰী বা ";" লাগিব, কিন্তু পোৱা গ'ল ${found(p.found, 'as')}`,
+    as: (p) =>
+      `বাক্যৰ পিছত নতুন শাৰী বা ";" লাগিব, কিন্তু পোৱা গ'ল ${found(p.found, 'as')}` +
+      (p.suggestion === undefined ? '' : ` — আপুনি ${p.suggestion} লিখিব বিচাৰিছিল নেকি?`),
     en: (p) =>
-      `Expected a line break or ";" after the statement, but found ${found(p.found, 'en')}`,
+      `Expected a line break or ";" after the statement, but found ${found(p.found, 'en')}` +
+      (p.suggestion === undefined ? '' : ` — did you mean ${p.suggestion}?`),
   },
   P008: {
     as: (p) =>

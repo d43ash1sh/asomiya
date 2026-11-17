@@ -55,6 +55,8 @@ export interface BuiltinContext {
   readonly chargeFor: (size: number) => void;
   readonly write: (text: string) => void;
   readonly readLine: (() => string | null) | null;
+  /** True when the program is written in Roman letters (affects প্ৰকাৰ's result). */
+  readonly roman: boolean;
 }
 
 export interface BuiltinFunctionValue {

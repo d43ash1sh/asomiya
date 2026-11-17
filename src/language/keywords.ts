@@ -21,8 +21,8 @@ const TOKEN_FOR_KEYWORD: Readonly<Record<KeywordId, SimpleTokenType>> = {
 function buildKeywordTable(): ReadonlyMap<string, SimpleTokenType> {
   const table = new Map<string, SimpleTokenType>();
   for (const entry of KEYWORD_GLOSSARY) {
-    for (const spelling of [entry.word, ...entry.aliases]) {
-      const key = normalizeIdentifier(spelling);
+    for (const spelling of [entry.word, ...entry.aliases, ...entry.roman]) {
+      const key = normalizeIdentifier(spelling).toLowerCase();
       if (table.has(key)) {
         throw new Error(`Duplicate keyword spelling in glossary: ${spelling}`);
       }
@@ -37,7 +37,8 @@ export const KEYWORDS: ReadonlyMap<string, SimpleTokenType> = buildKeywordTable(
 
 /** Looks up an already-normalised identifier. */
 export function keywordTokenType(normalizedName: string): SimpleTokenType | undefined {
-  return KEYWORDS.get(normalizedName);
+  // Lower-casing only affects Latin letters, so `Jodi`, `JODI` and `jodi` are all যদি.
+  return KEYWORDS.get(normalizedName.toLowerCase());
 }
 
 /** Canonical spelling of a keyword, for diagnostics. */

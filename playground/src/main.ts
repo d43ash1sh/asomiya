@@ -220,7 +220,9 @@ function chip(word: string, meaning: string): HTMLButtonElement {
 }
 
 function buildReference(): void {
-  const keywords = KEYWORD_GLOSSARY.map((k) => chip(k.word, k.concept));
+  const keywords = KEYWORD_GLOSSARY.map((k) =>
+    chip(k.word, k.roman[0] === undefined ? k.concept : `${k.concept} · ${k.roman[0]}`),
+  );
   const builtins = Object.keys(BUILTIN_NAMES)
     .filter(isBuiltinKey)
     .map((key) => chip(`${BUILTIN_NAMES[key]}()`, BUILTIN_HELP[key]));

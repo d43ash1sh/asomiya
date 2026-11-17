@@ -86,11 +86,26 @@ to assembly.)
 **Built-in functions:** `দৈৰ্ঘ্য` (length), `প্ৰকাৰ` (type), `সংখ্যা` (to number), `পাঠ` (to text),
 `পূৰ্ণাংক` (truncate), `সংযোজন` (append), `সোধা` (read a line of input).
 
+### Write it in English letters too
+
+No Assamese keyboard? Every keyword and built-in also has romanised spellings, the way people type
+Assamese in chats:
+
+```
+dhora naam = "Debashish"
+jodi (naam != "") { kowa("Nomoskar, " + naam) } nohole { kowa("naam nai") }
+```
+
+Romanised Assamese has no single standard spelling, so several common spellings are accepted
+(`kowa`, `kuwa`, `kua`; `xosa`, `hosa`, `sosa` …). Keywords ignore case, and a near-miss like
+`kowaa` gets a "did you mean `kowa` (কোৱা)?" hint. See the [Roman spelling guide](docs/ROMAN.md).
+
 Full details:
 
 - [Language specification](docs/LANGUAGE_SPEC.md): types, operators, scoping, semantics
 - [Grammar](docs/GRAMMAR.md): EBNF, precedence table, lexical rules
 - [Keyword glossary](docs/KEYWORDS.md): what every word means and why it was chosen
+- [Roman spelling guide](docs/ROMAN.md): writing Asomiya in English letters
 - [Error reference](docs/ERRORS.md): every error code in Assamese and English
 - [Architecture](docs/ARCHITECTURE.md): how the interpreter is built
 
@@ -146,6 +161,7 @@ screen, so input is left to the terminal itself.
 | [`functions.asom`](examples/functions.asom)       | functions, recursion, higher-order, closures |
 | [`lists.asom`](examples/lists.asom)               | lists, grapheme-aware text indexing          |
 | [`greet.asom`](examples/greet.asom)               | reading input with `সোধা`                    |
+| [`roman.asom`](examples/roman.asom)               | the same language in English letters         |
 
 ## Playground
 

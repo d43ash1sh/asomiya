@@ -1,0 +1,31 @@
+// Roman (English letters) — অসমীয়া শব্দ ইংৰাজী আখৰত লিখিব পাৰি।
+// Each keyword also has an Assamese-script form: dhora = ধৰা, kowa = কোৱা, jodi = যদি …
+dhora naam = "Debashish"
+dhora boyox = 24
+
+kowa("Nomoskar, " + naam)
+
+jodi (boyox >= 18) {
+    kowa("moi ejon praptoboyosko")
+} nohole {
+    kowa("moi etiya-o xoru")
+}
+
+// jetialoike = যেতিয়ালৈকে (while)
+dhora i = 1
+dhora jugfol = 0
+jetialoike (i <= 10) {
+    jugfol = jugfol + i
+    i = i + 1
+}
+kowa("1-10 jugfol:", jugfol)
+
+// fangchon = ফাংচন, ghuraidiya = ঘূৰাইদিয়া
+fangchon dugun(x) {
+    ghuraidiya x * 2
+}
+kowa(dugun(21))
+
+// Both scripts can be mixed in one program.
+ধৰা ফল = xosa aru !misa
+কোৱা(ফল, doirghyo("Oxom"))

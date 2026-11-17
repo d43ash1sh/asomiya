@@ -1,6 +1,6 @@
 {
   "name": "asomiya",
-  "version": "0.1.1",
+  "version": "0.2.0-beta.0",
   "description": "অসমীয়া — an educational programming language written in Assamese, with a TypeScript interpreter.",
   "keywords": [
     "assamese",
@@ -44,6 +44,7 @@
     "docs/LANGUAGE_SPEC.md",
     "docs/GRAMMAR.md",
     "docs/KEYWORDS.md",
+    "docs/ROMAN.md",
     "docs/ERRORS.md",
     "docs/ARCHITECTURE.md",
     "README.md",

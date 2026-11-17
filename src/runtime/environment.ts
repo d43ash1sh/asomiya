@@ -1,4 +1,5 @@
-import { runtimeError } from '../errors/runtime-error';
+import { runtimeError, type RuntimeError } from '../errors/runtime-error';
+import { suggestRoman } from '../language/roman';
 import type { Span } from '../lexer/token';
 import type { Value } from './values';
 
@@ -24,14 +25,14 @@ export class Environment {
 
   lookup(name: string, span: Span): Value {
     const value = this.find(name)?.bindings.get(name);
-    if (value === undefined) throw runtimeError('R001', { name }, span);
+    if (value === undefined) throw undefinedName(name, span);
     return value;
   }
 
   /** Assigns to the nearest scope that declares `name`. */
   assign(name: string, value: Value, span: Span): void {
     const owner = this.find(name);
-    if (owner === null) throw runtimeError('R001', { name }, span);
+    if (owner === null) throw undefinedName(name, span);
     if (owner.readOnly) throw runtimeError('R020', { name }, span);
     owner.bindings.set(name, value);
   }
@@ -41,4 +42,9 @@ export class Environment {
     if (this.bindings.has(name)) return this;
     return this.parent === null ? null : this.parent.find(name);
   }
+}
+
+function undefinedName(name: string, span: Span): RuntimeError {
+  const suggestion = suggestRoman(name);
+  return runtimeError('R001', suggestion === undefined ? { name } : { name, suggestion }, span);
 }

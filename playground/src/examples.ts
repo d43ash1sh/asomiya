@@ -5,6 +5,7 @@ import greet from '../../examples/greet.asom';
 import hello from '../../examples/hello.asom';
 import lists from '../../examples/lists.asom';
 import loops from '../../examples/loops.asom';
+import roman from '../../examples/roman.asom';
 import variables from '../../examples/variables.asom';
 
 export interface Example {
@@ -25,5 +26,6 @@ export const EXAMPLES: readonly Example[] = [
   { file: 'loops.asom', label: 'লুপ (loops)', source: loops, stdin: '' },
   { file: 'functions.asom', label: 'ফাংচন (functions)', source: functions, stdin: '' },
   { file: 'lists.asom', label: 'তালিকা (lists)', source: lists, stdin: '' },
+  { file: 'roman.asom', label: 'Roman — English letters', source: roman, stdin: '' },
   { file: 'greet.asom', label: 'ইনপুট — সোধা (input)', source: greet, stdin: 'দেবাশীষ' },
 ];

@@ -1,5 +1,5 @@
 import { runtimeError } from '../errors/runtime-error';
-import { BUILTIN_NAMES } from '../language/glossary';
+import { BUILTIN_NAMES, BUILTIN_ROMAN, type BuiltinKey } from '../language/glossary';
 import { typeName, type ValueKind } from '../language/types';
 import { assameseDigitsToAscii, graphemes } from '../lexer/unicode';
 import { MAX_LIST_LENGTH } from './limits';
@@ -106,6 +106,21 @@ const input = builtin(BUILTIN_NAMES.input, 0, 1, (args, ctx) => {
 
 /** All built-ins, keyed by their (already NFC) names. */
 export function createBuiltins(): ReadonlyMap<string, BuiltinFunctionValue> {
-  const all = [length, typeOf, toNumber, toText, toInteger, append, input];
-  return new Map(all.map((fn) => [fn.name.normalize('NFC'), fn]));
+  const byKey: Readonly<Record<BuiltinKey, BuiltinFunctionValue>> = {
+    length,
+    typeOf,
+    toNumber,
+    toText,
+    toInteger,
+    append,
+    input,
+  };
+  const out = new Map<string, BuiltinFunctionValue>();
+  for (const key of Object.keys(byKey) as BuiltinKey[]) {
+    const fn = byKey[key];
+    out.set(fn.name.normalize('NFC'), fn);
+    // Romanised names (BUILTIN_ROMAN) call the same function; messages use the Assamese name.
+    for (const spelling of BUILTIN_ROMAN[key]) out.set(spelling, fn);
+  }
+  return out;
 }

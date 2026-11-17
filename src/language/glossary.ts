@@ -26,6 +26,12 @@ export interface KeywordEntry {
   readonly word: string;
   /** Other accepted spellings (resolved to the same keyword). */
   readonly aliases: readonly string[];
+  /**
+   * Spellings in Latin letters (romanised Assamese, as typed in chats). There is no standard
+   * romanisation, so several common spellings are accepted; the first is the preferred one.
+   * Matching ignores ASCII case. See docs/ROMAN.md.
+   */
+  readonly roman: readonly string[];
   readonly concept: string;
   readonly meaning: string;
   readonly status: GlossaryStatus;
@@ -36,6 +42,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'let',
     word: 'ধৰা',
     aliases: [],
+    roman: ['dhora', 'dhara'],
     concept: 'variable declaration',
     meaning: '"suppose / let" — as in ধৰা হওক x = ৫',
     status: 'stable',
@@ -44,6 +51,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'print',
     word: 'কোৱা',
     aliases: [],
+    roman: ['kowa', 'kuwa', 'kua', 'koa'],
     concept: 'print a line',
     meaning: '"say / tell" (imperative)',
     status: 'stable',
@@ -52,6 +60,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'if',
     word: 'যদি',
     aliases: [],
+    roman: ['jodi', 'zodi', 'jadi'],
     concept: 'if',
     meaning: '"if"',
     status: 'stable',
@@ -61,6 +70,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     word: "নহ'লে",
     // `নহ’লে` (typographic apostrophe) needs no alias: normalizeIdentifier folds ’ into '.
     aliases: ['নহলে'],
+    roman: ['nohole', "noh'le", 'nohle', 'nhole', 'nahole', 'nahale'],
     concept: 'else',
     meaning: '"otherwise / if not" (নহয় + হ\'লে)',
     status: 'stable',
@@ -69,6 +79,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'while',
     word: 'যেতিয়ালৈকে',
     aliases: [],
+    roman: ['jetialoike', 'zetialoike', 'jetiyaloike', 'zetiyaloike', 'jetialoke'],
     concept: 'while loop',
     meaning: '"for as long as"',
     status: 'provisional',
@@ -77,6 +88,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'function',
     word: 'ফাংচন',
     aliases: [],
+    roman: ['fangchon', 'phangchon', 'fanchon'],
     concept: 'function declaration',
     meaning: 'loanword "function"; native candidates: ফলন, কাৰ্য',
     status: 'provisional',
@@ -85,6 +97,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'return',
     word: 'ঘূৰাইদিয়া',
     aliases: [],
+    roman: ['ghuraidiya', 'ghuraidia'],
     concept: 'return from a function',
     meaning: '"give back" (ঘূৰাই দিয়া, joined into one token)',
     status: 'provisional',
@@ -93,6 +106,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'break',
     word: 'ৰখা',
     aliases: [],
+    roman: ['rokha', 'rakha'],
     concept: 'break out of a loop',
     meaning: '"stop / halt"',
     status: 'stable',
@@ -101,6 +115,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'true',
     word: 'সঁচা',
     aliases: [],
+    roman: ['xosa', 'xocha', 'hosa', 'sosa', 'socha', 'sacha'],
     concept: 'boolean true',
     meaning: '"true"',
     status: 'stable',
@@ -109,6 +124,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'false',
     word: 'মিছা',
     aliases: [],
+    roman: ['misa', 'micha', 'misha'],
     concept: 'boolean false',
     meaning: '"false / untrue"',
     status: 'stable',
@@ -117,6 +133,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'null',
     word: 'খালী',
     aliases: [],
+    roman: ['khali', 'khaali'],
     concept: 'null',
     meaning: '"empty"',
     status: 'stable',
@@ -125,6 +142,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'and',
     word: 'আৰু',
     aliases: [],
+    roman: ['aru', 'aaru'],
     concept: 'logical AND',
     meaning: '"and"',
     status: 'stable',
@@ -133,6 +151,7 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     id: 'or',
     word: 'বা',
     aliases: [],
+    roman: ['ba', 'baa'],
     concept: 'logical OR',
     meaning: '"or"',
     status: 'stable',
@@ -149,3 +168,16 @@ export const BUILTIN_NAMES = {
   append: 'সংযোজন',
   input: 'সোধা',
 } as const;
+
+export type BuiltinKey = keyof typeof BUILTIN_NAMES;
+
+/** Romanised spellings of the built-ins (first = preferred). Like the built-ins, case-sensitive. */
+export const BUILTIN_ROMAN: Readonly<Record<BuiltinKey, readonly string[]>> = {
+  length: ['doirghyo', 'dairghya', 'doirgho'],
+  typeOf: ['prokar', 'prakar'],
+  toNumber: ['xonkhya', 'sonkhya', 'sankhya', 'xongkhya'],
+  toText: ['path', 'paath'],
+  toInteger: ['purnanko', 'purnanka', 'purnank'],
+  append: ['xonjojon', 'sonjojon', 'sanjojan'],
+  input: ['xudha', 'sudha', 'xodha', 'sodha'],
+};

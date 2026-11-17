@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.0-beta.0] — 2026-11-17 (beta)
+
+### Added
+
+- **Romanised Assamese.** Every keyword and built-in can also be written in English letters, the
+  way Assamese is typed in chats (`dhora`, `kowa`, `jodi`, `nohole`, `xosa` …). Because there is no
+  standard romanisation, several common spellings are accepted per word, and keywords ignore case.
+  Both scripts can be mixed in one program. See `docs/ROMAN.md`.
+- An undefined name that is close to a romanised keyword or built-in now gets a suggestion:
+  `"kowaa" … did you mean kowa (কোৱা)?` (R001).
+- `examples/roman.asom`, also in the playground.
+
 ## [0.1.1] — 2026-11-17
 
 ### Added

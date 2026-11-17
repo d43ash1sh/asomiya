@@ -27,6 +27,9 @@ This glossary is the source of truth for the language vocabulary. The same data 
 | `আৰু`         | logical AND (same as `&&`)  | "and".                                                                                                   | stable      |
 | `বা`         | logical OR (same as `\|\|`) | "or".                                                                                                    | stable      |
 
+Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi` …), listed in
+[ROMAN.md](ROMAN.md).
+
 ### Notes on provisional keywords
 
 - **`যেতিয়ালৈকে`** — With a negated clause, `…লৈকে` can mean "until" (_তুমি নহালৈকে_ = "until you

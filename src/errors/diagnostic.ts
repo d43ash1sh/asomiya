@@ -31,7 +31,7 @@ export interface DiagnosticParams {
   P009: { readonly keyword: string };
   P010: { readonly limit: number };
   // ── runtime ──────────────────────────────────────────────
-  R001: { readonly name: string };
+  R001: { readonly name: string; readonly suggestion?: string };
   R002: { readonly name: string };
   R003: { readonly op: string; readonly left: ValueKind; readonly right: ValueKind };
   R004: Record<string, never>;

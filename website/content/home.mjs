@@ -1,5 +1,6 @@
 // Home page (layout: "home").
-import { SITE, TEAM } from '../site.config.mjs';
+import { SITE } from '../site.config.mjs';
+import { teamGrid } from '../lib/team.mjs';
 import { icon } from '../lib/icons.mjs';
 
 const S = {
@@ -155,26 +156,28 @@ const S = {
   },
 };
 
-const HELLO_AS = `ধৰা নাম = "দেবাশীষ"
-ধৰা বয়স = ২৪
+const HELLO_AS = `ধৰা ভাষা = "অসমীয়া"
+ধৰা বয়স = ২০
 
-কোৱা("নমস্কাৰ, " + নাম)
+কোৱা("নমস্কাৰ, পৃথিৱী!")
+কোৱা("এই প্ৰগ্ৰামটোৰ ভাষা: " + ভাষা)
 
 যদি (বয়স >= ১৮) {
-    কোৱা("মই এজন প্ৰাপ্তবয়স্ক")
+    কোৱা("প্ৰাপ্তবয়স্ক")
 } নহ'লে {
-    কোৱা("মই এতিয়াও সৰু")
+    কোৱা("অপ্ৰাপ্তবয়স্ক")
 }`;
 
-const HELLO_ROMAN = `dhora naam = "Debashish"
-dhora boyox = 24
+const HELLO_ROMAN = `dhora bhaxa = "Oxomiya"
+dhora boyox = 20
 
-kowa("Nomoskar, " + naam)
+kowa("Nomoskar, prithibi!")
+kowa("ei programor bhaxa: " + bhaxa)
 
 jodi (boyox >= 18) {
-    kowa("moi dangor")
+    kowa("praptoboyosko")
 } nohole {
-    kowa("moi xoru")
+    kowa("oprapto-boyosko")
 }`;
 
 const LOOP_AS = `// ১ ৰ পৰা ৫ লৈকে বৰ্গ
@@ -305,9 +308,7 @@ function body(lang) {
     <h2>${s.teamTitle}</h2>
     <p>${s.teamSub}</p>
   </header>
-  <ul class="people">
-    ${TEAM.map((m) => `<li><span class="avatar" aria-hidden="true">${m.initials}</span><strong>${m.name[lang]}</strong><span>${m.role[lang]}</span></li>`).join('')}
-  </ul>
+  ${teamGrid(lang)}
   <div class="actions center">
     <a class="btn btn-primary" href="${SITE.repo}" target="_blank" rel="noopener noreferrer">${icon('github')}${s.star}</a>
     <a class="btn btn-secondary" href="${h.link('community/')}">${s.meet}</a>

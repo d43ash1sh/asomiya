@@ -73,7 +73,6 @@ function header(page, lang) {
   const home = rel(page.url, lang === 'as' ? 'as/' : '');
   const other = rel(page.url, otherLangPath(page.basePath, lang));
   return `<header class="topnav">
-  <div class="weave" aria-hidden="true"></div>
   <div class="topnav-inner">
     <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="drawer" aria-label="${esc(t.menu)}">${icon('menu')}</button>
     <a class="brand" href="${home}" aria-label="Asomiya — ${esc(t.homeLabel)}">
@@ -133,7 +132,6 @@ function footer(page, lang, sections) {
     )
     .join('');
   return `<footer class="footer">
-  <div class="weave" aria-hidden="true"></div>
   <div class="footer-inner">
     <div class="foot-brand">
       <a class="brand" href="${rel(page.url, lang === 'as' ? 'as/' : '')}">${logo(34)}<span class="brand-name">asomiya</span></a>

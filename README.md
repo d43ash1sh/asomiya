@@ -19,20 +19,45 @@ Write real programs in অসমীয়া script, or in English letters the w
 
 </div>
 
+**Assamese script**
+
 ```
-ধৰা নাম = "দেবাশীষ"                      dhora naam = "Debashish"
-ধৰা বয়স = ২৪                             dhora boyox = 24
+ধৰা ভাষা = "অসমীয়া"
+ধৰা বয়স = ২০
 
-কোৱা("নমস্কাৰ, " + নাম)                  kowa("Nomoskar, " + naam)
+কোৱা("নমস্কাৰ, পৃথিৱী!")
+কোৱা("এই প্ৰগ্ৰামটোৰ ভাষা: " + ভাষা)
 
-যদি (বয়স >= ১৮) {                        jodi (boyox >= 18) {
-    কোৱা("মই এজন প্ৰাপ্তবয়স্ক")               kowa("moi dangor")
-} নহ'লে {                                } nohole {
-    কোৱা("মই এতিয়াও সৰু")                     kowa("moi xoru")
-}                                        }
+যদি (বয়স >= ১৮) {
+    কোৱা("প্ৰাপ্তবয়স্ক")
+} নহ'লে {
+    কোৱা("অপ্ৰাপ্তবয়স্ক")
+}
 ```
 
-The two programs above are the same program: one in Assamese script, one in English letters.
+**English letters**
+
+```
+dhora bhaxa = "Oxomiya"
+dhora boyox = 20
+
+kowa("Nomoskar, prithibi!")
+kowa("ei programor bhaxa: " + bhaxa)
+
+jodi (boyox >= 18) {
+    kowa("praptoboyosko")
+} nohole {
+    kowa("oprapto-boyosko")
+}
+```
+
+Both are the same program. Output:
+
+```
+নমস্কাৰ, পৃথিৱী!
+এই প্ৰগ্ৰামটোৰ ভাষা: অসমীয়া
+প্ৰাপ্তবয়স্ক
+```
 
 ## Try it now
 

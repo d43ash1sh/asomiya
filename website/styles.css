@@ -39,8 +39,6 @@
   --tok-com: #5e6763;
   --tok-op: #98a09b;
 
-  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='10'%3E%3Crect width='28' height='1' fill='%232A3330'/%3E%3Crect y='9' width='28' height='1' fill='%232A3330'/%3E%3Cpath d='M14 2.6 16.8 5 14 7.4 11.2 5z' fill='%232A3330'/%3E%3Ccircle cx='14' cy='5' r='.9' fill='%23F2C14E' opacity='.7'/%3E%3C/svg%3E");
-
   --shadow: 0 0 0 1px var(--line), 0 24px 48px -24px rgb(0 0 0 / 0.8);
   --nav-h: 64px;
   --font: 'TASA Orbiter', 'Anek Bangla', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -79,7 +77,6 @@
   --tok-fn: #1f5e9c;
   --tok-com: #8c918e;
   --tok-op: #5d6662;
-  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='10'%3E%3Crect width='28' height='1' fill='%23CFCFC8'/%3E%3Crect y='9' width='28' height='1' fill='%23CFCFC8'/%3E%3Cpath d='M14 2.6 16.8 5 14 7.4 11.2 5z' fill='%23CFCFC8'/%3E%3Ccircle cx='14' cy='5' r='.9' fill='%23A87508'/%3E%3C/svg%3E");
   --shadow: 0 0 0 1px var(--line), 0 24px 48px -28px rgb(20 24 22 / 0.35);
   color-scheme: light;
 }
@@ -190,12 +187,6 @@ svg {
   justify-content: center;
 }
 
-/* The woven gamosa band. */
-.weave {
-  height: 10px;
-  background: var(--weave) repeat-x left center / 28px 10px;
-}
-
 /* ── logo ────────────────────────────────────────────────────────── */
 
 /* অ আ ক খ on four keycaps; অ is on the gold key. */
@@ -266,10 +257,6 @@ html[lang='as'] .scroll-hint {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
-}
-
-.topnav .weave {
-  display: none;
 }
 
 .topnav-inner {
@@ -1341,7 +1328,7 @@ html[lang='as'] .hero-title {
   text-decoration: none;
 }
 
-/* Demo window, framed by the woven band at both ends like a gamosa. */
+/* Demo window. */
 .hero-code {
   position: relative;
   margin: 0;
@@ -1349,14 +1336,6 @@ html[lang='as'] .hero-title {
   border-radius: 6px;
   box-shadow: var(--shadow);
   overflow: hidden;
-}
-
-.hero-code::before,
-.hero-code::after {
-  content: '';
-  display: block;
-  height: 10px;
-  background: var(--weave) repeat-x left center / 28px 10px;
 }
 
 .hero-code .code-block {
@@ -1584,6 +1563,87 @@ html[lang='as'] .band h2 {
   justify-content: flex-start;
 }
 
+/* Team: the same hairline grid as the features, with plain text links. */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  list-style: none;
+  padding: 0;
+  margin-bottom: 44px !important;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.team-grid li {
+  padding: 28px 28px 30px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.team-role {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[lang='as'] .team-role {
+  font-family: var(--font-as);
+  font-size: 0.9rem;
+  letter-spacing: 0;
+}
+
+.team-grid h3 {
+  margin: 0 0 18px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.team-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 0;
+}
+
+.team-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.team-links a:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.team-links .icon {
+  width: 15px;
+  height: 15px;
+}
+
+.footer-bottom a {
+  color: var(--ink-2);
+}
+
+.footer-bottom a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .letter-field span {
     animation: none;
@@ -1713,6 +1773,11 @@ html[lang='as'] .page-hero h1 {
 
 .narrow h2 {
   font-size: 1.75rem;
+  margin: 0 auto 16px;
+}
+
+.narrow h2 + * {
+  margin-top: 0;
 }
 
 .team {

@@ -338,7 +338,7 @@ const ADVANCED_SNIPPET = `import { Interpreter, parse, formatDiagnostic, Asomiya
 const source = 'কোৱা(সোধা("নাম? "))';
 const interpreter = new Interpreter({
   write: (text) => process.stdout.write(text),
-  readLine: () => 'দেবাশীষ',
+  readLine: () => 'ৰীতা',
   maxSteps: 1_000_000,
 });
 

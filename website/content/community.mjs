@@ -1,28 +1,16 @@
 // Community page: the team, social links, and how to contribute.
-import { SITE, SOCIAL, TEAM } from '../site.config.mjs';
+import { SITE, SOCIAL } from '../site.config.mjs';
+import { teamGrid } from '../lib/team.mjs';
+
+const LABELS = {
+  github: 'GitHub',
+  instagram: 'Instagram',
+  linkedin: 'LinkedIn',
+  x: 'X',
+  youtube: 'YouTube',
+};
 import { esc } from '../lib/html.mjs';
 import { icon } from '../lib/icons.mjs';
-
-function socialLinks(links) {
-  return Object.entries(links)
-    .filter(([, url]) => url !== '' && url !== undefined)
-    .map(
-      ([name, url]) =>
-        `<a class="icon-btn" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(name)}">${icon(name)}</a>`,
-    )
-    .join('');
-}
-
-function team(lang) {
-  return `<div class="team">${TEAM.map(
-    (m) => `<div class="member">
-  <span class="avatar avatar-lg" aria-hidden="true">${m.initials}</span>
-  <h3>${esc(m.name[lang])}</h3>
-  <p>${esc(m.role[lang])}</p>
-  <div class="socials">${socialLinks(m.links)}</div>
-</div>`,
-  ).join('')}</div>`;
-}
 
 const S = {
   en: {
@@ -91,7 +79,7 @@ function body(lang) {
 </section>
 <section class="section narrow">
   <h2 id="team">${s.team}</h2>
-  ${team(lang)}
+  ${teamGrid(lang)}
   <p class="center"><a class="text-link" href="${SITE.repo}/graphs/contributors" target="_blank" rel="noopener noreferrer">${s.contributors}</a></p>
 </section>
 <section class="section narrow">
@@ -101,7 +89,7 @@ function body(lang) {
     .filter(([, url]) => url !== '')
     .map(
       ([name, url]) =>
-        `<a class="social-pill" href="${esc(url)}" target="_blank" rel="noopener noreferrer me">${icon(name)}<span>${esc(name[0].toUpperCase() + name.slice(1))}</span></a>`,
+        `<a class="social-pill" href="${esc(url)}" target="_blank" rel="noopener noreferrer me">${icon(name)}<span>${esc(LABELS[name] ?? name)}</span></a>`,
     )
     .join(
       '',

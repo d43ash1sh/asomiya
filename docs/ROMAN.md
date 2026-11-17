@@ -4,7 +4,7 @@ Every keyword and built-in can also be typed in Latin letters (romanised Assames
 write Assamese in chats). You don't need an Assamese keyboard:
 
 ```
-dhora naam = "Debashish"
+dhora naam = "Rita"
 jodi (naam != "") {
     kowa("Nomoskar, " + naam)
 } nohole {

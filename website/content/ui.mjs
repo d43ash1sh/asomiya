@@ -25,7 +25,8 @@ export const UI = {
     changelog: 'Changelog',
     security: 'Security',
     copyright: (year) => `© ${year} Asomiya contributors. Released under the MIT License.`,
-    madeWith: 'Made with ❤️ in Assam',
+    madeWith:
+      'Made with ❤️ in <a href="https://heyhireme.indevs.in/" target="_blank" rel="noopener noreferrer">heyhireme</a>',
     copy: 'Copy',
     copied: 'Copied',
     tryIt: 'Try it',
@@ -55,7 +56,8 @@ export const UI = {
     changelog: 'সলনিৰ তালিকা',
     security: 'সুৰক্ষা',
     copyright: (year) => `© ${year} অসমীয়া প্ৰগ্ৰামিং ভাষাৰ অৱদানকাৰীসকল। MIT অনুজ্ঞাপত্ৰৰ অধীনত মুকলি।`,
-    madeWith: 'অসমত ❤️ সৈতে নিৰ্মিত',
+    madeWith:
+      '<a href="https://heyhireme.indevs.in/" target="_blank" rel="noopener noreferrer">heyhireme</a>-ত ❤️ সৈতে নিৰ্মিত',
     copy: 'কপি',
     copied: 'কপি হ’ল',
     tryIt: 'চলাই চাওক',

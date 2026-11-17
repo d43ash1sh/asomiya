@@ -1,6 +1,6 @@
 // Roman (English letters) — অসমীয়া শব্দ ইংৰাজী আখৰত লিখিব পাৰি।
 // Each keyword also has an Assamese-script form: dhora = ধৰা, kowa = কোৱা, jodi = যদি …
-dhora naam = "Debashish"
+dhora naam = "prithibi"
 dhora boyox = 24
 
 kowa("Nomoskar, " + naam)

@@ -145,7 +145,7 @@ const englishLetters = {
   },
   body: {
     en: (h) => `
-${h.sample('dhora naam = "Debashish"\njodi (naam != "") {\n    kowa("Nomoskar, " + naam)\n} nohole {\n    kowa("naam nai")\n}')}
+${h.sample('dhora naam = "Rita"\njodi (naam != "") {\n    kowa("Nomoskar, " + naam)\n} nohole {\n    kowa("naam nai")\n}')}
 ${h.h2('spelling', 'There is no single “correct” spelling')}
 <p>Assamese has no standard way of writing it in English letters. কোৱা can be <code>kowa</code>, <code>kuwa</code>, <code>kua</code> or <code>koa</code>. Many speakers write স as <code>x</code> (as in <em>Oxom</em> for অসম). So Asomiya accepts several common spellings for every word. The first one in each list is the preferred spelling.</p>
 ${h.table(
@@ -200,7 +200,7 @@ ${h.h2('output', 'Output in English letters')}
 <p>A program whose keywords are in English letters also prints in English letters: numbers as <code>123</code> and true/false/null as <code>xosa</code>, <code>misa</code>, <code>khali</code>. Programs in Assamese script print <code>১২৩</code>, <code>সঁচা</code>, <code>মিছা</code>, <code>খালী</code>.</p>
 ${h.example('কোৱা(১০ + ২০, সঁচা, খালী)', 'kowa(10 + 20, xosa, khali)')}`,
     as: (h) => `
-${h.sample('dhora naam = "Debashish"\njodi (naam != "") {\n    kowa("Nomoskar, " + naam)\n} nohole {\n    kowa("naam nai")\n}')}
+${h.sample('dhora naam = "Rita"\njodi (naam != "") {\n    kowa("Nomoskar, " + naam)\n} nohole {\n    kowa("naam nai")\n}')}
 ${h.h2('spelling', 'এটাই “শুদ্ধ” বানান নাই')}
 <p>ইংৰাজী আখৰত অসমীয়া লিখাৰ কোনো নিৰ্দিষ্ট নিয়ম নাই। কোৱা হ’ব পাৰে <code>kowa</code>, <code>kuwa</code>, <code>kua</code> বা <code>koa</code>। বহুতে স-ক <code>x</code> লিখে (যেনে অসমৰ বাবে <em>Oxom</em>)। সেয়েহে অসমীয়াই প্ৰতিটো শব্দৰ কেইবাটাও প্ৰচলিত বানান মানি লয়। প্ৰতিখন তালিকাৰ প্ৰথমটো পছন্দৰ বানান।</p>
 ${h.table(
@@ -709,7 +709,7 @@ const input = {
   },
   body: {
     en: (h) => `
-${h.example('ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")\nকোৱা("নমস্কাৰ, " + নাম)', 'dhora naam = xudha("Tomar naam ki? ")\nkowa("Nomoskar, " + naam)', { stdin: 'Debashish' })}
+${h.example('ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")\nকোৱা("নমস্কাৰ, " + নাম)', 'dhora naam = xudha("Tomar naam ki? ")\nkowa("Nomoskar, " + naam)', { stdin: 'Rita' })}
 ${h.h2('numbers', 'Numbers from input')}
 <p><code>সোধা</code> always gives back text. Convert it with <code>সংখ্যা</code> (<code>xonkhya</code>), which gives <code>খালী</code> if the answer isn’t a number:</p>
 ${h.example('ধৰা উত্তৰ = সংখ্যা(সোধা("এটা সংখ্যা দিয়ক: "))\nযদি (উত্তৰ == খালী) {\n    কোৱা("সেইটো সংখ্যা নহয়")\n} নহ\'লে {\n    কোৱা("দুগুণ:", উত্তৰ * ২)\n}', 'dhora uttor = xonkhya(xudha("Ekta xonkhya diok: "))\njodi (uttor == khali) {\n    kowa("eitu xonkhya nohoy")\n} nohole {\n    kowa("dugun:", uttor * 2)\n}', { stdin: '21' })}
@@ -720,7 +720,7 @@ ${h.h2('where', 'Where input comes from')}
   <li>When there is nothing left to read, <code>সোধা</code> gives <code>খালী</code>.</li>
 </ul>`,
     as: (h) => `
-${h.example('ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")\nকোৱা("নমস্কাৰ, " + নাম)', 'dhora naam = xudha("Tomar naam ki? ")\nkowa("Nomoskar, " + naam)', { stdin: 'দেবাশীষ' })}
+${h.example('ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")\nকোৱা("নমস্কাৰ, " + নাম)', 'dhora naam = xudha("Tomar naam ki? ")\nkowa("Nomoskar, " + naam)', { stdin: 'ৰীতা' })}
 ${h.h2('numbers', 'ইনপুটৰ পৰা সংখ্যা')}
 <p><code>সোধা</code>-ই সদায় পাঠ ঘূৰাই দিয়ে। <code>সংখ্যা</code> দি সলনি কৰক; উত্তৰটো সংখ্যা নহ’লে ই <code>খালী</code> দিয়ে:</p>
 ${h.example('ধৰা উত্তৰ = সংখ্যা(সোধা("এটা সংখ্যা দিয়ক: "))\nযদি (উত্তৰ == খালী) {\n    কোৱা("সেইটো সংখ্যা নহয়")\n} নহ\'লে {\n    কোৱা("দুগুণ:", উত্তৰ * ২)\n}', 'dhora uttor = xonkhya(xudha("Ekta xonkhya diok: "))\njodi (uttor == khali) {\n    kowa("eitu xonkhya nohoy")\n} nohole {\n    kowa("dugun:", uttor * 2)\n}', { stdin: '২১' })}

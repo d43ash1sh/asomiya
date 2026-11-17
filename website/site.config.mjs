@@ -19,27 +19,30 @@ export const SOCIAL = {
   youtube: '',
 };
 
-/** The team. Links that are empty are not shown. */
+/** The team, shown on the home and Community pages. Links that are empty are not shown. */
 export const TEAM = [
   {
     name: { en: 'Debashish Bordoloi', as: 'দেবাশীষ বৰদলৈ' },
-    role: { en: 'Creator', as: 'নিৰ্মাতা' },
-    initials: 'DB',
-    links: SOCIAL,
+    role: { en: 'Creator & maintainer', as: 'নিৰ্মাতা আৰু ৰক্ষণাবেক্ষণকাৰী' },
+    links: {
+      linkedin: 'https://www.linkedin.com/in/debashishbordoloi',
+      github: 'https://github.com/d43ash1sh',
+    },
   },
   {
     name: { en: 'Arnab Sharmah', as: 'অৰ্ণৱ শৰ্মা' },
-    role: { en: 'Collaborator & contributor', as: 'সহযোগী আৰু অৱদানকাৰী' },
-    initials: 'AS',
+    role: { en: 'Maintainer', as: 'ৰক্ষণাবেক্ষণকাৰী' },
     links: {
+      linkedin: 'https://www.linkedin.com/in/arnab-sharmah-ba844b31a/',
       github: 'https://github.com/arnabsmh',
-      instagram: 'https://www.instagram.com/arnab__sarmaa/',
     },
   },
   {
     name: { en: 'Siddhartha Borah', as: 'সিদ্ধাৰ্থ বৰা' },
-    role: { en: 'Collaborator & contributor', as: 'সহযোগী আৰু অৱদানকাৰী' },
-    initials: 'SB',
-    links: { github: 'https://github.com/siddharthaborah' },
+    role: { en: 'Maintainer', as: 'ৰক্ষণাবেক্ষণকাৰী' },
+    links: {
+      linkedin: 'https://www.linkedin.com/in/siddharthaborah/',
+      github: 'https://github.com/siddharthaborah',
+    },
   },
 ];

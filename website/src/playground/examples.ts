@@ -27,5 +27,5 @@ export const EXAMPLES: readonly Example[] = [
   { file: 'functions.asom', label: 'ফাংচন (functions)', source: functions, stdin: '' },
   { file: 'lists.asom', label: 'তালিকা (lists)', source: lists, stdin: '' },
   { file: 'roman.asom', label: 'Roman — English letters', source: roman, stdin: '' },
-  { file: 'greet.asom', label: 'ইনপুট — সোধা (input)', source: greet, stdin: 'দেবাশীষ' },
+  { file: 'greet.asom', label: 'ইনপুট — সোধা (input)', source: greet, stdin: 'ৰীতা' },
 ];

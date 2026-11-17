@@ -12,7 +12,7 @@ describe('runProgram (the playground runner)', () => {
   it('runs a program with the real interpreter', () => {
     const hello = readFileSync(join(ROOT, 'examples/hello.asom'), 'utf8');
     expect(runProgram(hello, defaults)).toEqual({
-      output: 'নমস্কাৰ, দেবাশীষ\nমোৰ বয়স ২৪\nমই এজন প্ৰাপ্তবয়স্ক\n',
+      output: 'নমস্কাৰ, পৃথিৱী!\nএই প্ৰগ্ৰামটোৰ ভাষা: অসমীয়া\nপ্ৰাপ্তবয়স্ক\n',
       error: null,
     });
   });

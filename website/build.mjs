@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COMMUNITY } from './content/community.mjs';
 import { HOME } from './content/home.mjs';
+import { JOIN } from './content/join.mjs';
 import { LEARN } from './content/learn.mjs';
 import { NOT_FOUND } from './content/not-found.mjs';
 import { PLAYGROUND } from './content/playground.mjs';
@@ -33,7 +34,7 @@ const SECTIONS = [LEARN, REFERENCE].map((section) => ({
 }));
 for (const s of SECTIONS) s.pages = s.groups.flatMap((g) => g.pages);
 
-const SINGLE = [HOME, PLAYGROUND, COMMUNITY, NOT_FOUND].map(prepare);
+const SINGLE = [HOME, PLAYGROUND, COMMUNITY, JOIN, NOT_FOUND].map(prepare);
 
 function write(path, html) {
   const file = join(OUT, path.endsWith('.html') ? path : join(path, 'index.html'));

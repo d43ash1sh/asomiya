@@ -72,7 +72,7 @@ const S = {
 
 function body(lang) {
   const s = S[lang];
-  return () => `
+  return (h) => `
 <section class="page-hero">
   <h1>${lang === 'en' ? 'Community' : 'সমাজ'}</h1>
   <p>${lang === 'en' ? 'The people behind Asomiya, and how you can join them.' : 'অসমীয়াৰ পিছৰ মানুহখিনি, আৰু আপুনি কেনেকৈ যোগ দিব পাৰে।'}</p>
@@ -102,6 +102,7 @@ function body(lang) {
   <div class="hero-cta">
     <a class="btn btn-primary" href="${SITE.repo}/issues" target="_blank" rel="noopener noreferrer">${icon('github')}${s.open}</a>
     <a class="btn btn-secondary" href="${SITE.repo}/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">${s.guide}</a>
+    <a class="btn btn-ghost" href="${h.link('join/')}">${lang === 'en' ? 'Test, hack or build with us' : 'আমাৰ সৈতে পৰীক্ষা, হেক বা নিৰ্মাণ কৰক'}</a>
   </div>
 </section>
 <section class="section narrow">

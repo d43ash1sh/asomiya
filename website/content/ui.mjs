@@ -23,6 +23,7 @@ export const UI = {
     footerTagline: 'A programming language in Assamese. Open source, MIT licensed.',
     footMore: 'More',
     changelog: 'Changelog',
+    joinUs: 'Join us: test, hack, build',
     security: 'Security',
     copyright: (year) => `© ${year} Asomiya contributors. Released under the MIT License.`,
     madeWith:
@@ -54,6 +55,7 @@ export const UI = {
     footerTagline: 'অসমীয়া ভাষাত এটা প্ৰগ্ৰামিং ভাষা। মুক্ত উৎস, MIT অনুজ্ঞাপত্ৰ।',
     footMore: 'অধিক',
     changelog: 'সলনিৰ তালিকা',
+    joinUs: 'যোগ দিয়ক',
     security: 'সুৰক্ষা',
     copyright: (year) => `© ${year} অসমীয়া প্ৰগ্ৰামিং ভাষাৰ অৱদানকাৰীসকল। MIT অনুজ্ঞাপত্ৰৰ অধীনত মুকলি।`,
     madeWith:

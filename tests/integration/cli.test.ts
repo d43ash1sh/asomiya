@@ -259,3 +259,31 @@ describe('REPL over a pipe', () => {
     expect(result.status).toBe(0);
   });
 });
+
+describe('asomiya python', () => {
+  it('prints the program in Python', () => {
+    const file = tempProgram('ধৰা ক = ২\nকোৱা("ফল:", ক * ৩)\n');
+    const result = cli(['python', file]);
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('ক = 2.0\nprint("ফল:", text(ক * 3.0))\n');
+  });
+
+  it('reports a syntax error instead', () => {
+    const result = cli(['python', '--lang', 'en', tempProgram('কোৱা(')]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('P0');
+    expect(result.stdout).toBe('');
+  });
+
+  it.skipIf(spawnSync('python3', ['--version']).status !== 0)(
+    'runs in Python with the same output',
+    () => {
+      for (const name of Object.keys(EXPECTED)) {
+        const source = join(ROOT, 'examples', name);
+        const translated = cli(['python', source]).stdout;
+        const python = spawnSync('python3', ['-'], { input: translated, encoding: 'utf8' });
+        expect(python.stdout, name).toBe(EXPECTED[name]);
+      }
+    },
+  );
+});

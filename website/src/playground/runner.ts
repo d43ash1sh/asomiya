@@ -6,6 +6,7 @@ import {
   type DigitSetting,
   type MessageLanguage,
 } from '../../../src/index';
+import { toPython } from '../../../src/python/translate';
 
 export interface RunSettings {
   readonly lang: MessageLanguage;
@@ -47,5 +48,29 @@ export function runProgram(source: string, settings: RunSettings): RunOutcome {
       fileName: 'program.asom',
     });
     return { output, error: message };
+  }
+}
+
+export interface Translation {
+  /** The equivalent Python program, or null if the source can't be parsed. */
+  readonly python: string | null;
+  readonly error: string | null;
+}
+
+/** Translates a program to Python, using the same digit setting as running it. */
+export function translateProgram(
+  source: string,
+  settings: { readonly lang: MessageLanguage; readonly digits: DigitSetting },
+): Translation {
+  try {
+    return { python: toPython(parse(source), { digits: settings.digits }), error: null };
+  } catch (error) {
+    if (!(error instanceof AsomiyaError)) throw error;
+    const message = formatDiagnostic(error.diagnostic, {
+      lang: settings.lang,
+      source,
+      fileName: 'program.asom',
+    });
+    return { python: null, error: message };
   }
 }

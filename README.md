@@ -198,8 +198,9 @@ built into the playground):
 ## Command-line usage
 
 ```
-asomiya run <file> [options]   run a program
-asomiya [repl] [options]       start the REPL (default)
+asomiya run <file> [options]      run a program
+asomiya python <file> [options]   print the same program in Python
+asomiya [repl] [options]          start the REPL (default)
 asomiya --version | --help
 
 Options:
@@ -243,6 +244,15 @@ that doesn't match how terminals draw Assamese, which garbled the screen.
 sent to a server. It has the examples built in, an input box for `সোধা`, Assamese or English
 errors, a digit-style switch, and share links that carry your program in the URL.
 
+The **Python** button shows your program in Python, side by side, updating as you type. It is a
+real translation, not an approximation: the Python program prints exactly what the Asomiya program
+prints, byte for byte, and stops with an error where Asomiya would. Where Python behaves
+differently (Python prints `3.0` where Asomiya prints `৩`, `-7 % 3` is `2` in Python but `-১` in
+Asomiya, Python counts `ক্ষ` as three characters …) the code calls a small helper function, so
+learners see plain Python everywhere else. `asomiya python file.asom` does the same in the
+terminal. The test suite checks this by running thousands of programs in both languages and
+comparing the output.
+
 ## Use as a library
 
 ```ts
@@ -252,6 +262,10 @@ const { output, error } = runSource('কোৱা(১০ + ২০)');
 console.log(output); // ৩০
 
 runSource('kowa(10 + 20)').output; // "30\n"
+
+import { parse, toPython } from 'asomiya';
+
+toPython(parse('কোৱা(১০ + ২০)')); // a Python program that prints ৩০
 ```
 
 See [Architecture → Embedding](https://github.com/d43ash1sh/asomiya/blob/main/docs/ARCHITECTURE.md#embedding).

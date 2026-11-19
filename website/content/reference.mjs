@@ -234,8 +234,9 @@ const cli = {
   body: {
     en: (h) => `
 ${h.h2('usage', 'Usage')}
-${h.pre(`asomiya run <file> [options]   run a program
-asomiya [repl] [options]       start the REPL (default)
+${h.pre(`asomiya run <file> [options]      run a program
+asomiya python <file> [options]   print the same program in Python
+asomiya [repl] [options]          start the REPL (default)
 asomiya --version | --help`)}
 ${h.h2('options', 'Options')}
 ${h.table(
@@ -266,6 +267,8 @@ ${h.table(
     ['<code>2</code>', 'Wrong usage, or the file couldn’t be read'],
   ],
 )}
+${h.h2('python', 'Translating to Python')}
+<p><code>asomiya python program.asom</code> prints the program in Python (the playground’s <strong>Python</strong> button does the same). The Python program prints exactly what the Asomiya program prints and stops with an error where it would. Where Python behaves differently, such as printing <code>3.0</code> for <code>৩</code> or counting <code>ক্ষ</code> as three characters, the code calls a small helper function that is included in the file. The digit options choose how its numbers print. Save it and run it with <code>python3 program.py</code>.</p>
 ${h.h2('repl', 'REPL')}
 <p>A complete statement runs as soon as you press Enter. An open <code>{</code> or <code>(</code> waits for more lines. <code>সোধা</code> reads the next line you type.</p>
 ${h.table(
@@ -280,8 +283,9 @@ ${h.table(
 ${h.note('note', '<p>The REPL has no arrow-key history on purpose: line editors redraw the line using column arithmetic that doesn’t match how terminals draw Assamese, which garbles the screen.</p>')}`,
     as: (h) => `
 ${h.h2('usage', 'ব্যৱহাৰ')}
-${h.pre(`asomiya run <file> [options]   প্ৰগ্ৰাম চলাওক
-asomiya [repl] [options]       REPL আৰম্ভ কৰক (ডিফল্ট)
+${h.pre(`asomiya run <file> [options]      প্ৰগ্ৰাম চলাওক
+asomiya python <file> [options]   একেটা প্ৰগ্ৰাম Python-ত দেখুৱাওক
+asomiya [repl] [options]          REPL আৰম্ভ কৰক (ডিফল্ট)
 asomiya --version | --help`)}
 ${h.h2('options', 'বিকল্প')}
 ${h.table(
@@ -312,6 +316,8 @@ ${h.table(
     ['<code>2</code>', 'ভুল ব্যৱহাৰ, বা ফাইল পঢ়িব পৰা নগ’ল'],
   ],
 )}
+${h.h2('python', 'Python-লৈ অনুবাদ')}
+<p><code>asomiya python program.asom</code>-এ প্ৰগ্ৰামটো Python-ত দেখুৱায় (প্লেগ্ৰাউণ্ডৰ <strong>Python</strong> বুটামেও একে কাম কৰে)। Python প্ৰগ্ৰামটোৱে অসমীয়া প্ৰগ্ৰামটোৱে যি ছপা কৰে, ঠিক সেয়াই ছপা কৰে, আৰু য’ত অসমীয়াত ভুল হয় তাতেই ৰৈ যায়। য’ত Python বেলেগ, যেনে <code>৩</code>-ৰ ঠাইত <code>3.0</code> ছপা কৰা বা <code>ক্ষ</code>-ক তিনিটা আখৰ বুলি গণা, তাত ফাইলটোতে থকা এটা সৰু সহায়ক ফাংচন ব্যৱহাৰ হয়। অংকৰ বিকল্পবোৰে ইয়াৰ সংখ্যা কেনেকৈ ছপা হ’ব ঠিক কৰে। সাঁচি থৈ <code>python3 program.py</code> দি চলাওক।</p>
 ${h.h2('repl', 'REPL')}
 <p>সম্পূৰ্ণ বাক্য এটা Enter টিপাৰ লগে লগে চলে। খোলা <code>{</code> বা <code>(</code> থাকিলে আৰু শাৰীৰ বাবে অপেক্ষা কৰে। <code>সোধা</code>-ই আপুনি লিখা পৰৱৰ্তী শাৰীটো পঢ়ে।</p>
 ${h.table(

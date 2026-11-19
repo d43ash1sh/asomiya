@@ -14,6 +14,15 @@ All notable changes to this project are documented here. The format follows
   and English-letter versions, and every sample is run when the site is built.
 - The playground now runs programs in a Web Worker with a **Stop** button, so the page never
   freezes.
+- **Show in Python.** The playground's **Python** button shows the program in Python, side by
+  side and updated as you type, with Copy and Download. `asomiya python <file>` does the same in
+  the terminal, and `toPython()` in the library. The translation is exact: the Python program
+  prints the same output byte for byte and fails at the same point. Plain Python is used wherever
+  it behaves like Asomiya (a static type and scope analysis decides); small helper functions,
+  included only when needed, cover the differences: number formatting and Assamese digits,
+  `%` on negative numbers, strict types in `+`, `==` and conditions, letter-based text indexing
+  (`ক্ষ` is one letter), block scopes and per-iteration loop variables. Tested by running every
+  example, 75 edge-case programs and thousands of random programs in both languages.
 
 ### Security
 

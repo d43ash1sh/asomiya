@@ -3,6 +3,7 @@ import { AsomiyaError } from '../errors/asomiya-error';
 import { formatDiagnostic } from '../errors/format';
 import type { MessageLanguage } from '../language/types';
 import { parse } from '../parser/parser';
+import { toPython } from '../python/translate';
 import { Interpreter } from '../runtime/interpreter';
 import type { DigitSetting } from '../runtime/values';
 import { CLI_MESSAGES } from './messages';
@@ -62,6 +63,26 @@ export function runFile(path: string, settings: ExecutionSettings, io: CliIO): n
   });
   try {
     interpreter.run(parse(source));
+    return EXIT_OK;
+  } catch (error) {
+    if (!(error instanceof AsomiyaError)) throw error;
+    io.stderr(
+      formatDiagnostic(error.diagnostic, { lang: settings.lang, source, fileName: path }) + '\n',
+    );
+    return EXIT_PROGRAM_ERROR;
+  }
+}
+
+/** Prints a source file translated to Python. Returns the process exit code. */
+export function translateFile(
+  path: string,
+  settings: Pick<ExecutionSettings, 'lang' | 'digits'>,
+  io: CliIO,
+): number {
+  const source = readSource(path, io, settings.lang);
+  if (source === null) return EXIT_USAGE_ERROR;
+  try {
+    io.stdout(toPython(parse(source), { digits: settings.digits }));
     return EXIT_OK;
   } catch (error) {
     if (!(error instanceof AsomiyaError)) throw error;

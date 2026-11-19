@@ -1,11 +1,15 @@
 // The playground page: editor, examples, input box, and running code in a Web Worker.
 import type { DigitSetting, MessageLanguage } from '../../../src/index';
 import { EXAMPLES } from '../playground/examples';
+import { highlightPython, splitPython } from '../playground/python-highlight';
 import { fromHash, toHash } from '../playground/share';
-import type { RunRequest, RunResponse } from './protocol';
+import type { PythonRequest, PythonResponse, RunRequest, RunResponse } from './protocol';
 import { load, save } from './storage';
 
 const SOURCE_KEY = 'asomiya-playground-source';
+const PYTHON_KEY = 'asomiya-playground-python';
+/** Wait this long after the last keystroke before translating again. */
+const PYTHON_DELAY_MS = 250;
 /** A program still running after this long is stopped (the step budget usually ends it first). */
 const RUN_TIMEOUT_MS = 15_000;
 
@@ -21,6 +25,10 @@ const UI = {
     copied: '🔗 Link copied',
     inAddressBar: '🔗 Link is in the address bar',
     tooLong: 'This program is too long to share as a link.',
+    pyFix: 'Fix this error to see the Python version:',
+    pyCopied: 'Copied',
+    helpers: (n: number) => `Helper functions (${n} lines, included when you copy or download)`,
+    noHelpers: 'No helper functions needed: this is plain Python.',
   },
   as: {
     running: 'চলি আছে…',
@@ -33,6 +41,10 @@ const UI = {
     copied: '🔗 লিংক কপি হ’ল',
     inAddressBar: '🔗 লিংকটো ঠিকনা-বাৰত আছে',
     tooLong: 'প্ৰগ্ৰামটো লিংক হিচাপে পঠিয়াবলৈ অতি দীঘল।',
+    pyFix: 'Python ৰূপটো চাবলৈ এই ভুলটো শুধৰাওক:',
+    pyCopied: 'কপি হ’ল',
+    helpers: (n: number) => `সহায়ক ফাংচন (${n} শাৰী, কপি বা ডাউনলোড কৰিলে সৈতে থাকে)`,
+    noHelpers: 'কোনো সহায়ক ফাংচন নালাগে: এইটো সাধাৰণ Python।',
   },
 } as const;
 
@@ -57,6 +69,16 @@ const clearButton = element('clear', HTMLButtonElement);
 const examples = element('examples', HTMLSelectElement);
 const errorLang = element('error-lang', HTMLSelectElement);
 const digits = element('digits', HTMLSelectElement);
+const main = element('pg-main', HTMLDivElement);
+const pythonToggle = element('python-toggle', HTMLButtonElement);
+const pythonPane = element('python-pane', HTMLElement);
+const pythonCode = element('python-code', HTMLElement);
+const pythonHelpers = element('python-helpers', HTMLDetailsElement);
+const pythonHelpersLabel = element('python-helpers-label', HTMLSpanElement);
+const pythonHelpersCode = element('python-helpers-code', HTMLElement);
+const pythonCopy = element('python-copy', HTMLButtonElement);
+const pythonDownload = element('python-download', HTMLButtonElement);
+const pythonClose = element('python-close', HTMLButtonElement);
 
 // ── running ───────────────────────────────────────────────────────────────
 
@@ -76,11 +98,133 @@ const WORKER_URL = new URL(`worker.js${SCRIPT_URL.search}`, SCRIPT_URL);
 function getWorker(): Worker {
   if (worker !== null) return worker;
   const created = new Worker(WORKER_URL);
-  created.addEventListener('message', (event: MessageEvent<RunResponse>) => {
-    if (event.data.id === runId) finish(event.data);
+  created.addEventListener('message', (event: MessageEvent<RunResponse | PythonResponse>) => {
+    if (event.data.kind === 'run' && event.data.id === runId) finish(event.data);
   });
   worker = created;
   return created;
+}
+
+// ── Python view ───────────────────────────────────────────────────────────
+
+/** A separate worker, so translating never waits for a long-running program. */
+let pythonWorker: Worker | null = null;
+let pythonId = 0;
+let pythonTimer: ReturnType<typeof setTimeout> | undefined;
+/** The complete translation (helpers included), for Copy and Download. */
+let pythonSource = '';
+
+function getPythonWorker(): Worker {
+  if (pythonWorker !== null) return pythonWorker;
+  const created = new Worker(WORKER_URL);
+  created.addEventListener('message', (event: MessageEvent<RunResponse | PythonResponse>) => {
+    if (event.data.kind === 'python' && event.data.id === pythonId) showPython(event.data);
+  });
+  pythonWorker = created;
+  return created;
+}
+
+function pythonOpen(): boolean {
+  return !pythonPane.hidden;
+}
+
+function translate(): void {
+  clearTimeout(pythonTimer);
+  if (!pythonOpen()) return;
+  pythonId += 1;
+  const request: PythonRequest = {
+    kind: 'python',
+    id: pythonId,
+    source: editor.value,
+    lang: errorLang.value === 'as' ? 'as' : 'en',
+    digits: digitSetting(),
+  };
+  getPythonWorker().postMessage(request);
+}
+
+function translateSoon(): void {
+  clearTimeout(pythonTimer);
+  if (pythonOpen()) pythonTimer = setTimeout(translate, PYTHON_DELAY_MS);
+}
+
+/** Highlighted code, built from text nodes only (never HTML). */
+function renderPython(target: HTMLElement, code: string): void {
+  target.replaceChildren(
+    ...highlightPython(code).map((token) => {
+      if (token.cls === '') return document.createTextNode(token.text);
+      const span = document.createElement('span');
+      span.className = token.cls;
+      span.textContent = token.text;
+      return span;
+    }),
+  );
+}
+
+function showPython(result: PythonResponse): void {
+  const ready = result.python !== null;
+  pythonCopy.disabled = !ready;
+  pythonDownload.disabled = !ready;
+  if (result.python === null) {
+    pythonSource = '';
+    const note = document.createElement('span');
+    note.className = 'placeholder';
+    note.textContent = t.pyFix + '\n\n';
+    const err = document.createElement('span');
+    err.className = 'error';
+    err.textContent = result.error ?? '';
+    pythonCode.replaceChildren(note, err);
+    pythonHelpers.hidden = true;
+    return;
+  }
+  pythonSource = result.python;
+  const { helpers, program } = splitPython(result.python);
+  renderPython(pythonCode, program);
+  const helperLines = helpers.split('\n').filter((line) => line.trim() !== '').length;
+  const needsHelpers = /\ndef |\nclass /.test(helpers);
+  pythonHelpers.hidden = false;
+  pythonHelpersLabel.textContent = needsHelpers ? t.helpers(helperLines) : t.noHelpers;
+  pythonHelpers.classList.toggle('is-empty', !needsHelpers);
+  if (!needsHelpers) pythonHelpers.open = false;
+  renderPython(pythonHelpersCode, helpers);
+}
+
+function setPythonOpen(open: boolean): void {
+  pythonPane.hidden = !open;
+  main.classList.toggle('with-python', open);
+  pythonToggle.setAttribute('aria-pressed', String(open));
+  save(PYTHON_KEY, open ? '1' : '0');
+  if (open) translate();
+}
+
+function copyPython(): void {
+  if (pythonSource === '') return;
+  const label = pythonCopy.querySelector('span');
+  const before = label?.textContent ?? '';
+  navigator.clipboard.writeText(pythonSource).then(
+    () => {
+      if (label) label.textContent = t.pyCopied;
+      setTimeout(() => {
+        if (label) label.textContent = before;
+      }, 1500);
+    },
+    () => undefined,
+  );
+}
+
+function downloadPython(): void {
+  if (pythonSource === '') return;
+  const url = URL.createObjectURL(
+    new Blob([pythonSource], { type: 'text/x-python;charset=utf-8' }),
+  );
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'program.py';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 1000);
 }
 
 function setStatus(text: string, kind: 'ok' | 'fail' | 'busy' | null): void {
@@ -104,6 +248,7 @@ function setRunning(running: boolean): void {
 function run(): void {
   runId += 1;
   const request: RunRequest = {
+    kind: 'run',
     id: runId,
     source: editor.value,
     stdin: stdin.value,
@@ -185,6 +330,7 @@ function edited(): void {
   renderGutter();
   syncExampleMenu();
   save(SOURCE_KEY, editor.value);
+  translateSoon();
 }
 
 function insertAtCursor(text: string): void {
@@ -204,6 +350,7 @@ function loadExample(index: number): void {
   stdin.value = example.stdin;
   save(SOURCE_KEY, editor.value);
   clearOutput();
+  translate();
 }
 
 async function share(): Promise<void> {
@@ -262,6 +409,18 @@ function init(): void {
   });
   clearButton.addEventListener('click', clearOutput);
   shareButton.addEventListener('click', () => void share());
+  pythonToggle.addEventListener('click', () => {
+    setPythonOpen(!pythonOpen());
+  });
+  pythonClose.addEventListener('click', () => {
+    setPythonOpen(false);
+    pythonToggle.focus();
+  });
+  pythonCopy.addEventListener('click', copyPython);
+  pythonDownload.addEventListener('click', downloadPython);
+  digits.addEventListener('change', translate);
+  errorLang.addEventListener('change', translate);
+  if (load(PYTHON_KEY) === '1') setPythonOpen(true);
   for (const chip of document.querySelectorAll<HTMLButtonElement>('[data-insert]')) {
     chip.addEventListener('click', () => {
       editor.focus();

@@ -6,7 +6,13 @@ import { DEFAULT_MAX_CALL_DEPTH, DEFAULT_MAX_STEPS } from '../runtime/interprete
 import { CLI_MESSAGES } from './messages';
 import { createWriter, SyncLineReader } from './io';
 import { runRepl } from './repl';
-import { EXIT_USAGE_ERROR, runFile, type CliIO, type ExecutionSettings } from './run-file';
+import {
+  EXIT_USAGE_ERROR,
+  runFile,
+  translateFile,
+  type CliIO,
+  type ExecutionSettings,
+} from './run-file';
 
 interface RawOptions {
   readonly lang: MessageLanguage;
@@ -92,6 +98,15 @@ export function main(argv: readonly string[]): number {
       .argument('<file>', 'path to the program'),
   ).action((file: string, options: RawOptions) => {
     exitCode = runFile(file, settingsFrom(options), processIO());
+  });
+
+  addExecutionOptions(
+    program
+      .command('python')
+      .description('print the program translated to Python (it prints exactly the same output)')
+      .argument('<file>', 'path to the program'),
+  ).action((file: string, options: RawOptions) => {
+    exitCode = translateFile(file, settingsFrom(options), processIO());
   });
 
   addExecutionOptions(

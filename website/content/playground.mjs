@@ -21,6 +21,15 @@ const S = {
     keywordsHint: 'Click to insert',
     editorLabel: 'Program source',
     noscript: 'The playground needs JavaScript.',
+    python: 'Python',
+    pythonTitle: 'Show this program in Python',
+    sameOutput: 'Same output',
+    sameOutputTitle: 'Prints exactly what the Asomiya program prints',
+    copy: 'Copy',
+    download: 'Download',
+    close: 'Close the Python view',
+    pyNote:
+      'Run it with <code>python3 program.py</code>. It prints exactly what this program prints in Asomiya. Where Python behaves differently from Asomiya, it uses a small helper function.',
   },
   as: {
     examples: 'উদাহৰণ…',
@@ -39,6 +48,15 @@ const S = {
     keywordsHint: 'ক্লিক কৰিলে এডিটৰত সোমাব',
     editorLabel: 'প্ৰগ্ৰাম',
     noscript: 'প্লেগ্ৰাউণ্ডৰ বাবে JavaScript লাগিব।',
+    python: 'Python',
+    pythonTitle: 'এই প্ৰগ্ৰামটো Python-ত চাওক',
+    sameOutput: 'একে ফলাফল',
+    sameOutputTitle: 'অসমীয়া প্ৰগ্ৰামটোৱে যি ছপা কৰে, ঠিক সেয়াই ছপা কৰে',
+    copy: 'কপি',
+    download: 'ডাউনলোড',
+    close: 'Python ভিউ বন্ধ কৰক',
+    pyNote:
+      '<code>python3 program.py</code> দি চলাওক। অসমীয়াত এই প্ৰগ্ৰামটোৱে যি ছপা কৰে, ঠিক সেয়াই ছপা কৰিব। য’ত Python অসমীয়াতকৈ বেলেগ, তাত এটা সৰু সহায়ক ফাংচন ব্যৱহাৰ কৰে।',
   },
 };
 
@@ -63,16 +81,35 @@ function body(lang) {
       <select id="examples"><option value="" disabled>${s.examples}</option></select>
     </label>
     <div class="pg-spacer"></div>
+    <button id="python-toggle" class="btn btn-ghost btn-sm" type="button" aria-pressed="false" aria-controls="python-pane" title="${s.pythonTitle}">${icon('code')}<span>${s.python}</span></button>
     <button id="share" class="btn btn-ghost btn-sm" type="button">${icon('share')}<span>${s.share}</span></button>
     <button id="run" class="btn btn-primary btn-sm" type="button" title="Ctrl/⌘ + Enter">${icon('play')}<span>${s.run}</span></button>
     <button id="stop" class="btn btn-danger btn-sm" type="button" hidden>${icon('stop')}<span>${s.stop}</span></button>
   </div>
-  <div class="pg-main">
+  <div id="pg-main" class="pg-main">
     <section class="pg-editor" aria-label="${s.editorLabel}">
       <div class="pg-file"><span class="file-dot" aria-hidden="true"></span>program.asom</div>
       <div class="editor">
         <div id="gutter" class="gutter" aria-hidden="true"></div>
         <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="${s.editorLabel}"></textarea>
+      </div>
+    </section>
+    <section id="python-pane" class="pg-python" aria-label="Python" hidden>
+      <div class="pg-file">
+        <span class="file-dot file-dot-py" aria-hidden="true"></span>program.py
+        <span class="py-badge" title="${s.sameOutputTitle}">${icon('check')}${s.sameOutput}</span>
+        <div class="pg-spacer"></div>
+        <button id="python-copy" class="btn btn-ghost btn-xs" type="button">${icon('copy')}<span>${s.copy}</span></button>
+        <button id="python-download" class="btn btn-ghost btn-xs" type="button">${icon('download')}<span>${s.download}</span></button>
+        <button id="python-close" class="btn btn-ghost btn-xs" type="button" aria-label="${s.close}" title="${s.close}">✕</button>
+      </div>
+      <div class="pg-python-body">
+        <pre class="pycode"><code id="python-code"></code></pre>
+        <details id="python-helpers" class="py-helpers" hidden>
+          <summary><span id="python-helpers-label"></span></summary>
+          <pre class="pycode"><code id="python-helpers-code"></code></pre>
+        </details>
+        <p class="py-note">${s.pyNote}</p>
       </div>
     </section>
     <aside class="pg-side">

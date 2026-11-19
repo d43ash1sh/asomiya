@@ -37,3 +37,5 @@ export { MESSAGES, renderMessage } from './errors/messages';
 export { formatDiagnostic, type FormatOptions } from './errors/format';
 
 export { runSource, type RunResult } from './run';
+
+export { toPython, type PythonOptions } from './python/translate';

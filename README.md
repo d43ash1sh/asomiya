@@ -302,11 +302,11 @@ instead of a public issue. See [SECURITY.md](https://github.com/d43ash1sh/asomiy
 
 ## People
 
-|                                                                               |                            |
-| ----------------------------------------------------------------------------- | -------------------------- |
-| **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh))           | Creator                    |
-| **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                  | Collaborator & Contributor |
-| **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah)) | Collaborator & Contributor |
+|                                                                               |             |
+| ----------------------------------------------------------------------------- | ----------- |
+| **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh))           | Creator     |
+| **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                  | Contributor |
+| **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah)) | Contributor |
 
 See all [contributors on GitHub](https://github.com/d43ash1sh/asomiya/graphs/contributors).
 

@@ -1,4 +1,4 @@
-// Home page (layout: "home"): one plain column, written by Debashish in the first person.
+// Home page (layout: "home"): the landing hero, then one plain column.
 import { EXTENSION, SITE, TEAM } from '../site.config.mjs';
 import { esc } from '../lib/html.mjs';
 import { icon } from '../lib/icons.mjs';
@@ -12,7 +12,7 @@ const S = {
     start: 'Start learning',
     more: 'Learn more',
     tagline: 'A programming language in Assamese.',
-    intro: `Hi, I’m Debashish Bordoloi. With Arnab Sharmah and Siddhartha Borah, I’m building Asomiya: a small programming language where the keywords, the numbers and the error messages are Assamese. You can write it in Assamese script, or in English letters if you don’t have an Assamese keyboard.`,
+    intro: `Here’s a small program. It asks for your name, then says hello three times. Press Try it to run it and change it.`,
     tryIt: 'Try it in your browser',
     learn: 'Learn the language',
     install: 'Install',
@@ -38,7 +38,7 @@ const S = {
     start: 'শিকিবলৈ আৰম্ভ কৰক',
     more: 'অধিক জানক',
     tagline: 'অসমীয়া ভাষাত এটা প্ৰগ্ৰামিং ভাষা।',
-    intro: `নমস্কাৰ, মই দেবাশীষ বৰদলৈ। অৰ্ণৱ শৰ্মা আৰু সিদ্ধাৰ্থ বৰাৰ সৈতে মই অসমীয়া নামৰ এটা সৰু প্ৰগ্ৰামিং ভাষা বনাই আছোঁ, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। ইয়াক অসমীয়া লিপিত লিখিব পাৰি, আৰু অসমীয়া কীব’ৰ্ড নাথাকিলে ইংৰাজী আখৰতো লিখিব পাৰি।`,
+    intro: `ইয়াত এটা সৰু প্ৰগ্ৰাম আছে। ই আপোনাৰ নাম সোধে, তাৰ পিছত তিনিবাৰ নমস্কাৰ জনায়। চলাই চাবলৈ আৰু সলনি কৰিবলৈ চলাই চাওক টিপক।`,
     tryIt: 'ব্ৰাউজাৰতে চলাই চাওক',
     learn: 'ভাষাটো শিকক',
     install: 'ইনষ্টল',

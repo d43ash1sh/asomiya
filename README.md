@@ -60,6 +60,10 @@ Both are the same program. Output:
 প্ৰাপ্তবয়স্ক
 ```
 
+You can run it without installing anything in the [playground](https://asomiya.codes/playground/):
+
+![The Asomiya playground with the program above and its output](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/website/screens/playground.png)
+
 ## Try it now
 
 **No install needed:** open the playground at **[asomiya.codes](https://asomiya.codes)** and press ▶.
@@ -257,8 +261,10 @@ comparing the output.
 ## VS Code extension
 
 **[Asomiya for VS Code](https://asomiya.codes/extension/)** (also Cursor, Windsurf and VSCodium):
-syntax colours in both scripts, errors as you type, hover help, a ▶ Run button with input, and a
-live **Show in Python** view.
+syntax colours in both scripts, errors as you type, hover help, a ▶ Run button whose output
+(with proper Assamese text) appears in an Asomiya panel, and a live **Show in Python** view.
+
+![Asomiya in VS Code](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/hover.png)
 
 - **VS Code:** [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya),
   or search “Asomiya” in the Extensions view.

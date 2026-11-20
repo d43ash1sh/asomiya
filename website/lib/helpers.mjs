@@ -116,6 +116,11 @@ export function createHelpers(page, lang) {
       return `<div class="code-block"><pre class="code"><code>${esc(text)}</code></pre></div>`;
     },
 
+    /** A real screenshot from website/screens, with a caption. */
+    figure(name, caption) {
+      return `<figure class="doc-figure"><img src="${rel(page.url, `assets/screens/${name}.png`)}" width="2880" height="1800" alt="${esc(caption)}" loading="lazy"><figcaption>${esc(caption)}</figcaption></figure>`;
+    },
+
     note(kind, html) {
       const label = { note: t.note, tip: t.tip, warning: t.warning }[kind];
       return `<div class="callout callout-${kind}"><p class="callout-title">${esc(label)}</p>${html}</div>`;

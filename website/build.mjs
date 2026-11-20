@@ -63,13 +63,15 @@ function build(def, lang, section) {
   });
 }
 
-// The extension page's icon and screenshots come from the extension itself.
+// The extension's icon, and real screenshots (website/screens, light theme) for the docs.
 mkdirSync(join(OUT, 'assets', 'extension'), { recursive: true });
-for (const name of ['icon', 'overview', 'errors', 'python']) {
-  copyFileSync(
-    join(ROOT, '..', 'editors', 'vscode', 'images', `${name}.png`),
-    join(OUT, 'assets', 'extension', `${name}.png`),
-  );
+copyFileSync(
+  join(ROOT, '..', 'editors', 'vscode', 'images', 'icon.png'),
+  join(OUT, 'assets', 'extension', 'icon.png'),
+);
+mkdirSync(join(OUT, 'assets', 'screens'), { recursive: true });
+for (const file of readdirSync(join(ROOT, 'screens'))) {
+  copyFileSync(join(ROOT, 'screens', file), join(OUT, 'assets', 'screens', file));
 }
 
 const urls = [];

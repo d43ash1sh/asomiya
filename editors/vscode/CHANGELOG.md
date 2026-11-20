@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- A rewritten guide with real screenshots of every feature.
+
 ## 0.2.0
 
 - **Run now shows its output in the Asomiya panel** (next to Terminal) instead of a terminal.

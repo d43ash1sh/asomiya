@@ -1,99 +1,78 @@
 # Asomiya (অসমীয়া) for VS Code
 
-Write code in Assamese. This extension adds full editor support for
-[Asomiya](https://asomiya.codes), the programming language in Assamese, in **Assamese script** or
-in **English letters** (`dhora`, `kowa`, `jodi`).
+Editor support for [Asomiya](https://asomiya.codes), a small programming language in Assamese.
+Write in Assamese script, or in English letters (`dhora`, `kowa`, `jodi`) if you don't have an
+Assamese keyboard.
 
-![Asomiya in VS Code](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/overview.png)
+![Asomiya in VS Code: a program, the help for যদি, and the output in the Asomiya panel](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/hover.png)
 
-## Features
+## What it does
 
-### Syntax colours in both scripts
+**Colours.** Keywords, built-ins, text, numbers (`১২৩` and `123`) and comments are coloured in
+both scripts. Every spelling the language accepts works, so `nohole`, `noh'le` and `নহ'লে` are
+all the same keyword.
 
-Keywords, built-ins, text, numbers (`১২৩` and `123`) and comments are coloured, whichever way you
-write. Every accepted spelling works: `nohole`, `noh'le` and `নহ'লে` are all the same keyword.
+**Run.** Press ▶ in the editor title, or Cmd/Ctrl+F5. The output appears in the **Asomiya**
+panel next to Terminal. (The terminal itself can't join Assamese letters properly, which is why
+the output has its own panel.) Nothing else to install: the interpreter is inside the extension.
 
-### Errors as you type
+**Questions.** When a program asks something with `সোধা` / `xudha`, a box appears at the bottom
+of the panel. Type the answer and press Enter. **Stop** ends a program that runs too long.
 
-Mistakes are underlined while you type, with Asomiya's error code and a message in Assamese or
-English. Click the code to read what it means and how to fix it.
+![A program waiting for an answer in the Asomiya panel](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/ask.png)
 
-![Errors as you type](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/errors.png)
+**Mistakes, underlined as you type.** Each one has a code (like `P001`) that links to an
+explanation, and the message can be in Assamese or English.
 
-### Hover help
+![A missing bracket underlined, with the error in the Problems list](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/errors.png)
 
-Hover any keyword or built-in to see what it does, in English and Assamese, and what it is called
-in Python.
+**Help on hover.** Point at a keyword or built-in to see what it means, in English and
+Assamese, and what it's called in Python.
 
-### Run with one click
+**Show in Python.** The split button in the editor title opens the same program in Python next
+to yours, and it updates as you type. **Asomiya: Save Python Version As…** saves it as a `.py`
+file.
 
-Press **▶** in the editor title (or **Cmd/Ctrl+F5**). The output appears in the **Asomiya** panel
-next to Terminal, with Assamese letters joined properly. When the program asks a question
-(`সোধা` / `xudha`), type the answer in the box at the bottom and press Enter. **Stop** (or
-Ctrl+C) ends a program that runs too long. Nothing else to install: the interpreter is built
-into the extension.
+![An Asomiya program and its Python version side by side](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/python.png)
 
-### Show in Python
+**Suggestions and snippets.** Keywords and built-ins are suggested in the script you're writing
+in. Type `jodi`, `jetialoike`, `fangchon`, `যদি` or `ফাংচন` and press Tab for a ready-made block.
 
-Click **Show in Python** in the editor title to see the same program in Python, side by side,
-updated as you type. It prints exactly the same output. Learn the ideas in Assamese, then see
-them in the language the industry uses. **Asomiya: Save Python Version As…** saves it as a
-`.py` file.
+![Suggestions while typing jet…](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/complete.png)
 
-![Show in Python](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/python.png)
+## Try it
 
-### Snippets
+Make a file called `hello.asom`:
 
-Type a keyword and press Tab:
+```
+ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")
+কোৱা("নমস্কাৰ, " + নাম + "!")
+```
 
-| Type                        | You get                        |
-| --------------------------- | ------------------------------ |
-| `jodi` / `যদি`              | an if block                    |
-| `jodinohole` / `যদিনহ'লে`   | if … else                      |
-| `jetialoike` / `যেতিয়ালৈকে` | a while loop                   |
-| `for` / `গণনা`              | a loop that counts from 1 to n |
-| `fangchon` / `ফাংচন`        | a function                     |
-| `xudha` / `সোধা`            | read input                     |
+or, in English letters:
 
-## Getting started
+```
+dhora naam = xudha("Apunar naam ki? ")
+kowa("Nomoskar, " + naam + "!")
+```
 
-1. Create a file ending in `.asom`, for example `hello.asom`.
-2. Write:
-
-   ```
-   ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")
-   কোৱা("নমস্কাৰ, " + নাম + "!")
-   ```
-
-   or, in English letters:
-
-   ```
-   dhora naam = xudha("Apunar naam ki? ")
-   kowa("Nomoskar, " + naam + "!")
-   ```
-
-3. Press **▶**.
-
-New to programming? Start with the [tutorial](https://asomiya.codes/learn/).
+Then press ▶. If you're new to programming, the [tutorial](https://asomiya.codes/learn/) starts
+from the beginning.
 
 ## Settings
 
-| Setting                  | Default |                                                                                   |
-| ------------------------ | ------- | --------------------------------------------------------------------------------- |
-| `asomiya.errorLanguage`  | `as`    | Error messages in Assamese (`as`) or English (`en`).                              |
-| `asomiya.digits`         | `auto`  | Print numbers as `১২৩`, `123`, or `auto` (`123` for programs in English letters). |
-| `asomiya.checkAsYouType` | `true`  | Underline errors while typing.                                                    |
+| Setting                  | Default | What it does                                                            |
+| ------------------------ | ------- | ----------------------------------------------------------------------- |
+| `asomiya.errorLanguage`  | `as`    | Error messages in Assamese (`as`) or English (`en`).                    |
+| `asomiya.digits`         | `auto`  | Print numbers as `১২৩` or `123`. `auto` uses `123` for English letters. |
+| `asomiya.checkAsYouType` | `true`  | Underline mistakes while typing.                                        |
 
-## Safe by design
+## Good to know
 
-- Checking for errors only reads your code; nothing runs until you press ▶.
-- Asomiya programs cannot touch your files or the network, and endless loops can always be stopped.
-- The extension has no dependencies and collects no data.
+- Checking for mistakes only reads your code. Nothing runs until you press ▶.
+- Asomiya programs can't touch your files or the network, and Stop always works.
+- No dependencies, no telemetry.
 
-## Links
-
-[Website](https://asomiya.codes) · [Playground](https://asomiya.codes/playground/) ·
-[Language reference](https://asomiya.codes/reference/) · [Source code](https://github.com/d43ash1sh/asomiya) ·
-[Report a problem](https://github.com/d43ash1sh/asomiya/issues)
-
-Made in Assam. MIT licensed.
+Found a problem or a word that sounds wrong in Assamese?
+[Open an issue](https://github.com/d43ash1sh/asomiya/issues). The source is on
+[GitHub](https://github.com/d43ash1sh/asomiya/tree/main/editors/vscode).

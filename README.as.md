@@ -209,7 +209,9 @@ jodi (naam != "") { kowa("Nomoskar, " + naam) } nohole { kowa("naam nai") }
 
 ## VS Code এক্সটেনশ্যন
 
-VS Code, Cursor, Windsurf আৰু VSCodium ৰ বাবে **অসমীয়া এক্সটেনশ্যন**: দুয়োটা লিপিত ক’ডৰ ৰং, লিখোঁতেই ভুল, হভাৰ সহায়, ইনপুটসহ ▶ চলোৱা বুটাম, আৰু **Python ত দেখুওৱা**। Extensions ত “Asomiya” বিচাৰক, বা [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya) / [Open VSX](https://open-vsx.org/extension/asomiya/asomiya) চাওক। বিতং: [asomiya.codes/as/extension](https://asomiya.codes/as/extension/)।
+VS Code, Cursor, Windsurf আৰু VSCodium ৰ বাবে **অসমীয়া এক্সটেনশ্যন**: দুয়োটা লিপিত ক’ডৰ ৰং, লিখোঁতেই ভুল, হভাৰ সহায়, ▶ চলোৱা বুটাম (ফলাফল শুদ্ধ অসমীয়া আখৰত অসমীয়া পেনেলত ওলায়), আৰু **Python ত দেখুওৱা**। Extensions ত “Asomiya” বিচাৰক, বা [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya) / [Open VSX](https://open-vsx.org/extension/asomiya/asomiya) চাওক। বিতং: [asomiya.codes/as/extension](https://asomiya.codes/as/extension/)।
+
+![VS Code ত অসমীয়া](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/hover.png)
 
 ## অন্যান্য নিয়ম
 

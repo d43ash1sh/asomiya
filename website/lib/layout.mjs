@@ -24,8 +24,9 @@ const CSP = [
   "form-action 'none'",
 ].join('; ');
 
+// Only an Assamese font is loaded; everything else uses the reader's system font.
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Anek+Bangla:wght@400;500;600;700&display=swap';
+  'https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap';
 
 const ROOT = new URL('../', import.meta.url);
 const fingerprints = new Map();
@@ -248,7 +249,7 @@ export function renderPage({
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:url" content="${canonical}" />
     <meta name="twitter:card" content="summary" />
-    <meta name="theme-color" content="#0d1210" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="${rel(page.url, 'favicon.svg')}" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

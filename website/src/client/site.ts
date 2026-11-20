@@ -3,7 +3,7 @@ import { save, SCRIPT_KEY, THEME_KEY } from './storage';
 
 /** The site is dark unless the visitor chose the light theme. */
 function isDark(): boolean {
-  return document.documentElement.dataset['theme'] !== 'light';
+  return document.documentElement.dataset['theme'] === 'dark';
 }
 
 function setupTheme(): void {

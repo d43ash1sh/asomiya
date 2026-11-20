@@ -40,7 +40,7 @@ const S = {
       ],
       [
         'Run with one click',
-        'Press ▶ (or Cmd/Ctrl+F5). The program runs in a terminal inside the editor; সোধা waits for your answer and Ctrl+C stops it. Nothing else to install.',
+        'Press ▶ (or Cmd/Ctrl+F5). The output shows up in the Asomiya panel next to Terminal, with Assamese letters joined properly. When the program asks a question, type the answer in the box at the bottom. Nothing else to install.',
       ],
       [
         'Show in Python',
@@ -53,13 +53,17 @@ const S = {
     ],
     shots: [
       [
-        'overview',
-        'Run a program, answer its questions in the terminal, and hover a keyword for help.',
+        'hover',
+        'Point at a word to see what it means, in English and Assamese, and its Python name. The program’s output is in the Asomiya panel below.',
       ],
-      ['errors', 'Errors are underlined as you type, with the error code and a clear message.'],
-      ['python', 'Show in Python: the same program in Python, side by side.'],
+      [
+        'ask',
+        'When a program asks a question (সোধা), you answer in the box at the bottom of the panel.',
+      ],
+      ['errors', 'Mistakes are underlined while you type. The error code links to an explanation.'],
+      ['python', 'Show in Python puts the same program in Python next to yours.'],
+      ['complete', 'Suggestions as you type, in the script you are using.'],
     ],
-    shotNote: 'Previews made with the extension’s own colouring, messages and Python translation.',
     installTitle: 'Install',
     installSteps: published
       ? [
@@ -155,7 +159,7 @@ const S = {
       ],
       [
         'এক ক্লিকত চলাওক',
-        '▶ টিপক (বা Cmd/Ctrl+F5)। প্ৰগ্ৰামটো এডিটৰৰ ভিতৰৰ টাৰ্মিনেলত চলে; সোধাই আপোনাৰ উত্তৰলৈ ৰয়, আৰু Ctrl+C য়ে ৰখায়। আন একো ইনষ্টল কৰিব নালাগে।',
+        '▶ টিপক (বা Cmd/Ctrl+F5)। ফলাফল Terminal ৰ কাষৰ অসমীয়া পেনেলত ওলায়, অসমীয়া আখৰবোৰ শুদ্ধকৈ জোৰা লাগি। প্ৰগ্ৰামে প্ৰশ্ন সুধিলে তলৰ বাকচত উত্তৰ লিখক। আন একো ইনষ্টল কৰিব নালাগে।',
       ],
       [
         'Python ত দেখুওৱা',
@@ -167,11 +171,15 @@ const S = {
       ],
     ],
     shots: [
-      ['overview', 'প্ৰগ্ৰাম চলাওক, টাৰ্মিনেলত প্ৰশ্নৰ উত্তৰ দিয়ক, আৰু সহায়ৰ বাবে মূল শব্দত হভাৰ কৰক।'],
-      ['errors', 'লিখোঁতেই ভুলৰ তলত ৰেখা পৰে, ভুলৰ ক’ড আৰু স্পষ্ট বাৰ্তাৰ সৈতে।'],
-      ['python', 'Python ত দেখুওৱা: একেটা প্ৰগ্ৰাম Python ত, কাষে কাষে।'],
+      [
+        'hover',
+        'কোনো শব্দৰ ওপৰত মাউছ ৰাখিলে ইয়াৰ অৰ্থ (ইংৰাজী আৰু অসমীয়াত) আৰু Python নাম দেখা যায়। তলৰ অসমীয়া পেনেলত প্ৰগ্ৰামৰ ফলাফল।',
+      ],
+      ['ask', 'প্ৰগ্ৰামে প্ৰশ্ন সুধিলে (সোধা), পেনেলৰ তলৰ বাকচত উত্তৰ লিখক।'],
+      ['errors', 'লিখোঁতেই ভুলৰ তলত ৰেখা পৰে। ভুলৰ ক’ডত ক্লিক কৰিলে ব্যাখ্যা পাব।'],
+      ['python', 'Python ত দেখুওৱাই একেটা প্ৰগ্ৰাম Python ত কাষতে দেখুৱায়।'],
+      ['complete', 'লিখোঁতেই পৰামৰ্শ, আপুনি ব্যৱহাৰ কৰা লিপিতে।'],
     ],
-    shotNote: 'এক্সটেনশ্যনৰ নিজৰ ৰং, বাৰ্তা আৰু Python অনুবাদেৰে বনোৱা পূৰ্বদৰ্শন।',
     installTitle: 'ইনষ্টল',
     installSteps: published
       ? [
@@ -282,7 +290,7 @@ function body(lang) {
     <article class="ext-main" id="overview">
       <p class="lead">${esc(s.intro)}</p>
       <figure class="ext-shot">
-        <img src="${h.asset('assets/extension/overview.png')}" width="1200" height="720" alt="${esc(s.shots[0][1])}" loading="lazy">
+        <img src="${h.asset('assets/screens/vscode-hover.png')}" width="2880" height="1800" alt="${esc(s.shots[0][1])}" loading="lazy">
         <figcaption>${esc(s.shots[0][1])}</figcaption>
       </figure>
       <ul class="ext-features">${s.features
@@ -292,12 +300,11 @@ function body(lang) {
         .slice(1)
         .map(
           ([name, cap]) => `<figure class="ext-shot">
-        <img src="${h.asset(`assets/extension/${name}.png`)}" width="1200" height="720" alt="${esc(cap)}" loading="lazy">
+        <img src="${h.asset(`assets/screens/vscode-${name}.png`)}" width="2880" height="1800" alt="${esc(cap)}" loading="lazy">
         <figcaption>${esc(cap)}</figcaption>
       </figure>`,
         )
         .join('')}
-      <p class="muted ext-note">${esc(s.shotNote)}</p>
 
       <h2 id="install">${esc(s.installTitle)}</h2>
       <ol class="join-list">${s.installSteps.map((i) => `<li>${fill(i)}</li>`).join('')}</ol>

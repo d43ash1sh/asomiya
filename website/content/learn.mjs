@@ -23,6 +23,8 @@ ${h.h2('you-will-learn', 'You will learn')}
   <li>How to make decisions and repeat things</li>
   <li>How to write your own functions</li>
 </ul>
+<p>You don’t need to install anything to follow along: every example has a <strong>Try it</strong> button that opens it in the <a href="${h.playground}">playground</a>, where you can change it and run it again.</p>
+${h.figure('playground', 'The playground: write on the left, press Run, and the output appears on the right.')}
 ${h.h2('hello', 'Say hello')}
 <p>A program is a list of instructions. <code>কোৱা</code> (<code>kowa</code>, “say”) prints whatever you give it:</p>
 ${h.example('কোৱা("নমস্কাৰ, পৃথিৱী!")', 'kowa("Nomoskar, prithibi!")')}
@@ -49,6 +51,8 @@ ${h.h2('you-will-learn', 'আপুনি শিকিব')}
   <li>সিদ্ধান্ত কেনেকৈ ল’ব আৰু কাম কেনেকৈ বাৰে বাৰে কৰিব</li>
   <li>নিজৰ ফাংচন কেনেকৈ লিখিব</li>
 </ul>
+<p>উদাহৰণবোৰ চেষ্টা কৰিবলৈ একো ইনষ্টল কৰিব নালাগে: প্ৰতিটো উদাহৰণৰ <strong>চলাই চাওক</strong> বুটামে ইয়াক <a href="${h.playground}">প্লেগ্ৰাউণ্ডত</a> খোলে, য’ত আপুনি সলনি কৰি আকৌ চলাব পাৰে।</p>
+${h.figure('playground', 'প্লেগ্ৰাউণ্ড: বাওঁফালে লিখক, Run টিপক, আৰু সোঁফালে ফলাফল ওলাব।')}
 ${h.h2('hello', 'নমস্কাৰ কওক')}
 <p>প্ৰগ্ৰাম হৈছে নিৰ্দেশনাৰ এখন তালিকা। <code>কোৱা</code>-ই যি দিয়ে তাকে ছপা কৰে:</p>
 ${h.example('কোৱা("নমস্কাৰ, পৃথিৱী!")', 'kowa("Nomoskar, prithibi!")')}
@@ -105,6 +109,7 @@ ${h.h2('update', 'Update or uninstall')}
 ${h.shell('npm install -g asomiya@latest\nnpm uninstall -g asomiya')}
 ${h.h2('editor', 'Writing code')}
 <p>Any text editor works. Save files as UTF-8 with the <code>.asom</code> extension. To type Assamese script, add an Assamese keyboard in your system settings, or write in <a href="${h.link('learn/english-letters/')}">English letters</a>.</p>
+${h.figure('vscode-run', 'An Asomiya program in VS Code. ▶ Run shows the output in the Asomiya panel.')}
 <p>For the best experience, install the <a href="${h.link('extension/')}">Asomiya extension</a> for VS Code, Cursor, Windsurf or VSCodium: colours for your code, errors as you type, a ▶ Run button and Show in Python. In Cursor, Windsurf and VSCodium, search “Asomiya” in Extensions.</p>`,
     as: (h) => `
 ${h.h2('try-online', 'অনলাইনত চলাই চাওক')}
@@ -129,6 +134,7 @@ ${h.h2('update', 'আপডেট বা আনইনষ্টল')}
 ${h.shell('npm install -g asomiya@latest\nnpm uninstall -g asomiya')}
 ${h.h2('editor', 'ক’ড লিখা')}
 <p>যিকোনো টেক্সট এডিটৰ চলিব। ফাইলবোৰ UTF-8 ত <code>.asom</code> এক্সটেনচনৰে সাঁচক। অসমীয়া লিপিত লিখিবলৈ ছিষ্টেম ছেটিংছত অসমীয়া কীব’ৰ্ড যোগ কৰক, বা <a href="${h.link('learn/english-letters/')}">ইংৰাজী আখৰত</a> লিখক।</p>
+${h.figure('vscode-run', 'VS Code ত এটা অসমীয়া প্ৰগ্ৰাম। ▶ চলাওক টিপিলে অসমীয়া পেনেলত ফলাফল ওলায়।')}
 <p>সবাতোকৈ ভাল অভিজ্ঞতাৰ বাবে VS Code, Cursor, Windsurf বা VSCodium ত <a href="${h.link('extension/')}">অসমীয়া এক্সটেনশ্যন</a> ইনষ্টল কৰক: ক’ডৰ ৰং, লিখোঁতেই ভুল, ▶ চলোৱা বুটাম আৰু Python ত দেখুওৱা। Cursor, Windsurf আৰু VSCodium ত Extensions ত “Asomiya” বিচাৰক।</p>`,
   },
 };
@@ -718,9 +724,11 @@ ${h.example('ধৰা উত্তৰ = সংখ্যা(সোধা("এট
 ${h.h2('where', 'Where input comes from')}
 <ul>
   <li><strong>Terminal:</strong> the program waits for you to type a line and press Enter.</li>
+  <li><strong>VS Code:</strong> a box appears at the bottom of the Asomiya panel; type the answer and press Enter.</li>
   <li><strong>Playground:</strong> type answers in the <em>Input</em> box before you press Run, one answer per line.</li>
   <li>When there is nothing left to read, <code>সোধা</code> gives <code>খালী</code>.</li>
-</ul>`,
+</ul>
+${h.figure('vscode-ask', 'In VS Code, the program waits for your answer in the Asomiya panel.')}`,
     as: (h) => `
 ${h.example('ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")\nকোৱা("নমস্কাৰ, " + নাম)', 'dhora naam = xudha("Tomar naam ki? ")\nkowa("Nomoskar, " + naam)', { stdin: 'ৰীতা' })}
 ${h.h2('numbers', 'ইনপুটৰ পৰা সংখ্যা')}
@@ -729,9 +737,11 @@ ${h.example('ধৰা উত্তৰ = সংখ্যা(সোধা("এট
 ${h.h2('where', 'ইনপুট ক’ৰ পৰা আহে')}
 <ul>
   <li><strong>টাৰ্মিনেল:</strong> প্ৰগ্ৰামটোৱে আপুনি এটা শাৰী লিখি Enter টিপালৈকে অপেক্ষা কৰে।</li>
+  <li><strong>VS Code:</strong> অসমীয়া পেনেলৰ তলত এটা বাকচ ওলায়; উত্তৰ লিখি Enter টিপক।</li>
   <li><strong>প্লেগ্ৰাউণ্ড:</strong> চলাওক টিপাৰ আগতে <em>ইনপুট</em> বাকচত উত্তৰবোৰ লিখক, প্ৰতি শাৰীত এটা।</li>
   <li>পঢ়িবলৈ একো নাথাকিলে <code>সোধা</code>-ই <code>খালী</code> দিয়ে।</li>
-</ul>`,
+</ul>
+${h.figure('vscode-ask', 'VS Code ত প্ৰগ্ৰামটোৱে অসমীয়া পেনেলত আপোনাৰ উত্তৰলৈ অপেক্ষা কৰে।')}`,
   },
 };
 
@@ -756,6 +766,8 @@ ${h.sample('ধৰা ক = ৫\nকোৱা(ক + খ)', { expectError: true }
   <li><strong>The message</strong>, in Assamese or English (choose with <code>--lang en</code>, or the switch in the playground).</li>
   <li><strong>The place</strong>: file, line and column, and the line itself with <code>^</code> under the problem.</li>
 </ol>
+<p>In VS Code you don’t have to run the program to see grammar mistakes: they are underlined as you type, and the code links to its explanation.</p>
+${h.figure('vscode-errors', 'A missing ) in VS Code: the mistake is underlined and listed under Problems with its code, P001.')}
 ${h.h2('common', 'Common mistakes')}
 ${h.table(
   ['Code', 'What it means', 'Fix'],
@@ -798,6 +810,8 @@ ${h.sample('ধৰা ক = ৫\nকোৱা(ক + খ)', { expectError: true }
   <li><strong>বাৰ্তা</strong>, অসমীয়া বা ইংৰাজীত (<code>--lang en</code> দি বা প্লেগ্ৰাউণ্ডৰ বুটামেৰে বাছি লওক)।</li>
   <li><strong>স্থান</strong>: ফাইল, শাৰী আৰু স্তম্ভ, আৰু সমস্যাটোৰ তলত <code>^</code> থকা শাৰীটো।</li>
 </ol>
+<p>VS Code ত বাক্য-গঠনৰ ভুল চাবলৈ প্ৰগ্ৰাম চলাব নালাগে: লিখোঁতেই তলত ৰেখা পৰে, আৰু ক’ডটোৱে ব্যাখ্যালৈ লৈ যায়।</p>
+${h.figure('vscode-errors', 'VS Code ত এটা ) নাই: ভুলটোৰ তলত ৰেখা পৰিছে আৰু Problems ত ইয়াৰ ক’ড P001 ৰ সৈতে দেখুৱাইছে।')}
 ${h.h2('common', 'সাধাৰণ ভুল')}
 ${h.table(
   ['ক’ড', 'অৰ্থ', 'সমাধান'],

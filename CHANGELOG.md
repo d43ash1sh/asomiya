@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.1] — 2026-11-20
+
 ### Added
 
 - **VS Code extension** (`editors/vscode`, also for Cursor, Windsurf and VSCodium): syntax
@@ -13,7 +15,14 @@ All notable changes to this project are documented here. The format follows
   error codes, hover help with the Python name of each word, completions, Run in a terminal with
   input and Stop (the interpreter runs on a worker thread; no Node.js install needed), a live
   Show in Python view, and snippets. Released from `vscode-v*` tags by
-  `.github/workflows/vscode.yml`. The website has a new page for it: https://asomiya.codes/extension/.
+  `.github/workflows/vscode.yml`. The website has a new page for it: https://asomiya.codes/extension/. Published on the
+  [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya) and
+  [Open VSX](https://open-vsx.org/extension/asomiya/asomiya).
+
+### Fixed
+
+- The test suite now passes on Windows (a Unix-only timer, path separators, and UTF-8 input), and
+  the Python comparison tests no longer hang occasionally on macOS.
 
 ## [0.3.0] — 2026-11-20
 

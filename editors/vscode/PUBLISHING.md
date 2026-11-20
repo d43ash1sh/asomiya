@@ -40,6 +40,16 @@ in with Microsoft Entra ID instead (no secret is stored anywhere).
 5. Add repository variables `AZURE_CLIENT_ID` (the app's Application ID), `AZURE_TENANT_ID`
    (Directory ID) and `PUBLISH_VS_MARKETPLACE` = `true`.
 
+## Uploading by hand
+
+You can always publish a release without any of the setup above: download the `.vsix` from the
+GitHub Release, open https://marketplace.visualstudio.com/manage/publishers/asomiya, and use
+**⋯ → Update** on the extension (or **New extension → Visual Studio Code** the first time).
+Microsoft verifies each upload for a few minutes before it goes public.
+
+Never delete and re-push a release tag: GitHub turns its release into a hidden draft. Bump the
+version instead.
+
 ## After the first publish
 
 Fill in `marketplace` and `openVsx` in `EXTENSION` (`website/site.config.mjs`):

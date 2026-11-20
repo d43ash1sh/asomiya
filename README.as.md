@@ -207,6 +207,10 @@ jodi (naam != "") { kowa("Nomoskar, " + naam) } nohole { kowa("naam nai") }
 চাৰ্ভাৰলৈ নাযায়। তাত উদাহৰণবোৰ আছে, `সোধা`ৰ বাবে এটা ইনপুট বাকচ আছে (প্ৰতিবাৰ মাতিলে এটা শাৰী পঢ়ে),
 আৰু প্ৰগ্ৰামটো লিংক হিচাপে আনক পঠিয়াব পাৰি।
 
+## VS Code এক্সটেনশ্যন
+
+VS Code, Cursor, Windsurf আৰু VSCodium ৰ বাবে **অসমীয়া এক্সটেনশ্যন**: দুয়োটা লিপিত ক’ডৰ ৰং, লিখোঁতেই ভুল, হভাৰ সহায়, ইনপুটসহ ▶ চলোৱা বুটাম, আৰু **Python ত দেখুওৱা**। Extensions ত “Asomiya” বিচাৰক, বা [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya) / [Open VSX](https://open-vsx.org/extension/asomiya/asomiya) চাওক। বিতং: [asomiya.codes/as/extension](https://asomiya.codes/as/extension/)।
+
 ## অন্যান্য নিয়ম
 
 - মন্তব্য: `// শাৰীৰ শেষলৈকে` আৰু `/* … */`।

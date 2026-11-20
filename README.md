@@ -10,6 +10,7 @@ Write real programs in অসমীয়া script, or in English letters the w
 [![CI](https://github.com/d43ash1sh/asomiya/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/d43ash1sh/asomiya/actions/workflows/ci.yml)
 [![node](https://img.shields.io/node/v/asomiya.svg)](https://nodejs.org)
 [![license](https://img.shields.io/npm/l/asomiya.svg)](https://github.com/d43ash1sh/asomiya/blob/main/LICENSE)
+[![Open VSX](https://img.shields.io/open-vsx/v/asomiya/asomiya?label=Open%20VSX)](https://open-vsx.org/extension/asomiya/asomiya)
 
 [Website & Playground](https://asomiya.codes) ·
 [Documentation](#documentation) ·
@@ -257,8 +258,14 @@ comparing the output.
 
 **[Asomiya for VS Code](https://asomiya.codes/extension/)** (also Cursor, Windsurf and VSCodium):
 syntax colours in both scripts, errors as you type, hover help, a ▶ Run button with input, and a
-live **Show in Python** view. Download it from the
-[extension page](https://asomiya.codes/extension/); the source is in
+live **Show in Python** view.
+
+- **VS Code:** [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya),
+  or search “Asomiya” in the Extensions view.
+- **Cursor, Windsurf, VSCodium:** [Open VSX](https://open-vsx.org/extension/asomiya/asomiya), or
+  search “Asomiya” in Extensions.
+
+More on the [extension page](https://asomiya.codes/extension/); the source is in
 [`editors/vscode`](https://github.com/d43ash1sh/asomiya/tree/main/editors/vscode).
 
 ## Use as a library

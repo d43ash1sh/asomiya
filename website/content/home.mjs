@@ -1,5 +1,5 @@
 // Home page (layout: "home").
-import { SITE } from '../site.config.mjs';
+import { EXTENSION, SITE } from '../site.config.mjs';
 import { teamGrid } from '../lib/team.mjs';
 import { icon } from '../lib/icons.mjs';
 
@@ -74,6 +74,12 @@ const S = {
       ],
     ],
     install: 'Installation guide',
+    editorTitle: 'Write Asomiya in your code editor',
+    editorSub:
+      'The Asomiya extension brings colours, errors as you type, hover help, a ▶ Run button and Show in Python to VS Code, Cursor, Windsurf and VSCodium.',
+    editorCta: 'Get the extension',
+    editorAlt:
+      'Asomiya in VS Code: a program, a hover card explaining a keyword, and the program running in the terminal.',
     teamTitle: 'Made in Assam',
     teamSub:
       'Built by a small team and shaped by everyone who speaks Assamese. Suggest a better word, report a bug, or add a feature.',
@@ -148,6 +154,11 @@ const S = {
       ],
     ],
     install: 'ইনষ্টল কৰাৰ নিৰ্দেশিকা',
+    editorTitle: 'আপোনাৰ ক’ড এডিটৰত অসমীয়া লিখক',
+    editorSub:
+      'অসমীয়া এক্সটেনশ্যনে VS Code, Cursor, Windsurf আৰু VSCodium লৈ ৰং, লিখোঁতেই ভুল, হভাৰ সহায়, ▶ চলোৱা বুটাম আৰু Python ত দেখুওৱা লৈ আনে।',
+    editorCta: 'এক্সটেনশ্যন লওক',
+    editorAlt: 'VS Code ত অসমীয়া: এটা প্ৰগ্ৰাম, মূল শব্দ বুজোৱা হভাৰ কাৰ্ড, আৰু টাৰ্মিনেলত চলি থকা প্ৰগ্ৰাম।',
     teamTitle: 'অসমত নিৰ্মিত',
     teamSub:
       'এটা সৰু দলে বনাইছে, আৰু অসমীয়া কোৱা সকলোৱে গঢ় দিছে। এটা ভাল শব্দৰ পৰামৰ্শ দিয়ক, ভুল জনাওক, বা নতুন সুবিধা যোগ কৰক।',
@@ -301,6 +312,20 @@ function body(lang) {
     ${s.steps.map(([title, text], i) => `<li><span class="step-n" aria-hidden="true">${ASSAMESE_DIGITS[i]}</span><h3>${title}</h3><p>${text}</p></li>`).join('')}
   </ol>
   <p class="center"><a class="text-link" href="${h.link('learn/installation/')}">${s.install}</a></p>
+</section>
+
+<section class="section">
+  <div class="split">
+    <div>
+      <h2>${s.editorTitle}</h2>
+      <p class="lead">${s.editorSub}</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="${h.link('extension/')}">${icon('download')}${s.editorCta}</a>
+        <a class="btn btn-secondary" href="${EXTENSION.openVsx}" target="_blank" rel="noopener noreferrer">Open VSX</a>
+      </div>
+    </div>
+    <div><img class="home-shot" src="${h.asset('assets/extension/overview.png')}" width="1200" height="720" alt="${s.editorAlt}" loading="lazy"></div>
+  </div>
 </section>
 
 <section class="section team-band">

@@ -359,7 +359,7 @@ function body(lang) {
 export const EXTENSION_PAGE = {
   id: 'extension',
   path: 'extension/',
-  section: 'community',
+  section: 'extension',
   layout: 'page',
   title: { en: 'VS Code extension', as: 'VS Code এক্সটেনশ্যন' },
   description: {

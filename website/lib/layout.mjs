@@ -58,6 +58,7 @@ function navLinks(page, lang) {
     ['learn', `${prefix}learn/`, t.nav.learn],
     ['reference', `${prefix}reference/`, t.nav.reference],
     ['playground', `${prefix}playground/`, t.nav.playground],
+    ['extension', `${prefix}extension/`, t.nav.extension],
     ['community', `${prefix}community/`, t.nav.community],
   ];
   return items

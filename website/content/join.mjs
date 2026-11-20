@@ -74,7 +74,7 @@ const S = {
       'Ideas we would love help with: a for-each loop, more built-in functions (text and lists), support for more editors (JetBrains, Zed, Neovim), and lessons for school students.',
     ],
     contribNote:
-      'The code is TypeScript with more than 330 tests. Every change runs them on Linux, macOS and Windows.',
+      'The code is TypeScript with more than 360 tests. Every change runs them on Linux, macOS and Windows.',
     wordsTitle: 'Help with the words',
     words: `Some keywords are still provisional, like যেতিয়ালৈকে (while), ফাংচন (function) and ঘূৰাইদিয়া (return). If you know a more natural Assamese word, or a romanised spelling we missed, ${'{ISSUE}'}. The full list is in the ${'{KW}'}.`,
     teamTitle: 'Who to talk to',
@@ -142,7 +142,7 @@ const S = {
       'য’ত সহায় বিচাৰোঁ: for-each লুপ, অধিক অন্তৰ্নিৰ্মিত ফাংচন (পাঠ আৰু তালিকা), আন এডিটৰৰ বাবে সহায় (JetBrains, Zed, Neovim), আৰু স্কুলৰ ছাত্ৰ-ছাত্ৰীৰ বাবে পাঠ।',
     ],
     contribNote:
-      'ক’ডটো TypeScript ত, ৩৩০টাতকৈ অধিক পৰীক্ষাৰ সৈতে। প্ৰতিটো সলনিয়ে Linux, macOS আৰু Windows ত সেইবোৰ চলায়।',
+      'ক’ডটো TypeScript ত, ৩৬০টাতকৈ অধিক পৰীক্ষাৰ সৈতে। প্ৰতিটো সলনিয়ে Linux, macOS আৰু Windows ত সেইবোৰ চলায়।',
     wordsTitle: 'শব্দৰ বাবে সহায়',
     words: `কিছুমান মূল শব্দ এতিয়াও অস্থায়ী, যেনে যেতিয়ালৈকে, ফাংচন আৰু ঘূৰাইদিয়া। অধিক স্বাভাৱিক অসমীয়া শব্দ বা আমি এৰি দিয়া ইংৰাজী বানান জানিলে ${'{ISSUE}'}। সম্পূৰ্ণ তালিকা ${'{KW}'}-ত আছে।`,
     teamTitle: 'কাৰ সৈতে কথা পাতিব',

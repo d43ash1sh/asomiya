@@ -104,7 +104,8 @@ ${h.shell('asomiya')}
 ${h.h2('update', 'Update or uninstall')}
 ${h.shell('npm install -g asomiya@latest\nnpm uninstall -g asomiya')}
 ${h.h2('editor', 'Writing code')}
-<p>Any text editor works. Save files as UTF-8 with the <code>.asom</code> extension. To type Assamese script, add an Assamese keyboard in your system settings, or write in <a href="${h.link('learn/english-letters/')}">English letters</a>.</p>`,
+<p>Any text editor works. Save files as UTF-8 with the <code>.asom</code> extension. To type Assamese script, add an Assamese keyboard in your system settings, or write in <a href="${h.link('learn/english-letters/')}">English letters</a>.</p>
+<p>For the best experience, install the <a href="${h.link('extension/')}">Asomiya extension</a> for VS Code, Cursor, Windsurf or VSCodium: colours for your code, errors as you type, a ▶ Run button and Show in Python. In Cursor, Windsurf and VSCodium, search “Asomiya” in Extensions.</p>`,
     as: (h) => `
 ${h.h2('try-online', 'অনলাইনত চলাই চাওক')}
 <p><a href="${h.playground}">প্লেগ্ৰাউণ্ড</a>-এ আপোনাৰ ব্ৰাউজাৰতে সঁচা ইণ্টাৰপ্ৰেটাৰটো চলায়। কোনো চাৰ্ভাৰলৈ একো নাযায়।</p>
@@ -127,7 +128,8 @@ ${h.shell('asomiya')}
 ${h.h2('update', 'আপডেট বা আনইনষ্টল')}
 ${h.shell('npm install -g asomiya@latest\nnpm uninstall -g asomiya')}
 ${h.h2('editor', 'ক’ড লিখা')}
-<p>যিকোনো টেক্সট এডিটৰ চলিব। ফাইলবোৰ UTF-8 ত <code>.asom</code> এক্সটেনচনৰে সাঁচক। অসমীয়া লিপিত লিখিবলৈ ছিষ্টেম ছেটিংছত অসমীয়া কীব’ৰ্ড যোগ কৰক, বা <a href="${h.link('learn/english-letters/')}">ইংৰাজী আখৰত</a> লিখক।</p>`,
+<p>যিকোনো টেক্সট এডিটৰ চলিব। ফাইলবোৰ UTF-8 ত <code>.asom</code> এক্সটেনচনৰে সাঁচক। অসমীয়া লিপিত লিখিবলৈ ছিষ্টেম ছেটিংছত অসমীয়া কীব’ৰ্ড যোগ কৰক, বা <a href="${h.link('learn/english-letters/')}">ইংৰাজী আখৰত</a> লিখক।</p>
+<p>সবাতোকৈ ভাল অভিজ্ঞতাৰ বাবে VS Code, Cursor, Windsurf বা VSCodium ত <a href="${h.link('extension/')}">অসমীয়া এক্সটেনশ্যন</a> ইনষ্টল কৰক: ক’ডৰ ৰং, লিখোঁতেই ভুল, ▶ চলোৱা বুটাম আৰু Python ত দেখুওৱা। Cursor, Windsurf আৰু VSCodium ত Extensions ত “Asomiya” বিচাৰক।</p>`,
   },
 };
 

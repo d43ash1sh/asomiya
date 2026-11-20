@@ -267,6 +267,8 @@ function registerPython(context: vscode.ExtensionContext): void {
 }
 
 export function activate(context: vscode.ExtensionContext): void {
+  // The extension activates when an Asomiya file is opened; only then show the Asomiya panel.
+  void vscode.commands.executeCommand('setContext', 'asomiya.active', true);
   registerDiagnostics(context);
   registerLanguageFeatures(context);
   registerRun(context);

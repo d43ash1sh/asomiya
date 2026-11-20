@@ -2,7 +2,7 @@
   "name": "asomiya",
   "displayName": "Asomiya (অসমীয়া)",
   "description": "Write code in Assamese: syntax colours, errors as you type, hover help, a Run button and Show in Python for the Asomiya programming language.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "publisher": "asomiya",
   "license": "MIT",
   "icon": "images/icon.png",
@@ -212,7 +212,8 @@
         {
           "type": "webview",
           "id": "asomiya.output",
-          "name": "Output"
+          "name": "Output",
+          "when": "asomiya.active"
         }
       ]
     }

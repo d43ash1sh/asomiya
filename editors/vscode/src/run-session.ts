@@ -27,6 +27,9 @@ export interface RunCallbacks {
 }
 
 const encoder = new TextEncoder();
+/** How often batched output is passed on. */
+const FLUSH_MS = 30;
+const MAX_PENDING = 1_000_000;
 
 /** Cuts UTF-8 bytes to `max` without splitting a character. */
 function clip(bytes: Uint8Array, max: number): Uint8Array {
@@ -43,6 +46,9 @@ export class RunSession {
   private readonly state = new Int32Array(this.shared, 0, 2);
   private waitingForInput = false;
   private done = false;
+  /** Output is passed on in batches: a loop printing a line at a time must not flood the panel. */
+  private pending = '';
+  private timer: ReturnType<typeof setTimeout> | undefined;
 
   constructor(
     workerFile: string,
@@ -91,8 +97,14 @@ export class RunSession {
 
   private receive(message: FromWorker): void {
     if (message.type === 'output') {
-      this.callbacks.output(message.text);
+      this.pending += message.text;
+      // Between two batches only the newest output matters; the panel keeps less than this anyway.
+      if (this.pending.length > MAX_PENDING) this.pending = this.pending.slice(-MAX_PENDING);
+      this.timer ??= setTimeout(() => {
+        this.flush();
+      }, FLUSH_MS);
     } else if (message.type === 'input') {
+      this.flush();
       this.waitingForInput = true;
       this.callbacks.input();
     } else {
@@ -100,8 +112,18 @@ export class RunSession {
     }
   }
 
+  private flush(): void {
+    clearTimeout(this.timer);
+    this.timer = undefined;
+    if (this.pending === '') return;
+    const text = this.pending;
+    this.pending = '';
+    this.callbacks.output(text);
+  }
+
   private finish(outcome: Outcome, error: string | null): void {
     if (this.done) return;
+    this.flush();
     this.done = true;
     this.waitingForInput = false;
     void this.worker.terminate();

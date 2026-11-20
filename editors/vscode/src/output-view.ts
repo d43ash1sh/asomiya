@@ -35,6 +35,7 @@ export interface PanelText {
   readonly send: string;
   readonly stop: string;
   readonly empty: string;
+  readonly trimmed: string;
 }
 
 export const PANEL_TEXT: Readonly<Record<MessageLanguage, PanelText>> = {
@@ -48,6 +49,7 @@ export const PANEL_TEXT: Readonly<Record<MessageLanguage, PanelText>> = {
     send: 'Send',
     stop: 'Stop',
     empty: 'Press ▶ Run on an Asomiya (.asom) file to see its output here.',
+    trimmed: '… earlier output hidden (only the newest output is kept)',
   },
   as: {
     running: 'চলি আছে…',
@@ -59,6 +61,7 @@ export const PANEL_TEXT: Readonly<Record<MessageLanguage, PanelText>> = {
     send: 'পঠিয়াওক',
     stop: 'ৰখাওক',
     empty: 'ইয়াত ফলাফল চাবলৈ এটা অসমীয়া (.asom) ফাইলত ▶ চলাওক টিপক।',
+    trimmed: '… আগৰ ফলাফল লুকুৱা হৈছে (কেৱল নতুন ফলাফল ৰখা হয়)',
   },
 };
 
@@ -137,6 +140,8 @@ function html(nonce: string): string {
   .answer { color: var(--vscode-terminal-ansiCyan, var(--vscode-textLink-foreground)); }
   .error { color: var(--vscode-errorForeground); }
   .note { color: var(--vscode-descriptionForeground); font-family: var(--vscode-font-family); }
+  p.note { margin: 0 0 6px; }
+  p.note[hidden] { display: none; }
   form { display: flex; gap: 8px; padding: 8px 14px 12px; }
   form[hidden] { display: none; }
   input { flex: 1; font: inherit; padding: 5px 8px; color: var(--vscode-input-foreground); background: var(--vscode-input-background);
@@ -145,18 +150,27 @@ function html(nonce: string): string {
 </head>
 <body>
 <header><span class="file" id="file"></span><span class="status" id="status"></span><button class="secondary" id="stop" hidden></button></header>
-<main id="main"><pre id="out"><span class="note" id="empty"></span></pre></main>
+<main id="main"><p class="note" id="trim" hidden></p><pre id="out"><span class="note" id="empty"></span></pre></main>
 <form id="form" hidden><input id="answer" autocomplete="off" spellcheck="false"><button type="submit" id="send"></button></form>
 <script nonce="${nonce}">
   const vscode = acquireVsCodeApi();
   const $ = (id) => document.getElementById(id);
-  const out = $('out'), main = $('main'), form = $('form'), input = $('answer'), stop = $('stop'), status = $('status');
+  const out = $('out'), trim = $('trim'), main = $('main'), form = $('form'), input = $('answer'), stop = $('stop'), status = $('status');
   let ui = null;
+  // Keep the newest output only, so a program that prints forever can't slow the editor down.
+  const KEEP = 300000;
+  let size = 0;
   const add = (text, cls) => {
     const span = document.createElement('span');
     if (cls) span.className = cls;
     span.textContent = text;
     out.append(span);
+    size += text.length;
+    while (size > KEEP && out.childNodes.length > 1) {
+      size -= out.firstChild.textContent.length;
+      out.firstChild.remove();
+      trim.hidden = false;
+    }
     main.scrollTop = main.scrollHeight;
   };
   const setStatus = (kind) => { status.className = 'status ' + kind; status.textContent = ui ? ui[kind] : ''; };
@@ -164,7 +178,7 @@ function html(nonce: string): string {
   window.addEventListener('message', (event) => {
     const m = event.data;
     if (m.type === 'start') {
-      ui = m.ui; out.textContent = ''; $('file').textContent = m.file;
+      ui = m.ui; out.textContent = ''; size = 0; trim.hidden = true; trim.textContent = ui.trimmed; $('file').textContent = m.file;
       input.placeholder = ui.placeholder; $('send').textContent = ui.send; stop.textContent = ui.stop;
       stop.hidden = false; setStatus('running'); ask(false);
     } else if (m.type === 'output') {

@@ -2690,7 +2690,7 @@ html[lang='as'] .ext-meta h1 {
 
 @media (max-width: 900px) {
   .ext-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -3035,4 +3035,34 @@ html[lang='as'] .layout-home .foot-title {
 .layout-home .home h2 {
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.ext-history {
+  margin: 0;
+}
+
+.ext-history div {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ext-history div:last-child {
+  border-bottom: 0;
+}
+
+.ext-history dt {
+  font-weight: 600;
+}
+
+.ext-history dd {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+/* The landing page is always dark, so its theme toggle would do nothing. */
+.layout-home [data-theme-toggle] {
+  display: none;
 }

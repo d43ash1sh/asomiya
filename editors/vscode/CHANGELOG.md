@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+- A program that prints a lot (say, a loop of 200 000 lines) no longer floods the Asomiya panel:
+  output is passed on in batches, and the panel keeps the newest 300 000 characters.
+- The Asomiya panel only appears once you work with an Asomiya file, not in every project.
+
 ## 0.2.1
 
 - A rewritten guide with real screenshots of every feature.

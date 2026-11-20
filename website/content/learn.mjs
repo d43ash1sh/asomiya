@@ -105,6 +105,7 @@ ${h.shell('asomiya run hello.asom')}
 ${h.h2('repl', 'The interactive REPL')}
 <p>Type <code>asomiya</code> on its own to start the REPL, where each line runs as soon as you press Enter. It’s the fastest way to experiment. Type <code>.help</code> for help and <code>.exit</code> (or Ctrl+D) to quit.</p>
 ${h.shell('asomiya')}
+${h.note('warning', `<p>Many terminals, including the one inside VS Code, can’t join Assamese letters, so text like <code>যুগ্ম</code> may look broken there. The program is still right. For clean Assamese output, run it in the <a href="${h.link('extension/')}">VS Code extension</a> (its Asomiya panel) or in the <a href="${h.playground}">playground</a>, or write in English letters.</p>`)}
 ${h.h2('update', 'Update or uninstall')}
 ${h.shell('npm install -g asomiya@latest\nnpm uninstall -g asomiya')}
 ${h.h2('editor', 'Writing code')}
@@ -130,6 +131,7 @@ ${h.shell('asomiya run hello.asom')}
 ${h.h2('repl', 'REPL')}
 <p>অকল <code>asomiya</code> লিখিলে REPL আৰম্ভ হয়, য’ত Enter টিপাৰ লগে লগে প্ৰতিটো শাৰী চলে। পৰীক্ষা কৰাৰ আটাইতকৈ সহজ উপায়। সহায়ৰ বাবে <code>.সহায়</code> আৰু ওলাই যাবলৈ <code>.প্ৰস্থান</code> (বা Ctrl+D) লিখক।</p>
 ${h.shell('asomiya')}
+${h.note('warning', `<p>বহুতো টাৰ্মিনেলে, VS Code ৰ ভিতৰৰটোকে ধৰি, অসমীয়া আখৰ জোৰা লগাব নোৱাৰে, গতিকে <code>যুগ্ম</code> ৰ দৰে লিখা তাত ভঙা যেন লাগিব পাৰে। প্ৰগ্ৰামটো কিন্তু শুদ্ধ। পৰিষ্কাৰ অসমীয়া ফলাফলৰ বাবে <a href="${h.link('extension/')}">VS Code এক্সটেনশ্যনত</a> (ইয়াৰ অসমীয়া পেনেলত) বা <a href="${h.playground}">প্লেগ্ৰাউণ্ডত</a> চলাওক, বা ইংৰাজী আখৰত লিখক।</p>`)}
 ${h.h2('update', 'আপডেট বা আনইনষ্টল')}
 ${h.shell('npm install -g asomiya@latest\nnpm uninstall -g asomiya')}
 ${h.h2('editor', 'ক’ড লিখা')}

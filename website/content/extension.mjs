@@ -83,7 +83,7 @@ const S = {
     commandsTitle: 'Commands and shortcuts',
     commands: [
       ['Asomiya: Run Program', '▶ in the editor title · Cmd/Ctrl+F5'],
-      ['Asomiya: Stop Program', 'Ctrl+C in the terminal'],
+      ['Asomiya: Stop Program', 'Stop in the Asomiya panel, or Ctrl+C there'],
       ['Asomiya: Show in Python', 'the split icon in the editor title'],
       ['Asomiya: Save Python Version As…', 'in the Python view’s title'],
     ],
@@ -105,7 +105,19 @@ const S = {
     ],
     historyTitle: 'Version history',
     history: [
-      'First release: syntax colours, errors as you type, hover help, completions, Run with input, Show in Python, and snippets in both scripts.',
+      [
+        '0.2.2',
+        'A program that prints a lot no longer slows the editor down. The Asomiya panel only appears once you open an Asomiya file.',
+      ],
+      ['0.2.1', 'A rewritten guide with real screenshots.'],
+      [
+        '0.2.0',
+        'Run shows its output in the Asomiya panel, where Assamese letters join properly (the terminal broke them apart), with an answer box for সোধা and a Stop button. Show in Python opens at your program.',
+      ],
+      [
+        '0.1.0',
+        'First release: syntax colours, errors as you type, hover help, suggestions, Run, Show in Python, and snippets in both scripts.',
+      ],
     ],
     side: {
       categories: 'Categories',
@@ -199,7 +211,7 @@ const S = {
     commandsTitle: 'কমাণ্ড আৰু শ্বৰ্টকাট',
     commands: [
       ['Asomiya: Run Program', 'এডিটৰৰ শিৰোনামত ▶ · Cmd/Ctrl+F5'],
-      ['Asomiya: Stop Program', 'টাৰ্মিনেলত Ctrl+C'],
+      ['Asomiya: Stop Program', 'অসমীয়া পেনেলৰ ৰখাওক বুটাম, বা তাত Ctrl+C'],
       ['Asomiya: Show in Python', 'এডিটৰৰ শিৰোনামত split আইকন'],
       ['Asomiya: Save Python Version As…', 'Python view ৰ শিৰোনামত'],
     ],
@@ -221,7 +233,19 @@ const S = {
     ],
     historyTitle: 'সংস্কৰণৰ ইতিহাস',
     history: [
-      'প্ৰথম সংস্কৰণ: ছিনটেক্সৰ ৰং, লিখোঁতেই ভুল, হভাৰ সহায়, সম্পূৰ্ণকৰণ, ইনপুটসহ চলোৱা, Python ত দেখুওৱা, আৰু দুয়োটা লিপিত ছনিপেট।',
+      [
+        '0.2.2',
+        'বহুত ছপা কৰা প্ৰগ্ৰামে এতিয়া এডিটৰ লেহেমীয়া নকৰে। অসমীয়া পেনেলটো কেৱল অসমীয়া ফাইল খুলিলেহে ওলায়।',
+      ],
+      ['0.2.1', 'সঁচা স্ক্ৰীণশ্বটসহ নতুনকৈ লিখা নিৰ্দেশিকা।'],
+      [
+        '0.2.0',
+        'চলাওক টিপিলে ফলাফল অসমীয়া পেনেলত ওলায়, য’ত অসমীয়া আখৰ শুদ্ধকৈ জোৰা লাগে (টাৰ্মিনেলত ভাঙি গৈছিল), সোধাৰ বাবে উত্তৰৰ বাকচ আৰু ৰখাওক বুটামসহ। Python ত দেখুওৱাই আপোনাৰ প্ৰগ্ৰামৰ পৰা আৰম্ভ কৰে।',
+      ],
+      [
+        '0.1.0',
+        'প্ৰথম সংস্কৰণ: ছিনটেক্সৰ ৰং, লিখোঁতেই ভুল, হভাৰ সহায়, পৰামৰ্শ, চলোৱা, Python ত দেখুওৱা, আৰু দুয়োটা লিপিত ছনিপেট।',
+      ],
     ],
     side: {
       categories: 'শ্ৰেণী',
@@ -330,8 +354,9 @@ function body(lang) {
       <ul class="join-list">${s.safe.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
 
       <h2 id="history">${esc(s.historyTitle)}</h2>
-      <div class="ext-version"><p><strong>${esc(X.version)}</strong> <span class="muted">${esc(X.released)}</span></p>
-      <ul class="join-list">${s.history.map((i) => `<li>${esc(i)}</li>`).join('')}</ul></div>
+      <div class="ext-version"><dl class="ext-history">${s.history
+        .map(([v, text]) => `<div><dt>${esc(v)}</dt><dd>${esc(text)}</dd></div>`)
+        .join('')}</dl></div>
     </article>
 
     <aside class="ext-side">

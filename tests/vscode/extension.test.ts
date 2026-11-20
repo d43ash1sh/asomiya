@@ -286,6 +286,34 @@ describe('VS Code extension: Run', () => {
     expect(run.error()).toContain('test.asom:1:6');
   });
 
+  it('passes a flood of output on in a few batches', async () => {
+    let batches = 0;
+    let chars = 0;
+    await new Promise<void>((resolve) => {
+      new RunSession(
+        worker,
+        {
+          source: 'dhora i = 0\njetialoike (i < 100000) {\n    kowa(i)\n    i = i + 1\n}',
+          fileName: 'flood.asom',
+          lang: 'en',
+          digits: 'auto',
+        },
+        {
+          output: (text) => {
+            batches++;
+            chars += text.length;
+          },
+          input: () => undefined,
+          finished: () => {
+            resolve();
+          },
+        },
+      );
+    });
+    expect(batches).toBeLessThan(1000);
+    expect(chars).toBeGreaterThan(500_000);
+  });
+
   it('stops an endless program', async () => {
     const run = start('jetialoike (xosa) { }');
     await new Promise((r) => setTimeout(r, 100));

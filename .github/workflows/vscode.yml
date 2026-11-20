@@ -58,15 +58,20 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: vsix
-      - name: Create the GitHub Release
+      - name: Create (or update) the GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.package.outputs.version }}
-        run: >
-          gh release create "$GITHUB_REF_NAME" "asomiya-vscode-$VERSION.vsix"
-          --repo "$GITHUB_REPOSITORY"
-          --title "Asomiya for VS Code $VERSION"
-          --notes "Install: in VS Code open Extensions, click ⋯ and choose Install from VSIX…, then pick this file. Changes: https://github.com/$GITHUB_REPOSITORY/blob/main/editors/vscode/CHANGELOG.md"
+        shell: bash
+        run: |
+          file="asomiya-vscode-$VERSION.vsix"
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$file" --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$GITHUB_REF_NAME" "$file" --repo "$GITHUB_REPOSITORY" \
+              --title "Asomiya for VS Code $VERSION" \
+              --notes "Install: in VS Code open Extensions, click ⋯ and choose Install from VSIX…, then pick this file. Changes: https://github.com/$GITHUB_REPOSITORY/blob/main/editors/vscode/CHANGELOG.md"
+          fi
 
   open-vsx:
     if: github.ref_type == 'tag' && vars.PUBLISH_OPEN_VSX == 'true'

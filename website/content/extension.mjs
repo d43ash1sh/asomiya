@@ -19,7 +19,9 @@ const S = {
       'Write code in Assamese in VS Code: syntax colours, errors as you type, hover help, a Run button and Show in Python.',
     install: 'Install',
     download: 'Download .vsix',
-    soon: 'Coming soon to the VS Code Marketplace and Open VSX. Until then, install the .vsix file (see below).',
+    soon: X.openVsx
+      ? 'In Cursor, Windsurf and VSCodium: search “Asomiya” in Extensions. Coming soon to the VS Code Marketplace; until then, install the .vsix file in VS Code (see below).'
+      : 'Coming soon to the VS Code Marketplace and Open VSX. Until then, install the .vsix file (see below).',
     tabs: ['Overview', 'Install', 'Version history'],
     intro:
       'Asomiya is a programming language in Assamese. This extension gives it full editor support in VS Code and the editors built on it (Cursor, Windsurf, VSCodium), whether you write in Assamese script or in English letters.',
@@ -70,7 +72,9 @@ const S = {
           'In VS Code, open the Extensions view (Cmd/Ctrl+Shift+X), click ⋯ at the top and choose “Install from VSIX…”.',
           'Pick the downloaded file. Then create a file ending in .asom and start writing.',
         ],
-    cursorNote: 'Cursor, Windsurf and VSCodium work the same way (they use the Open VSX registry).',
+    cursorNote: X.openVsx
+      ? 'Cursor, Windsurf and VSCodium: open Extensions, search “Asomiya” and click Install (it comes from the Open VSX registry).'
+      : 'Cursor, Windsurf and VSCodium work the same way (they use the Open VSX registry).',
     firstTitle: 'Your first program',
     commandsTitle: 'Commands and shortcuts',
     commands: [
@@ -130,7 +134,9 @@ const S = {
       'VS Code ত অসমীয়াত ক’ড লিখক: ছিনটেক্সৰ ৰং, লিখোঁতেই ভুল দেখুওৱা, হভাৰ সহায়, চলোৱা বুটাম আৰু Python ত দেখুওৱা।',
     install: 'ইনষ্টল কৰক',
     download: '.vsix ডাউনলোড কৰক',
-    soon: 'অতি সোনকালে VS Code Marketplace আৰু Open VSX ত আহিব। তেতিয়ালৈকে .vsix ফাইলটো ইনষ্টল কৰক (তলত চাওক)।',
+    soon: X.openVsx
+      ? 'Cursor, Windsurf আৰু VSCodium ত: Extensions ত “Asomiya” বিচাৰক। VS Code Marketplace ত অতি সোনকালে আহিব; তেতিয়ালৈকে VS Code ত .vsix ফাইলটো ইনষ্টল কৰক (তলত চাওক)।'
+      : 'অতি সোনকালে VS Code Marketplace আৰু Open VSX ত আহিব। তেতিয়ালৈকে .vsix ফাইলটো ইনষ্টল কৰক (তলত চাওক)।',
     tabs: ['আভাস', 'ইনষ্টল', 'সংস্কৰণৰ ইতিহাস'],
     intro:
       'অসমীয়া এটা অসমীয়া ভাষাৰ প্ৰগ্ৰামিং ভাষা। এই এক্সটেনশ্যনে VS Code আৰু তাৰ ওপৰত নিৰ্মিত এডিটৰবোৰত (Cursor, Windsurf, VSCodium) সম্পূৰ্ণ সহায় দিয়ে, আপুনি অসমীয়া আখৰতে লিখক বা ইংৰাজী আখৰত।',
@@ -178,7 +184,9 @@ const S = {
           'VS Code ত Extensions view খোলক (Cmd/Ctrl+Shift+X), ওপৰৰ ⋯ টিপক আৰু “Install from VSIX…” বাছক।',
           'ডাউনলোড কৰা ফাইলটো বাছক। তাৰ পিছত .asom ত শেষ হোৱা এটা ফাইল বনাই লিখিবলৈ আৰম্ভ কৰক।',
         ],
-    cursorNote: 'Cursor, Windsurf আৰু VSCodium তো একেদৰে চলে (সিহঁতে Open VSX ব্যৱহাৰ কৰে)।',
+    cursorNote: X.openVsx
+      ? 'Cursor, Windsurf আৰু VSCodium: Extensions খোলক, “Asomiya” বিচাৰক আৰু Install টিপক (Open VSX ৰ পৰা আহে)।'
+      : 'Cursor, Windsurf আৰু VSCodium তো একেদৰে চলে (সিহঁতে Open VSX ব্যৱহাৰ কৰে)।',
     firstTitle: 'আপোনাৰ প্ৰথম প্ৰগ্ৰাম',
     commandsTitle: 'কমাণ্ড আৰু শ্বৰ্টকাট',
     commands: [
@@ -259,7 +267,7 @@ function body(lang) {
       <p class="ext-tagline">${esc(s.tagline)}</p>
       <div class="ext-actions">
         <a class="btn btn-primary" href="${installHref}" ${published ? 'target="_blank" rel="noopener noreferrer"' : ''}>${icon('download')}${esc(published ? s.install : s.download)}</a>
-        ${published && X.openVsx ? `<a class="btn btn-secondary" href="${X.openVsx}" target="_blank" rel="noopener noreferrer">Open VSX</a>` : ''}
+        ${X.openVsx ? `<a class="btn btn-secondary" href="${X.openVsx}" target="_blank" rel="noopener noreferrer">Open VSX</a>` : ''}
         <a class="btn btn-secondary" href="${X.source}" target="_blank" rel="noopener noreferrer">${icon('github')}GitHub</a>
       </div>
       ${published ? '' : `<p class="ext-soon">${esc(s.soon)}</p>`}

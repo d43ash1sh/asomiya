@@ -63,7 +63,7 @@ export const EXTENSION = {
   engine: extPkg.engines.vscode.replace(/^\^/, ''),
   categories: extPkg.categories,
   marketplace: '',
-  openVsx: '',
+  openVsx: 'https://open-vsx.org/extension/asomiya/asomiya',
   vsix: `${SITE.repo}/releases/download/vscode-v${extPkg.version}/asomiya-vscode-${extPkg.version}.vsix`,
   source: `${SITE.repo}/tree/main/editors/vscode`,
   changelog: `${SITE.repo}/blob/main/editors/vscode/CHANGELOG.md`,

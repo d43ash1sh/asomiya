@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 const ROOT = resolve(import.meta.dirname, '../..');
@@ -77,7 +77,8 @@ describe('website links', () => {
 
   it('every page exists in English and Assamese', () => {
     const english = pages
-      .map(({ file }) => relative(OUT, file))
+      // Forward slashes on every OS (Windows paths use \\).
+      .map(({ file }) => relative(OUT, file).split(sep).join('/'))
       .filter((p) => !p.startsWith('as/') && p !== '404.html');
     for (const page of english) expect(existsSync(join(OUT, 'as', page)), page).toBe(true);
   });

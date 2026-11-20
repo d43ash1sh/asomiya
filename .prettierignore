@@ -3,3 +3,5 @@ node_modules/
 coverage/
 package-lock.json
 website/dist/
+editors/vscode/dist/
+editors/vscode/syntaxes/

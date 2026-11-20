@@ -36,7 +36,7 @@ const S = {
       ],
       [
         'Runs anywhere',
-        'In the browser playground, in your terminal with the CLI and REPL, or inside a JavaScript app as a library.',
+        'In the browser playground, in VS Code with the Asomiya extension, in your terminal with the CLI and REPL, or inside a JavaScript app as a library.',
       ],
       [
         'Safe to run',
@@ -112,7 +112,7 @@ const S = {
       ],
       [
         'সকলোতে চলে',
-        'ব্ৰাউজাৰৰ প্লেগ্ৰাউণ্ডত, CLI আৰু REPL ৰে টাৰ্মিনেলত, বা লাইব্ৰেৰী হিচাপে JavaScript এপৰ ভিতৰত।',
+        'ব্ৰাউজাৰৰ প্লেগ্ৰাউণ্ডত, অসমীয়া এক্সটেনশ্যনেৰে VS Code ত, CLI আৰু REPL ৰে টাৰ্মিনেলত, বা লাইব্ৰেৰী হিচাপে JavaScript এপৰ ভিতৰত।',
       ],
       [
         'চলাবলৈ নিৰাপদ',

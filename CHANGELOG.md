@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **VS Code extension** (`editors/vscode`, also for Cursor, Windsurf and VSCodium): syntax
+  colours in both scripts (generated from the language's own glossary), errors as you type with
+  error codes, hover help with the Python name of each word, completions, Run in a terminal with
+  input and Stop (the interpreter runs on a worker thread; no Node.js install needed), a live
+  Show in Python view, and snippets. Released from `vscode-v*` tags by
+  `.github/workflows/vscode.yml`. The website has a new page for it: https://asomiya.codes/extension/.
+
 ## [0.3.0] — 2026-11-20
 
 ### Added

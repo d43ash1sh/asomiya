@@ -6,7 +6,14 @@ import tseslint from 'typescript-eslint';
 
 // `tseslint.config()` is deprecated in favour of ESLint core's `defineConfig()`.
 export default defineConfig(
-  globalIgnores(['dist/', 'website/dist/', 'node_modules/', 'coverage/']),
+  globalIgnores([
+    'dist/',
+    'website/dist/',
+    'editors/vscode/dist/',
+    'editors/vscode/dist-tools/',
+    'node_modules/',
+    'coverage/',
+  ]),
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,
   {

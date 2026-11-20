@@ -31,6 +31,7 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run website:build
+      - run: npm run vscode:build
       - name: Smoke-test the packed CLI
         shell: bash
         run: |

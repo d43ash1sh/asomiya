@@ -24,6 +24,7 @@ export const UI = {
     footMore: 'More',
     changelog: 'Changelog',
     joinUs: 'Join us: test, hack, build',
+    extension: 'VS Code extension',
     security: 'Security',
     copyright: (year) => `© ${year} Asomiya contributors. Released under the MIT License.`,
     madeWith:
@@ -56,6 +57,7 @@ export const UI = {
     footMore: 'অধিক',
     changelog: 'সলনিৰ তালিকা',
     joinUs: 'যোগ দিয়ক',
+    extension: 'VS Code এক্সটেনশ্যন',
     security: 'সুৰক্ষা',
     copyright: (year) => `© ${year} অসমীয়া প্ৰগ্ৰামিং ভাষাৰ অৱদানকাৰীসকল। MIT অনুজ্ঞাপত্ৰৰ অধীনত মুকলি।`,
     madeWith:

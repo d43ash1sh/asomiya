@@ -71,7 +71,7 @@ const S = {
     contrib: [
       `Read ${'{CONTRIB}'}: how the project is organised and how to run the tests.`,
       `Pick an issue on ${'{ISSUES}'}, or suggest your own idea first.`,
-      'Ideas we would love help with: a for-each loop, more built-in functions (text and lists), syntax highlighting for VS Code, and lessons for school students.',
+      'Ideas we would love help with: a for-each loop, more built-in functions (text and lists), support for more editors (JetBrains, Zed, Neovim), and lessons for school students.',
     ],
     contribNote:
       'The code is TypeScript with more than 330 tests. Every change runs them on Linux, macOS and Windows.',
@@ -139,7 +139,7 @@ const S = {
     contrib: [
       `${'{CONTRIB}'} পঢ়ক: প্ৰকল্পটো কেনেকৈ সজোৱা আৰু পৰীক্ষা কেনেকৈ চলাব।`,
       `${'{ISSUES}'}-ত এটা ইছ্যু বাছি লওক, বা আগতে নিজৰ ধাৰণা জনাওক।`,
-      'য’ত সহায় বিচাৰোঁ: for-each লুপ, অধিক অন্তৰ্নিৰ্মিত ফাংচন (পাঠ আৰু তালিকা), VS Code ৰ বাবে ছিনটেক্স হাইলাইট, আৰু স্কুলৰ ছাত্ৰ-ছাত্ৰীৰ বাবে পাঠ।',
+      'য’ত সহায় বিচাৰোঁ: for-each লুপ, অধিক অন্তৰ্নিৰ্মিত ফাংচন (পাঠ আৰু তালিকা), আন এডিটৰৰ বাবে সহায় (JetBrains, Zed, Neovim), আৰু স্কুলৰ ছাত্ৰ-ছাত্ৰীৰ বাবে পাঠ।',
     ],
     contribNote:
       'ক’ডটো TypeScript ত, ৩৩০টাতকৈ অধিক পৰীক্ষাৰ সৈতে। প্ৰতিটো সলনিয়ে Linux, macOS আৰু Windows ত সেইবোৰ চলায়।',

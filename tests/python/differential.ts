@@ -1,4 +1,7 @@
 import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AsomiyaError, Interpreter, parse } from '../../src/index';
 import { toPython } from '../../src/python/translate';
@@ -60,13 +63,25 @@ export function hasPython(): boolean {
 }
 
 export function runPython(jobs: readonly { source: string; stdin: string }[]): PythonOutcome[] {
-  const result = spawnSync('python3', ['-I', RUNNER], {
-    input: JSON.stringify(jobs),
-    encoding: 'utf8',
-    maxBuffer: 1 << 30,
-  });
-  if (result.status !== 0) throw new Error(`python3 failed: ${result.stderr}`);
-  return JSON.parse(result.stdout) as PythonOutcome[];
+  // The jobs go through a file, not stdin: writing megabytes into a pipe occasionally deadlocked
+  // on macOS (Python waiting for the end of input that never came). The timeout turns any other
+  // stall into a test failure instead of a hang.
+  const dir = mkdtempSync(join(tmpdir(), 'asomiya-py-'));
+  const file = join(dir, 'jobs.json');
+  writeFileSync(file, JSON.stringify(jobs), 'utf8');
+  try {
+    const result = spawnSync('python3', ['-I', RUNNER, file], {
+      encoding: 'utf8',
+      maxBuffer: 1 << 30,
+      timeout: 120_000,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    if (result.error) throw new Error(`python3 failed: ${result.error.message}`);
+    if (result.status !== 0) throw new Error(`python3 failed: ${result.stderr}`);
+    return JSON.parse(result.stdout) as PythonOutcome[];
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 }
 
 export interface Case {

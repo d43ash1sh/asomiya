@@ -148,6 +148,7 @@ function footer(page, lang, sections) {
       .join('')}
     ${col(t.footMore, [
       [t.joinUs, lang === 'as' ? 'as/join/' : 'join/', false],
+      [t.extension, lang === 'as' ? 'as/extension/' : 'extension/', false],
       ['GitHub', SITE.repo, true],
       ['npm', SITE.npm, true],
       [t.changelog, `${SITE.repo}/blob/main/CHANGELOG.md`, true],

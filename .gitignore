@@ -32,3 +32,7 @@ temp/
 .idea/
 .DS_Store
 Thumbs.db
+
+# VS Code extension build output
+dist-tools/
+*.vsix

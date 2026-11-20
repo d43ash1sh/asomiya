@@ -1,0 +1,13 @@
+# Only the built extension, its manifest, grammar, snippets, images and docs are packaged.
+**
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE
+!language-configuration.json
+!dist/extension.js
+!dist/run-worker.js
+!syntaxes/**
+!snippets/**
+!images/icon.png
+!images/file-icon.png

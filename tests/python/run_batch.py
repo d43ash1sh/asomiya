@@ -48,8 +48,9 @@ class FakeStdin:
 
 
 def main():
-    # Read bytes as UTF-8: on Windows the default stdin encoding is the ANSI code page.
-    jobs = json.loads(sys.stdin.buffer.read().decode("utf-8"))
+    # The job list is a UTF-8 file (on Windows the default encoding is the ANSI code page).
+    with open(sys.argv[1], encoding="utf-8") as f:
+        jobs = json.load(f)
     real_stdout, real_stdin = sys.stdout, sys.stdin
     results = []
     for job in jobs:

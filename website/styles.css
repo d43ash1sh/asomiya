@@ -2424,3 +2424,305 @@ textarea,
     'liga' 0,
     'calt' 0 !important;
 }
+
+/* ── VS Code extension page (marketplace-style listing) ──────────── */
+
+.ext {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 72px;
+}
+
+.ext-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--ink-3);
+  font: 500 0.8rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ext-crumbs a {
+  color: var(--ink-2);
+}
+
+.ext-head {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  margin: 22px 0 0;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--mist);
+}
+
+.ext-icon {
+  width: 128px;
+  height: 128px;
+  border-radius: 26px;
+}
+
+.ext-meta h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+html[lang='as'] .ext-meta h1 {
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+.ext-by {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 12px 0 0;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+.ext-by > a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ext-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink-2);
+}
+
+.ext-verified .icon {
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.ext-sep {
+  color: var(--line-2);
+}
+
+.ext-tagline {
+  max-width: 720px;
+  margin: 14px 0 0;
+  color: var(--ink-2);
+  font-size: 1.08rem;
+}
+
+.ext-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.ext-soon {
+  margin: 12px 0 0;
+  color: var(--ink-3);
+  font-size: 0.9rem;
+}
+
+.ext-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 26px 0 0;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+}
+
+.ext-tabs a {
+  padding: 12px 16px;
+  border-bottom: 2px solid transparent;
+  color: var(--ink-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ext-tabs a:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.ext-tabs a.on {
+  border-bottom-color: var(--accent);
+  color: var(--ink);
+}
+
+.ext-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 48px;
+  margin-top: 32px;
+}
+
+.ext-main > .lead {
+  margin-top: 0;
+}
+
+.ext-main h2 {
+  margin: 48px 0 14px;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 90px;
+}
+
+.ext-shot {
+  margin: 28px 0;
+}
+
+.ext-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.25);
+}
+
+.ext-shot figcaption {
+  margin-top: 10px;
+  color: var(--ink-3);
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+.ext-note {
+  font-size: 0.88rem;
+}
+
+.ext-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 32px 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.ext-features li {
+  padding: 22px 24px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.ext-features h3 {
+  margin: 0 0 6px;
+  font-size: 1.12rem;
+}
+
+.ext-features p {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+.ext-version {
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.ext-version p {
+  margin: 0;
+}
+
+.ext-side section {
+  padding: 0 0 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ext-side h2 {
+  margin: 0 0 12px;
+  font: 600 0.78rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.ext-side ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ext-side li {
+  margin: 6px 0;
+}
+
+.ext-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+
+.ext-chips span {
+  padding: 3px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-size: 0.86rem;
+}
+
+.ext-info {
+  margin: 0;
+}
+
+.ext-info div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 0.92rem;
+}
+
+.ext-info dt {
+  color: var(--ink-3);
+}
+
+.ext-info dd {
+  margin: 0;
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .ext-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .ext {
+    padding: 20px 16px 56px;
+  }
+
+  .ext-head {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 22px 18px;
+  }
+
+  .ext-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 18px;
+  }
+
+  .ext-features {
+    grid-template-columns: 1fr;
+  }
+}

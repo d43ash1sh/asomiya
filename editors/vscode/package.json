@@ -1,0 +1,202 @@
+{
+  "name": "asomiya",
+  "displayName": "Asomiya (অসমীয়া)",
+  "description": "Write code in Assamese: syntax colours, errors as you type, hover help, a Run button and Show in Python for the Asomiya programming language.",
+  "version": "0.1.0",
+  "publisher": "asomiya",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "homepage": "https://asomiya.codes/extension/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d43ash1sh/asomiya.git",
+    "directory": "editors/vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/d43ash1sh/asomiya/issues"
+  },
+  "galleryBanner": {
+    "color": "#0d1210",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Education",
+    "Linters"
+  ],
+  "keywords": [
+    "assamese",
+    "asomiya",
+    "অসমীয়া",
+    "assam",
+    "programming language",
+    "education",
+    "beginners",
+    "india"
+  ],
+  "main": "./dist/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": "limited",
+      "description": "Run needs a desktop editor."
+    }
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "asomiya",
+        "aliases": [
+          "Asomiya",
+          "অসমীয়া",
+          "asomiya"
+        ],
+        "extensions": [
+          ".asom"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/file-icon.png",
+          "dark": "./images/file-icon.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "asomiya",
+        "scopeName": "source.asomiya",
+        "path": "./syntaxes/asomiya.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "asomiya",
+        "path": "./snippets/asomiya.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "asomiya.run",
+        "title": "Run Program",
+        "category": "Asomiya",
+        "icon": "$(play)"
+      },
+      {
+        "command": "asomiya.stop",
+        "title": "Stop Program",
+        "category": "Asomiya",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "asomiya.showPython",
+        "title": "Show in Python",
+        "category": "Asomiya",
+        "icon": "$(split-horizontal)"
+      },
+      {
+        "command": "asomiya.savePython",
+        "title": "Save Python Version As…",
+        "category": "Asomiya"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "asomiya.run",
+          "when": "resourceLangId == asomiya",
+          "group": "navigation@0"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "asomiya.showPython",
+          "when": "resourceLangId == asomiya",
+          "group": "navigation@1"
+        },
+        {
+          "command": "asomiya.savePython",
+          "when": "resourceScheme == asomiya-python",
+          "group": "navigation@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "asomiya.run",
+          "when": "resourceLangId == asomiya",
+          "group": "asomiya@1"
+        },
+        {
+          "command": "asomiya.showPython",
+          "when": "resourceLangId == asomiya",
+          "group": "asomiya@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "asomiya.run",
+          "when": "editorLangId == asomiya"
+        },
+        {
+          "command": "asomiya.showPython",
+          "when": "editorLangId == asomiya"
+        },
+        {
+          "command": "asomiya.savePython",
+          "when": "editorLangId == asomiya || resourceScheme == asomiya-python"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "asomiya.run",
+        "key": "ctrl+f5",
+        "mac": "cmd+f5",
+        "when": "editorLangId == asomiya"
+      }
+    ],
+    "configuration": {
+      "title": "Asomiya",
+      "properties": {
+        "asomiya.errorLanguage": {
+          "type": "string",
+          "enum": [
+            "as",
+            "en"
+          ],
+          "enumDescriptions": [
+            "অসমীয়া",
+            "English"
+          ],
+          "default": "as",
+          "description": "Language of error messages."
+        },
+        "asomiya.digits": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "assamese",
+            "ascii"
+          ],
+          "enumDescriptions": [
+            "০-৯, or 0-9 for programs written in English letters",
+            "Always ০-৯",
+            "Always 0-9"
+          ],
+          "default": "auto",
+          "description": "How Run and Show in Python print numbers."
+        },
+        "asomiya.checkAsYouType": {
+          "type": "boolean",
+          "default": true,
+          "description": "Underline errors while you type."
+        }
+      }
+    }
+  }
+}

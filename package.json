@@ -84,7 +84,10 @@
     "prepublishOnly": "npm run check && npm run build",
     "docs:errors": "npm run build && node scripts/generate-error-docs.mjs && prettier --write docs/ERRORS.md",
     "website:build": "tsup --silent && tsup --config tsup.website.config.ts && node website/build.mjs",
-    "website:serve": "npm run website:build && python3 -m http.server 8080 --directory website/dist"
+    "website:serve": "npm run website:build && python3 -m http.server 8080 --directory website/dist",
+    "vscode:grammar": "tsup editors/vscode/scripts/write-grammar.ts --format cjs --shims --out-dir editors/vscode/dist-tools --silent && node editors/vscode/dist-tools/write-grammar.cjs",
+    "vscode:build": "tsup --config editors/vscode/tsup.config.ts",
+    "vscode:package": "npm run vscode:build && cd editors/vscode && npx --yes @vscode/vsce@4.1.0 package --no-dependencies --out asomiya-vscode.vsix"
   },
   "dependencies": {
     "commander": "14.0.3"
@@ -92,13 +95,16 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/node": "20.19.43",
+    "@types/vscode": "1.90.0",
     "eslint": "10.15.0",
     "globals": "16.5.0",
     "prettier": "3.10.1",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.73.0",
-    "vitest": "4.1.12"
+    "vitest": "4.1.12",
+    "vscode-oniguruma": "2.0.1",
+    "vscode-textmate": "9.3.2"
   },
   "overrides": {
     "esbuild": "^0.28.2"

@@ -253,6 +253,14 @@ learners see plain Python everywhere else. `asomiya python file.asom` does the s
 terminal. The test suite checks this by running thousands of programs in both languages and
 comparing the output.
 
+## VS Code extension
+
+**[Asomiya for VS Code](https://asomiya.codes/extension/)** (also Cursor, Windsurf and VSCodium):
+syntax colours in both scripts, errors as you type, hover help, a ▶ Run button with input, and a
+live **Show in Python** view. Download it from the
+[extension page](https://asomiya.codes/extension/); the source is in
+[`editors/vscode`](https://github.com/d43ash1sh/asomiya/tree/main/editors/vscode).
+
 ## Use as a library
 
 ```ts

@@ -4,6 +4,7 @@ import { copyFileSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COMMUNITY } from './content/community.mjs';
+import { EXTENSION_PAGE } from './content/extension.mjs';
 import { HOME } from './content/home.mjs';
 import { JOIN } from './content/join.mjs';
 import { LEARN } from './content/learn.mjs';
@@ -34,7 +35,7 @@ const SECTIONS = [LEARN, REFERENCE].map((section) => ({
 }));
 for (const s of SECTIONS) s.pages = s.groups.flatMap((g) => g.pages);
 
-const SINGLE = [HOME, PLAYGROUND, COMMUNITY, JOIN, NOT_FOUND].map(prepare);
+const SINGLE = [HOME, PLAYGROUND, COMMUNITY, JOIN, EXTENSION_PAGE, NOT_FOUND].map(prepare);
 
 function write(path, html) {
   const file = join(OUT, path.endsWith('.html') ? path : join(path, 'index.html'));
@@ -60,6 +61,15 @@ function build(def, lang, section) {
     // English pages show code in English letters first; Assamese pages in Assamese script.
     scriptDefault: lang === 'as' ? 'as' : 'roman',
   });
+}
+
+// The extension page's icon and screenshots come from the extension itself.
+mkdirSync(join(OUT, 'assets', 'extension'), { recursive: true });
+for (const name of ['icon', 'overview', 'errors', 'python']) {
+  copyFileSync(
+    join(ROOT, '..', 'editors', 'vscode', 'images', `${name}.png`),
+    join(OUT, 'assets', 'extension', `${name}.png`),
+  );
 }
 
 const urls = [];

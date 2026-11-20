@@ -46,3 +46,25 @@ export const TEAM = [
     },
   },
 ];
+
+const extPkg = JSON.parse(
+  readFileSync(new URL('../editors/vscode/package.json', import.meta.url), 'utf8'),
+);
+
+/**
+ * The VS Code extension, shown on /extension/. Fill in `marketplace` and `openVsx` once it is
+ * published there; until then the page offers the .vsix from GitHub Releases.
+ */
+export const EXTENSION = {
+  id: `${extPkg.publisher}.${extPkg.name}`,
+  name: extPkg.displayName,
+  version: extPkg.version,
+  released: '2026-11-20',
+  engine: extPkg.engines.vscode.replace(/^\^/, ''),
+  categories: extPkg.categories,
+  marketplace: '',
+  openVsx: '',
+  vsix: `${SITE.repo}/releases/download/vscode-v${extPkg.version}/asomiya-vscode-${extPkg.version}.vsix`,
+  source: `${SITE.repo}/tree/main/editors/vscode`,
+  changelog: `${SITE.repo}/blob/main/editors/vscode/CHANGELOG.md`,
+};

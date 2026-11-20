@@ -62,7 +62,7 @@ export const EXTENSION = {
   released: '2026-11-20',
   engine: extPkg.engines.vscode.replace(/^\^/, ''),
   categories: extPkg.categories,
-  marketplace: '',
+  marketplace: 'https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya',
   openVsx: 'https://open-vsx.org/extension/asomiya/asomiya',
   vsix: `${SITE.repo}/releases/download/vscode-v${extPkg.version}/asomiya-vscode-${extPkg.version}.vsix`,
   source: `${SITE.repo}/tree/main/editors/vscode`,

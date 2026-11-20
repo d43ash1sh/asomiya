@@ -26,6 +26,7 @@ const UI = {
     inAddressBar: '🔗 Link is in the address bar',
     tooLong: 'This program is too long to share as a link.',
     pyFix: 'Fix this error to see the Python version:',
+    pySlow: 'Translating took too long, so it was stopped. Try a smaller program.',
     pyCopied: 'Copied',
     helpers: (n: number) => `Helper functions (${n} lines, included when you copy or download)`,
     noHelpers: 'No helper functions needed: this is plain Python.',
@@ -42,6 +43,7 @@ const UI = {
     inAddressBar: '🔗 লিংকটো ঠিকনা-বাৰত আছে',
     tooLong: 'প্ৰগ্ৰামটো লিংক হিচাপে পঠিয়াবলৈ অতি দীঘল।',
     pyFix: 'Python ৰূপটো চাবলৈ এই ভুলটো শুধৰাওক:',
+    pySlow: 'অনুবাদ কৰোঁতে বহু সময় লাগিল, সেয়ে ৰখোৱা হ’ল। সৰু প্ৰগ্ৰাম এটা চেষ্টা কৰক।',
     pyCopied: 'কপি হ’ল',
     helpers: (n: number) => `সহায়ক ফাংচন (${n} শাৰী, কপি বা ডাউনলোড কৰিলে সৈতে থাকে)`,
     noHelpers: 'কোনো সহায়ক ফাংচন নালাগে: এইটো সাধাৰণ Python।',
@@ -111,6 +113,10 @@ function getWorker(): Worker {
 let pythonWorker: Worker | null = null;
 let pythonId = 0;
 let pythonTimer: ReturnType<typeof setTimeout> | undefined;
+/** Stops a translation that takes too long (it runs on the page's CPU). */
+let pythonWatchdog: ReturnType<typeof setTimeout> | undefined;
+let pythonPending = false;
+const PYTHON_TIMEOUT_MS = 5000;
 /** The complete translation (helpers included), for Copy and Download. */
 let pythonSource = '';
 
@@ -118,10 +124,21 @@ function getPythonWorker(): Worker {
   if (pythonWorker !== null) return pythonWorker;
   const created = new Worker(WORKER_URL);
   created.addEventListener('message', (event: MessageEvent<RunResponse | PythonResponse>) => {
-    if (event.data.kind === 'python' && event.data.id === pythonId) showPython(event.data);
+    if (event.data.kind !== 'python' || event.data.id !== pythonId) return;
+    clearTimeout(pythonWatchdog);
+    pythonPending = false;
+    showPython(event.data);
   });
   pythonWorker = created;
   return created;
+}
+
+/** Throws away a busy translation worker; the next request starts a fresh one. */
+function stopPythonWorker(): void {
+  clearTimeout(pythonWatchdog);
+  pythonPending = false;
+  pythonWorker?.terminate();
+  pythonWorker = null;
 }
 
 function pythonOpen(): boolean {
@@ -139,7 +156,14 @@ function translate(): void {
     lang: errorLang.value === 'as' ? 'as' : 'en',
     digits: digitSetting(),
   };
+  // A newer edit replaces a translation still in progress instead of queueing behind it.
+  if (pythonPending) stopPythonWorker();
+  pythonPending = true;
   getPythonWorker().postMessage(request);
+  pythonWatchdog = setTimeout(() => {
+    stopPythonWorker();
+    showPython({ kind: 'python', id: pythonId, python: null, error: t.pySlow }, false);
+  }, PYTHON_TIMEOUT_MS);
 }
 
 function translateSoon(): void {
@@ -160,7 +184,7 @@ function renderPython(target: HTMLElement, code: string): void {
   );
 }
 
-function showPython(result: PythonResponse): void {
+function showPython(result: PythonResponse, fixNote = true): void {
   const ready = result.python !== null;
   pythonCopy.disabled = !ready;
   pythonDownload.disabled = !ready;
@@ -168,7 +192,7 @@ function showPython(result: PythonResponse): void {
     pythonSource = '';
     const note = document.createElement('span');
     note.className = 'placeholder';
-    note.textContent = t.pyFix + '\n\n';
+    note.textContent = fixNote ? t.pyFix + '\n\n' : '';
     const err = document.createElement('span');
     err.className = 'error';
     err.textContent = result.error ?? '';

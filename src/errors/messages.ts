@@ -1,7 +1,14 @@
 import { keywordWord } from '../language/keywords';
 import { typeName, type MessageLanguage, type ValueKind } from '../language/types';
 import { asciiDigitsToAssamese } from '../lexer/unicode';
-import type { DiagnosticCode, DiagnosticParams, Found, NameRole, Phase } from './diagnostic';
+import type {
+  DiagnosticCode,
+  DiagnosticParams,
+  Found,
+  NameRole,
+  Phase,
+  PythonLimit,
+} from './diagnostic';
 
 type MessageDef<C extends DiagnosticCode> = Readonly<
   Record<MessageLanguage, (p: DiagnosticParams[C]) => string>
@@ -9,6 +16,27 @@ type MessageDef<C extends DiagnosticCode> = Readonly<
 
 /** Assamese number text: ৩০ */
 const n = (value: number): string => asciiDigitsToAssamese(String(value));
+
+const PYTHON_LIMITS: Readonly<
+  Record<PythonLimit, Readonly<Record<MessageLanguage, (limit: string) => string>>>
+> = {
+  loops: {
+    as: (l) => `Python ত এটাৰ ভিতৰত আনটোকৈ সৰ্বোচ্চ ${l}টা লুপ থাকিব পাৰে`,
+    en: (l) => `Python allows at most ${l} loops inside each other`,
+  },
+  blocks: {
+    as: (l) => `Python ত সৰ্বোচ্চ ${l} স্তৰৰ ব্লক (ব্লকৰ ভিতৰত ব্লক) থাকিব পাৰে`,
+    en: (l) => `Python allows at most ${l} levels of blocks inside blocks`,
+  },
+  brackets: {
+    as: (l) => `Python ৰূপটোত এটাৰ ভিতৰত আনটোকৈ ${l}টাতকৈ বেছি বন্ধনী লাগিব, Python ত ইমান নচলে`,
+    en: (l) => `the Python version would need more than ${l} brackets inside each other`,
+  },
+  expression: {
+    as: () => `এই অংশটো অনুবাদৰ বাবে অতি দীঘল বা গভীৰ; ইয়াক সৰু সৰু অংশত ভাগ কৰক`,
+    en: () => `this part is too long or too deeply nested; split it into smaller parts`,
+  },
+};
 
 const codePoint = (ch: string): string =>
   `U+${(ch.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, '0')}`;
@@ -125,6 +153,11 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     as: () =>
       `"${keywordWord('continue')}" কেৱল "${keywordWord('while')}" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
     en: () => `"${keywordWord('continue')}" (continue) can only be used inside a loop`,
+  },
+
+  P012: {
+    as: (p) => `Python লৈ অনুবাদ কৰিব নোৱাৰি: ${PYTHON_LIMITS[p.what].as(n(p.limit))}`,
+    en: (p) => `Cannot translate to Python: ${PYTHON_LIMITS[p.what].en(String(p.limit))}`,
   },
 
   R001: {

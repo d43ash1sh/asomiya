@@ -20,6 +20,7 @@ export const samples = {
   P009: [{ keyword: 'যদি' }, 'ধৰা যদি = ৫'],
   P010: [{ limit: 256 }, '(((((… ৩০০ levels …)))))'],
   P011: [{}, 'আগবাঢ়া  (outside a loop)'],
+  P012: [{ what: 'loops', limit: 20 }, 'asomiya python, with ২১ loops inside each other'],
   R001: [{ name: 'খ' }, 'কোৱা(খ)  (খ never declared)'],
   R002: [{ name: 'ক' }, 'ধৰা ক = ১; ধৰা ক = ২'],
   R003: [{ op: '-', left: 'string', right: 'number' }, '"ক" - ১'],

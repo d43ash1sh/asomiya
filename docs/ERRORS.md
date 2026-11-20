@@ -124,6 +124,12 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **English:** "আগবাঢ়া" (continue) can only be used inside a loop
 - **Example:** `আগবাঢ়া  (outside a loop)`
 
+### P012
+
+- **অসমীয়া:** Python লৈ অনুবাদ কৰিব নোৱাৰি: Python ত এটাৰ ভিতৰত আনটোকৈ সৰ্বোচ্চ ২০টা লুপ থাকিব পাৰে
+- **English:** Cannot translate to Python: Python allows at most 20 loops inside each other
+- **Example:** `asomiya python, with ২১ loops inside each other`
+
 ## Runtime errors — চলোৱাৰ সময়ৰ ভুল (`R`)
 
 ### R001

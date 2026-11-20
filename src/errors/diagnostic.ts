@@ -7,6 +7,9 @@ export type Found =
   | { readonly kind: 'newline' }
   | { readonly kind: 'token'; readonly text: string };
 
+/** A limit of Python itself that a translation would go over (see src/python/translate.ts). */
+export type PythonLimit = 'loops' | 'blocks' | 'brackets' | 'expression';
+
 export type NameRole = 'variable' | 'function' | 'parameter';
 
 /** Parameters for every diagnostic code. Adding a code here forces a message for it in messages.ts. */
@@ -32,6 +35,7 @@ export interface DiagnosticParams {
   P009: { readonly keyword: string };
   P010: { readonly limit: number };
   P011: Record<string, never>;
+  P012: { readonly what: PythonLimit; readonly limit: number };
   // ── runtime ──────────────────────────────────────────────
   R001: { readonly name: string; readonly suggestion?: string };
   R002: { readonly name: string };

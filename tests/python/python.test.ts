@@ -55,6 +55,42 @@ describe('translation to Python', () => {
   });
 });
 
+describe('translation limits', () => {
+  const code = (source: string): string | undefined => {
+    try {
+      toPython(parse(source));
+      return undefined;
+    } catch (error) {
+      return (error as { diagnostic?: { code: string } }).diagnostic?.code;
+    }
+  };
+  const loops = (n: number): string =>
+    'ধৰা ক = ০\n' + 'যেতিয়ালৈকে (ক < ১) {\n'.repeat(n) + 'ক = ক + ১\n' + '}\n'.repeat(n);
+
+  it('stays fast with thousands of lists', () => {
+    const source = 'ধৰা ক = []\n' + 'ক = ক + [[১]]\n'.repeat(5000) + 'কোৱা(দৈৰ্ঘ্য(ক))';
+    const start = performance.now();
+    expect(toPython(parse(source))).toContain('print(');
+    expect(performance.now() - start).toBeLessThan(5000);
+  });
+
+  it('refuses what Python itself cannot run, with an error code', () => {
+    expect(code(loops(20))).toBeUndefined();
+    expect(code(loops(21))).toBe('P012');
+    expect(
+      code('ধৰা ক = ১\n' + 'যদি (ক > ০) {\n'.repeat(120) + 'কোৱা(ক)\n' + '}\n'.repeat(120)),
+    ).toBe('P012');
+    const calls = (n: number): string =>
+      'ফাংচন ফ(ক) { ঘূৰাইদিয়া ক }\nকোৱা(' + 'ফ('.repeat(n) + '১' + ')'.repeat(n) + ')';
+    expect(code(calls(150))).toBeUndefined();
+    expect(code(calls(250))).toBe('P012');
+  });
+
+  it('reports a very long expression as an error, not a crash', () => {
+    expect(code('ধৰা ক = "ক"\nকোৱা(ক' + ' + ক'.repeat(5000) + ')')).toBe('P012');
+  });
+});
+
 describe('Python highlighting (playground)', () => {
   it('splits the helpers from the program', () => {
     const parts = splitPython(toPython(parse('কোৱা(-7 % 3)')));

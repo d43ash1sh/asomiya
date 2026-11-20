@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-11-20
+
 ### Added
 
 - **Website** (`website/`, deployed to https://asomiya.codes): home page, a 14-page tutorial, a
@@ -29,6 +31,18 @@ All notable changes to this project are documented here. The format follows
 - Website: strict Content Security Policy on every page (no inline scripts, no network access),
   share links are size-limited and never run automatically, and tests check these rules plus every
   internal link on each build.
+- Show in Python: a program with thousands of lists took minutes to translate (the type analysis
+  grew with the cube of the number of lists). It now stays fast for any program, and the
+  playground stops a translation that takes longer than 5 seconds instead of waiting forever.
+- Dependencies: the build tool esbuild is pinned to 0.28.2 or newer (GHSA-g7r4-m6w7-qqqr, a dev
+  server file read on Windows; it was never part of the published package).
+
+### Fixed
+
+- Show in Python: a very long expression such as `ক + ক + … + ক` crashed the translator with an
+  internal error. Programs that Python itself cannot run (more than 20 loops inside each other,
+  more than 99 levels of blocks, or more than 200 brackets inside each other) produced Python
+  that failed with a SyntaxError. Both now give the new error **P012** with the exact place.
 
 ## [0.2.0] — 2026-11-18
 

@@ -27,6 +27,8 @@ import type {
   VariableDeclaration,
 } from '../parser/ast';
 import type { DigitSetting } from '../runtime/values';
+import type { DiagnosticParams } from '../errors/diagnostic';
+import { parserError } from '../errors/parser-error';
 import { HELPER_INTERNALS, HELPERS } from './prelude';
 
 export interface PythonOptions {
@@ -52,6 +54,14 @@ const KINDS = 127n;
  * the kinds, so the analysis knows what a list may hold.
  */
 const siteBit = (i: number): bigint => 1n << BigInt(7 + i);
+/**
+ * Tracking every site on its own costs about sites³ per round, so a program with thousands of
+ * lists would take minutes to translate. Past this many, the remaining sites share the last bit:
+ * the analysis only gets less precise (more helpers), never wrong.
+ */
+const MAX_SITES = 128;
+/** Type analysis rounds before giving up on precision (each round costs about the program size). */
+const MAX_ROUNDS = 200;
 
 /** True if every value of type `t` has one of the kinds in `kinds` (vacuously true for none). */
 const only = (t: bigint, kinds: bigint): boolean => (t & ~kinds) === 0n;
@@ -197,6 +207,50 @@ function pythonBase(name: string): string {
 
 // ── Python source helpers ──────────────────────────────────────────────────
 
+/** Python's own limits (CPython's tokenizer and compiler), kept for every supported version. */
+const PY_MAX_LOOPS = 20;
+const PY_MAX_BLOCKS = 99;
+const PY_MAX_BRACKETS = 200;
+
+/**
+ * Checks generated lines against limits Python itself has, where Asomiya allows more. Without
+ * this the translation would be a Python program that doesn't even start.
+ */
+function pythonLimit(lines: readonly string[]): DiagnosticParams['P012'] | null {
+  const open: { indent: number; loop: boolean; def: boolean }[] = [];
+  let brackets = 0;
+  for (const line of lines) {
+    const text = line.trimStart();
+    if (text === '') continue;
+    const indent = line.length - text.length;
+    while ((open[open.length - 1]?.indent ?? -1) >= indent) open.pop();
+    if (open.length > PY_MAX_BLOCKS) return { what: 'blocks', limit: PY_MAX_BLOCKS };
+    const compound = /^(while|def|if|elif|else)\b.*:$/.exec(text);
+    if (compound) {
+      const loop = compound[1] === 'while';
+      if (loop) {
+        let loops = 1;
+        for (let i = open.length - 1; i >= 0 && !open[i]?.def; i--) if (open[i]?.loop) loops++;
+        if (loops > PY_MAX_LOOPS) return { what: 'loops', limit: PY_MAX_LOOPS };
+      }
+      open.push({ indent, loop, def: compound[1] === 'def' });
+    }
+    let quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch === '\\') i++;
+        else if (ch === '"') quoted = false;
+      } else if (ch === '"') quoted = true;
+      else if (ch === '#') break;
+      else if (ch === '(' || ch === '[' || ch === '{') {
+        if (++brackets > PY_MAX_BRACKETS) return { what: 'brackets', limit: PY_MAX_BRACKETS };
+      } else if (ch === ')' || ch === ']' || ch === '}') brackets--;
+    }
+  }
+  return null;
+}
+
 function pyString(s: string): string {
   let out = '"';
   for (const ch of s) {
@@ -314,6 +368,8 @@ class Translator {
   private appendBinding: Binding | null = null;
   private readonly ascii: boolean;
   private readonly roman: boolean;
+  /** The statement being worked on, to point at if the program is too deep to translate. */
+  at: Statement | null = null;
 
   constructor(
     private readonly program: Program,
@@ -390,6 +446,7 @@ class Translator {
   }
 
   private resolveStatement(s: Statement): void {
+    this.at = s;
     switch (s.kind) {
       case 'VariableDeclaration': {
         if (s.initializer !== null) this.resolveExpression(s.initializer, false);
@@ -546,6 +603,12 @@ class Translator {
   // ── pass 2: types ───────────────────────────────────────────────────────
 
   private addSite(e: Expression, parts: readonly Expression[]): void {
+    const shared = this.siteParts[MAX_SITES - 1];
+    if (shared !== undefined) {
+      this.sites.set(e, MAX_SITES - 1);
+      shared.push(...parts);
+      return;
+    }
     this.sites.set(e, this.siteParts.length);
     this.siteParts.push([...parts]);
   }
@@ -566,7 +629,7 @@ class Translator {
     this.siteElements = this.siteParts.map(() => 0n);
     // If সংযোজন is passed around as a value, any call might add anything to any list.
     const appendEscapes = this.appendBinding?.escapes ?? false;
-    for (let round = 0; round < 10_000; round++) {
+    for (let round = 0; round < MAX_ROUNDS; round++) {
       this.types = new Map();
       let changed = false;
       for (const b of this.bindings) {
@@ -606,8 +669,17 @@ class Translator {
         if (t !== this.siteElements[i]) changed = true;
       });
       this.siteElements = next;
-      if (!changed) break;
+      if (!changed) {
+        this.types = new Map();
+        return;
+      }
     }
+    // No fixed point within the budget: assume nothing, which is always correct.
+    for (const b of this.bindings) {
+      b.type = this.any;
+      b.returnType = this.any;
+    }
+    this.siteElements = this.siteParts.map(() => this.any);
     this.types = new Map();
   }
 
@@ -745,7 +817,14 @@ class Translator {
         `${indent}${b.pyName} = ${b.boxed ? `[${this.need('UNSET')}]` : this.need('UNSET')}`,
       );
     }
-    for (const s of statements) lines.push(...this.emitStatement(s, indent));
+    for (const s of statements) {
+      const emitted = this.emitStatement(s, indent);
+      if (indent === '') {
+        const over = pythonLimit(emitted);
+        if (over !== null) throw parserError('P012', over, s.span);
+      }
+      lines.push(...emitted);
+    }
     return lines;
   }
 
@@ -762,6 +841,7 @@ class Translator {
   }
 
   private emitStatement(s: Statement, indent: string): string[] {
+    this.at = s;
     switch (s.kind) {
       case 'VariableDeclaration': {
         const b = this.declared.get(s);
@@ -1184,5 +1264,16 @@ class Translator {
 
 /** Translates a parsed program into Python source. */
 export function toPython(program: Program, options: PythonOptions = {}): string {
-  return new Translator(program, options).translate();
+  const translator = new Translator(program, options);
+  try {
+    return translator.translate();
+  } catch (error) {
+    // The passes recurse over the syntax tree; a very long chain such as `ক + ক + … + ক` can use
+    // up the stack. Report it as a language error, never as a crash.
+    if (error instanceof RangeError && /call stack/i.test(error.message)) {
+      const span = translator.at?.span ?? program.span;
+      throw parserError('P012', { what: 'expression', limit: 0 }, span);
+    }
+    throw error;
+  }
 }

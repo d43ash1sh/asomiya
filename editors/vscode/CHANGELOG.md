@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0
+
+- **Run now shows its output in the Asomiya panel** (next to Terminal) instead of a terminal.
+  VS Code's terminal draws one character per cell, which broke joined Assamese letters
+  (যুগ্ম, আপোনাৰ); the panel shapes them properly. Questions from `সোধা` / `xudha` get an
+  input box there (Ctrl+D for no answer), and Stop / Ctrl+C ends a running program.
+- The panel takes the keyboard focus when a program runs, so answers are never typed into your
+  code.
+- **Show in Python** opens at your program, not at the helper functions at the top of the file.
+- New real screenshots and a rewritten guide.
+
 ## 0.1.0
 
 First release.

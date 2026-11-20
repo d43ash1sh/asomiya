@@ -12,6 +12,7 @@ import {
   check,
   completions,
   describe as describeWord,
+  programStart,
   python,
 } from '../../editors/vscode/src/service';
 
@@ -133,6 +134,15 @@ describe('VS Code extension: errors, hover, completion, Python', () => {
     expect(failed.error).toContain('P0');
   });
 
+  it('opens the Python view at the learner’s program, not the helpers', () => {
+    const out = python('kowa(-7 % 3)', 'en', 'auto').python ?? '';
+    const lines = out.split('\n');
+    const start = programStart(out);
+    expect(start).toBeGreaterThan(0);
+    expect(lines[start]).toContain('the program');
+    expect(programStart('print(1)')).toBe(0);
+  });
+
   it('every snippet is a valid program', () => {
     const snippets = JSON.parse(read('snippets/asomiya.json')) as Record<
       string,
@@ -212,9 +222,13 @@ describe('VS Code extension: Run', () => {
   function start(source: string): {
     session: RunSession;
     output: () => string;
+    error: () => string | null;
+    asked: () => number;
     done: Promise<string>;
   } {
     let out = '';
+    let err: string | null = null;
+    let questions = 0;
     let resolve: (outcome: string) => void = () => undefined;
     const done = new Promise<string>((r) => {
       resolve = r;
@@ -223,46 +237,59 @@ describe('VS Code extension: Run', () => {
       worker,
       { source, fileName: 'test.asom', lang: 'en', digits: 'auto' },
       {
-        write: (text) => {
+        output: (text) => {
           out += text;
         },
-        finished: (outcome) => {
+        input: () => {
+          questions++;
+        },
+        finished: (outcome, error) => {
+          err = error;
           resolve(outcome);
         },
       },
     );
-    return { session, output: () => out, done };
+    return { session, output: () => out, error: () => err, asked: () => questions, done };
   }
 
   const until = async (test: () => boolean): Promise<void> => {
     for (let i = 0; i < 200 && !test(); i++) await new Promise((r) => setTimeout(r, 10));
   };
 
-  it('prints output with terminal line breaks', async () => {
+  it('passes the program’s output through as printed', async () => {
     const run = start('kowa("Nomoskar")\nkowa(1 + 2)');
     expect(await run.done).toBe('ok');
-    expect(run.output()).toContain('Nomoskar\r\n3\r\n');
+    expect(run.output()).toBe('Nomoskar\n3\n');
   });
 
-  it('reads input typed in the terminal, including Assamese and backspace', async () => {
+  it('asks for input and takes the answer, in Assamese too', async () => {
     const run = start('dhora naam = xudha("Naam? ")\nkowa("Nomoskar, " + naam)');
-    await until(() => run.output().includes('Naam? '));
-    run.session.input('অসমx\x7f\r');
+    await until(() => run.asked() === 1);
+    expect(run.session.waiting).toBe(true);
+    run.session.answer('অসম');
     expect(await run.done).toBe('ok');
     expect(run.output()).toContain('Nomoskar, অসম');
   });
 
-  it('shows errors with their code and position', async () => {
-    const run = start('kowa(naam)');
-    expect(await run.done).toBe('error');
-    expect(run.output()).toContain('R001');
-    expect(run.output()).toContain('test.asom:1:6');
+  it('gives খালী (null) at the end of input', async () => {
+    const run = start('kowa(xudha())');
+    await until(() => run.asked() === 1);
+    run.session.answer(null);
+    expect(await run.done).toBe('ok');
+    expect(run.output()).toBe('khali\n');
   });
 
-  it('stops an endless program with Ctrl+C', async () => {
+  it('reports errors with their code and position', async () => {
+    const run = start('kowa(naam)');
+    expect(await run.done).toBe('error');
+    expect(run.error()).toContain('R001');
+    expect(run.error()).toContain('test.asom:1:6');
+  });
+
+  it('stops an endless program', async () => {
     const run = start('jetialoike (xosa) { }');
     await new Promise((r) => setTimeout(r, 100));
-    run.session.input('\x03');
+    run.session.stop();
     expect(await run.done).toBe('stopped');
     expect(run.session.running).toBe(false);
   });

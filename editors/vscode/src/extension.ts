@@ -1,5 +1,5 @@
 /**
- * The Asomiya extension: errors as you type, hovers, completions, Run (in a terminal, with input)
+ * The Asomiya extension: errors as you type, hovers, completions, Run (in the Asomiya panel, with input)
  * and Show in Python (a live, read-only Python version beside the program).
  *
  * Nothing here runs a program on its own: checking only parses, and Run happens when asked. The
@@ -9,8 +9,9 @@ import { basename, join } from 'node:path';
 import * as vscode from 'vscode';
 import type { MessageLanguage } from '../../../src/language/types';
 import type { DigitSetting } from '../../../src/runtime/values';
+import { OUTPUT_VIEW, OutputView, PANEL_TEXT } from './output-view';
 import { RunSession } from './run-session';
-import { check, completions, describe, python } from './service';
+import { check, completions, describe, programStart, python } from './service';
 
 const LANGUAGE = 'asomiya';
 const PYTHON_SCHEME = 'asomiya-python';
@@ -127,7 +128,7 @@ function registerLanguageFeatures(context: vscode.ExtensionContext): void {
 // ── Run ──────────────────────────────────────────────────────────────────
 
 function registerRun(context: vscode.ExtensionContext): void {
-  let terminal: vscode.Terminal | undefined;
+  const view = new OutputView();
   let session: RunSession | undefined;
   const workerFile = join(context.extensionPath, 'dist', 'run-worker.js');
 
@@ -141,48 +142,42 @@ function registerRun(context: vscode.ExtensionContext): void {
       return;
     }
     session?.stop();
-    terminal?.dispose();
     const { lang, digits } = settings();
     const fileName = basename(doc.uri.fsPath || doc.uri.path) || 'program.asom';
-    const write = new vscode.EventEmitter<string>();
-    const pty: vscode.Pseudoterminal = {
-      onDidWrite: write.event,
-      open: () => {
-        session = new RunSession(
-          workerFile,
-          { source: doc.getText(), fileName, lang, digits },
-          {
-            write: (text) => {
-              write.fire(text);
-            },
-            finished: () => undefined,
-          },
-          lang === 'as'
-            ? { stopped: 'ৰখোৱা হ’ল।', finished: 'শেষ হ’ল।' }
-            : { stopped: 'Stopped.', finished: 'Finished.' },
-        );
+    view.post({ type: 'start', file: fileName, ui: PANEL_TEXT[lang] });
+    // Focus the panel: a program that asks a question (সোধা) needs the answer typed there.
+    await view.reveal();
+    const current = new RunSession(
+      workerFile,
+      { source: doc.getText(), fileName, lang, digits },
+      {
+        output: (text) => {
+          view.post({ type: 'output', text });
+        },
+        input: () => {
+          view.post({ type: 'input' });
+        },
+        finished: (outcome, error) => {
+          view.post({ type: 'done', outcome, error });
+        },
       },
-      close: () => {
-        session?.stop();
-      },
-      handleInput: (data) => {
-        session?.input(data);
-      },
-    };
-    terminal = vscode.window.createTerminal({ name: `Asomiya: ${fileName}`, pty });
-    terminal.show(true);
+    );
+    session = current;
   };
 
   context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(OUTPUT_VIEW, view, {
+      webviewOptions: { retainContextWhenHidden: true },
+    }),
+    view,
+    view.onMessage((message) => {
+      if (message.type === 'answer') session?.answer(message.text);
+      else if (message.type === 'eof') session?.answer(null);
+      else if (message.type === 'stop') session?.stop();
+    }),
     vscode.commands.registerCommand('asomiya.run', run),
     vscode.commands.registerCommand('asomiya.stop', () => {
       session?.stop();
-    }),
-    vscode.window.onDidCloseTerminal((closed) => {
-      if (closed === terminal) {
-        session?.stop();
-        terminal = undefined;
-      }
     }),
     { dispose: () => session?.stop() },
   );
@@ -226,11 +221,17 @@ function registerPython(context: vscode.ExtensionContext): void {
       open.set(doc.uri.toString(), uri);
       const py = await vscode.workspace.openTextDocument(uri);
       await vscode.languages.setTextDocumentLanguage(py, 'python');
-      await vscode.window.showTextDocument(py, {
+      const editor = await vscode.window.showTextDocument(py, {
         viewColumn: vscode.ViewColumn.Beside,
         preserveFocus: true,
         preview: false,
       });
+      // Start at the learner's own program; the helper functions come first in the file.
+      const start = programStart(py.getText());
+      if (start > 0) {
+        const top = new vscode.Range(start, 0, start, 0);
+        editor.revealRange(top, vscode.TextEditorRevealType.AtTop);
+      }
     }),
     vscode.commands.registerCommand('asomiya.savePython', async () => {
       const active = vscode.window.activeTextEditor?.document;

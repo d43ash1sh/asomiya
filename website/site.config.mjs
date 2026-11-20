@@ -59,7 +59,7 @@ export const EXTENSION = {
   id: `${extPkg.publisher}.${extPkg.name}`,
   name: extPkg.displayName,
   version: extPkg.version,
-  released: '2026-11-20',
+  released: '2026-11-21',
   engine: extPkg.engines.vscode.replace(/^\^/, ''),
   categories: extPkg.categories,
   marketplace: 'https://marketplace.visualstudio.com/items?itemName=asomiya.asomiya',

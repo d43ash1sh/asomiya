@@ -27,9 +27,11 @@ in Python.
 
 ### Run with one click
 
-Press **▶** in the editor title (or **Cmd/Ctrl+F5**). The program runs in a terminal inside VS
-Code. Questions from `সোধা` / `xudha` wait for your answer, and **Ctrl+C** stops a program that
-runs too long. Nothing else to install: the interpreter is built into the extension.
+Press **▶** in the editor title (or **Cmd/Ctrl+F5**). The output appears in the **Asomiya** panel
+next to Terminal, with Assamese letters joined properly. When the program asks a question
+(`সোধা` / `xudha`), type the answer in the box at the bottom and press Enter. **Stop** (or
+Ctrl+C) ends a program that runs too long. Nothing else to install: the interpreter is built
+into the extension.
 
 ### Show in Python
 

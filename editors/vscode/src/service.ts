@@ -121,3 +121,10 @@ export function python(source: string, lang: MessageLanguage, digits: DigitSetti
     };
   }
 }
+
+/** The line where the translated program begins (after the header and helper functions). */
+export function programStart(python: string): number {
+  const lines = python.split('\n');
+  const marker = lines.findIndex((line) => line.startsWith('# ── the program'));
+  return marker < 0 ? 0 : marker;
+}

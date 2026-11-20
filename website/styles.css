@@ -2939,3 +2939,101 @@ a {
   color: var(--ink-3);
   font-size: 0.9rem;
 }
+
+
+/* ── landing page: the dark hero look, on the home page only ─────── */
+
+/* The home page keeps its original dark palette and type (the docs use the plain light style). */
+body.layout-home {
+  --cotton: #0d1210;
+  --mist: #121816;
+  --mist-2: #19211e;
+  --surface: #111714;
+  --ink: #edede9;
+  --ink-2: #a5aca7;
+  --ink-3: #737b76;
+  --line: #1d2523;
+  --line-2: #2a3330;
+  --accent: #f2c14e;
+  --accent-hover: #f7d27a;
+  --accent-ink: #0d1210;
+  --accent-soft: rgb(242 193 78 / 0.1);
+  --gold: #f2c14e;
+  --gold-soft: rgb(242 193 78 / 0.1);
+  --tea: #7fd1a5;
+  --tea-soft: rgb(127 209 165 / 0.1);
+  --link: #f2c14e;
+  --danger: #ff7a85;
+
+  --code-bg: #101614;
+  --code-line: #1d2523;
+  --code-ink: #e6e8e4;
+  --tok-kw: #f2c14e;
+  --tok-str: #7fd1a5;
+  --tok-num: #ff9f87;
+  --tok-lit: #c9a9ff;
+  --tok-fn: #8cc8ff;
+  --tok-com: #5e6763;
+  --tok-op: #98a09b;
+
+  --shadow: 0 0 0 1px var(--line), 0 24px 48px -24px rgb(0 0 0 / 0.8);
+  --nav-h: 64px;
+  --font: 'TASA Orbiter', 'Anek Bangla', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-as: 'Anek Bangla', 'TASA Orbiter', system-ui, sans-serif;
+  --mono: 'Geist Mono', 'Anek Bangla', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --logo: #f2c14e;
+  --logo-ink: #0d1210;
+  color-scheme: dark;
+}
+
+.layout-home .topnav-links a,
+.layout-home .btn,
+.layout-home .code-btn,
+.layout-home .scroll-hint,
+.layout-home .lang-switch,
+.layout-home .brand-version,
+.layout-home .code-output-label,
+.layout-home .foot-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[lang='as'] .layout-home .topnav-links a,
+html[lang='as'] .layout-home .btn,
+html[lang='as'] .layout-home .scroll-hint,
+html[lang='as'] .layout-home .code-output-label,
+html[lang='as'] .layout-home .foot-title {
+  font-family: var(--font-as);
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.layout-home .topnav {
+  background: color-mix(in srgb, var(--cotton) 85%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.layout-home .btn {
+  border-radius: 4px;
+  padding: 14px 22px;
+}
+
+.layout-home .btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+}
+
+.layout-home .home {
+  padding-top: 72px;
+}
+
+.layout-home .home h2 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}

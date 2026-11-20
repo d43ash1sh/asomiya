@@ -24,9 +24,10 @@ const CSP = [
   "form-action 'none'",
 ].join('; ');
 
-// Only an Assamese font is loaded; everything else uses the reader's system font.
+// Noto Sans Bengali for Assamese everywhere; TASA Orbiter, Geist Mono and Anek Bangla for the
+// landing page's original look.
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap';
+  'https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Anek+Bangla:wght@400;500;600;700&display=swap';
 
 const ROOT = new URL('../', import.meta.url);
 const fingerprints = new Map();

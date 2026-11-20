@@ -1,10 +1,16 @@
 // Home page (layout: "home"): one plain column, written by Debashish in the first person.
 import { EXTENSION, SITE, TEAM } from '../site.config.mjs';
 import { esc } from '../lib/html.mjs';
-import { logo } from '../lib/icons.mjs';
+import { icon } from '../lib/icons.mjs';
 
 const S = {
   en: {
+    heroTitle: 'The programming language<br />that speaks Assamese.',
+    heroSub:
+      'Asomiya is a programming language whose keywords, numbers and error messages are in Assamese. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead. Learn to program in the language you think in.',
+    heroNote: 'Free and open source. Runs in your browser.',
+    start: 'Start learning',
+    more: 'Learn more',
     tagline: 'A programming language in Assamese.',
     intro: `Hi, I’m Debashish Bordoloi. With Arnab Sharmah and Siddhartha Borah, I’m building Asomiya: a small programming language where the keywords, the numbers and the error messages are Assamese. You can write it in Assamese script, or in English letters if you don’t have an Assamese keyboard.`,
     tryIt: 'Try it in your browser',
@@ -25,6 +31,12 @@ const S = {
     teamTitle: 'Who’s building it',
   },
   as: {
+    heroTitle: 'অসমীয়া কোৱা<br />এটা প্ৰগ্ৰামিং ভাষা।',
+    heroSub:
+      'অসমীয়া এটা প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। যি ভাষাত ভাবে, সেই ভাষাতে প্ৰগ্ৰামিং শিকক।',
+    heroNote: 'বিনামূলীয়া আৰু মুক্ত উৎস। ব্ৰাউজাৰতে চলে।',
+    start: 'শিকিবলৈ আৰম্ভ কৰক',
+    more: 'অধিক জানক',
     tagline: 'অসমীয়া ভাষাত এটা প্ৰগ্ৰামিং ভাষা।',
     intro: `নমস্কাৰ, মই দেবাশীষ বৰদলৈ। অৰ্ণৱ শৰ্মা আৰু সিদ্ধাৰ্থ বৰাৰ সৈতে মই অসমীয়া নামৰ এটা সৰু প্ৰগ্ৰামিং ভাষা বনাই আছোঁ, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। ইয়াক অসমীয়া লিপিত লিখিব পাৰি, আৰু অসমীয়া কীব’ৰ্ড নাথাকিলে ইংৰাজী আখৰতো লিখিব পাৰি।`,
     tryIt: 'ব্ৰাউজাৰতে চলাই চাওক',
@@ -64,6 +76,28 @@ jetialoike (k <= 3) {
     k = k + 1
 }`;
 
+/** The Assamese alphabet, for the animated letter field in the hero. */
+const ALPHABET = [...'অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযৰলৱশষসহ', 'ক্ষ', 'ড়', 'ঢ়', 'য়'];
+const COLS = 16;
+const ROWS = 7;
+
+/**
+ * A grid of Assamese letters that light up in slow diagonal waves (CSS only: each letter gets a
+ * delay class from its diagonal, because inline styles are blocked by the Content Security Policy).
+ * অ আ ক খ, the letters of the logo, glow gold.
+ */
+function letterField() {
+  const cells = [];
+  for (let r = 0; r < ROWS; r += 1) {
+    for (let c = 0; c < COLS; c += 1) {
+      const letter = ALPHABET[(r * 7 + c * 3) % ALPHABET.length];
+      const gold = ['অ', 'আ', 'ক', 'খ'].includes(letter) ? ' g' : '';
+      cells.push(`<span class="d${(r + c) % 12}${gold}">${letter}</span>`);
+    }
+  }
+  return `<div class="letter-field" aria-hidden="true" lang="as">${cells.join('')}</div>`;
+}
+
 function body(lang) {
   const s = S[lang];
   return (h) => {
@@ -84,15 +118,28 @@ function body(lang) {
           '<a href="$1" target="_blank" rel="noopener noreferrer">',
         );
     return `
-<article class="home">
-  <header class="home-intro">
-    ${logo(64)}
-    <div>
-      <h1>${lang === 'as' ? 'অসমীয়া' : 'Asomiya'}</h1>
-      <p class="home-tagline">${esc(s.tagline)}</p>
+<section class="hero">
+  ${letterField()}
+  <div class="hero-bottom">
+    <div class="hero-text">
+      <h1 class="hero-title">${s.heroTitle}</h1>
+      <p class="hero-sub">${s.heroSub}</p>
     </div>
-  </header>
+    <div class="hero-side">
+      <p class="hero-note">${esc(s.heroNote)}</p>
+      <div class="hero-row">
+        <p class="install">
+          <code>npm install -g asomiya</code>
+          <button class="code-btn" type="button" data-copy="npm install -g asomiya" data-copied="${h.t.copied}" aria-label="${h.t.copy}">${icon('copy')}</button>
+        </p>
+        <a class="btn btn-primary" href="${h.link('learn/')}">${esc(s.start)}<span aria-hidden="true">›</span></a>
+      </div>
+    </div>
+  </div>
+  <a class="scroll-hint" href="#intro">${esc(s.more)}</a>
+</section>
 
+<article class="home" id="intro">
   <p class="home-lead">${esc(s.intro)}</p>
 
   ${h.example(HELLO_AS, HELLO_ROMAN, { stdin: lang === 'as' ? 'অনন্যা' : 'Ananya' })}
@@ -107,7 +154,7 @@ function body(lang) {
   <ul class="home-list">${s.today.map((t) => `<li>${fill(t)}</li>`).join('')}</ul>
 
   <figure class="home-figure">
-    <img src="${h.asset('assets/screens/vscode-hover.png')}" width="2880" height="1800" alt="${esc(s.shot)}" loading="lazy">
+    <img src="${h.asset('assets/screens/vscode-hover-dark.png')}" width="2880" height="1800" alt="${esc(s.shot)}" loading="lazy">
     <figcaption>${esc(s.shot)}</figcaption>
   </figure>
 

@@ -31,17 +31,14 @@ bibliography: paper.bib
 
 Asomiya is an open-source educational programming language in which every word a
 learner reads or writes can be Assamese: keywords, built-in functions, numerals and
-error messages. A first program looks like this:
+error messages. \autoref{fig:example} shows a first program.
 
-```
-ধৰা নাম = "অসম"
-যদি (দৈৰ্ঘ্য(নাম) > ১) {
-    কোৱা("নমস্কাৰ, " + নাম)
-}
-```
+![The same Asomiya program written in Assamese script (left) and in romanised Assamese
+(right), with the output of each. `dhora` declares a variable, `jodi` means "if",
+`doirghyo` gives the length of a text, and `kowa` prints.\label{fig:example}](example.png)
 
 Learners who do not have an Assamese keyboard can write the same program in Latin
-letters, the way Assamese is typed in chat (`dhora`, `jodi`, `kowa`). Because there is
+letters, the way Assamese is typed in chat (\autoref{fig:example}, right). Because there is
 no standard romanisation, Asomiya accepts several common spellings for each word, 68
 in total for 21 keywords and built-ins, and suggests the intended word when a learner
 types a near-miss.
@@ -87,14 +84,16 @@ mainstream language. Asomiya is designed for:
 **Errors that teach.** Error messages are among the most difficult parts of
 programming for novices [@becker2019]. Every Asomiya error has a code, a message in
 Assamese (or English, on request), and a caret under the exact position in the line.
-Conditions must be `সঁচা` or `মিছা` (true or false); there is no implicit "truthiness",
+Conditions must be true or false (`xosa` or `misa`); there is no implicit "truthiness",
 so a common class of beginner mistakes becomes an explicit, explained error.
 
 **Assamese text behaves as the learner sees it.** Names are compared after Unicode
 normalisation [@uax15], and the length and indexing of text count user-perceived
-characters [@uax29], so `দৈৰ্ঘ্য("নাম")` is `২` and a conjunct such as `ক্ষ` is never
-split. Numbers can be written with Assamese or ASCII digits and are printed in the
-script of the program, so `১০ + ২০` prints `৩০`.
+characters [@uax29]. The Assamese word for "name" in \autoref{fig:example} is three
+Unicode code points but two written characters, and Asomiya reports its length as 2;
+a conjunct letter such as _kṣa_ (three code points) is never split. Numbers can be
+written with Assamese or ASCII digits and are printed in the script of the program, so
+ten plus twenty written in Assamese digits prints thirty in Assamese digits.
 
 **Safe for classrooms.** Programs cannot access files or the network, and loops,
 recursion depth and memory are bounded, so a learner's infinite loop stops with an

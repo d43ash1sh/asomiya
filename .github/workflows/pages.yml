@@ -6,6 +6,7 @@ name: Playground
 on:
   push:
     branches: [main]
+  # Also started by the beta branch (see beta-preview.yml).
   workflow_dispatch:
 
 # Only the deploy job may publish. The build job runs `npm ci` (third-party install scripts), so it
@@ -30,6 +31,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run website:build
+      # The beta branch is a preview of the next design, published at asomiya.codes/beta/.
+      - name: Build the beta preview
+        run: |
+          git clone --depth 1 --branch beta "https://github.com/$GITHUB_REPOSITORY" beta-src || exit 0
+          cd beta-src
+          npm ci
+          SITE_PREVIEW=1 npm run website:build
+          cp -R website/dist ../website/dist/beta
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: website/dist

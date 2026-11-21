@@ -1,7 +1,7 @@
 // Behaviour shared by every page: theme switch, mobile menu, copy buttons, "on this page" links.
 import { save, SCRIPT_KEY, THEME_KEY } from './storage';
 
-/** The site is dark unless the visitor chose the light theme. */
+/** The site is white unless the visitor chose the dark theme. */
 function isDark(): boolean {
   return document.documentElement.dataset['theme'] === 'dark';
 }

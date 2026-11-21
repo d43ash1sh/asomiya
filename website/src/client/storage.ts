@@ -15,6 +15,7 @@ export function save(key: string, value: string): void {
   }
 }
 
-export const THEME_KEY = 'asomiya-theme';
+// v2: the site is white by default; earlier saved choices (from the old dark landing page) reset.
+export const THEME_KEY = 'asomiya-theme-v2';
 /** Preferred script for code samples: 'as' (Assamese) or 'roman' (English letters). */
 export const SCRIPT_KEY = 'asomiya-script';

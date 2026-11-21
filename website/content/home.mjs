@@ -9,49 +9,39 @@ import { icon } from '../lib/icons.mjs';
 
 // ── the programs shown on the page ──────────────────────────────────────
 
-const HELLO = {
-  as: `ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")
-কোৱা("নমস্কাৰ, " + নাম + "!")
+const HELLO = `ধৰা ঠাই = "অসম"
+কোৱা("নমস্কাৰ, " + ঠাই + "!")
 
-ধৰা ক = ১
-যেতিয়ালৈকে (ক <= ৩) {
+ধৰা ক = 1
+যেতিয়ালৈকে (ক <= 3) {
     কোৱা(ক, "বাৰ নমস্কাৰ")
-    ক = ক + ১
-}`,
-  en: `dhora naam = xudha("Apunar naam ki? ")
-kowa("Nomoskar, " + naam + "!")
+    ক = ক + 1
+}`;
 
-dhora k = 1
-jetialoike (k <= 3) {
-    kowa(k, "bar nomoskar")
-    k = k + 1
-}`,
-};
+const TYPO = `ধৰা ঠাই = "অসম"
+কোৱা(ঠই)`;
 
-const TYPO = `ধৰা নাম = "অনন্যা"
-কোৱা(নম)`;
-
-const PRICE = `ধৰা দাম = ১২০
-ধৰা সংখ্যা = ৩
+const PRICE = `ধৰা দাম = 120
+ধৰা সংখ্যা = 3
 কোৱা("মুঠ:", দাম * সংখ্যা)`;
 
 /** Runs a program with the real interpreter; the build stops if a sample that should work fails. */
 function run(source, stdin = []) {
   const lines = [...stdin];
-  const result = runSource(source, { readLine: () => lines.shift() ?? null });
+  const result = runSource(source, { readLine: () => lines.shift() ?? null, digits: 'ascii' });
   if (result.error !== null) throw new Error(`Home page sample failed:\n${source}`);
   return result.output;
 }
 
 function errorOf(source, lang) {
-  const result = runSource(source);
+  const result = runSource(source, { digits: 'ascii' });
   if (result.error === null) throw new Error('Home page error sample ran without an error');
   return formatDiagnostic(result.error.diagnostic, { lang, source, fileName: 'hello.asom' });
 }
 
 /** The learner's part of the Python version (the helper functions come first in the file). */
 function pythonOf(source) {
-  const py = toPython(parse(source));
+  const py = toPython(parse(source), { digits: 'ascii' });
   const mark = py.indexOf('# ── the program');
   return (mark === -1 ? py : py.slice(py.indexOf('\n', mark) + 1)).trim();
 }
@@ -64,7 +54,6 @@ const S = {
     sub: 'Asomiya is a small programming language with Assamese keywords, numbers and error messages. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead.',
     docs: 'Read the docs',
     tryIt: 'Try it in your browser',
-    askName: 'Ananya',
     ranIn: 'hello.asom · ran in the browser',
     noErrors: '0 errors',
     chipAs: '@অসমীয়া',
@@ -97,7 +86,7 @@ const S = {
       ['0', 'Accounts, ads or tracking'],
     ],
     writeIn: 'Write it however you type',
-    scripts: ['অসমীয়া script', 'English letters', '১২৩ digits', '123 digits', 'Python'],
+    scripts: ['অসমীয়া script', 'English letters', 'English digits 123', 'Python'],
     s1: {
       tag: '#01 - WRITE IN ASSAMESE',
       title: 'Keywords you already know, in the script you already read.',
@@ -107,7 +96,7 @@ const S = {
           'English letters too',
           'jodi, nohole, jetialoike. Every spelling works, so a phone keyboard is enough.',
         ],
-        ['Assamese numbers', '১০ + ২০ prints ৩০. Mix ১২৩ and 123 freely.'],
+        ['Ordinary numbers', '10 + 20 prints 30. Assamese digits work too, if you prefer them.'],
         [
           'Questions and answers',
           'সোধা asks the person running the program, and waits for their answer.',
@@ -210,9 +199,8 @@ const S = {
     sub: 'অসমীয়া এটা সৰু প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক।',
     docs: 'নথিপত্ৰ পঢ়ক',
     tryIt: 'ব্ৰাউজাৰতে চলাই চাওক',
-    askName: 'অনন্যা',
     ranIn: 'hello.asom · ব্ৰাউজাৰত চলিল',
-    noErrors: '০ টা ভুল',
+    noErrors: '0 টা ভুল',
     chipAs: '@অসমীয়া',
     chipRoman: '@roman',
     run: 'এই প্ৰগ্ৰামটো চলাওক',
@@ -237,20 +225,20 @@ const S = {
       ],
     ],
     stats: [
-      ['৩৭২', 'প্ৰতিটো সলনিত পৰীক্ষা'],
-      ['২', 'লিপি: অসমীয়া আৰু ইংৰাজী আখৰ'],
-      ['৪০', 'ভুলৰ ক’ড, প্ৰতিটোৰে ব্যাখ্যা'],
-      ['০', 'একাউণ্ট, বিজ্ঞাপন বা ট্ৰেকিং'],
+      ['372', 'প্ৰতিটো সলনিত পৰীক্ষা'],
+      ['2', 'লিপি: অসমীয়া আৰু ইংৰাজী আখৰ'],
+      ['40', 'ভুলৰ ক’ড, প্ৰতিটোৰে ব্যাখ্যা'],
+      ['0', 'একাউণ্ট, বিজ্ঞাপন বা ট্ৰেকিং'],
     ],
     writeIn: 'যেনেকৈ টাইপ কৰে তেনেকৈ লিখক',
-    scripts: ['অসমীয়া লিপি', 'ইংৰাজী আখৰ', '১২৩ অংক', '123 অংক', 'Python'],
+    scripts: ['অসমীয়া লিপি', 'ইংৰাজী আখৰ', 'ইংৰাজী অংক 123', 'Python'],
     s1: {
       tag: '#01 - অসমীয়াত লিখক',
       title: 'চিনাকি শব্দ, চিনাকি লিপিত।',
       items: [
         ['অসমীয়া মূল শব্দ', 'যদি, নহ’লে, যেতিয়ালৈকে, ফাংচন। প্ৰগ্ৰাম এটা বাক্যৰ দৰে পঢ়িব পাৰি।'],
         ['ইংৰাজী আখৰতো', 'jodi, nohole, jetialoike। সকলো বানান চলে, গতিকে ফোনৰ কীব’ৰ্ডেই যথেষ্ট।'],
-        ['অসমীয়া সংখ্যা', '১০ + ২০ য়ে ৩০ ছপা কৰে। ১২৩ আৰু 123 একেলগে ব্যৱহাৰ কৰিব পাৰি।'],
+        ['সাধাৰণ সংখ্যা', '10 + 20 য়ে 30 ছপা কৰে। বিচাৰিলে অসমীয়া অংকও চলে।'],
         ['প্ৰশ্ন আৰু উত্তৰ', 'সোধা য়ে প্ৰগ্ৰাম চলোৱা মানুহজনক সোধে, আৰু উত্তৰলৈ ৰৈ থাকে।'],
       ],
       link: 'মূল শব্দৰ সম্পূৰ্ণ তালিকা',
@@ -273,7 +261,7 @@ const S = {
       title: 'আপোনাৰ প্ৰগ্ৰাম Python ত চাওক। পিছৰ ভাষাটো সহজ হ’ব।',
       items: [
         ['কাষে কাষে', 'যিকোনো প্ৰগ্ৰাম Python লৈ, যিয়ে একেবাৰে একে ফলাফল ছপা কৰে।'],
-        ['যাদৃচ্ছিক প্ৰগ্ৰামত পৰীক্ষিত', 'পৰীক্ষাত ১৫০০ টা যাদৃচ্ছিক প্ৰগ্ৰাম দুয়োটাতে চলাই ফলাফল মিলোৱা হয়।'],
+        ['যাদৃচ্ছিক প্ৰগ্ৰামত পৰীক্ষিত', 'পৰীক্ষাত 1500 টা যাদৃচ্ছিক প্ৰগ্ৰাম দুয়োটাতে চলাই ফলাফল মিলোৱা হয়।'],
         ['লগত লৈ যাওক', 'প্লেগ্ৰাউণ্ড, টাৰ্মিনেল বা VS Code ৰ পৰা .py ফাইল ছেভ কৰক।'],
       ],
       link: 'Python ৰূপ কেনেকৈ কাম কৰে',
@@ -367,8 +355,8 @@ function featureSection(id, s, windowHtml, linkHref, scene) {
 function body(lang) {
   const s = S[lang];
   // The page shows Assamese script in both languages: that is the point of the language.
-  const hello = HELLO.as;
-  const helloOut = run(hello, [S.as.askName]);
+  const hello = HELLO;
+  const helloOut = run(hello);
   return (h) => {
     const href = {
       pg: h.playground,
@@ -387,11 +375,11 @@ function body(lang) {
 
     const s1Window = windowBox(
       s.s1.window,
-      `<pre class="ds-code"><code>${highlight(hello)}</code></pre><div class="ds-out"><span>${esc(s.s1.out)}</span><pre>${esc(`আপোনাৰ নাম কি? ${S.as.askName}\n${helloOut.replace(/^.*\? /, '')}`.trim())}</pre></div>`,
+      `<pre class="ds-code"><code>${highlight(hello)}</code></pre><div class="ds-out"><span>${esc(s.s1.out)}</span><pre>${esc(helloOut.trim())}</pre></div>`,
     );
     const s2Window = windowBox(
       s.s2.window,
-      `<pre class="ds-code"><code>${highlight(TYPO)}</code></pre><div class="ds-out ds-out-error"><pre>${esc(errorOf(TYPO, lang))}</pre></div><div class="ds-verify"><span>${lang === 'as' ? 'শুধৰণি' : 'FIX'}</span><code>${esc('কোৱা(নাম)')}</code><b>✓ ${lang === 'as' ? 'চলিল' : 'RUNS'}</b></div>`,
+      `<pre class="ds-code"><code>${highlight(TYPO)}</code></pre><div class="ds-out ds-out-error"><pre>${esc(errorOf(TYPO, lang))}</pre></div><div class="ds-verify"><span>${lang === 'as' ? 'শুধৰণি' : 'FIX'}</span><code>${esc('কোৱা(ঠাই)')}</code><b>✓ ${lang === 'as' ? 'চলিল' : 'RUNS'}</b></div>`,
     );
     const s3Window = windowBox(
       s.s3.window,

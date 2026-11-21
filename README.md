@@ -337,11 +337,12 @@ instead of a public issue. See [SECURITY.md](https://github.com/d43ash1sh/asomiy
 
 ## People
 
-|                                                                               |             |
-| ----------------------------------------------------------------------------- | ----------- |
-| **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh))           | Creator     |
-| **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                  | Contributor |
-| **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah)) | Contributor |
+|                                                                                          |             |
+| ---------------------------------------------------------------------------------------- | ----------- |
+| **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh))                      | Creator     |
+| **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                             | Contributor |
+| **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah))            | Contributor |
+| **Bigratom Saikia** ([@saikiabigratom-design](https://github.com/saikiabigratom-design)) | Contributor |
 
 See all [contributors on GitHub](https://github.com/d43ash1sh/asomiya/graphs/contributors).
 

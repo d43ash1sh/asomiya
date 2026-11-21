@@ -45,6 +45,14 @@ export const TEAM = [
       github: 'https://github.com/siddharthaborah',
     },
   },
+  {
+    name: { en: 'Bigratom Saikia', as: 'Bigratom Saikia' },
+    role: { en: 'Contributor', as: 'অৱদানকাৰী' },
+    links: {
+      linkedin: 'https://www.linkedin.com/in/bigratom-saikia-0415b8208/',
+      github: 'https://github.com/saikiabigratom-design',
+    },
+  },
 ];
 
 const extPkg = JSON.parse(

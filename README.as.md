@@ -284,7 +284,7 @@ REPLত কাঁড় চাবিৰে (arrow key) আগৰ শাৰী �
 
 ## নিৰ্মাতা আৰু সহযোগী
 
-- **দেবাশীষ বৰদলৈ** ([@d43ash1sh](https://github.com/d43ash1sh)) — নিৰ্মাতা
+- **দেবাশীষ বৰদলৈ** ([@d43ash1sh](https://github.com/d43ash1sh), ORCID [0009-0006-0473-0774](https://orcid.org/0009-0006-0473-0774)) — নিৰ্মাতা
 - **অৰ্ণৱ শৰ্মা** ([@arnabsmh](https://github.com/arnabsmh)) — অৱদানকাৰী
 - **সিদ্ধাৰ্থ বৰা** ([@siddharthaborah](https://github.com/siddharthaborah)) — অৱদানকাৰী
 - **Bigratom Saikia** ([@saikiabigratom-design](https://github.com/saikiabigratom-design)) — অৱদানকাৰী

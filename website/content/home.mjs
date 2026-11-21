@@ -1,184 +1,526 @@
-// Home page (layout: "home"): the landing hero, then one plain column.
+// Home page (layout: "home"): a product landing page. Hero, a program running over a pixel-art tea
+// garden, numbered feature sections with live-looking windows, the four steps, the pipeline, where it
+// runs, and the team. Every code sample and output here comes from the real interpreter at build time.
+import { formatDiagnostic, parse, runSource, toPython } from '../../dist/index.js';
 import { EXTENSION, SITE, TEAM } from '../site.config.mjs';
-import { esc } from '../lib/html.mjs';
+import { highlight } from '../lib/highlight.mjs';
+import { esc, shareHash } from '../lib/html.mjs';
 import { icon } from '../lib/icons.mjs';
 
-const S = {
-  en: {
-    heroTitle: 'The programming language<br />that speaks Assamese.',
-    heroSub:
-      'Asomiya is a programming language whose keywords, numbers and error messages are in Assamese. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead. Learn to program in the language you think in.',
-    heroNote: 'Free and open source. Runs in your browser.',
-    start: 'Start learning',
-    more: 'Learn more',
-    tagline: 'A programming language in Assamese.',
-    intro: `Here’s a small program. It asks for your name, then says hello three times. Press Try it to run it and change it.`,
-    tryIt: 'Try it in your browser',
-    learn: 'Learn the language',
-    install: 'Install',
-    todayTitle: 'What works today',
-    today: [
-      `Variables, conditions, loops, functions and lists. The <a href="{learn}">tutorial</a> goes through them one by one.`,
-      `Run programs in the <a href="{pg}">playground</a>, in your terminal (<code>npm install -g asomiya</code>), or in VS Code with the <a href="{ext}">Asomiya extension</a>.`,
-      `Error messages in Assamese or in English. Each one has a code, so you can <a href="{errors}">look it up</a>.`,
-      `Show in Python: see any program as Python, so the next language is easier.`,
-    ],
-    shot: 'Asomiya in VS Code: the program, its output in the Asomiya panel, and the help that appears when you point at a word.',
-    whyTitle: 'Why Assamese?',
-    why: `Programming languages almost always borrow English words. Nothing about running code needs that. Variables can be called <code>বয়স</code>, a loop can start with <code>যেতিয়ালৈকে</code>, and <code>১০ + ২০</code> prints <code>৩০</code>. I want Assamese speakers to be able to learn the ideas of programming first, in the language they already think in, and pick up English keywords later.`,
-    helpTitle: 'Help me make it better',
-    help: `Asomiya is young and open source. If something is confusing, a word sounds wrong in Assamese, or you find a bug, please tell us: open an issue on <a href="{gh}">GitHub</a> or message me on <a href="{li}">LinkedIn</a>. Students and teachers who want to test it can start on the <a href="{join}">Join page</a>.`,
-    teamTitle: 'Who’s building it',
-  },
-  as: {
-    heroTitle: 'অসমীয়া কোৱা<br />এটা প্ৰগ্ৰামিং ভাষা।',
-    heroSub:
-      'অসমীয়া এটা প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক। যি ভাষাত ভাবে, সেই ভাষাতে প্ৰগ্ৰামিং শিকক।',
-    heroNote: 'বিনামূলীয়া আৰু মুক্ত উৎস। ব্ৰাউজাৰতে চলে।',
-    start: 'শিকিবলৈ আৰম্ভ কৰক',
-    more: 'অধিক জানক',
-    tagline: 'অসমীয়া ভাষাত এটা প্ৰগ্ৰামিং ভাষা।',
-    intro: `ইয়াত এটা সৰু প্ৰগ্ৰাম আছে। ই আপোনাৰ নাম সোধে, তাৰ পিছত তিনিবাৰ নমস্কাৰ জনায়। চলাই চাবলৈ আৰু সলনি কৰিবলৈ চলাই চাওক টিপক।`,
-    tryIt: 'ব্ৰাউজাৰতে চলাই চাওক',
-    learn: 'ভাষাটো শিকক',
-    install: 'ইনষ্টল',
-    todayTitle: 'এতিয়া কি কি কৰিব পাৰি',
-    today: [
-      `চলক, চৰ্ত, লুপ, ফাংচন আৰু তালিকা। <a href="{learn}">পাঠবোৰত</a> এটা এটাকৈ শিকোৱা হৈছে।`,
-      `<a href="{pg}">প্লেগ্ৰাউণ্ডত</a>, টাৰ্মিনেলত (<code>npm install -g asomiya</code>), বা <a href="{ext}">অসমীয়া এক্সটেনশ্যনেৰে</a> VS Code ত প্ৰগ্ৰাম চলাওক।`,
-      `ভুলৰ বাৰ্তা অসমীয়া বা ইংৰাজীত। প্ৰতিটোৰে এটা ক’ড আছে, গতিকে <a href="{errors}">বিচাৰি চাব</a> পাৰি।`,
-      `Python ত দেখুওৱা: যিকোনো প্ৰগ্ৰাম Python ত কেনেকুৱা হয় চাওক, যাতে পিছৰ ভাষাটো সহজ হয়।`,
-    ],
-    shot: 'VS Code ত অসমীয়া: প্ৰগ্ৰাম, অসমীয়া পেনেলত ইয়াৰ ফলাফল, আৰু কোনো শব্দৰ ওপৰত মাউছ ৰাখিলে ওলোৱা সহায়।',
-    whyTitle: 'কিয় অসমীয়াত?',
-    why: `প্ৰগ্ৰামিং ভাষাবোৰে প্ৰায় সদায় ইংৰাজী শব্দ ধাৰ কৰে, যদিও ক’ড চলাবলৈ তাৰ কোনো প্ৰয়োজন নাই। চলকৰ নাম <code>বয়স</code> হ’ব পাৰে, লুপ <code>যেতিয়ালৈকে</code> ৰে আৰম্ভ হ’ব পাৰে, আৰু <code>১০ + ২০</code> য়ে <code>৩০</code> ছপা কৰে। মই বিচাৰোঁ অসমীয়া মানুহে প্ৰথমে নিজে ভবা ভাষাতে প্ৰগ্ৰামিঙৰ ধাৰণাবোৰ শিকক, আৰু ইংৰাজী শব্দবোৰ পিছত শিকক।`,
-    helpTitle: 'উন্নত কৰাত সহায় কৰক',
-    help: `অসমীয়া এতিয়াও নতুন আৰু মুক্ত উৎস। কিবা বুজাত অসুবিধা হ’লে, কোনো শব্দ অসমীয়াত অস্বাভাৱিক লাগিলে, বা ভুল পালে আমাক জনাওক: <a href="{gh}">GitHub</a> ত ইছ্যু খোলক বা <a href="{li}">LinkedIn</a> ত মোক বাৰ্তা দিয়ক। পৰীক্ষা কৰিব বিচৰা ছাত্ৰ-ছাত্ৰী আৰু শিক্ষকসকলে <a href="{join}">যোগ দিয়ক পৃষ্ঠাৰ</a> পৰা আৰম্ভ কৰিব পাৰে।`,
-    teamTitle: 'কোনে বনাইছে',
-  },
-};
+// ── the programs shown on the page ──────────────────────────────────────
 
-const HELLO_AS = `ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")
+const HELLO = {
+  as: `ধৰা নাম = সোধা("আপোনাৰ নাম কি? ")
 কোৱা("নমস্কাৰ, " + নাম + "!")
 
 ধৰা ক = ১
 যেতিয়ালৈকে (ক <= ৩) {
     কোৱা(ক, "বাৰ নমস্কাৰ")
     ক = ক + ১
-}`;
-
-const HELLO_ROMAN = `dhora naam = xudha("Apunar naam ki? ")
+}`,
+  en: `dhora naam = xudha("Apunar naam ki? ")
 kowa("Nomoskar, " + naam + "!")
 
 dhora k = 1
 jetialoike (k <= 3) {
     kowa(k, "bar nomoskar")
     k = k + 1
-}`;
+}`,
+};
 
-/** The Assamese alphabet, for the animated letter field in the hero. */
-const ALPHABET = [...'অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযৰলৱশষসহ', 'ক্ষ', 'ড়', 'ঢ়', 'য়'];
-const COLS = 16;
-const ROWS = 7;
+const TYPO = `ধৰা নাম = "অনন্যা"
+কোৱা(নম)`;
 
-/**
- * A grid of Assamese letters that light up in slow diagonal waves (CSS only: each letter gets a
- * delay class from its diagonal, because inline styles are blocked by the Content Security Policy).
- * অ আ ক খ, the letters of the logo, glow gold.
- */
-function letterField() {
-  const cells = [];
-  for (let r = 0; r < ROWS; r += 1) {
-    for (let c = 0; c < COLS; c += 1) {
-      const letter = ALPHABET[(r * 7 + c * 3) % ALPHABET.length];
-      const gold = ['অ', 'আ', 'ক', 'খ'].includes(letter) ? ' g' : '';
-      cells.push(`<span class="d${(r + c) % 12}${gold}">${letter}</span>`);
-    }
-  }
-  return `<div class="letter-field" aria-hidden="true" lang="as">${cells.join('')}</div>`;
+const PRICE = `ধৰা দাম = ১২০
+ধৰা সংখ্যা = ৩
+কোৱা("মুঠ:", দাম * সংখ্যা)`;
+
+/** Runs a program with the real interpreter; the build stops if a sample that should work fails. */
+function run(source, stdin = []) {
+  const lines = [...stdin];
+  const result = runSource(source, { readLine: () => lines.shift() ?? null });
+  if (result.error !== null) throw new Error(`Home page sample failed:\n${source}`);
+  return result.output;
+}
+
+function errorOf(source, lang) {
+  const result = runSource(source);
+  if (result.error === null) throw new Error('Home page error sample ran without an error');
+  return formatDiagnostic(result.error.diagnostic, { lang, source, fileName: 'hello.asom' });
+}
+
+/** The learner's part of the Python version (the helper functions come first in the file). */
+function pythonOf(source) {
+  const py = toPython(parse(source));
+  const mark = py.indexOf('# ── the program');
+  return (mark === -1 ? py : py.slice(py.indexOf('\n', mark) + 1)).trim();
+}
+
+// ── text ────────────────────────────────────────────────────────────────
+
+const S = {
+  en: {
+    title: 'Programs that speak <em>Assamese</em>,<br />from your very first <em>line</em>',
+    sub: 'Asomiya is a small programming language with Assamese keywords, numbers and error messages. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead.',
+    docs: 'Read the docs',
+    tryIt: 'Try it in your browser',
+    askName: 'Ananya',
+    ranIn: 'hello.asom · ran in the browser',
+    noErrors: '0 errors',
+    chipAs: '@অসমীয়া',
+    chipRoman: '@roman',
+    run: 'Run this program',
+    cards: [
+      [
+        'Playground',
+        'Write and run Asomiya in your browser. Nothing to install, and you can share a link to your program.',
+        'Open it',
+        'pg',
+      ],
+      [
+        'Terminal',
+        'Install from npm, then run any .asom file or start the interactive prompt with asomiya.',
+        'Install',
+        'install',
+      ],
+      [
+        'VS Code',
+        'Colours, mistakes underlined as you type, help on hover, Run, and a live Python view.',
+        'Extension',
+        'ext',
+      ],
+    ],
+    stats: [
+      ['372', 'Tests on every change'],
+      ['2', 'Scripts: Assamese and English letters'],
+      ['40', 'Error codes, each explained'],
+      ['0', 'Accounts, ads or tracking'],
+    ],
+    writeIn: 'Write it however you type',
+    scripts: ['অসমীয়া script', 'English letters', '১২৩ digits', '123 digits', 'Python'],
+    s1: {
+      tag: '#01 - WRITE IN ASSAMESE',
+      title: 'Keywords you already know, in the script you already read.',
+      items: [
+        ['Assamese keywords', 'যদি, নহ’লে, যেতিয়ালৈকে, ফাংচন. A program reads like a sentence.'],
+        [
+          'English letters too',
+          'jodi, nohole, jetialoike. Every spelling works, so a phone keyboard is enough.',
+        ],
+        ['Assamese numbers', '১০ + ২০ prints ৩০. Mix ১২৩ and 123 freely.'],
+        [
+          'Questions and answers',
+          'সোধা asks the person running the program, and waits for their answer.',
+        ],
+      ],
+      link: 'The full keyword list',
+      window: 'asomiya · hello.asom',
+      out: 'OUTPUT',
+    },
+    s2: {
+      tag: '#02 - MISTAKES THAT TEACH',
+      title: 'Every error says what went wrong, where, and how to fix it.',
+      items: [
+        [
+          'In Assamese or English',
+          'Learners read the message in their own language. One setting switches it.',
+        ],
+        ['Points at the spot', 'The line and the exact word are shown, not a stack trace.'],
+        ['A code for each one', 'R001, P001… each has a page that explains it with an example.'],
+      ],
+      link: 'All error codes',
+      window: 'asomiya · error R001',
+    },
+    s3: {
+      tag: '#03 - SHOW IN PYTHON',
+      title: 'See your program in Python. The next language is easier.',
+      items: [
+        ['Side by side', 'Any program, translated to Python that prints exactly the same output.'],
+        [
+          'Checked on random programs',
+          'Tests run 1,500 random programs in both and compare the output.',
+        ],
+        ['Take it with you', 'Save the .py file from the playground, the terminal or VS Code.'],
+      ],
+      link: 'How Python export works',
+      window: 'asomiya → python',
+    },
+    s4: {
+      tag: '#04 - HOW IT WORKS',
+      title: 'Four steps from nothing to your first program.',
+      steps: [
+        ['Install', 'One npm package. No account, no sign-up.', 'npm install -g asomiya'],
+        ['Write', 'Make a file called hello.asom in any editor.', 'code hello.asom'],
+        ['Run', 'Run it. Answers to সোধা are typed right there.', 'asomiya run hello.asom'],
+        ['See it in Python', 'Print the same program as Python.', 'asomiya python hello.asom'],
+      ],
+    },
+    hood: {
+      tag: 'UNDER THE HOOD',
+      title: 'Read once, checked carefully, run safely.',
+      text: 'Asomiya is a tree-walking interpreter written in TypeScript. It reads Unicode properly, so joined letters like ক্ষ and য় are one character. Programs cannot touch your files or the network, and a loop that never ends is stopped.',
+      link: 'How it is built',
+      stages: [
+        ['LEXER', 'UNICODE · NFC', 'Assamese and English words, both kinds of digits'],
+        ['PARSER', 'SYNTAX TREE', 'Brackets, blocks and precedence, with clear errors'],
+        ['EVALUATOR', 'STEP BUDGET', 'Runs the tree, stops endless loops, no file access'],
+        ['PYTHON', 'SAME OUTPUT', 'Translates the tree to Python you can read'],
+      ],
+    },
+    where: {
+      tag: 'WHERE IT RUNS',
+      title: 'Works wherever you write code.',
+      items: [
+        ['Browser', 'asomiya.codes/playground', 'pg'],
+        ['Terminal', 'npm install -g asomiya', 'install'],
+        ['VS Code', 'Marketplace: asomiya.asomiya', 'ext'],
+        ['VSCodium & Cursor', 'Open VSX: asomiya/asomiya', 'ext'],
+        ['Node.js library', "import { runSource } from 'asomiya'", 'npm'],
+        ['Python', 'asomiya python hello.asom', 'learn'],
+      ],
+    },
+    values: [
+      [
+        'Assamese first',
+        'Words were chosen with Assamese speakers, and we still ask: if a word sounds wrong, tell us.',
+        'Built for learners',
+        'Free forever',
+      ],
+      [
+        'Safe by design',
+        'Programs can’t read files, open the network or freeze your browser. Stop always works.',
+        'No file access',
+        'Endless loops stopped',
+      ],
+      [
+        'Open source',
+        'MIT licensed and built in the open on GitHub. Issues and pull requests are welcome.',
+        'MIT license',
+        'No tracking',
+      ],
+    ],
+    teamTitle: 'Who’s building it',
+    askTitle: 'Still wondering?',
+    askText: 'Ask your favourite AI what it thinks of Asomiya, then try it yourself.',
+    askPrompt:
+      'What is the Asomiya programming language at asomiya.codes, and is it good for learning to program in Assamese?',
+  },
+  as: {
+    title: '<em>অসমীয়া</em> কোৱা প্ৰগ্ৰাম,<br />প্ৰথম <em>শাৰীৰে</em> পৰা',
+    sub: 'অসমীয়া এটা সৰু প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক।',
+    docs: 'নথিপত্ৰ পঢ়ক',
+    tryIt: 'ব্ৰাউজাৰতে চলাই চাওক',
+    askName: 'অনন্যা',
+    ranIn: 'hello.asom · ব্ৰাউজাৰত চলিল',
+    noErrors: '০ টা ভুল',
+    chipAs: '@অসমীয়া',
+    chipRoman: '@roman',
+    run: 'এই প্ৰগ্ৰামটো চলাওক',
+    cards: [
+      [
+        'প্লেগ্ৰাউণ্ড',
+        'ব্ৰাউজাৰতে অসমীয়া লিখক আৰু চলাওক। একো ইনষ্টল কৰিব নালাগে, আৰু প্ৰগ্ৰামৰ লিংক শ্বেয়াৰ কৰিব পাৰি।',
+        'খোলক',
+        'pg',
+      ],
+      [
+        'টাৰ্মিনেল',
+        'npm ৰ পৰা ইনষ্টল কৰক, তাৰ পিছত যিকোনো .asom ফাইল চলাওক বা asomiya লিখি প্ৰম্পট খোলক।',
+        'ইনষ্টল',
+        'install',
+      ],
+      [
+        'VS Code',
+        'ৰং, লিখোঁতে ভুলৰ তলত ৰেখা, মাউছ ৰাখিলে সহায়, চলোৱা, আৰু Python ৰূপ।',
+        'এক্সটেনশ্যন',
+        'ext',
+      ],
+    ],
+    stats: [
+      ['৩৭২', 'প্ৰতিটো সলনিত পৰীক্ষা'],
+      ['২', 'লিপি: অসমীয়া আৰু ইংৰাজী আখৰ'],
+      ['৪০', 'ভুলৰ ক’ড, প্ৰতিটোৰে ব্যাখ্যা'],
+      ['০', 'একাউণ্ট, বিজ্ঞাপন বা ট্ৰেকিং'],
+    ],
+    writeIn: 'যেনেকৈ টাইপ কৰে তেনেকৈ লিখক',
+    scripts: ['অসমীয়া লিপি', 'ইংৰাজী আখৰ', '১২৩ অংক', '123 অংক', 'Python'],
+    s1: {
+      tag: '#01 - অসমীয়াত লিখক',
+      title: 'চিনাকি শব্দ, চিনাকি লিপিত।',
+      items: [
+        ['অসমীয়া মূল শব্দ', 'যদি, নহ’লে, যেতিয়ালৈকে, ফাংচন। প্ৰগ্ৰাম এটা বাক্যৰ দৰে পঢ়িব পাৰি।'],
+        ['ইংৰাজী আখৰতো', 'jodi, nohole, jetialoike। সকলো বানান চলে, গতিকে ফোনৰ কীব’ৰ্ডেই যথেষ্ট।'],
+        ['অসমীয়া সংখ্যা', '১০ + ২০ য়ে ৩০ ছপা কৰে। ১২৩ আৰু 123 একেলগে ব্যৱহাৰ কৰিব পাৰি।'],
+        ['প্ৰশ্ন আৰু উত্তৰ', 'সোধা য়ে প্ৰগ্ৰাম চলোৱা মানুহজনক সোধে, আৰু উত্তৰলৈ ৰৈ থাকে।'],
+      ],
+      link: 'মূল শব্দৰ সম্পূৰ্ণ তালিকা',
+      window: 'asomiya · hello.asom',
+      out: 'ফলাফল',
+    },
+    s2: {
+      tag: '#02 - শিকোৱা ভুল',
+      title: 'প্ৰতিটো ভুলে কয় কি হ’ল, ক’ত হ’ল, আৰু কেনেকৈ শুধৰাব।',
+      items: [
+        ['অসমীয়া বা ইংৰাজীত', 'শিকাৰুৱে নিজৰ ভাষাত বাৰ্তা পঢ়ে। এটা ছেটিঙে ভাষা সলনি কৰে।'],
+        ['ঠাইখিনি দেখুৱায়', 'শাৰী আৰু ঠিক শব্দটো দেখুৱায়, দীঘলীয়া ষ্টেক ট্ৰেচ নহয়।'],
+        ['প্ৰতিটোৰে ক’ড', 'R001, P001… প্ৰতিটোৰে উদাহৰণসহ ব্যাখ্যাৰ পৃষ্ঠা আছে।'],
+      ],
+      link: 'সকলো ভুলৰ ক’ড',
+      window: 'asomiya · ভুল R001',
+    },
+    s3: {
+      tag: '#03 - PYTHON ত চাওক',
+      title: 'আপোনাৰ প্ৰগ্ৰাম Python ত চাওক। পিছৰ ভাষাটো সহজ হ’ব।',
+      items: [
+        ['কাষে কাষে', 'যিকোনো প্ৰগ্ৰাম Python লৈ, যিয়ে একেবাৰে একে ফলাফল ছপা কৰে।'],
+        ['যাদৃচ্ছিক প্ৰগ্ৰামত পৰীক্ষিত', 'পৰীক্ষাত ১৫০০ টা যাদৃচ্ছিক প্ৰগ্ৰাম দুয়োটাতে চলাই ফলাফল মিলোৱা হয়।'],
+        ['লগত লৈ যাওক', 'প্লেগ্ৰাউণ্ড, টাৰ্মিনেল বা VS Code ৰ পৰা .py ফাইল ছেভ কৰক।'],
+      ],
+      link: 'Python ৰূপ কেনেকৈ কাম কৰে',
+      window: 'asomiya → python',
+    },
+    s4: {
+      tag: '#04 - কেনেকৈ কাম কৰে',
+      title: 'একোৱেই নাইৰ পৰা প্ৰথম প্ৰগ্ৰামলৈ চাৰিটা খোজ।',
+      steps: [
+        ['ইনষ্টল', 'এটা npm পেকেজ। একাউণ্ট নালাগে।', 'npm install -g asomiya'],
+        ['লিখক', 'যিকোনো এডিটৰত hello.asom নামৰ ফাইল এটা বনাওক।', 'code hello.asom'],
+        ['চলাওক', 'চলাওক। সোধা ৰ উত্তৰ তাতেই টাইপ কৰক।', 'asomiya run hello.asom'],
+        ['Python ত চাওক', 'একেটা প্ৰগ্ৰাম Python হিচাপে ছপা কৰক।', 'asomiya python hello.asom'],
+      ],
+    },
+    hood: {
+      tag: 'ভিতৰত কি আছে',
+      title: 'এবাৰ পঢ়ে, ভালদৰে পৰীক্ষা কৰে, নিৰাপদে চলায়।',
+      text: 'অসমীয়া TypeScript ত লিখা এটা ট্ৰি-ৱাকিং ইণ্টাৰপ্ৰেটাৰ। ই ইউনিক’ড ঠিকমতে পঢ়ে, গতিকে ক্ষ, য় ৰ দৰে যুক্ত আখৰ এটা আখৰ হিচাপে ধৰা হয়। প্ৰগ্ৰামে আপোনাৰ ফাইল বা নেটৱৰ্ক চুব নোৱাৰে, আৰু শেষ নোহোৱা লুপ ৰখোৱা হয়।',
+      link: 'কেনেকৈ বনোৱা হৈছে',
+      stages: [
+        ['LEXER', 'UNICODE · NFC', 'অসমীয়া আৰু ইংৰাজী শব্দ, দুয়ো ধৰণৰ অংক'],
+        ['PARSER', 'SYNTAX TREE', 'বন্ধনী, ব্লক আৰু ক্ৰম, স্পষ্ট ভুলৰ বাৰ্তাৰে'],
+        ['EVALUATOR', 'STEP BUDGET', 'গছজোপা চলায়, অন্তহীন লুপ ৰখায়, ফাইল নুচুয়'],
+        ['PYTHON', 'SAME OUTPUT', 'গছজোপা পঢ়িব পৰা Python লৈ ৰূপান্তৰ কৰে'],
+      ],
+    },
+    where: {
+      tag: 'ক’ত চলে',
+      title: 'য’তেই ক’ড লিখে, তাতেই চলে।',
+      items: [
+        ['ব্ৰাউজাৰ', 'asomiya.codes/playground', 'pg'],
+        ['টাৰ্মিনেল', 'npm install -g asomiya', 'install'],
+        ['VS Code', 'Marketplace: asomiya.asomiya', 'ext'],
+        ['VSCodium আৰু Cursor', 'Open VSX: asomiya/asomiya', 'ext'],
+        ['Node.js লাইব্ৰেৰী', "import { runSource } from 'asomiya'", 'npm'],
+        ['Python', 'asomiya python hello.asom', 'learn'],
+      ],
+    },
+    values: [
+      [
+        'প্ৰথমে অসমীয়া',
+        'শব্দবোৰ অসমীয়া মানুহৰ সৈতে বাছি লোৱা হৈছে, আৰু এতিয়াও সোধো: কোনো শব্দ অস্বাভাৱিক লাগিলে জনাওক।',
+        'শিকাৰুৰ বাবে',
+        'চিৰদিন বিনামূলীয়া',
+      ],
+      [
+        'নিৰাপদ',
+        'প্ৰগ্ৰামে ফাইল পঢ়িব, নেটৱৰ্ক খুলিব বা ব্ৰাউজাৰ ৰখাব নোৱাৰে। ৰখাওক সদায় কাম কৰে।',
+        'ফাইল নুচুয়',
+        'অন্তহীন লুপ ৰখায়',
+      ],
+      [
+        'মুক্ত উৎস',
+        'MIT অনুজ্ঞাপত্ৰ, GitHub ত খোলাখুলিকৈ বনোৱা। ইছ্যু আৰু পুল ৰিকুৱেষ্ট স্বাগতম।',
+        'MIT অনুজ্ঞাপত্ৰ',
+        'ট্ৰেকিং নাই',
+      ],
+    ],
+    teamTitle: 'কোনে বনাইছে',
+    askTitle: 'এতিয়াও ভাবি আছে?',
+    askText: 'আপোনাৰ প্ৰিয় AI ক অসমীয়াৰ বিষয়ে সোধক, তাৰ পিছত নিজে চলাই চাওক।',
+    askPrompt:
+      'What is the Asomiya programming language at asomiya.codes, and is it good for learning to program in Assamese?',
+  },
+};
+
+// ── building blocks ─────────────────────────────────────────────────────
+
+/** A window with a title bar, like a terminal or an editor tab. */
+const windowBox = (title, inner, cls = '') =>
+  `<div class="ds-window ${cls}"><div class="ds-window-bar"><span class="ds-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>${esc(title)}</span></div>${inner}</div>`;
+
+const copyCmd = (h, cmd, cls = '') =>
+  `<div class="ds-cmd ${cls}"><code><span class="ds-prompt" aria-hidden="true">$</span> ${esc(cmd)}</code><button class="ds-copy" type="button" data-copy="${esc(cmd)}" data-copied="${esc(h.t.copied)}" aria-label="${esc(h.t.copy)}">${esc(h.t.copy.toLowerCase())}</button></div>`;
+
+function featureSection(id, s, windowHtml, linkHref, scene) {
+  return `<section class="ds-feature" id="${id}">
+  <p class="ds-tag">${esc(s.tag)}</p>
+  <h2 class="ds-h2">${esc(s.title)}</h2>
+  <div class="ds-split">
+    <ul class="ds-list">${s.items
+      .map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${esc(text)}</p></li>`)
+      .join('')}</ul>
+    <div class="ds-stage ds-stage-${scene}">${windowHtml}</div>
+  </div>
+  <a class="ds-more" href="${linkHref}">${esc(s.link)} <span aria-hidden="true">→</span></a>
+</section>`;
 }
 
 function body(lang) {
   const s = S[lang];
+  // The page shows Assamese script in both languages: that is the point of the language.
+  const hello = HELLO.as;
+  const helloOut = run(hello, [S.as.askName]);
   return (h) => {
-    const links = {
-      '{learn}': h.link('learn/'),
-      '{pg}': h.playground,
-      '{ext}': h.link('extension/'),
-      '{errors}': h.link('reference/errors/'),
-      '{gh}': SITE.repo,
-      '{li}': 'https://www.linkedin.com/in/debashishbordoloi',
-      '{join}': h.link('join/'),
+    const href = {
+      pg: h.playground,
+      install: h.link('learn/installation/'),
+      ext: h.link('extension/'),
+      npm: SITE.npm,
+      learn: h.link('learn/'),
     };
-    const fill = (text) =>
-      text
-        .replace(/\{[a-z]+\}/g, (key) => esc(links[key] ?? key))
-        .replace(
-          /<a href="(https?:[^"]+)">/g,
-          '<a href="$1" target="_blank" rel="noopener noreferrer">',
-        );
+    const ext = (key) => (key === 'npm' ? ' target="_blank" rel="noopener noreferrer"' : '');
+    const runLink = `${h.playground}${shareHash(hello)}`;
+    const firstLine = (helloOut.split('\n').find((l) => l.includes('!')) ?? '').replace(
+      /^.*\? /,
+      '',
+    );
+    const askUrl = (base) => `${base}${encodeURIComponent(s.askPrompt)}`;
+
+    const s1Window = windowBox(
+      s.s1.window,
+      `<pre class="ds-code"><code>${highlight(hello)}</code></pre><div class="ds-out"><span>${esc(s.s1.out)}</span><pre>${esc(`আপোনাৰ নাম কি? ${S.as.askName}\n${helloOut.replace(/^.*\? /, '')}`.trim())}</pre></div>`,
+    );
+    const s2Window = windowBox(
+      s.s2.window,
+      `<pre class="ds-code"><code>${highlight(TYPO)}</code></pre><div class="ds-out ds-out-error"><pre>${esc(errorOf(TYPO, lang))}</pre></div><div class="ds-verify"><span>${lang === 'as' ? 'শুধৰণি' : 'FIX'}</span><code>${esc('কোৱা(নাম)')}</code><b>✓ ${lang === 'as' ? 'চলিল' : 'RUNS'}</b></div>`,
+    );
+    const s3Window = windowBox(
+      s.s3.window,
+      `<div class="ds-diff"><p class="ds-diff-head">asomiya</p><pre class="ds-code"><code>${highlight(PRICE)}</code></pre><p class="ds-diff-head">python</p><pre class="ds-code ds-py"><code>${esc(pythonOf(PRICE))}</code></pre><div class="ds-out"><span>${esc(s.s1.out)}</span><pre>${esc(run(PRICE).trim())}</pre></div></div>`,
+    );
+
     return `
-<section class="hero">
-  ${letterField()}
-  <div class="hero-bottom">
-    <div class="hero-text">
-      <h1 class="hero-title">${s.heroTitle}</h1>
-      <p class="hero-sub">${s.heroSub}</p>
-    </div>
-    <div class="hero-side">
-      <p class="hero-note">${esc(s.heroNote)}</p>
-      <div class="hero-row">
-        <p class="install">
-          <code>npm install -g asomiya</code>
-          <button class="code-btn" type="button" data-copy="npm install -g asomiya" data-copied="${h.t.copied}" aria-label="${h.t.copy}">${icon('copy')}</button>
-        </p>
-        <a class="btn btn-primary" href="${h.link('learn/')}">${esc(s.start)}<span aria-hidden="true">›</span></a>
+<section class="ds-hero">
+  <h1 class="ds-h1">${s.title}</h1>
+  <p class="ds-sub">${s.sub}</p>
+  <p class="ds-actions">
+    <a class="btn btn-secondary" href="${h.link('learn/')}">${esc(s.docs)}</a>
+    <a class="btn btn-primary" href="${h.playground}">${esc(s.tryIt)}</a>
+  </p>
+  ${copyCmd(h, 'npm install -g asomiya', 'ds-cmd-dark')}
+</section>
+
+<section class="ds-showcase" aria-label="${esc(s.run)}">
+  <div class="ds-scene ds-scene-day">
+    <div class="ds-chat">
+      <div class="ds-answer">
+        <p lang="as">${esc(firstLine)}</p>
+        <p class="ds-answer-meta"><span>✓ ${esc(s.ranIn)}</span><span>${esc(s.noErrors)}</span></p>
+      </div>
+      <div class="ds-input">
+        <code>${highlight(hello.split('\n')[1])}</code>
+        <div class="ds-input-row">
+          <span class="ds-plus" aria-hidden="true">+</span>
+          <span class="ds-chip">${esc(s.chipAs)}</span>
+          <span class="ds-chip">${esc(s.chipRoman)}</span>
+          <a class="ds-send" href="${runLink}" aria-label="${esc(s.run)}">${icon('play')}</a>
+        </div>
       </div>
     </div>
   </div>
-  <a class="scroll-hint" href="#intro">${esc(s.more)}</a>
+  <div class="ds-cards">${s.cards
+    .map(
+      ([title, text, link, key]) =>
+        `<div class="ds-card"><h3>${esc(title)}</h3><p>${esc(text)}</p><a href="${href[key]}">${esc(link)}<span aria-hidden="true">→</span></a></div>`,
+    )
+    .join('')}</div>
 </section>
 
-<article class="home" id="intro">
-  <p class="home-lead">${esc(s.intro)}</p>
+<section class="ds-stats">${s.stats
+      .map(([n, label]) => `<div><strong>${esc(n)}</strong><span>${esc(label)}</span></div>`)
+      .join('')}</section>
 
-  ${h.example(HELLO_AS, HELLO_ROMAN, { stdin: lang === 'as' ? 'অনন্যা' : 'Ananya' })}
+<section class="ds-formats">
+  <p>${esc(s.writeIn)}</p>
+  <ul>${s.scripts.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+</section>
 
-  <p class="home-actions">
-    <a class="btn btn-primary" href="${h.playground}">${esc(s.tryIt)}</a>
-    <a class="btn btn-secondary" href="${h.link('learn/')}">${esc(s.learn)}</a>
-    <a class="btn btn-secondary" href="${h.link('learn/installation/')}">${esc(s.install)}</a>
-  </p>
+${featureSection('write', s.s1, s1Window, h.link('reference/keywords/'), 'day')}
+${featureSection('errors', s.s2, s2Window, h.link('reference/errors/'), 'dusk')}
+${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'day')}
 
-  <h2 id="today">${esc(s.todayTitle)}</h2>
-  <ul class="home-list">${s.today.map((t) => `<li>${fill(t)}</li>`).join('')}</ul>
+<section class="ds-feature" id="how">
+  <p class="ds-tag">${esc(s.s4.tag)}</p>
+  <h2 class="ds-h2">${esc(s.s4.title)}</h2>
+  <ol class="ds-steps">${s.s4.steps
+    .map(
+      ([title, text, cmd], i) =>
+        `<li><span class="ds-step-n">0${i + 1}</span><h3>${esc(title)}</h3><p>${esc(text)}</p>${copyCmd(h, cmd)}</li>`,
+    )
+    .join('')}</ol>
+</section>
 
-  <figure class="home-figure">
-    <img src="${h.asset('assets/screens/vscode-hover-dark.png')}" width="2880" height="1800" alt="${esc(s.shot)}" loading="lazy">
-    <figcaption>${esc(s.shot)}</figcaption>
-  </figure>
+<section class="ds-hood">
+  <div class="ds-hood-text">
+    <p class="ds-tag">${esc(s.hood.tag)}</p>
+    <h2 class="ds-h2">${esc(s.hood.title)}</h2>
+    <p>${esc(s.hood.text)}</p>
+    <a class="ds-more" href="${SITE.repo}/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">${esc(s.hood.link)} <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="ds-stage ds-stage-dusk ds-pipeline">${s.hood.stages
+    .map(
+      ([name, kind, text]) =>
+        `<div class="ds-stage-card"><p><b>${esc(name)}</b><span>${esc(kind)}</span></p><p>${esc(text)}</p></div>`,
+    )
+    .join('')}</div>
+</section>
 
-  <h2 id="why">${esc(s.whyTitle)}</h2>
-  <p>${s.why}</p>
+<section class="ds-feature" id="where">
+  <p class="ds-tag">${esc(s.where.tag)}</p>
+  <h2 class="ds-h2">${esc(s.where.title)}</h2>
+  <div class="ds-grid">${s.where.items
+    .map(
+      ([title, detail, key]) =>
+        `<a class="ds-tile" href="${href[key]}"${ext(key)}><strong>${esc(title)}</strong><code>${esc(detail)}</code></a>`,
+    )
+    .join('')}</div>
+</section>
 
-  <h2 id="help">${esc(s.helpTitle)}</h2>
-  <p>${fill(s.help)}</p>
+<section class="ds-values">${s.values
+      .map(
+        ([title, text, a, b]) =>
+          `<div><h3>${esc(title)}</h3><p>${esc(text)}</p><p class="ds-badges"><span>${esc(a)}</span><span>${esc(b)}</span></p></div>`,
+      )
+      .join('')}</section>
 
-  <h2 id="team">${esc(s.teamTitle)}</h2>
-  <ul class="home-team">${TEAM.map(
+<section class="ds-feature" id="team">
+  <p class="ds-tag">${lang === 'as' ? 'দল' : 'TEAM'}</p>
+  <h2 class="ds-h2">${esc(s.teamTitle)}</h2>
+  <div class="ds-grid ds-grid-4">${TEAM.map(
     (m) =>
-      `<li><strong>${esc(m.name[lang])}</strong>, ${esc(m.role[lang].toLowerCase())}${Object.entries(
+      `<div class="ds-tile ds-person"><strong>${esc(m.name[lang])}</strong><span>${esc(m.role[lang])}</span><p>${Object.entries(
         m.links,
       )
         .filter(([, url]) => url)
         .map(
           ([kind, url]) =>
-            ` · <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${kind === 'linkedin' ? 'LinkedIn' : 'GitHub'}</a>`,
+            `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${kind === 'linkedin' ? 'LinkedIn' : 'GitHub'}</a>`,
         )
-        .join('')}</li>`,
-  ).join('')}</ul>
-  <p class="home-small"><a href="${EXTENSION.marketplace || h.link('extension/')}"${EXTENSION.marketplace ? ' target="_blank" rel="noopener noreferrer"' : ''}>VS Code</a> · <a href="${SITE.npm}" target="_blank" rel="noopener noreferrer">npm</a> · <a href="${SITE.repo}" target="_blank" rel="noopener noreferrer">GitHub</a> · v${esc(SITE.version)}</p>
-</article>`;
+        .join(' · ')}</p></div>`,
+  ).join('')}</div>
+</section>
+
+<section class="ds-ask">
+  <h2 class="ds-h2">${esc(s.askTitle)}</h2>
+  <p>${esc(s.askText)}</p>
+  <p class="ds-ask-row">
+    <a class="btn btn-secondary" href="${askUrl('https://chatgpt.com/?q=')}" target="_blank" rel="noopener noreferrer">Ask ChatGPT</a>
+    <a class="btn btn-secondary" href="${askUrl('https://www.google.com/search?udm=50&q=')}" target="_blank" rel="noopener noreferrer">Ask Gemini</a>
+    <a class="btn btn-secondary" href="${askUrl('https://claude.ai/new?q=')}" target="_blank" rel="noopener noreferrer">Ask Claude</a>
+    <a class="btn btn-secondary" href="${askUrl('https://www.perplexity.ai/search?q=')}" target="_blank" rel="noopener noreferrer">Ask Perplexity</a>
+  </p>
+  <p class="ds-actions"><a class="btn btn-primary" href="${h.playground}">${esc(s.tryIt)}</a></p>
+  <p class="ds-small"><a href="${EXTENSION.marketplace || h.link('extension/')}"${EXTENSION.marketplace ? ' target="_blank" rel="noopener noreferrer"' : ''}>VS Code</a> · <a href="${SITE.npm}" target="_blank" rel="noopener noreferrer">npm</a> · <a href="${SITE.repo}" target="_blank" rel="noopener noreferrer">GitHub</a> · v${esc(SITE.version)}</p>
+</section>`;
   };
 }
 

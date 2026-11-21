@@ -24,10 +24,12 @@ const CSP = [
   "form-action 'none'",
 ].join('; ');
 
-// Noto Sans Bengali for Assamese everywhere; TASA Orbiter, Geist Mono and Anek Bangla for the
-// landing page's original look.
+// Geist for text, Red Hat Display for headings, Geist Mono for code, Noto Sans Bengali for Assamese.
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Anek+Bangla:wght@400;500;600;700&display=swap';
+  'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Red+Hat+Display:ital,wght@0,500;0,700;1,500;1,700&family=Geist+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap';
+
+/** Preview builds (asomiya.codes/beta/) must not be indexed by search engines. */
+const PREVIEW = process.env.SITE_PREVIEW === '1';
 
 const ROOT = new URL('../', import.meta.url);
 const fingerprints = new Map();
@@ -85,6 +87,8 @@ function header(page, lang) {
     </a>
     <nav class="topnav-links" aria-label="${esc(t.mainNav)}">${navLinks(page, lang)}</nav>
     <div class="topnav-actions">
+      <a class="btn btn-secondary btn-nav" href="${rel(page.url, lang === 'as' ? 'as/learn/' : 'learn/')}">${esc(t.quickstart)}</a>
+      <a class="btn btn-primary btn-nav" href="${rel(page.url, lang === 'as' ? 'as/learn/installation/' : 'learn/installation/')}">${esc(t.install)}</a>
       <a class="lang-switch" href="${other}" hreflang="${lang === 'en' ? 'as' : 'en'}" lang="${lang === 'en' ? 'as' : 'en'}" title="${esc(t.switchLangTitle)}">${icon('globe')}<span>${esc(t.switchLang)}</span></a>
       <button class="icon-btn" type="button" data-theme-toggle aria-label="${esc(t.toggleTheme)}" title="${esc(t.toggleTheme)}">${icon('sun', 'icon-sun')}${icon('moon', 'icon-moon')}</button>
       <a class="icon-btn" href="${SITE.repo}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">${icon('github')}</a>
@@ -241,7 +245,7 @@ export function renderPage({
     <meta http-equiv="Content-Security-Policy" content="${CSP}" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>${esc(title)}</title>
-    <meta name="description" content="${esc(description)}" />
+    <meta name="description" content="${esc(description)}" />${PREVIEW ? '\n    <meta name="robots" content="noindex, nofollow" />' : ''}
     <link rel="canonical" href="${canonical}" />
     ${alternates}
     <meta property="og:type" content="website" />
@@ -250,7 +254,7 @@ export function renderPage({
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:url" content="${canonical}" />
     <meta name="twitter:card" content="summary" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#fafaf9" />
     <link rel="icon" href="${rel(page.url, 'favicon.svg')}" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -1,0 +1,19 @@
+name: Beta preview
+
+# The beta branch is published at asomiya.codes/beta/. Only the main branch may deploy to GitHub
+# Pages, so a push to beta asks the Pages workflow on main to rebuild (it builds both branches).
+
+on:
+  push:
+    branches: [beta]
+
+permissions:
+  actions: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ github.token }}

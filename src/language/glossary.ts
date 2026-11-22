@@ -17,7 +17,8 @@ export type KeywordId =
   | 'false'
   | 'null'
   | 'and'
-  | 'or';
+  | 'or'
+  | 'not';
 
 export type GlossaryStatus = 'stable' | 'provisional';
 
@@ -164,6 +165,15 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     roman: ['ba', 'baa'],
     concept: 'logical OR',
     meaning: '"or"',
+    status: 'stable',
+  },
+  {
+    id: 'not',
+    word: 'নহয়',
+    aliases: [],
+    roman: ['nohoy', 'nohoi', 'nahoy'],
+    concept: 'logical NOT',
+    meaning: '"is not / not"',
     status: 'stable',
   },
 ];

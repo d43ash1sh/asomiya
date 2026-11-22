@@ -59,6 +59,7 @@ The spellings live in one place, [`src/language/glossary.ts`](../src/language/gl
 | `খালী`       | `khali`, `khaali`                                                     | null     |
 | `আৰু`         | `aru`, `aaru`                                                         | and      |
 | `বা`         | `ba`, `baa`                                                           | or       |
+| `নহয়`        | `nohoy`, `nohoi`, `nahoy`                                             | not      |
 
 Because these are keywords, they can't be used as variable names (`dhora jodi = 1` is an error).
 

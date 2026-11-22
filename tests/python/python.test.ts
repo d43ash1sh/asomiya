@@ -29,6 +29,11 @@ describe('translation to Python', () => {
     );
   });
 
+  it('translates logical not with nohoy and নহয়', () => {
+    expect(toPython(parse('কোৱা(নহয় সঁচা)'))).toContain('print(text(not True))');
+    expect(toPython(parse('kowa(nohoy xosa)'))).toContain('print(text(not True))');
+  });
+
   it('only includes the helpers a program needs', () => {
     expect(toPython(parse('কোৱা("নমস্কাৰ")'))).not.toContain('def ');
     const out = toPython(parse('কোৱা(-7 % 3)'));

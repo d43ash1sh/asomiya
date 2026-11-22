@@ -48,7 +48,7 @@ equality       = comparison , { ( "==" | "!=" ) , comparison } ;
 comparison     = additive , { ( "<" | ">" | "<=" | ">=" ) , additive } ;
 additive       = multiplicative , { ( "+" | "-" ) , multiplicative } ;
 multiplicative = unary , { ( "*" | "/" | "%" ) , unary } ;
-unary          = ( "!" | "-" ) , unary
+unary          = ( "!" | "নহয়" | "-" ) , unary
                | postfix ;
 postfix        = primary , { "(" , [ exprList ] , ")" | "[" , expression , "]" } ;
 primary        = NUMBER | STRING

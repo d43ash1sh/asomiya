@@ -72,7 +72,7 @@ Operands are evaluated left to right. There are **no implicit conversions** exce
 | `<` `>` `<=` `>=` | two সংখ্যা or two পাঠ       | numeric order, or UTF-16 code-unit order for text (identical to code-point order for Assamese)   |
 | `&&` / `আৰু`       | two সঁচা-মিছা               | short-circuit AND                                                                                |
 | `\|\|` / `বা`     | two সঁচা-মিছা               | short-circuit OR                                                                                 |
-| `!`               | সঁচা-মিছা                   | NOT                                                                                              |
+| `!` / `নহয়`       | সঁচা-মিছা                   | NOT                                                                                              |
 | unary `-`         | সংখ্যা                      | negation                                                                                         |
 | `x[i]`            | তালিকা or পাঠ, integer `i` | zero-based element. For a পাঠ, the `i`-th **grapheme cluster**.                                  |
 | `x[i] = v`        | তালিকা                     | replaces an element. A পাঠ can't be changed.                                                     |

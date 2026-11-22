@@ -83,7 +83,7 @@
         },
         {
           "name": "keyword.operator.logical.asomiya",
-          "match": "(?<![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])(?:aaru|aru|baa|আৰু|ba|বা)(?![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])"
+          "match": "(?<![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])(?:nahoy|nohoi|nohoy|aaru|নহয়|aru|baa|আৰু|নহয়|ba|বা)(?![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])"
         },
         {
           "name": "support.function.builtin.asomiya",

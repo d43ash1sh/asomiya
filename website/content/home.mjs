@@ -1,5 +1,5 @@
-// Home page (layout: "home"): a product landing page. Hero, a program running over a pixel-art tea
-// garden, numbered feature sections with live-looking windows, the four steps, the pipeline, where it
+// Home page (layout: "home"): a product landing page. Hero, a program running over a pixel-art
+// Brahmaputra valley, numbered feature sections with live-looking windows, the four steps, the pipeline, where it
 // runs, and the team. Every code sample and output here comes from the real interpreter at build time.
 import { formatDiagnostic, parse, runSource, toPython } from '../../dist/index.js';
 import { EXTENSION, SITE, TEAM } from '../site.config.mjs';
@@ -24,6 +24,10 @@ const TYPO = `ধৰা ঠাই = "অসম"
 const PRICE = `ধৰা দাম = 120
 ধৰা সংখ্যা = 3
 কোৱা("মুঠ:", দাম * সংখ্যা)`;
+
+/** One-line programs the hero demo types out, one after another. Their answers come from the real
+ * interpreter at build time. The first is also what the page shows without JavaScript. */
+const DEMOS = ['কোৱা("নমস্কাৰ, অসম!")', 'কোৱা("মুঠ:", 120 * 3)', 'kowa("Namaskar, " + "Asom!")'];
 
 /** Runs a program with the real interpreter; the build stops if a sample that should work fails. */
 function run(source, stdin = []) {
@@ -339,7 +343,7 @@ const copyCmd = (h, cmd, cls = '') =>
   `<div class="ds-cmd ${cls}"><code><span class="ds-prompt" aria-hidden="true">$</span> ${esc(cmd)}</code><button class="ds-copy" type="button" data-copy="${esc(cmd)}" data-copied="${esc(h.t.copied)}" aria-label="${esc(h.t.copy)}">${esc(h.t.copy.toLowerCase())}</button></div>`;
 
 function featureSection(id, s, windowHtml, linkHref, scene) {
-  return `<section class="ds-feature" id="${id}">
+  return `<section class="ds-feature" id="${id}" data-reveal>
   <p class="ds-tag">${esc(s.tag)}</p>
   <h2 class="ds-h2">${esc(s.title)}</h2>
   <div class="ds-split">
@@ -366,12 +370,9 @@ function body(lang) {
       learn: h.link('learn/'),
     };
     const ext = (key) => (key === 'npm' ? ' target="_blank" rel="noopener noreferrer"' : '');
-    const runLink = `${h.playground}${shareHash(hello)}`;
-    const firstLine = (helloOut.split('\n').find((l) => l.includes('!')) ?? '').replace(
-      /^.*\? /,
-      '',
-    );
     const askUrl = (base) => `${base}${encodeURIComponent(s.askPrompt)}`;
+
+    const demos = DEMOS.map((code) => ({ code, out: run(code).trim() }));
 
     const s1Window = windowBox(
       s.s1.window,
@@ -397,22 +398,28 @@ function body(lang) {
   ${copyCmd(h, 'npm install -g asomiya', 'ds-cmd-dark')}
 </section>
 
-<section class="ds-showcase" aria-label="${esc(s.run)}">
-  <div class="ds-scene ds-scene-day">
-    <div class="ds-chat">
-      <div class="ds-answer">
-        <p lang="as">${esc(firstLine)}</p>
+<section class="ds-showcase" aria-label="${esc(s.run)}" data-reveal>
+  <div class="ds-scene ds-scene-valley">
+    <div class="ds-chat" data-demo>
+      <div class="ds-answer" data-demo-answer aria-live="polite">
+        <p lang="as" data-demo-out>${esc(demos[0].out)}</p>
         <p class="ds-answer-meta"><span>✓ ${esc(s.ranIn)}</span><span>${esc(s.noErrors)}</span></p>
       </div>
       <div class="ds-input">
-        <code>${highlight(hello.split('\n')[1])}</code>
+        <code data-demo-code>${highlight(demos[0].code)}</code>
         <div class="ds-input-row">
           <span class="ds-plus" aria-hidden="true">+</span>
           <span class="ds-chip">${esc(s.chipAs)}</span>
           <span class="ds-chip">${esc(s.chipRoman)}</span>
-          <a class="ds-send" href="${runLink}" aria-label="${esc(s.run)}">${icon('play')}</a>
+          <a class="ds-send" href="${h.playground}${shareHash(demos[0].code)}" aria-label="${esc(s.run)}" data-demo-send>${icon('play')}</a>
         </div>
       </div>
+      ${demos
+        .map(
+          (d) =>
+            `<template data-demo-item data-href="${h.playground}${shareHash(d.code)}"><code>${highlight(d.code)}</code><p>${esc(d.out)}</p></template>`,
+        )
+        .join('')}
     </div>
   </div>
   <div class="ds-cards">${s.cards
@@ -423,20 +430,23 @@ function body(lang) {
     .join('')}</div>
 </section>
 
-<section class="ds-stats">${s.stats
-      .map(([n, label]) => `<div><strong>${esc(n)}</strong><span>${esc(label)}</span></div>`)
+<section class="ds-stats" data-reveal>${s.stats
+      .map(
+        ([n, label]) =>
+          `<div><strong data-count="${esc(n)}">${esc(n)}</strong><span>${esc(label)}</span></div>`,
+      )
       .join('')}</section>
 
-<section class="ds-formats">
+<section class="ds-formats" data-reveal>
   <p>${esc(s.writeIn)}</p>
   <ul>${s.scripts.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
 </section>
 
-${featureSection('write', s.s1, s1Window, h.link('reference/keywords/'), 'day')}
+${featureSection('write', s.s1, s1Window, h.link('reference/keywords/'), 'tea')}
 ${featureSection('errors', s.s2, s2Window, h.link('reference/errors/'), 'dusk')}
-${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'day')}
+${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'valley')}
 
-<section class="ds-feature" id="how">
+<section class="ds-feature" id="how" data-reveal>
   <p class="ds-tag">${esc(s.s4.tag)}</p>
   <h2 class="ds-h2">${esc(s.s4.title)}</h2>
   <ol class="ds-steps">${s.s4.steps
@@ -447,7 +457,7 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'day')}
     .join('')}</ol>
 </section>
 
-<section class="ds-hood">
+<section class="ds-hood" data-reveal>
   <div class="ds-hood-text">
     <p class="ds-tag">${esc(s.hood.tag)}</p>
     <h2 class="ds-h2">${esc(s.hood.title)}</h2>
@@ -462,7 +472,7 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'day')}
     .join('')}</div>
 </section>
 
-<section class="ds-feature" id="where">
+<section class="ds-feature" id="where" data-reveal>
   <p class="ds-tag">${esc(s.where.tag)}</p>
   <h2 class="ds-h2">${esc(s.where.title)}</h2>
   <div class="ds-grid">${s.where.items
@@ -473,14 +483,14 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'day')}
     .join('')}</div>
 </section>
 
-<section class="ds-values">${s.values
+<section class="ds-values" data-reveal>${s.values
       .map(
         ([title, text, a, b]) =>
           `<div><h3>${esc(title)}</h3><p>${esc(text)}</p><p class="ds-badges"><span>${esc(a)}</span><span>${esc(b)}</span></p></div>`,
       )
       .join('')}</section>
 
-<section class="ds-feature" id="team">
+<section class="ds-feature" id="team" data-reveal>
   <p class="ds-tag">${lang === 'as' ? 'দল' : 'TEAM'}</p>
   <h2 class="ds-h2">${esc(s.teamTitle)}</h2>
   <div class="ds-grid ds-grid-4">${TEAM.map(
@@ -497,7 +507,7 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'day')}
   ).join('')}</div>
 </section>
 
-<section class="ds-ask">
+<section class="ds-ask" data-reveal>
   <h2 class="ds-h2">${esc(s.askTitle)}</h2>
   <p>${esc(s.askText)}</p>
   <p class="ds-ask-row">

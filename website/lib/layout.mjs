@@ -163,6 +163,7 @@ function footer(page, lang, sections) {
     <p>${t.copyright(new Date().getFullYear())}</p>
     <p>${t.madeWith}</p>
   </div>
+  <div class="foot-mark" aria-hidden="true" data-reveal><span>asomiya</span></div>
 </footer>`;
 }
 

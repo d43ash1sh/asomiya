@@ -1,5 +1,6 @@
 // Behaviour shared by every page: theme switch, mobile menu, copy buttons, "on this page" links.
 import { save, SCRIPT_KEY, THEME_KEY } from './storage';
+import './motion';
 
 /** The site is white unless the visitor chose the dark theme. */
 function isDark(): boolean {

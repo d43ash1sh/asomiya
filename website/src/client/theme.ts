@@ -6,3 +6,12 @@ if (theme === 'light' || theme === 'dark') document.documentElement.dataset['the
 
 const script = load(SCRIPT_KEY);
 if (script === 'as' || script === 'roman') document.documentElement.dataset['script'] = script;
+
+// Sections fade in as they scroll into view (site.ts). Hidden only when that can work, and never for
+// visitors who asked for less motion.
+if (
+  'IntersectionObserver' in window &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+) {
+  document.documentElement.classList.add('js-motion');
+}

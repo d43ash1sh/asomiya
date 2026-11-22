@@ -139,7 +139,7 @@ All notable changes to this project are documented here. The format follows
 ## [0.1.0] — 2026-11-17
 
 First published release. It includes the initial implementation and the fixes from the repository
-audit (see `docs/FINAL_AUDIT_REPORT.md`).
+audit.
 
 ### Language
 

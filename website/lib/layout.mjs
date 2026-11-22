@@ -28,9 +28,6 @@ const CSP = [
 const FONTS =
   'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Red+Hat+Display:ital,wght@0,500;0,700;1,500;1,700&family=Geist+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap';
 
-/** Preview builds (asomiya.codes/beta/) must not be indexed by search engines. */
-const PREVIEW = process.env.SITE_PREVIEW === '1';
-
 const ROOT = new URL('../', import.meta.url);
 const fingerprints = new Map();
 
@@ -245,7 +242,7 @@ export function renderPage({
     <meta http-equiv="Content-Security-Policy" content="${CSP}" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>${esc(title)}</title>
-    <meta name="description" content="${esc(description)}" />${PREVIEW ? '\n    <meta name="robots" content="noindex, nofollow" />' : ''}
+    <meta name="description" content="${esc(description)}" />
     <link rel="canonical" href="${canonical}" />
     ${alternates}
     <meta property="og:type" content="website" />

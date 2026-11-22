@@ -5,7 +5,7 @@ import { tokenize } from '../../src/lexer/lexer';
 import { MAX_LIST_LENGTH, MAX_TEXT_LENGTH } from '../../src/runtime/limits';
 import { fail, failCode, run } from '../helpers';
 
-/** Regression tests for the bugs found in the repository audit (docs/FINAL_AUDIT_REPORT.md). */
+/** Regression tests for the bugs found in the repository audit. */
 
 function lexCode(source: string) {
   try {

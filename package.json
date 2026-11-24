@@ -1,6 +1,6 @@
 {
   "name": "asomiya",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "অসমীয়া — a programming language in Assamese. Write code in Assamese script or in English letters (dhora, kowa, jodi). Interpreter, REPL and browser playground.",
   "keywords": [
     "assamese",

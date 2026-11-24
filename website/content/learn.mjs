@@ -427,15 +427,15 @@ ${h.table(
   [
     ['<code>আৰু</code>', '<code>aru</code>', '<code>&amp;&amp;</code>', 'both are true'],
     ['<code>বা</code>', '<code>ba</code>', '<code>||</code>', 'at least one is true'],
-    ['', '', '<code>!</code>', 'not'],
+    ['<code>নহয়</code>', '<code>nohoy</code>', '<code>!</code>', 'not'],
   ],
 )}
-${h.example('ধৰা বয়স = ২০\nকোৱা(বয়স >= ১৮ আৰু বয়স < ৬০)\nকোৱা(!(বয়স > ১০))', 'dhora boyox = 20\nkowa(boyox >= 18 aru boyox < 60)\nkowa(!(boyox > 10))')}
+${h.example('ধৰা বয়স = ২০\nকোৱা(বয়স >= ১৮ আৰু বয়স < ৬০)\nকোৱা(নহয় (বয়স > ১০))', 'dhora boyox = 20\nkowa(boyox >= 18 aru boyox < 60)\nkowa(nohoy (boyox > 10))')}
 <p><code>আৰু</code> and <code>বা</code> stop early: if the left side already decides the answer, the right side isn’t evaluated.</p>
 ${h.h2('precedence', 'Precedence')}
 <p>From strongest to weakest:</p>
 <ol>
-  <li><code>!</code> and unary <code>-</code></li>
+  <li><code>!</code> / <code>নহয়</code> and unary <code>-</code></li>
   <li><code>* / %</code></li>
   <li><code>+ -</code></li>
   <li><code>&lt; &lt;= &gt; &gt;=</code></li>
@@ -468,15 +468,15 @@ ${h.table(
   [
     ['<code>আৰু</code>', '<code>aru</code>', '<code>&amp;&amp;</code>', 'দুয়োটা সঁচা'],
     ['<code>বা</code>', '<code>ba</code>', '<code>||</code>', 'অন্ততঃ এটা সঁচা'],
-    ['', '', '<code>!</code>', 'নহয়'],
+    ['<code>নহয়</code>', '<code>nohoy</code>', '<code>!</code>', 'উলটা (সঁচা ↔ মিছা)'],
   ],
 )}
-${h.example('ধৰা বয়স = ২০\nকোৱা(বয়স >= ১৮ আৰু বয়স < ৬০)\nকোৱা(!(বয়স > ১০))', 'dhora boyox = 20\nkowa(boyox >= 18 aru boyox < 60)\nkowa(!(boyox > 10))')}
+${h.example('ধৰা বয়স = ২০\nকোৱা(বয়স >= ১৮ আৰু বয়স < ৬০)\nকোৱা(নহয় (বয়স > ১০))', 'dhora boyox = 20\nkowa(boyox >= 18 aru boyox < 60)\nkowa(nohoy (boyox > 10))')}
 <p>বাওঁফালৰ অংশই উত্তৰ ঠিক কৰি দিলে <code>আৰু</code> আৰু <code>বা</code>-এ সোঁফালৰ অংশ চলায়েই নাই।</p>
 ${h.h2('precedence', 'অগ্ৰাধিকাৰ')}
 <p>আটাইতকৈ শক্তিশালীৰ পৰা দুৰ্বললৈ:</p>
 <ol>
-  <li><code>!</code> আৰু একক <code>-</code></li>
+  <li><code>!</code> / <code>নহয়</code> আৰু একক <code>-</code></li>
   <li><code>* / %</code></li>
   <li><code>+ -</code></li>
   <li><code>&lt; &lt;= &gt; &gt;=</code></li>

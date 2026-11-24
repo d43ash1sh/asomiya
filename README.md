@@ -141,7 +141,7 @@ Source files use the `.asom` extension.
 | continue        | `আগবাঢ়া`                             | `aagbara`                                   |
 | function        | `ফাংচন যোগ(ক, খ) { ঘূৰাইদিয়া ক + খ }` | `fangchon jog(k, kh) { ghuraidiya k + kh }` |
 | true/false/null | `সঁচা` `মিছা` `খালী`                  | `xosa` `misa` `khali`                       |
-| and / or / not  | `আৰু` / `বা` / `!`                    | `aru` / `ba` / `!`                          |
+| and / or / not  | `আৰু` / `বা` / `নহয়` (or `!`)         | `aru` / `ba` / `nohoy`                      |
 | list            | `ধৰা ল = [১, ২, ৩]`, `ল[০]`          | `dhora l = [1, 2, 3]`, `l[0]`               |
 | comment         | `// line` and `/* block */`          | same                                        |
 
@@ -344,6 +344,7 @@ instead of a public issue. See [SECURITY.md](https://github.com/d43ash1sh/asomiy
 | **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                                                                            | Contributor |
 | **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah))                                                           | Contributor |
 | **Bigratom Saikia** ([@saikiabigratom-design](https://github.com/saikiabigratom-design))                                                | Contributor |
+| **Nitish** ([@Nitishsarma45678](https://github.com/Nitishsarma45678))                                                                   | Contributor |
 
 See all [contributors on GitHub](https://github.com/d43ash1sh/asomiya/graphs/contributors).
 

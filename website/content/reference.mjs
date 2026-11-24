@@ -73,7 +73,7 @@ const overview = {
   body: {
     en: (h) => `
 <div class="card-grid">
-  <a class="card" href="${h.link('reference/keywords/')}"><strong>Keywords</strong><span>All 14 keywords, in Assamese and English letters.</span></a>
+  <a class="card" href="${h.link('reference/keywords/')}"><strong>Keywords</strong><span>All 15 keywords, in Assamese and English letters.</span></a>
   <a class="card" href="${h.link('reference/builtins/')}"><strong>Built-in functions</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, সংযোজন, সোধা.</span></a>
   <a class="card" href="${h.link('reference/errors/')}"><strong>Error codes</strong><span>Every error, with its message and an example.</span></a>
   <a class="card" href="${h.link('reference/cli/')}"><strong>CLI and REPL</strong><span>Commands, options and exit codes.</span></a>
@@ -82,7 +82,7 @@ const overview = {
 </div>`,
     as: (h) => `
 <div class="card-grid">
-  <a class="card" href="${h.link('reference/keywords/')}"><strong>মূল শব্দ</strong><span>১৪টা মূল শব্দ, অসমীয়া আৰু ইংৰাজী আখৰত।</span></a>
+  <a class="card" href="${h.link('reference/keywords/')}"><strong>মূল শব্দ</strong><span>১৫টা মূল শব্দ, অসমীয়া আৰু ইংৰাজী আখৰত।</span></a>
   <a class="card" href="${h.link('reference/builtins/')}"><strong>অন্তৰ্নিৰ্মিত ফাংচন</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, সংযোজন, সোধা।</span></a>
   <a class="card" href="${h.link('reference/errors/')}"><strong>ভুলৰ ক’ড</strong><span>প্ৰতিটো ভুল, বাৰ্তা আৰু উদাহৰণসহ।</span></a>
   <a class="card" href="${h.link('reference/cli/')}"><strong>CLI আৰু REPL</strong><span>কমাণ্ড, বিকল্প আৰু এক্সিট ক’ড।</span></a>

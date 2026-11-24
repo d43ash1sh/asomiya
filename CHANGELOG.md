@@ -6,6 +6,20 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-11-24
+
+### Added
+
+- **`নহয়` / `nohoy` (logical NOT)**, the same as `!`. Also spelled `nohoi` and `nahoy`. With
+  `আৰু` and `বা`, all three logic operators now have Assamese words. Contributed by Nitish
+  ([@Nitishsarma45678](https://github.com/Nitishsarma45678)) in
+  [#3](https://github.com/d43ash1sh/asomiya/pull/3).
+
+### Changed
+
+- `নহয়`, `nohoy`, `nohoi` and `nahoy` are now keywords, so a program that used one of them as a
+  variable name must rename it.
+
 ## [0.3.3] — 2026-11-21
 
 ### Changed

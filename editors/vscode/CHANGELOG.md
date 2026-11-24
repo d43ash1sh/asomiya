@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+- Colours, hover help and completions for the new logical NOT word `নহয়` / `nohoy` (same as `!`).
+
 ## 0.2.2
 
 - A program that prints a lot (say, a loop of 200 000 lines) no longer floods the Asomiya panel:

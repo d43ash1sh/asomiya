@@ -17,6 +17,7 @@ const TOKEN_FOR_KEYWORD: Readonly<Record<KeywordId, SimpleTokenType>> = {
   null: 'Null',
   and: 'AndAnd',
   or: 'OrOr',
+  not: 'Bang',
 };
 
 function buildKeywordTable(): ReadonlyMap<string, SimpleTokenType> {

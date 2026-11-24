@@ -73,6 +73,13 @@ describe('booleans and logic', () => {
     ['মিছা || মিছা', 'মিছা'],
     ['সঁচা && !মিছা', 'সঁচা'],
     ['!(১ > ২)', 'সঁচা'],
+    ['নহয় সঁচা', 'মিছা'],
+    ['নহয় মিছা', 'সঁচা'],
+    ['নহয় নহয় সঁচা', 'সঁচা'],
+    ['নহয় (১ > ২)', 'সঁচা'],
+    ['সঁচা আৰু নহয় মিছা', 'সঁচা'],
+    ['nohoy xosa', 'misa'],
+    ['nohoy misa', 'xosa'],
     ['খালী == খালী', 'সঁচা'],
     ['খালী == মিছা', 'মিছা'],
     ['৩ >= ৩', 'সঁচা'],
@@ -94,6 +101,8 @@ describe('booleans and logic', () => {
     expect(d.params).toEqual({ op: 'আৰু', type: 'number' });
     expect(failCode('কোৱা(মিছা || "ক")')).toBe('R017');
     expect(failCode('কোৱা(!১)')).toBe('R013');
+    expect(failCode('কোৱা(নহয় ১)')).toBe('R013');
+    expect(failCode('kowa(nohoy 1)')).toBe('R013');
   });
 });
 

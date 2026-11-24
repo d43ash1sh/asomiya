@@ -27,6 +27,7 @@ This glossary is the source of truth for the language vocabulary. The same data 
 | `খালী`       | null (absence of a value)   | "empty".                                                                                                 | stable      |
 | `আৰু`         | logical AND (same as `&&`)  | "and".                                                                                                   | stable      |
 | `বা`         | logical OR (same as `\|\|`) | "or".                                                                                                    | stable      |
+| `নহয়`        | logical NOT (same as `!`)   | "not / is not".                                                                                          | stable      |
 
 Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi` …), listed in
 [ROMAN.md](ROMAN.md).
@@ -45,10 +46,9 @@ Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi`
 
 These are **not** keywords yet. They are listed here so they are not given conflicting meanings:
 
-| Candidate | Possible meaning                              |
-| --------- | --------------------------------------------- |
-| `নহয়`     | logical NOT (currently only `!` is supported) |
-| `প্ৰতিটো`  | for-each loop                                 |
+| Candidate | Possible meaning |
+| --------- | ---------------- |
+| `প্ৰতিটো`  | for-each loop    |
 
 ## Built-in functions — অন্তৰ্নিৰ্মিত ফাংচন
 

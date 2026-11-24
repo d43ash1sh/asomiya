@@ -66,7 +66,7 @@ export function buildGrammar(): object {
             match: words(pick('if', 'else', 'while', 'return', 'break', 'continue')),
           },
           { name: 'constant.language.asomiya', match: words(pick('true', 'false', 'null')) },
-          { name: 'keyword.operator.logical.asomiya', match: words(pick('and', 'or')) },
+          { name: 'keyword.operator.logical.asomiya', match: words(pick('and', 'or', 'not')) },
           {
             name: 'support.function.builtin.asomiya',
             match: words([...pick('print'), ...WORDS.filter((w) => w.kind === 'builtin')]),

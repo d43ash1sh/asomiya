@@ -212,7 +212,7 @@ export function generate(seed: number): Generated {
           case 1:
             return `(${sub('any')} ${r.pick(['==', '!='])} ${sub('any')})`;
           case 2:
-            return `(!${sub('bool')})`;
+            return `(${r.pick(['!', kw('not')])}${sub('bool')})`;
           case 3:
             return `(${sub('bool')} ${r.pick(['&&', '||', kw('and'), kw('or')])} ${sub('bool')})`;
           case 4:

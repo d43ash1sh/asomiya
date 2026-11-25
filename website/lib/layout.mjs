@@ -251,7 +251,13 @@ export function renderPage({
     <meta property="og:title" content="${esc(title)}" />
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:url" content="${canonical}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${SITE.url}/${page.ogImage}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${esc(title)}" />
+    <meta property="og:locale" content="${lang === 'as' ? 'as_IN' : 'en_US'}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="${SITE.url}/${page.ogImage}" />
     <meta name="theme-color" content="#fafaf9" />
     <link rel="icon" href="${rel(page.url, 'favicon.svg')}" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

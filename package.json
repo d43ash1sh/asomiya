@@ -91,7 +91,8 @@
     "website:serve": "npm run website:build && python3 -m http.server 8080 --directory website/dist",
     "vscode:grammar": "tsup editors/vscode/scripts/write-grammar.ts --format cjs --shims --out-dir editors/vscode/dist-tools --silent && node editors/vscode/dist-tools/write-grammar.cjs",
     "vscode:build": "tsup --config editors/vscode/tsup.config.ts",
-    "vscode:package": "npm run vscode:build && cd editors/vscode && npx --yes @vscode/vsce@4.1.0 package --no-dependencies --out asomiya-vscode.vsix"
+    "vscode:package": "npm run vscode:build && cd editors/vscode && npx --yes @vscode/vsce@4.1.0 package --no-dependencies --out asomiya-vscode.vsix",
+    "website:og": "tsup --silent && node website/scripts/og-images.mjs"
   },
   "dependencies": {
     "commander": "14.0.3"

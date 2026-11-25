@@ -56,6 +56,27 @@ describe('website security', () => {
   });
 });
 
+describe('link previews', () => {
+  it('every page has its own 1200×630 preview image, and the image exists', () => {
+    const seen = new Set<string>();
+    for (const { file, html } of pages) {
+      if (file.endsWith('404.html')) continue;
+      const image = /property="og:image" content="https:\/\/asomiya\.codes\/(og\/[^"]+\.png)"/.exec(
+        html,
+      )?.[1];
+      expect(image, file).toBeDefined();
+      if (image === undefined) continue;
+      const png = readFileSync(join(OUT, image));
+      // PNG header: width and height are big-endian at bytes 16 and 20.
+      expect([png.readUInt32BE(16), png.readUInt32BE(20)], image).toEqual([1200, 630]);
+      expect(html, file).toContain('name="twitter:card" content="summary_large_image"');
+      seen.add(image);
+    }
+    // One card per page, not the home card reused (run `npm run website:og` after adding a page).
+    expect(seen.size).toBe(pages.filter((p) => !p.file.endsWith('404.html')).length);
+  });
+});
+
 describe('website links', () => {
   it('every internal link and asset exists', () => {
     const missing: string[] = [];

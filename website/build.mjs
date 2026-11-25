@@ -1,41 +1,15 @@
 // Static site generator for asomiya.codes. Run with `npm run website:build` (after the library and
 // the browser bundles are built). Writes HTML for every page in English (/) and Assamese (/as/).
-import { copyFileSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { COMMUNITY } from './content/community.mjs';
-import { EXTENSION_PAGE } from './content/extension.mjs';
-import { HOME } from './content/home.mjs';
-import { JOIN } from './content/join.mjs';
-import { LEARN } from './content/learn.mjs';
-import { NOT_FOUND } from './content/not-found.mjs';
-import { PLAYGROUND } from './content/playground.mjs';
-import { REFERENCE } from './content/reference.mjs';
 import { createHelpers } from './lib/helpers.mjs';
 import { renderPage } from './lib/layout.mjs';
+import { LANGS, SECTIONS, SINGLE, ogImageFile } from './lib/pages.mjs';
 import { SITE } from './site.config.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, 'dist');
-const LANGS = ['en', 'as'];
-
-/** Gives a page definition its per-language URLs. */
-function prepare(def) {
-  return {
-    ...def,
-    basePath: def.path,
-    localUrl: (lang) => (lang === 'as' ? `as/${def.path}` : def.path),
-  };
-}
-
-/** Sections with a sidebar: groups of pages, read in order (for previous/next links). */
-const SECTIONS = [LEARN, REFERENCE].map((section) => ({
-  ...section,
-  groups: section.groups.map((g) => ({ ...g, pages: g.pages.map(prepare) })),
-}));
-for (const s of SECTIONS) s.pages = s.groups.flatMap((g) => g.pages);
-
-const SINGLE = [HOME, PLAYGROUND, COMMUNITY, JOIN, EXTENSION_PAGE, NOT_FOUND].map(prepare);
 
 function write(path, html) {
   const file = join(OUT, path.endsWith('.html') ? path : join(path, 'index.html'));
@@ -43,8 +17,17 @@ function write(path, html) {
   writeFileSync(file, html);
 }
 
+/** The page's preview image, or the home page's if it has none yet (run `npm run website:og`). */
+function ogImage(url, lang) {
+  const file = ogImageFile(url);
+  if (existsSync(join(ROOT, file))) return file;
+  console.warn(`No preview image ${file}; using the home page's. Run: npm run website:og`);
+  return ogImageFile(lang === 'as' ? 'as/' : '');
+}
+
 function build(def, lang, section) {
   const page = { ...def, url: def.localUrl(lang) };
+  page.ogImage = ogImage(page.url, lang);
   const h = createHelpers(page, lang);
   const body = def.body[lang](h);
   const pages = section?.pages ?? [];
@@ -99,6 +82,12 @@ const notFoundHtml = build({ ...notFound, localUrl: () => '' }, 'en', undefined)
   (_, attr, url) => `${attr}="/${url === './' ? '' : url}"`,
 );
 write('404.html', notFoundHtml);
+
+// Preview images for links shared on WhatsApp, Facebook, X … (made by scripts/og-images.mjs).
+mkdirSync(join(OUT, 'og'), { recursive: true });
+for (const file of readdirSync(join(ROOT, 'og'))) {
+  if (file.endsWith('.png')) copyFileSync(join(ROOT, 'og', file), join(OUT, 'og', file));
+}
 
 // Static files.
 mkdirSync(join(OUT, 'assets'), { recursive: true });

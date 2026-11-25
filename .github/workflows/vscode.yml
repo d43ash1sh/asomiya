@@ -58,6 +58,7 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: vsix
+      # --latest=false: the language release (vX.Y.Z), not the extension, stays "Latest".
       - name: Create (or update) the GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -69,7 +70,7 @@ jobs:
             gh release upload "$GITHUB_REF_NAME" "$file" --clobber --repo "$GITHUB_REPOSITORY"
           else
             gh release create "$GITHUB_REF_NAME" "$file" --repo "$GITHUB_REPOSITORY" \
-              --title "Asomiya for VS Code $VERSION" \
+              --title "Asomiya for VS Code $VERSION" --latest=false \
               --notes "Install: in VS Code open Extensions, click ⋯ and choose Install from VSIX…, then pick this file. Changes: https://github.com/$GITHUB_REPOSITORY/blob/main/editors/vscode/CHANGELOG.md"
           fi
 

@@ -20,6 +20,11 @@ const KEYWORD_MEANING = {
   if: { en: 'Run a block if a condition is true', as: 'চৰ্ত সঁচা হ’লে ব্লক চলোৱা' },
   else: { en: 'Otherwise', as: 'অন্যথা' },
   while: { en: 'Repeat while a condition is true', as: 'চৰ্ত সঁচা হৈ থকালৈকে বাৰে বাৰে চলোৱা' },
+  forEach: {
+    en: 'Run a block once for each item of a list (or letter of a text)',
+    as: 'তালিকাৰ প্ৰতিটো উপাদানৰ (বা পাঠৰ প্ৰতিটো আখৰৰ) বাবে এবাৰকৈ ব্লক চলোৱা',
+  },
+  in: { en: 'Comes after the list in a প্ৰতিটো loop', as: 'প্ৰতিটো লুপত তালিকাৰ পিছত বহে' },
   break: { en: 'Leave the loop', as: 'লুপৰ পৰা ওলাই অহা' },
   continue: { en: 'Skip to the next round of the loop', as: 'লুপৰ পৰৱৰ্তী পাকলৈ যোৱা' },
   function: { en: 'Define a function', as: 'ফাংচন বনোৱা' },
@@ -73,7 +78,7 @@ const overview = {
   body: {
     en: (h) => `
 <div class="card-grid">
-  <a class="card" href="${h.link('reference/keywords/')}"><strong>Keywords</strong><span>All 15 keywords, in Assamese and English letters.</span></a>
+  <a class="card" href="${h.link('reference/keywords/')}"><strong>Keywords</strong><span>All 17 keywords, in Assamese and English letters.</span></a>
   <a class="card" href="${h.link('reference/builtins/')}"><strong>Built-in functions</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, সংযোজন, সোধা.</span></a>
   <a class="card" href="${h.link('reference/errors/')}"><strong>Error codes</strong><span>Every error, with its message and an example.</span></a>
   <a class="card" href="${h.link('reference/cli/')}"><strong>CLI and REPL</strong><span>Commands, options and exit codes.</span></a>
@@ -82,7 +87,7 @@ const overview = {
 </div>`,
     as: (h) => `
 <div class="card-grid">
-  <a class="card" href="${h.link('reference/keywords/')}"><strong>মূল শব্দ</strong><span>১৫টা মূল শব্দ, অসমীয়া আৰু ইংৰাজী আখৰত।</span></a>
+  <a class="card" href="${h.link('reference/keywords/')}"><strong>মূল শব্দ</strong><span>১৭টা মূল শব্দ, অসমীয়া আৰু ইংৰাজী আখৰত।</span></a>
   <a class="card" href="${h.link('reference/builtins/')}"><strong>অন্তৰ্নিৰ্মিত ফাংচন</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, সংযোজন, সোধা।</span></a>
   <a class="card" href="${h.link('reference/errors/')}"><strong>ভুলৰ ক’ড</strong><span>প্ৰতিটো ভুল, বাৰ্তা আৰু উদাহৰণসহ।</span></a>
   <a class="card" href="${h.link('reference/cli/')}"><strong>CLI আৰু REPL</strong><span>কমাণ্ড, বিকল্প আৰু এক্সিট ক’ড।</span></a>

@@ -116,7 +116,8 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
       `Invalid assignment target — only a variable or a list element may appear left of "="`,
   },
   P004: {
-    as: () => `"${keywordWord('break')}" কেৱল "${keywordWord('while')}" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
+    as: () =>
+      `"${keywordWord('break')}" কেৱল লুপৰ ("${keywordWord('while')}" বা "${keywordWord('forEach')}") ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
     en: () => `"${keywordWord('break')}" (break) can only be used inside a loop`,
   },
   P005: {
@@ -151,13 +152,20 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
 
   P011: {
     as: () =>
-      `"${keywordWord('continue')}" কেৱল "${keywordWord('while')}" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
+      `"${keywordWord('continue')}" কেৱল লুপৰ ("${keywordWord('while')}" বা "${keywordWord('forEach')}") ভিতৰত ব্যৱহাৰ কৰিব পাৰি`,
     en: () => `"${keywordWord('continue')}" (continue) can only be used inside a loop`,
   },
 
   P012: {
     as: (p) => `Python লৈ অনুবাদ কৰিব নোৱাৰি: ${PYTHON_LIMITS[p.what].as(n(p.limit))}`,
     en: (p) => `Cannot translate to Python: ${PYTHON_LIMITS[p.what].en(String(p.limit))}`,
+  },
+
+  P013: {
+    as: (p) =>
+      `"${keywordWord('in')}"ৰ আগত তালিকাখন লিখক: ${keywordWord('forEach')} ${p.name} তালিকা ${keywordWord('in')} { … }`,
+    en: (p) =>
+      `Write the list before "${keywordWord('in')}": ${keywordWord('forEach')} ${p.name} <list> ${keywordWord('in')} { … }`,
   },
 
   R001: {
@@ -254,6 +262,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
       `"${p.name}" এটা অন্তৰ্নিৰ্মিত ফাংচন; ইয়াক সলনি কৰিব নোৱাৰি (নিজৰ বাবে "${keywordWord('let')} ${p.name} = …" লিখক)`,
     en: (p) =>
       `"${p.name}" is a built-in and cannot be reassigned (declare your own with "${keywordWord('let')}")`,
+  },
+  R021: {
+    as: (p) =>
+      `"${keywordWord('forEach')}" লুপে কেৱল তালিকা বা পাঠৰ ওপৰেৰে যাব পাৰে, কিন্তু ইয়াৰ প্ৰকাৰ ${typeName(p.type, 'as')}`,
+    en: (p) =>
+      `"${keywordWord('forEach')}" can only loop over a list or text, but got ${typeName(p.type, 'en')}`,
   },
 };
 

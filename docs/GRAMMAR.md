@@ -16,6 +16,7 @@ statement      = varDecl
                | funcDecl
                | ifStmt
                | whileStmt
+               | forEachStmt
                | breakStmt
                | continueStmt
                | returnStmt
@@ -28,6 +29,8 @@ funcDecl       = "ফাংচন" , IDENT , "(" , [ identList ] , ")" , block ;
 ifStmt         = "যদি" , expression , block , [ { NEWLINE } , elseKw , ( ifStmt | block ) ] ;
 elseKw         = "নহ'লে" | "নহলে" ;
 whileStmt      = "যেতিয়ালৈকে" , expression , block ;
+forEachStmt    = "প্ৰতিটো" , ( forEachHead | "(" , forEachHead , ")" ) , block ;
+forEachHead    = IDENT , expression , "মাজত" ;
 breakStmt      = "ৰখা" ;                    (* only inside a loop *)
 continueStmt   = "আগবাঢ়া" ;                 (* only inside a loop *)
 returnStmt     = "ঘূৰাইদিয়া" , [ expression ] ; (* only inside a function *)

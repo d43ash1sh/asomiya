@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0
+
+- Colours, hover help and completions for the new for-each loop `প্ৰতিটো … মাজত` /
+  `protito … majot` (`প্ৰতিটো ফল ফলবোৰ মাজত { … }`), and Run uses Asomiya 0.5.0.
+
 ## 0.3.0
 
 - Colours, hover help and completions for the new logical NOT word `নহয়` / `nohoy` (same as `!`).

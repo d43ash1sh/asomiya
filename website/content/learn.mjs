@@ -178,6 +178,11 @@ ${h.table(
       '<code>jetialoike</code>, <code>zetialoike</code>, <code>jetiyaloike</code> …',
       'while',
     ],
+    [
+      '<code>প্ৰতিটো</code> … <code>মাজত</code>',
+      '<code>protito</code> … <code>majot</code>',
+      'for each … in',
+    ],
     ['<code>ৰখা</code>', '<code>rokha</code>, <code>rakha</code>', 'break'],
     ['<code>আগবাঢ়া</code>', '<code>aagbara</code>, <code>agbara</code> …', 'continue'],
     [
@@ -232,6 +237,11 @@ ${h.table(
       '<code>যেতিয়ালৈকে</code>',
       '<code>jetialoike</code>, <code>zetialoike</code>, <code>jetiyaloike</code> …',
       'লুপ',
+    ],
+    [
+      '<code>প্ৰতিটো</code> … <code>মাজত</code>',
+      '<code>protito</code> … <code>majot</code>',
+      'প্ৰতিটো উপাদানৰ বাবে লুপ',
     ],
     ['<code>ৰখা</code>', '<code>rokha</code>, <code>rakha</code>', 'লুপ ৰখোৱা'],
     ['<code>আগবাঢ়া</code>', '<code>aagbara</code>, <code>agbara</code> …', 'পৰৱৰ্তী পাকলৈ যোৱা'],
@@ -582,8 +592,8 @@ const loops = {
   path: 'learn/loops/',
   title: { en: 'Loops', as: 'লুপ' },
   description: {
-    en: 'Repeat code with যেতিয়ালৈকে (jetialoike), stop with ৰখা (rokha) and skip with আগবাঢ়া (aagbara).',
-    as: 'যেতিয়ালৈকে দি ক’ড বাৰে বাৰে চলাওক, ৰখা দি ৰখাওক আৰু আগবাঢ়া দি এৰি যাওক।',
+    en: 'Repeat code with যেতিয়ালৈকে (jetialoike), go through a list with প্ৰতিটো … মাজত (protito … majot), stop with ৰখা (rokha) and skip with আগবাঢ়া (aagbara).',
+    as: 'যেতিয়ালৈকে দি ক’ড বাৰে বাৰে চলাওক, প্ৰতিটো … মাজত দি তালিকাৰ প্ৰতিটো উপাদান চাওক, ৰখা দি ৰখাওক আৰু আগবাঢ়া দি এৰি যাওক।',
   },
   intro: {
     en: '<code>যেতিয়ালৈকে</code> (<code>jetialoike</code>) means “for as long as”. It runs its block again and again while the condition stays <code>সঁচা</code>.',
@@ -600,6 +610,14 @@ ${h.example('ধৰা ন = ১\nযেতিয়ালৈকে (সঁচ�
 ${h.h2('continue', 'Skip ahead: আগবাঢ়া')}
 <p><code>আগবাঢ়া</code> (<code>aagbara</code>, “go forward”) skips the rest of this round and starts the next one:</p>
 ${h.example('ধৰা ক = ০\nযেতিয়ালৈকে (ক < ১০) {\n    ক = ক + ১\n    যদি (ক % ২ == ০) {\n        আগবাঢ়া\n    }\n    কোৱা(ক)\n}', 'dhora k = 0\njetialoike (k < 10) {\n    k = k + 1\n    jodi (k % 2 == 0) {\n        aagbara\n    }\n    kowa(k)\n}')}
+${h.h2('foreach', 'Go through a list: প্ৰতিটো … মাজত')}
+<p><code>প্ৰতিটো</code> (<code>protito</code>, “each”) runs its block once for every item of a list. The list comes before <code>মাজত</code> (<code>majot</code>, “among”), just as you would say <em>ফলবোৰৰ মাজত</em>:</p>
+${h.example('ধৰা ফলবোৰ = ["আম", "কল", "লিচু"]\nপ্ৰতিটো ফল ফলবোৰ মাজত {\n    কোৱা("মোৰ " + ফল + " ভাল লাগে")\n}', 'dhora folbor = ["aam", "kol", "lichu"]\nprotito fol folbor majot {\n    kowa("I like " + fol)\n}')}
+<p>No counter to set up or forget to increase. Adding up a list:</p>
+${h.example('ধৰা নম্বৰ = [৭৫, ৮২, ৯১, ৬৮]\nধৰা মুঠ = ০\nপ্ৰতিটো ন নম্বৰ মাজত {\n    মুঠ = মুঠ + ন\n}\nকোৱা("গড়:", মুঠ / দৈৰ্ঘ্য(নম্বৰ))', 'dhora nombor = [75, 82, 91, 68]\ndhora mut = 0\nprotito n nombor majot {\n    mut = mut + n\n}\nkowa("average:", mut / doirghyo(nombor))')}
+<p>With text, it goes letter by letter, keeping each Assamese letter whole (<code>মী</code>, <code>য়া</code>):</p>
+${h.example('প্ৰতিটো আখৰ "অসমীয়া" মাজত {\n    কোৱা(আখৰ)\n}', 'protito akhor "Asom" majot {\n    kowa(akhor)\n}')}
+${h.note('note', `<p>The loop goes over the items the list had when it started, so adding to the list inside the loop is safe. <code>ৰখা</code> and <code>আগবাঢ়া</code> work here too.</p>`)}
 ${h.h2('nested', 'Loops inside loops')}
 ${h.example('ধৰা শাৰী = ১\nযেতিয়ালৈকে (শাৰী <= ৪) {\n    ধৰা ৰেখা = ""\n    ধৰা গণনা = ০\n    যেতিয়ালৈকে (গণনা < শাৰী) {\n        ৰেখা = ৰেখা + "★"\n        গণনা = গণনা + ১\n    }\n    কোৱা(ৰেখা)\n    শাৰী = শাৰী + ১\n}', 'dhora xari = 1\njetialoike (xari <= 4) {\n    dhora rekha = ""\n    dhora gonona = 0\n    jetialoike (gonona < xari) {\n        rekha = rekha + "★"\n        gonona = gonona + 1\n    }\n    kowa(rekha)\n    xari = xari + 1\n}')}
 <p><code>ৰখা</code> and <code>আগবাঢ়া</code> only affect the innermost loop. Using them outside a loop is an error.</p>`,
@@ -613,6 +631,14 @@ ${h.example('ধৰা ন = ১\nযেতিয়ালৈকে (সঁচ�
 ${h.h2('continue', 'এৰি যাওক: আগবাঢ়া')}
 <p><code>আগবাঢ়া</code>-ই এই পাকৰ বাকী অংশ এৰি পৰৱৰ্তী পাক আৰম্ভ কৰে:</p>
 ${h.example('ধৰা ক = ০\nযেতিয়ালৈকে (ক < ১০) {\n    ক = ক + ১\n    যদি (ক % ২ == ০) {\n        আগবাঢ়া\n    }\n    কোৱা(ক)\n}', 'dhora k = 0\njetialoike (k < 10) {\n    k = k + 1\n    jodi (k % 2 == 0) {\n        aagbara\n    }\n    kowa(k)\n}')}
+${h.h2('foreach', 'তালিকাৰ প্ৰতিটো উপাদান: প্ৰতিটো … মাজত')}
+<p><code>প্ৰতিটো</code>-এ তালিকাৰ প্ৰতিটো উপাদানৰ বাবে ব্লকটো এবাৰকৈ চলায়। তালিকাখন <code>মাজত</code>ৰ আগত বহে, ঠিক যেনেকৈ আমি কওঁ <em>ফলবোৰৰ মাজত</em>:</p>
+${h.example('ধৰা ফলবোৰ = ["আম", "কল", "লিচু"]\nপ্ৰতিটো ফল ফলবোৰ মাজত {\n    কোৱা("মোৰ " + ফল + " ভাল লাগে")\n}', 'dhora folbor = ["aam", "kol", "lichu"]\nprotito fol folbor majot {\n    kowa("I like " + fol)\n}')}
+<p>গণনাৰ চলক ৰাখিব নালাগে। তালিকাৰ যোগফল:</p>
+${h.example('ধৰা নম্বৰ = [৭৫, ৮২, ৯১, ৬৮]\nধৰা মুঠ = ০\nপ্ৰতিটো ন নম্বৰ মাজত {\n    মুঠ = মুঠ + ন\n}\nকোৱা("গড়:", মুঠ / দৈৰ্ঘ্য(নম্বৰ))', 'dhora nombor = [75, 82, 91, 68]\ndhora mut = 0\nprotito n nombor majot {\n    mut = mut + n\n}\nkowa("average:", mut / doirghyo(nombor))')}
+<p>পাঠৰ ক্ষেত্ৰত ই আখৰে আখৰে যায়, অসমীয়া আখৰ গোটেইটোকৈ ৰাখি (<code>মী</code>, <code>য়া</code>):</p>
+${h.example('প্ৰতিটো আখৰ "অসমীয়া" মাজত {\n    কোৱা(আখৰ)\n}', 'protito akhor "Asom" majot {\n    kowa(akhor)\n}')}
+${h.note('note', `<p>লুপ আৰম্ভ হোৱাৰ সময়ত তালিকাত যিবোৰ উপাদান আছিল, লুপটোৱে সেইবোৰৰ ওপৰেৰেহে যায়; সেয়ে লুপৰ ভিতৰত তালিকাত যোগ কৰাটো নিৰাপদ। <code>ৰখা</code> আৰু <code>আগবাঢ়া</code>-ও ইয়াত চলে।</p>`)}
 ${h.h2('nested', 'লুপৰ ভিতৰত লুপ')}
 ${h.example('ধৰা শাৰী = ১\nযেতিয়ালৈকে (শাৰী <= ৪) {\n    ধৰা ৰেখা = ""\n    ধৰা গণনা = ০\n    যেতিয়ালৈকে (গণনা < শাৰী) {\n        ৰেখা = ৰেখা + "★"\n        গণনা = গণনা + ১\n    }\n    কোৱা(ৰেখা)\n    শাৰী = শাৰী + ১\n}', 'dhora xari = 1\njetialoike (xari <= 4) {\n    dhora rekha = ""\n    dhora gonona = 0\n    jetialoike (gonona < xari) {\n        rekha = rekha + "★"\n        gonona = gonona + 1\n    }\n    kowa(rekha)\n    xari = xari + 1\n}')}
 <p><code>ৰখা</code> আৰু <code>আগবাঢ়া</code>-এ কেৱল আটাইতকৈ ভিতৰৰ লুপটোতহে প্ৰভাৱ পেলায়। লুপৰ বাহিৰত ব্যৱহাৰ কৰাটো ভুল।</p>`,

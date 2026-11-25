@@ -21,6 +21,7 @@ export const samples = {
   P010: [{ limit: 256 }, '(((((… ৩০০ levels …)))))'],
   P011: [{}, 'আগবাঢ়া  (outside a loop)'],
   P012: [{ what: 'loops', limit: 20 }, 'asomiya python, with ২১ loops inside each other'],
+  P013: [{ name: 'ফল' }, 'প্ৰতিটো ফল মাজত ফলবোৰ { … }'],
   R001: [{ name: 'খ' }, 'কোৱা(খ)  (খ never declared)'],
   R002: [{ name: 'ক' }, 'ধৰা ক = ১; ধৰা ক = ২'],
   R003: [{ op: '-', left: 'string', right: 'number' }, '"ক" - ১'],
@@ -41,4 +42,5 @@ export const samples = {
   R018: [{}, 'very deep recursion with a raised --max-depth'],
   R019: [{ type: 'list', limit: 1000000 }, 'ধৰা ল = [১]; যেতিয়ালৈকে (সঁচা) { ল = ল + ল }'],
   R020: [{ name: 'দৈৰ্ঘ্য' }, 'দৈৰ্ঘ্য = ৫'],
+  R021: [{ type: 'number' }, 'প্ৰতিটো ক ১০ মাজত { … }'],
 };

@@ -126,6 +126,14 @@ export interface WhileStatement extends Node {
   readonly body: BlockStatement;
 }
 
+/** `প্ৰতিটো নাম তালিকা মাজত { … }`: runs the body once for each element (or letter, for text). */
+export interface ForEachStatement extends Node {
+  readonly kind: 'ForEachStatement';
+  readonly variable: Identifier;
+  readonly iterable: Expression;
+  readonly body: BlockStatement;
+}
+
 export interface BreakStatement extends Node {
   readonly kind: 'BreakStatement';
 }
@@ -159,6 +167,7 @@ export type Statement =
   | FunctionDeclaration
   | IfStatement
   | WhileStatement
+  | ForEachStatement
   | BreakStatement
   | ContinueStatement
   | ReturnStatement

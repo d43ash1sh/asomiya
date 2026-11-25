@@ -9,6 +9,8 @@ export type KeywordId =
   | 'if'
   | 'else'
   | 'while'
+  | 'forEach'
+  | 'in'
   | 'function'
   | 'return'
   | 'break'
@@ -84,6 +86,24 @@ export const KEYWORD_GLOSSARY: readonly KeywordEntry[] = [
     roman: ['jetialoike', 'zetialoike', 'jetiyaloike', 'zetiyaloike', 'jetialoke'],
     concept: 'while loop',
     meaning: '"for as long as"',
+    status: 'provisional',
+  },
+  {
+    id: 'forEach',
+    word: 'প্ৰতিটো',
+    aliases: [],
+    roman: ['protito', 'pratito', 'protitu'],
+    concept: 'for-each loop (প্ৰতিটো নাম তালিকা মাজত)',
+    meaning: '"each one / every"',
+    status: 'provisional',
+  },
+  {
+    id: 'in',
+    word: 'মাজত',
+    aliases: [],
+    roman: ['majot', 'majat', 'maajot', 'majhot'],
+    concept: 'ends the list part of a for-each loop',
+    meaning: '"among / in the midst of" (postposition, as in ফলবোৰৰ মাজত)',
     status: 'provisional',
   },
   {

@@ -106,12 +106,31 @@ so `যদি (০)` is rejected instead of being silently false. The parenthese
 Runs the body **as long as** the condition is `সঁচা`. The condition is re-checked before every iteration
 and must be a `সঁচা-মিছা`.
 
-### 5.3 `ৰখা`
+### 5.3 `প্ৰতিটো` … `মাজত`
+
+```
+প্ৰতিটো ফল ফলবোৰ মাজত { … }
+প্ৰতিটো (আখৰ "অসম" মাজত) { … }
+```
+
+Runs the body once for each element of a `তালিকা`, in order, or once for each **grapheme cluster**
+of a `পাঠ` (see 4.1), with the name bound to it. The header's parentheses are optional. The value
+after the name is evaluated once, before the first iteration; anything other than a তালিকা or পাঠ is
+an error (R021). Writing `মাজত` straight after the name, in English order, is error P013.
+
+- The loop goes over the elements the list had **when the loop started**. Changing the list in the
+  body (`সংযোজন`, `ল[i] = …`) does not change which elements the loop visits.
+- Each iteration gets a **new** variable, so a function made in the body keeps that iteration's value.
+  The body shares the variable's scope, like a function body and its parameters, so declaring the
+  same name again in the body is an error (R002). Assigning to it only changes that iteration's copy.
+- `ৰখা` and `আগবাঢ়া` work as in `যেতিয়ালৈকে`.
+
+### 5.4 `ৰখা`
 
 Leaves the innermost enclosing loop immediately. It is a syntax error outside a loop (P004), including
 inside a function that is itself inside a loop.
 
-### 5.4 `আগবাঢ়া`
+### 5.5 `আগবাঢ়া`
 
 Skips the rest of the current iteration of the innermost enclosing loop; the condition is checked
 again as usual. Same placement rules as `ৰখা` (P011 outside a loop).

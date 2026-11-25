@@ -382,6 +382,20 @@ def item(value, index):
     ['unicodedata'],
   ),
 
+  each: h(
+    `
+def each(value):
+    """What প্ৰতিটো loops over: a copy of a list, or the letters of a text."""
+    k = kind(value)
+    if k == "list":
+        return value[:]
+    if k == "string":
+        return [unicodedata.normalize("NFC", letter) for letter in graphemes(value)]
+    fail("R021", f"can only loop over a list or text, not {k}")`,
+    ['kind', 'graphemes', 'fail'],
+    ['unicodedata'],
+  ),
+
   put: h(
     `
 def put(value, index, new):

@@ -63,7 +63,9 @@ export function buildGrammar(): object {
           { name: 'storage.type.asomiya', match: words(pick('let', 'function')) },
           {
             name: 'keyword.control.asomiya',
-            match: words(pick('if', 'else', 'while', 'return', 'break', 'continue')),
+            match: words(
+              pick('if', 'else', 'while', 'forEach', 'in', 'return', 'break', 'continue'),
+            ),
           },
           { name: 'constant.language.asomiya', match: words(pick('true', 'false', 'null')) },
           { name: 'keyword.operator.logical.asomiya', match: words(pick('and', 'or', 'not')) },

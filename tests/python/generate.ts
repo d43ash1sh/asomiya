@@ -247,7 +247,7 @@ export function generate(seed: number): Generated {
   const statement = (depth: number, loop: boolean, func: boolean): string => {
     budget -= 2;
     const e = (w: Want): string => expr(w, 3);
-    const choice = depth <= 0 || budget <= 0 ? r.int(4) : r.int(15);
+    const choice = depth <= 0 || budget <= 0 ? r.int(4) : r.int(17);
     switch (choice) {
       case 0: {
         const kind = r.pick(['num', 'num', 'str', 'str', 'bool', 'list', 'any'] as const);
@@ -314,6 +314,25 @@ export function generate(seed: number): Generated {
       }
       case 13:
         return block(depth - 1, loop, func);
+      case 14: {
+        // প্ৰতিটো over a list (mostly), a text, or sometimes anything (R021).
+        const v = r.pick(['it', 'v', 'ক', 'x']);
+        const source = r.chance(0.6) ? e('list') : r.chance(0.6) ? e('str') : e('any');
+        const head = `${v} ${source} ${kw('in')}`;
+        return `${kw('forEach')} ${r.chance(0.3) ? `(${head})` : head} ${block(depth - 1, true, func, [v])}`;
+      }
+      case 15: {
+        // A closure made in a প্ৰতিটো loop keeps that iteration's variable.
+        const g = `w${guard++}`;
+        return [
+          `${kw('let')} fs${g} = []`,
+          `${kw('forEach')} v [1, "দুই", ${r.pick(NUMBERS)}] ${kw('in')} {`,
+          `${kw('function')} c() { ${r.chance(0.5) ? `v = v + 1; ` : ''}${kw('return')} v }`,
+          `${bi('append')}(fs${g}, c)`,
+          `}`,
+          `${kw('print')}(fs${g}[0](), fs${g}[${r.int(3)}](), fs${g}[2]())`,
+        ].join('\n');
+      }
       default:
         return `${kw('print')}(${name()})`;
     }

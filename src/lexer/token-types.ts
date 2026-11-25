@@ -6,6 +6,8 @@ export type SimpleTokenType =
   | 'If'
   | 'Else'
   | 'While'
+  | 'ForEach'
+  | 'In'
   | 'Function'
   | 'Return'
   | 'Break'

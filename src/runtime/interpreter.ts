@@ -232,6 +232,32 @@ export class Interpreter {
         }
         return NORMAL;
       }
+      case 'ForEachStatement': {
+        const iterable = this.evaluate(statement.iterable, env);
+        let items: readonly Value[];
+        if (iterable.kind === 'list') {
+          // A copy: changing the list inside the loop doesn't change what the loop goes over.
+          this.charge(iterable.elements.length, statement.iterable.span);
+          items = iterable.elements.slice();
+        } else if (iterable.kind === 'string') {
+          this.charge(iterable.value.length, statement.iterable.span);
+          items = graphemes(iterable.value).map((letter) => str(letter));
+        } else {
+          throw runtimeError('R021', { type: iterable.kind }, statement.iterable.span);
+        }
+        const name = statement.variable.name;
+        for (const item of items) {
+          this.tick(statement.variable.span);
+          // A new variable each time round, so a function made in the body keeps its own value.
+          // The body shares its scope, as a function body shares its parameters' scope.
+          const scope = new Environment(env);
+          scope.declare(name, item, statement.variable.span);
+          const completion = this.executeBlock(statement.body.body, scope);
+          if (completion.type === 'break') break;
+          if (completion.type === 'return') return completion;
+        }
+        return NORMAL;
+      }
       case 'BreakStatement':
         return BREAK;
       case 'ContinueStatement':

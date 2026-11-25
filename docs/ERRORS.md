@@ -78,7 +78,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### P004
 
-- **অসমীয়া:** "ৰখা" কেৱল "যেতিয়ালৈকে" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি
+- **অসমীয়া:** "ৰখা" কেৱল লুপৰ ("যেতিয়ালৈকে" বা "প্ৰতিটো") ভিতৰত ব্যৱহাৰ কৰিব পাৰি
 - **English:** "ৰখা" (break) can only be used inside a loop
 - **Example:** `ৰখা  (outside a loop)`
 
@@ -120,7 +120,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### P011
 
-- **অসমীয়া:** "আগবাঢ়া" কেৱল "যেতিয়ালৈকে" লুপৰ ভিতৰত ব্যৱহাৰ কৰিব পাৰি
+- **অসমীয়া:** "আগবাঢ়া" কেৱল লুপৰ ("যেতিয়ালৈকে" বা "প্ৰতিটো") ভিতৰত ব্যৱহাৰ কৰিব পাৰি
 - **English:** "আগবাঢ়া" (continue) can only be used inside a loop
 - **Example:** `আগবাঢ়া  (outside a loop)`
 
@@ -129,6 +129,12 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **অসমীয়া:** Python লৈ অনুবাদ কৰিব নোৱাৰি: Python ত এটাৰ ভিতৰত আনটোকৈ সৰ্বোচ্চ ২০টা লুপ থাকিব পাৰে
 - **English:** Cannot translate to Python: Python allows at most 20 loops inside each other
 - **Example:** `asomiya python, with ২১ loops inside each other`
+
+### P013
+
+- **অসমীয়া:** "মাজত"ৰ আগত তালিকাখন লিখক: প্ৰতিটো ফল তালিকা মাজত { … }
+- **English:** Write the list before "মাজত": প্ৰতিটো ফল <list> মাজত { … }
+- **Example:** `প্ৰতিটো ফল মাজত ফলবোৰ { … }`
 
 ## Runtime errors — চলোৱাৰ সময়ৰ ভুল (`R`)
 
@@ -251,3 +257,9 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **অসমীয়া:** "দৈৰ্ঘ্য" এটা অন্তৰ্নিৰ্মিত ফাংচন; ইয়াক সলনি কৰিব নোৱাৰি (নিজৰ বাবে "ধৰা দৈৰ্ঘ্য = …" লিখক)
 - **English:** "দৈৰ্ঘ্য" is a built-in and cannot be reassigned (declare your own with "ধৰা")
 - **Example:** `দৈৰ্ঘ্য = ৫`
+
+### R021
+
+- **অসমীয়া:** "প্ৰতিটো" লুপে কেৱল তালিকা বা পাঠৰ ওপৰেৰে যাব পাৰে, কিন্তু ইয়াৰ প্ৰকাৰ সংখ্যা
+- **English:** "প্ৰতিটো" can only loop over a list or text, but got number
+- **Example:** `প্ৰতিটো ক ১০ মাজত { … }`

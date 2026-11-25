@@ -4,10 +4,12 @@ import { tokenize } from '../lexer/lexer';
 import { spanFrom, type Token } from '../lexer/token';
 import { PUNCTUATION_TEXT, type PunctuationTokenType, type TokenType } from '../lexer/token-types';
 import { isLetter } from '../lexer/unicode';
+import { keywordWord } from '../language/keywords';
 import { suggestRoman } from '../language/roman';
 import type {
   BlockStatement,
   Expression,
+  ForEachStatement,
   FunctionDeclaration,
   Identifier,
   IfStatement,
@@ -169,6 +171,8 @@ export class Parser {
         return this.parseIf();
       case 'While':
         return this.parseWhile();
+      case 'ForEach':
+        return this.parseForEach();
       case 'Print':
         return this.parsePrint();
       case 'LeftBrace':
@@ -293,6 +297,42 @@ export class Parser {
     try {
       const body = this.parseBlock();
       return { kind: 'WhileStatement', condition, body, span: spanFrom(keyword.span, body.span) };
+    } finally {
+      this.loopDepth--;
+    }
+  }
+
+  /** `প্ৰতিটো নাম তালিকা মাজত { … }`, optionally with the header in parentheses. */
+  private parseForEach(): ForEachStatement {
+    const keyword = this.advance();
+    const parenthesized = this.match('LeftParen');
+    const variable = this.parseName('variable');
+    if (this.check('In')) {
+      // English order (`for x in xs`): the list goes before মাজত in Asomiya.
+      throw parserError('P013', { name: variable.name }, this.peek().span);
+    }
+    const iterable = this.parseExpression();
+    if (!this.check('In')) {
+      const token = this.peek();
+      throw parserError(
+        'P001',
+        { expected: keywordWord('in'), found: describe(token) },
+        token.span,
+        token.type === 'EOF',
+      );
+    }
+    this.advance();
+    if (parenthesized) this.expect('RightParen');
+    this.loopDepth++;
+    try {
+      const body = this.parseBlock();
+      return {
+        kind: 'ForEachStatement',
+        variable,
+        iterable,
+        body,
+        span: spanFrom(keyword.span, body.span),
+      };
     } finally {
       this.loopDepth--;
     }

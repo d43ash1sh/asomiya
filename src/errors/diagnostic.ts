@@ -36,6 +36,7 @@ export interface DiagnosticParams {
   P010: { readonly limit: number };
   P011: Record<string, never>;
   P012: { readonly what: PythonLimit; readonly limit: number };
+  P013: { readonly name: string };
   // ── runtime ──────────────────────────────────────────────
   R001: { readonly name: string; readonly suggestion?: string };
   R002: { readonly name: string };
@@ -67,6 +68,7 @@ export interface DiagnosticParams {
   R018: Record<string, never>;
   R019: { readonly type: 'string' | 'list'; readonly limit: number };
   R020: { readonly name: string };
+  R021: { readonly type: ValueKind };
 }
 
 export type DiagnosticCode = keyof DiagnosticParams;

@@ -19,6 +19,7 @@ import type {
   BlockStatement,
   CallExpression,
   Expression,
+  ForEachStatement,
   FunctionDeclaration,
   Identifier,
   IfStatement,
@@ -109,7 +110,8 @@ class PyFunc {
   }
 }
 
-type BindingKind = 'var' | 'func' | 'param' | 'builtin';
+/** `loop`: the variable of a প্ৰতিটো loop. */
+type BindingKind = 'var' | 'func' | 'param' | 'loop' | 'builtin';
 
 class Binding {
   pyName = '';
@@ -225,9 +227,9 @@ function pythonLimit(lines: readonly string[]): DiagnosticParams['P012'] | null 
     const indent = line.length - text.length;
     while ((open[open.length - 1]?.indent ?? -1) >= indent) open.pop();
     if (open.length > PY_MAX_BLOCKS) return { what: 'blocks', limit: PY_MAX_BLOCKS };
-    const compound = /^(while|def|if|elif|else)\b.*:$/.exec(text);
+    const compound = /^(while|for|def|if|elif|else)\b.*:$/.exec(text);
     if (compound) {
-      const loop = compound[1] === 'while';
+      const loop = compound[1] === 'while' || compound[1] === 'for';
       if (loop) {
         let loops = 1;
         for (let i = open.length - 1; i >= 0 && !open[i]?.def; i--) if (open[i]?.loop) loops++;
@@ -351,6 +353,7 @@ class Translator {
   private readonly declared = new Map<VariableDeclaration | FunctionDeclaration, Binding | null>();
   private readonly scopes = new Map<BlockStatement | Program | FunctionDeclaration, Scope>();
   private readonly funcs = new Map<FunctionDeclaration, PyFunc>();
+  private readonly loopVars = new Map<ForEachStatement, Binding>();
   private readonly bindings: Binding[] = [];
   /** Statement stack used while resolving: the scope and the index of the current statement. */
   private frames: { scope: Scope; index: number }[] = [];
@@ -482,6 +485,23 @@ class Translator {
         this.resolveExpression(s.condition, false);
         this.resolveBlock(s.body, true);
         return;
+      case 'ForEachStatement': {
+        this.resolveExpression(s.iterable, false);
+        // Like a function's parameters, the loop variable shares the body's scope.
+        const scope = new Scope(this.currentScope(), false, this.py, true);
+        this.scopes.set(s.body, scope);
+        const b = new Binding(s.variable.name, 'loop', this.py, -1, true, null);
+        // Its type is that of an element of the list (or a letter of the text).
+        const zero: Expression = { kind: 'NumberLiteral', value: 0, span: s.variable.span };
+        b.values.push({ kind: 'IndexExpression', object: s.iterable, index: zero, span: s.span });
+        scope.decls.set(b.name, b);
+        this.py.locals.push(b);
+        this.bindings.push(b);
+        this.loopVars.set(s, b);
+        this.declareAll(s.body.body, scope);
+        this.resolveStatements(s.body.body, scope);
+        return;
+      }
       case 'BlockStatement':
         this.resolveBlock(s, false);
         return;
@@ -812,7 +832,7 @@ class Translator {
   private emitStatements(statements: readonly Statement[], scope: Scope, indent: string): string[] {
     const lines: string[] = [];
     for (const b of scope.decls.values()) {
-      if (!b.preset || b.kind === 'param') continue;
+      if (!b.preset || b.kind === 'param' || b.kind === 'loop') continue;
       lines.push(
         `${indent}${b.pyName} = ${b.boxed ? `[${this.need('UNSET')}]` : this.need('UNSET')}`,
       );
@@ -880,6 +900,27 @@ class Translator {
           `${indent}while ${this.condition(s.condition)}:`,
           ...this.emitBody(s.body, indent + '    '),
         ];
+      case 'ForEachStatement': {
+        const b = this.loopVars.get(s);
+        if (!b) throw new Error('unresolved loop');
+        const t = this.typeOf(s.iterable);
+        const source = this.expr(s.iterable);
+        // A list literal is new, so nothing else can change it: no copy needed.
+        const items =
+          s.iterable.kind === 'ListLiteral'
+            ? source.code
+            : t !== 0n && only(t, this.lists)
+              ? `${wrap(source, P.atom)}[:]`
+              : `${this.need('each')}(${source.code})`;
+        // A boxed variable gets a new box each time round (see Binding.boxed).
+        const box = b.boxed ? [`${indent}    ${b.pyName} = [${b.pyName}]`] : [];
+        const body = this.emitBody(s.body, indent + '    ');
+        return [
+          `${indent}for ${b.pyName} in ${items}:`,
+          ...box,
+          ...(box.length > 0 && body.length === 1 && body[0]?.trim() === 'pass' ? [] : body),
+        ];
+      }
       case 'BreakStatement':
         return [`${indent}break`];
       case 'ContinueStatement':

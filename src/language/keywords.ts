@@ -8,6 +8,8 @@ const TOKEN_FOR_KEYWORD: Readonly<Record<KeywordId, SimpleTokenType>> = {
   if: 'If',
   else: 'Else',
   while: 'While',
+  forEach: 'ForEach',
+  in: 'In',
   function: 'Function',
   return: 'Return',
   break: 'Break',

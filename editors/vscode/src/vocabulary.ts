@@ -48,6 +48,16 @@ const KEYWORD_INFO: Readonly<Record<KeywordId, { en: string; as: string; python:
     as: 'চৰ্ত সঁচা হৈ থকালৈকে ব্লকটো বাৰে বাৰে চলায়।',
     python: 'while',
   },
+  forEach: {
+    en: 'Runs a block once for each item of a list (or letter of a text): প্ৰতিটো ফল ফলবোৰ মাজত { … }.',
+    as: 'তালিকাৰ প্ৰতিটো উপাদান (বা পাঠৰ প্ৰতিটো আখৰ)ৰ বাবে ব্লকটো এবাৰকৈ চলায়।',
+    python: 'for … in',
+  },
+  in: {
+    en: 'Ends the list part of a প্ৰতিটো loop: প্ৰতিটো ফল ফলবোৰ মাজত { … }.',
+    as: 'প্ৰতিটো লুপত তালিকাখনৰ পিছত বহে।',
+    python: 'in',
+  },
   function: { en: 'Defines a function.', as: 'এটা ফাংচন সংজ্ঞাবদ্ধ কৰে।', python: 'def' },
   return: {
     en: 'Returns a value from a function.',

@@ -50,6 +50,8 @@ The spellings live in one place, [`src/language/glossary.ts`](../src/language/gl
 | `যদি`        | `jodi`, `zodi`, `jadi`                                                | if       |
 | `নহ'লে`      | `nohole`, `noh'le`, `nohle`, `nhole`, `nahole`, `nahale`              | else     |
 | `যেতিয়ালৈকে` | `jetialoike`, `zetialoike`, `jetiyaloike`, `zetiyaloike`, `jetialoke` | while    |
+| `প্ৰতিটো`     | `protito`, `pratito`, `protitu`                                       | for each |
+| `মাজত`       | `majot`, `majat`, `maajot`, `majhot`                                  | in       |
 | `ফাংচন`      | `fangchon`, `phangchon`, `fanchon`                                    | function |
 | `ঘূৰাইদিয়া`   | `ghuraidiya`, `ghuraidia`                                             | return   |
 | `ৰখা`        | `rokha`, `rakha`                                                      | break    |

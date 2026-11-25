@@ -19,5 +19,5 @@ export const LANGUAGE: LanguageConfig = {
   nativeName: 'অসমীয়া',
   cliName: 'asomiya',
   fileExtension: '.asom',
-  version: '0.4.0',
+  version: '0.5.0',
 };

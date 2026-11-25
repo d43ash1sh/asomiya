@@ -137,6 +137,7 @@ Source files use the `.asom` extension.
 | print           | `কোৱা("মান:", ক)`                    | `kowa("man:", k)`                           |
 | if / else       | `যদি (ক > ১) { … } নহ'লে { … }`      | `jodi (k > 1) { … } nohole { … }`           |
 | while loop      | `যেতিয়ালৈকে (ক < ১০) { … }`          | `jetialoike (k < 10) { … }`                 |
+| for-each loop   | `প্ৰতিটো ফল ফলবোৰ মাজত { … }`         | `protito fol folbor majot { … }`            |
 | break           | `ৰখা`                                | `rokha`                                     |
 | continue        | `আগবাঢ়া`                             | `aagbara`                                   |
 | function        | `ফাংচন যোগ(ক, খ) { ঘূৰাইদিয়া ক + খ }` | `fangchon jog(k, kh) { ghuraidiya k + kh }` |
@@ -195,7 +196,7 @@ built into the playground):
 | `variables.asom`    | types, reassignment, scope, separators       |
 | `arithmetic.asom`   | precedence, decimals, conversions            |
 | `conditionals.asom` | else-if chains, logic words, nesting         |
-| `loops.asom`        | while, break, nested loops                   |
+| `loops.asom`        | while, for-each, break, nested loops         |
 | `functions.asom`    | functions, recursion, higher-order, closures |
 | `lists.asom`        | lists, Assamese-aware text indexing          |
 | `greet.asom`        | reading input with `সোধা`                    |

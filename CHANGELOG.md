@@ -6,6 +6,22 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-11-26
+
+### Added
+
+- **`প্ৰতিটো` … `মাজত` (for-each loop)**, Roman `protito … majot`:
+  `প্ৰতিটো ফল ফলবোৰ মাজত { কোৱা(ফল) }` runs the body once for each element of a list, or each
+  letter (grapheme cluster) of a text. The loop goes over a copy of the list, so changing the list in
+  the body is safe; each iteration gets a new variable; `ৰখা` and `আগবাঢ়া` work as in `যেতিয়ালৈকে`.
+  Translates to Python `for … in …`. New errors: R021 (looping over something that isn't a list or
+  text) and P013 (`মাজত` written before the list).
+
+### Changed
+
+- `প্ৰতিটো`, `মাজত` and their Roman spellings (`protito`, `pratito`, `protitu`, `majot`, `majat`,
+  `maajot`, `majhot`) are now keywords, so a program that used one as a name must rename it.
+
 ## [0.4.0] — 2026-11-24
 
 ### Added

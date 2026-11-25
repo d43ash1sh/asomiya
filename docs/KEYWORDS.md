@@ -18,6 +18,8 @@ This glossary is the source of truth for the language vocabulary. The same data 
 | `যদি`        | if                          | "if" — the ordinary conditional conjunction.                                                             | stable      |
 | `নহ'লে`      | else                        | "otherwise / if not" (নহয় + হ'লে). Also accepted: `নহলে`, and `নহ’লে` with a typographic apostrophe.     | stable      |
 | `যেতিয়ালৈকে` | while loop                  | "for as long as". With a positive clause (_মই যেতিয়ালৈকে জীয়াই থাকিম_) it means "as long as".            | provisional |
+| `প্ৰতিটো`     | for-each loop               | "each one / every". `প্ৰতিটো ফল ফলবোৰ মাজত { … }` reads "each fruit among the fruits".                    | provisional |
+| `মাজত`       | ends a for-each header      | "among / in the midst of", the postposition in _ফলবোৰৰ মাজত_. Written after the list.                    | provisional |
 | `ফাংচন`      | function declaration        | Loanword ("function"), widely understood in Assamese technical writing.                                  | provisional |
 | `ঘূৰাইদিয়া`   | return from a function      | "give back". Standard spelling is two words (ঘূৰাই দিয়া); written as one token here.                      | provisional |
 | `ৰখা`        | break out of a loop         | "stop / halt" (imperative of ৰখ).                                                                        | stable      |
@@ -37,6 +39,10 @@ Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi`
 - **`যেতিয়ালৈকে`** — With a negated clause, `…লৈকে` can mean "until" (_তুমি নহালৈকে_ = "until you
   come"), which is the opposite of what a loop does. In this language the condition is always read
   positively: the loop runs **as long as** it is `সঁচা`. Candidates that have been considered: `যিমানলৈকে`.
+- **`প্ৰতিটো` … `মাজত`** — Follows Assamese word order: the postposition `মাজত` comes after the list,
+  as in _ফলবোৰৰ মাজত_ ("among the fruits"). The genitive `ৰ` is left off so the list can be any
+  expression (`প্ৰতিটো ক [১, ২] মাজত`). Writing it in English order (`প্ৰতিটো ক মাজত ল`) is error P013,
+  which shows the right order.
 - **`ফাংচন`** — Chosen because programmers recognise it straight away. Native candidates: `ফলন` (the
   mathematics term) and `কাৰ্য` ("task / act"). Needs review.
 - **`ঘূৰাইদিয়া`** — A keyword has to be one token, so the two words are joined. A two-word form
@@ -46,9 +52,9 @@ Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi`
 
 These are **not** keywords yet. They are listed here so they are not given conflicting meanings:
 
-| Candidate | Possible meaning |
-| --------- | ---------------- |
-| `প্ৰতিটো`  | for-each loop    |
+| Candidate            | Possible meaning |
+| -------------------- | ---------------- |
+| (none at the moment) |                  |
 
 ## Built-in functions — অন্তৰ্নিৰ্মিত ফাংচন
 

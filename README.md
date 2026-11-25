@@ -11,7 +11,7 @@ Write real programs in অসমীয়া script, or in English letters the w
 [![node](https://img.shields.io/node/v/asomiya.svg)](https://nodejs.org)
 [![license](https://img.shields.io/npm/l/asomiya.svg)](https://github.com/d43ash1sh/asomiya/blob/main/LICENSE)
 [![Open VSX](https://img.shields.io/open-vsx/v/asomiya/asomiya?label=Open%20VSX)](https://open-vsx.org/extension/asomiya/asomiya)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24426149.svg)](https://doi.org/10.5281/zenodo.24426149)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24426148.svg)](https://doi.org/10.5281/zenodo.24426148)
 
 [Website & Playground](https://asomiya.codes) ·
 [Documentation](#documentation) ·

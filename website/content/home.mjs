@@ -1,7 +1,13 @@
-// Home page (layout: "home"): a product landing page. Hero, a program running over a pixel-art
-// Brahmaputra valley, numbered feature sections with live-looking windows, the four steps, the pipeline, where it
-// runs, and the team. Every code sample and output here comes from the real interpreter at build time.
-import { formatDiagnostic, parse, runSource, toPython } from '../../dist/index.js';
+// Home page (layout: "home"): a product landing page. A hero with the headline in Assamese script
+// beside a program running over a pixel-art Brahmaputra valley, a band of the keywords, feature
+// sections with live-looking windows, the four steps, the pipeline, where it runs, and the team. Every code sample and output here comes from the real interpreter at build time.
+import {
+  formatDiagnostic,
+  KEYWORD_GLOSSARY,
+  parse,
+  runSource,
+  toPython,
+} from '../../dist/index.js';
 import { EXTENSION, SITE, TEAM } from '../site.config.mjs';
 import { highlight } from '../lib/highlight.mjs';
 import { esc, shareHash } from '../lib/html.mjs';
@@ -54,7 +60,7 @@ function pythonOf(source) {
 
 const S = {
   en: {
-    title: 'Programs that speak <em>Assamese</em>,<br />from your very first <em>line</em>',
+    title: 'Programs that speak Assamese, from your very first line.',
     sub: 'Asomiya is a small programming language with Assamese keywords, numbers and error messages. No Assamese keyboard? Type <code>dhora</code>, <code>kowa</code> and <code>jodi</code> instead.',
     docs: 'Read the docs',
     tryIt: 'Try it in your browser',
@@ -83,16 +89,7 @@ const S = {
         'ext',
       ],
     ],
-    stats: [
-      ['372', 'Tests on every change'],
-      ['2', 'Scripts: Assamese and English letters'],
-      ['40', 'Error codes, each explained'],
-      ['0', 'Accounts, ads or tracking'],
-    ],
-    writeIn: 'Write it however you type',
-    scripts: ['অসমীয়া script', 'English letters', 'English digits 123', 'Python'],
     s1: {
-      tag: '#01 - WRITE IN ASSAMESE',
       title: 'Keywords you already know, in the script you already read.',
       items: [
         ['Assamese keywords', 'যদি, নহ’লে, যেতিয়ালৈকে, ফাংচন. A program reads like a sentence.'],
@@ -111,7 +108,6 @@ const S = {
       out: 'OUTPUT',
     },
     s2: {
-      tag: '#02 - MISTAKES THAT TEACH',
       title: 'Every error says what went wrong, where, and how to fix it.',
       items: [
         [
@@ -125,7 +121,6 @@ const S = {
       window: 'asomiya · error R001',
     },
     s3: {
-      tag: '#03 - SHOW IN PYTHON',
       title: 'See your program in Python. The next language is easier.',
       items: [
         ['Side by side', 'Any program, translated to Python that prints exactly the same output.'],
@@ -139,7 +134,6 @@ const S = {
       window: 'asomiya → python',
     },
     s4: {
-      tag: '#04 - HOW IT WORKS',
       title: 'Four steps from nothing to your first program.',
       steps: [
         ['Install', 'One npm package. No account, no sign-up.', 'npm install -g asomiya'],
@@ -149,7 +143,6 @@ const S = {
       ],
     },
     hood: {
-      tag: 'UNDER THE HOOD',
       title: 'Read once, checked carefully, run safely.',
       text: 'Asomiya is a tree-walking interpreter written in TypeScript. It reads Unicode properly, so joined letters like ক্ষ and য় are one character. Programs cannot touch your files or the network, and a loop that never ends is stopped.',
       link: 'How it is built',
@@ -161,7 +154,6 @@ const S = {
       ],
     },
     where: {
-      tag: 'WHERE IT RUNS',
       title: 'Works wherever you write code.',
       items: [
         ['Browser', 'asomiya.codes/playground', 'pg'],
@@ -199,7 +191,7 @@ const S = {
       'What is the Asomiya programming language at asomiya.codes, and is it good for learning to program in Assamese?',
   },
   as: {
-    title: '<em>অসমীয়া</em> কোৱা প্ৰগ্ৰাম,<br />প্ৰথম <em>শাৰীৰে</em> পৰা',
+    title: 'প্ৰথম শাৰীৰ পৰাই অসমীয়া কোৱা প্ৰগ্ৰাম।',
     sub: 'অসমীয়া এটা সৰু প্ৰগ্ৰামিং ভাষা, য’ত মূল শব্দ, সংখ্যা আৰু ভুলৰ বাৰ্তা সকলো অসমীয়াত। অসমীয়া কীব’ৰ্ড নাই? <code>dhora</code>, <code>kowa</code>, <code>jodi</code> লিখক।',
     docs: 'নথিপত্ৰ পঢ়ক',
     tryIt: 'ব্ৰাউজাৰতে চলাই চাওক',
@@ -228,16 +220,7 @@ const S = {
         'ext',
       ],
     ],
-    stats: [
-      ['372', 'প্ৰতিটো সলনিত পৰীক্ষা'],
-      ['2', 'লিপি: অসমীয়া আৰু ইংৰাজী আখৰ'],
-      ['40', 'ভুলৰ ক’ড, প্ৰতিটোৰে ব্যাখ্যা'],
-      ['0', 'একাউণ্ট, বিজ্ঞাপন বা ট্ৰেকিং'],
-    ],
-    writeIn: 'যেনেকৈ টাইপ কৰে তেনেকৈ লিখক',
-    scripts: ['অসমীয়া লিপি', 'ইংৰাজী আখৰ', 'ইংৰাজী অংক 123', 'Python'],
     s1: {
-      tag: '#01 - অসমীয়াত লিখক',
       title: 'চিনাকি শব্দ, চিনাকি লিপিত।',
       items: [
         ['অসমীয়া মূল শব্দ', 'যদি, নহ’লে, যেতিয়ালৈকে, ফাংচন। প্ৰগ্ৰাম এটা বাক্যৰ দৰে পঢ়িব পাৰি।'],
@@ -250,7 +233,6 @@ const S = {
       out: 'ফলাফল',
     },
     s2: {
-      tag: '#02 - শিকোৱা ভুল',
       title: 'প্ৰতিটো ভুলে কয় কি হ’ল, ক’ত হ’ল, আৰু কেনেকৈ শুধৰাব।',
       items: [
         ['অসমীয়া বা ইংৰাজীত', 'শিকাৰুৱে নিজৰ ভাষাত বাৰ্তা পঢ়ে। এটা ছেটিঙে ভাষা সলনি কৰে।'],
@@ -261,7 +243,6 @@ const S = {
       window: 'asomiya · ভুল R001',
     },
     s3: {
-      tag: '#03 - PYTHON ত চাওক',
       title: 'আপোনাৰ প্ৰগ্ৰাম Python ত চাওক। পিছৰ ভাষাটো সহজ হ’ব।',
       items: [
         ['কাষে কাষে', 'যিকোনো প্ৰগ্ৰাম Python লৈ, যিয়ে একেবাৰে একে ফলাফল ছপা কৰে।'],
@@ -272,7 +253,6 @@ const S = {
       window: 'asomiya → python',
     },
     s4: {
-      tag: '#04 - কেনেকৈ কাম কৰে',
       title: 'একোৱেই নাইৰ পৰা প্ৰথম প্ৰগ্ৰামলৈ চাৰিটা খোজ।',
       steps: [
         ['ইনষ্টল', 'এটা npm পেকেজ। একাউণ্ট নালাগে।', 'npm install -g asomiya'],
@@ -282,7 +262,6 @@ const S = {
       ],
     },
     hood: {
-      tag: 'ভিতৰত কি আছে',
       title: 'এবাৰ পঢ়ে, ভালদৰে পৰীক্ষা কৰে, নিৰাপদে চলায়।',
       text: 'অসমীয়া TypeScript ত লিখা এটা ট্ৰি-ৱাকিং ইণ্টাৰপ্ৰেটাৰ। ই ইউনিক’ড ঠিকমতে পঢ়ে, গতিকে ক্ষ, য় ৰ দৰে যুক্ত আখৰ এটা আখৰ হিচাপে ধৰা হয়। প্ৰগ্ৰামে আপোনাৰ ফাইল বা নেটৱৰ্ক চুব নোৱাৰে, আৰু শেষ নোহোৱা লুপ ৰখোৱা হয়।',
       link: 'কেনেকৈ বনোৱা হৈছে',
@@ -294,7 +273,6 @@ const S = {
       ],
     },
     where: {
-      tag: 'ক’ত চলে',
       title: 'য’তেই ক’ড লিখে, তাতেই চলে।',
       items: [
         ['ব্ৰাউজাৰ', 'asomiya.codes/playground', 'pg'],
@@ -333,6 +311,24 @@ const S = {
   },
 };
 
+/** The keywords shown in the band under the hero, with the English word each one stands for. */
+const BAND = [
+  ['let', 'let'],
+  ['print', 'print'],
+  ['if', 'if'],
+  ['else', 'else'],
+  ['while', 'while'],
+  ['forEach', 'for each'],
+  ['function', 'function'],
+  ['return', 'return'],
+  ['true', 'true'],
+  ['false', 'false'],
+].map(([id, en]) => {
+  const k = KEYWORD_GLOSSARY.find((entry) => entry.id === id);
+  if (!k) throw new Error(`No keyword ${id}`);
+  return { word: k.word, roman: k.roman[0], en };
+});
+
 // ── building blocks ─────────────────────────────────────────────────────
 
 /** A window with a title bar, like a terminal or an editor tab. */
@@ -344,7 +340,6 @@ const copyCmd = (h, cmd, cls = '') =>
 
 function featureSection(id, s, windowHtml, linkHref, scene) {
   return `<section class="ds-feature" id="${id}" data-reveal>
-  <p class="ds-tag">${esc(s.tag)}</p>
   <h2 class="ds-h2">${esc(s.title)}</h2>
   <div class="ds-split">
     <ul class="ds-list">${s.items
@@ -389,17 +384,16 @@ function body(lang) {
 
     return `
 <section class="ds-hero">
-  <h1 class="ds-h1">${s.title}</h1>
-  <p class="ds-sub">${s.sub}</p>
-  <p class="ds-actions">
-    <a class="btn btn-secondary" href="${h.link('learn/')}">${esc(s.docs)}</a>
-    <a class="btn btn-primary" href="${h.playground}">${esc(s.tryIt)}</a>
-  </p>
-  ${copyCmd(h, 'npm install -g asomiya', 'ds-cmd-dark')}
-</section>
-
-<section class="ds-showcase" aria-label="${esc(s.run)}" data-reveal>
-  <div class="ds-scene ds-scene-valley">
+  <div class="ds-hero-text">
+    <h1 class="ds-h1"><span class="ds-h1-as" lang="as">অসমীয়াত প্ৰগ্ৰাম লিখক</span><span class="ds-h1-line">${esc(s.title)}</span></h1>
+    <p class="ds-sub">${s.sub}</p>
+    <p class="ds-actions">
+      <a class="btn btn-primary" href="${h.playground}">${esc(s.tryIt)}</a>
+      <a class="btn btn-secondary" href="${h.link('learn/')}">${esc(s.docs)}</a>
+    </p>
+    ${copyCmd(h, 'npm install -g asomiya', 'ds-cmd-dark')}
+  </div>
+  <div class="ds-scene ds-scene-valley ds-hero-demo" aria-label="${esc(s.run)}">
     <div class="ds-chat" data-demo>
       <div class="ds-answer" data-demo-answer aria-live="polite">
         <p lang="as" data-demo-out>${esc(demos[0].out)}</p>
@@ -422,6 +416,17 @@ function body(lang) {
         .join('')}
     </div>
   </div>
+</section>
+
+<section class="ds-words" aria-label="${lang === 'as' ? 'মূল শব্দ' : 'Keywords'}">
+  <ul>${BAND.map(
+    (k) =>
+      `<li><b lang="as">${esc(k.word)}</b><span>${esc(k.roman)}</span><small>${esc(k.en)}</small></li>`,
+  ).join('')}</ul>
+  <a class="ds-words-link" href="${h.link('reference/keywords/')}">${lang === 'as' ? 'আটাইবোৰ মূল শব্দ চাওক' : `See all ${KEYWORD_GLOSSARY.length} keywords`}</a>
+</section>
+
+<section class="ds-showcase" data-reveal>
   <div class="ds-cards">${s.cards
     .map(
       ([title, text, link, key]) =>
@@ -430,24 +435,11 @@ function body(lang) {
     .join('')}</div>
 </section>
 
-<section class="ds-stats" data-reveal>${s.stats
-      .map(
-        ([n, label]) =>
-          `<div><strong data-count="${esc(n)}">${esc(n)}</strong><span>${esc(label)}</span></div>`,
-      )
-      .join('')}</section>
-
-<section class="ds-formats" data-reveal>
-  <p>${esc(s.writeIn)}</p>
-  <ul>${s.scripts.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
-</section>
-
 ${featureSection('write', s.s1, s1Window, h.link('reference/keywords/'), 'tea')}
 ${featureSection('errors', s.s2, s2Window, h.link('reference/errors/'), 'dusk')}
 ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'valley')}
 
 <section class="ds-feature" id="how" data-reveal>
-  <p class="ds-tag">${esc(s.s4.tag)}</p>
   <h2 class="ds-h2">${esc(s.s4.title)}</h2>
   <ol class="ds-steps">${s.s4.steps
     .map(
@@ -459,7 +451,6 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'valley')}
 
 <section class="ds-hood" data-reveal>
   <div class="ds-hood-text">
-    <p class="ds-tag">${esc(s.hood.tag)}</p>
     <h2 class="ds-h2">${esc(s.hood.title)}</h2>
     <p>${esc(s.hood.text)}</p>
     <a class="ds-more" href="${SITE.repo}/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">${esc(s.hood.link)} <span aria-hidden="true">→</span></a>
@@ -473,7 +464,6 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'valley')}
 </section>
 
 <section class="ds-feature" id="where" data-reveal>
-  <p class="ds-tag">${esc(s.where.tag)}</p>
   <h2 class="ds-h2">${esc(s.where.title)}</h2>
   <div class="ds-grid">${s.where.items
     .map(
@@ -491,7 +481,6 @@ ${featureSection('python', s.s3, s3Window, h.link('reference/cli/'), 'valley')}
       .join('')}</section>
 
 <section class="ds-feature" id="team" data-reveal>
-  <p class="ds-tag">${lang === 'as' ? 'দল' : 'TEAM'}</p>
   <h2 class="ds-h2">${esc(s.teamTitle)}</h2>
   <div class="ds-grid ds-grid-4">${TEAM.map(
     (m) =>

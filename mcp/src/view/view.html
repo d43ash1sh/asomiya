@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="as">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Asomiya playground</title>
+    <style>
+      /*STYLE*/
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <header class="bar">
+        <span class="brand"><b>অসমীয়া</b> <span>playground</span></span>
+        <span id="status" class="status" role="status" aria-live="polite">Asomiya</span>
+      </header>
+      <div class="editor">
+        <div class="layers">
+          <pre id="painted" class="painted" aria-hidden="true"></pre>
+          <textarea
+            id="code"
+            class="code"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            aria-label="Asomiya code"
+          ></textarea>
+        </div>
+      </div>
+      <div id="input-box" class="input-box" hidden>
+        <label for="input">ইনপুট · input for সোধা (one line each)</label>
+        <textarea id="input" rows="2" spellcheck="false"></textarea>
+      </div>
+      <div class="actions">
+        <button id="run" class="primary" type="button" title="Run (Ctrl/⌘ + Enter)">
+          ▶ চলাওক · Run
+        </button>
+        <button id="python" type="button" aria-expanded="false" aria-controls="python-box">
+          Python
+        </button>
+        <button id="open" type="button" disabled>Open on asomiya.codes</button>
+      </div>
+      <section id="python-box" class="python" aria-label="Python" hidden>
+        <h2>Python ৰূপ · the same program in Python</h2>
+        <pre id="python-code"></pre>
+        <p id="python-note" class="note"></p>
+      </section>
+      <section class="result" aria-label="Output">
+        <h2>ফলাফল · Output</h2>
+        <pre id="output" class="output empty"></pre>
+        <pre id="problem" class="problem" hidden></pre>
+      </section>
+    </main>
+    <script>
+      /*SCRIPT*/
+    </script>
+  </body>
+</html>

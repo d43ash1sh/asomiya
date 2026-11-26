@@ -26,6 +26,7 @@
     "src",
     "tests",
     "website/src/playground/asom.d.ts",
+    "mcp/src/text.d.ts",
     "tsup.config.ts",
     "tsup.website.config.ts",
     "vitest.config.ts",

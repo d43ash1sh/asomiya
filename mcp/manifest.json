@@ -1,0 +1,58 @@
+{
+  "manifest_version": "0.3",
+  "name": "asomiya",
+  "display_name": "Asomiya (অসমীয়া)",
+  "version": "0.1.0",
+  "description": "Write, check and run programs in Asomiya, the programming language in Assamese.",
+  "long_description": "Asomiya (অসমীয়া) is a programming language whose keywords are Assamese words, written in Assamese script or in English letters. This extension lets Claude write, check, run and explain Asomiya programs, look up keywords and error codes, show programs in Python, and teach lessons — with a playground right in the chat. Programs run in a sandbox: they can't touch your files, the network or the system.",
+  "author": {
+    "name": "Debashish Bordoloi",
+    "url": "https://github.com/d43ash1sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d43ash1sh/asomiya"
+  },
+  "homepage": "https://asomiya.codes/ai/",
+  "documentation": "https://github.com/d43ash1sh/asomiya/tree/main/mcp#readme",
+  "support": "https://github.com/d43ash1sh/asomiya/issues",
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"]
+    }
+  },
+  "tools": [
+    { "name": "run_asomiya", "description": "Run an Asomiya program and show its output." },
+    {
+      "name": "check_asomiya",
+      "description": "Check a program for syntax errors without running it."
+    },
+    { "name": "asomiya_to_python", "description": "Show the same program in Python." },
+    { "name": "lookup_keyword", "description": "Look up keywords and built-ins in any script." },
+    { "name": "explain_error", "description": "Explain an error code and how to fix it." }
+  ],
+  "prompts": [
+    {
+      "name": "teach_asomiya",
+      "description": "A short, hands-on lesson on one topic.",
+      "arguments": ["topic", "language"],
+      "text": "Teach me ${arguments.topic} in Asomiya, explained in ${arguments.language}."
+    },
+    {
+      "name": "translate_to_asomiya",
+      "description": "Rewrite a program in Asomiya and check it runs.",
+      "arguments": ["program", "script"],
+      "text": "Rewrite this program in Asomiya (${arguments.script}): ${arguments.program}"
+    }
+  ],
+  "keywords": ["asomiya", "assamese", "অসমীয়া", "programming", "education", "learn to code"],
+  "license": "MIT",
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": { "node": ">=20.0.0" }
+  }
+}

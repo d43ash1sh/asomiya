@@ -104,3 +104,27 @@ describe('website links', () => {
     for (const page of english) expect(existsSync(join(OUT, 'as', page)), page).toBe(true);
   });
 });
+
+describe('for AI assistants', () => {
+  it('publishes llms.txt and the same guide the MCP server gives', () => {
+    const index = readFileSync(join(OUT, 'llms.txt'), 'utf8');
+    expect(index).toMatch(/^# Asomiya/);
+    expect(index).toContain('https://asomiya.codes/llms-full.txt');
+    const full = readFileSync(join(OUT, 'llms-full.txt'), 'utf8');
+    const served = execFileSync(process.execPath, [join(ROOT, 'mcp/dist/index.js'), '--guide'], {
+      encoding: 'utf8',
+    });
+    expect(full).toBe(served);
+    expect(full).toContain('প্ৰতিটো');
+  });
+
+  it('names the current .mcpb file on the AI page', () => {
+    const { version } = JSON.parse(readFileSync(join(ROOT, 'mcp/package.json'), 'utf8')) as {
+      version: string;
+    };
+    const page = pages.find(
+      ({ file }) => relative(OUT, file).split(sep).join('/') === 'ai/index.html',
+    );
+    expect(page?.html).toContain(`asomiya-${version}.mcpb`);
+  });
+});

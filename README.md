@@ -88,7 +88,7 @@ asomiya            # start the interactive REPL
 - **Runs anywhere.** A CLI and REPL for Node.js 20+, a browser playground, and a library API.
 - **Safe to run other people's code.** Programs can't touch files or the network, and loops,
   recursion and memory are limited. See [SECURITY.md](https://github.com/d43ash1sh/asomiya/blob/main/SECURITY.md).
-- **Well tested.** Over 300 tests, run on Linux, macOS and Windows.
+- **Well tested.** Over 400 tests, run on Linux, macOS and Windows.
 
 ## Installation
 
@@ -275,6 +275,18 @@ syntax colours in both scripts, errors as you type, hover help, a ▶ Run button
 
 More on the [extension page](https://asomiya.codes/extension/); the source is in
 [`editors/vscode`](https://github.com/d43ash1sh/asomiya/tree/main/editors/vscode).
+
+## Use with AI
+
+**[asomiya-mcp](mcp/README.md)** is an [MCP](https://modelcontextprotocol.io) server that lets
+Claude, ChatGPT, VS Code Copilot, Cursor and other AI apps write, check, run and explain Asomiya,
+with a playground right in the chat. Add it to your AI app:
+
+```bash
+claude mcp add asomiya -- npx -y asomiya-mcp
+```
+
+Other apps, and the one-click Claude Desktop extension: [asomiya.codes/ai](https://asomiya.codes/ai/).
 
 ## Use as a library
 

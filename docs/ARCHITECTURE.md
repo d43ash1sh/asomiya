@@ -131,6 +131,26 @@ Nothing in `src/` outside `src/cli/` uses Node APIs, so no special build of the 
   access); output is inserted as text, never HTML; shared links are never run automatically.
   `tests/website/` checks these rules on every build.
 
+## MCP server
+
+`mcp/` is **asomiya-mcp**, an [MCP](https://modelcontextprotocol.io) server that lets AI assistants
+write, check, run and explain Asomiya. It is published to npm on its own and listed in the MCP
+Registry; see [mcp/README.md](../mcp/README.md) and [mcp/PUBLISHING.md](../mcp/PUBLISHING.md).
+
+| Path                    | Responsibility                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `mcp/src/server.ts`     | Tools, resources and prompts (`createServer()`), on the MCP TypeScript SDK v2. |
+| `mcp/src/runner.ts`     | What the tools do, as plain functions over `runSource`, `parse`, `toPython`.   |
+| `mcp/src/knowledge.ts`  | The docs, examples, vocabulary lookup, error explanations and the AI guide.    |
+| `mcp/src/hints.ts`      | How to fix each error code.                                                    |
+| `mcp/src/view/`         | The in-chat playground (an MCP App), with the interpreter bundled in.          |
+| `mcp/scripts/build.mjs` | Builds the view into one HTML file, then the server into `mcp/dist/index.js`.  |
+
+Everything the server says about the language comes from this repository (`docs/`, `examples/`,
+`glossary.ts`, `messages.ts`), and `tests/mcp/` runs every code sample in the guide, so it can't
+drift from the interpreter. The package has no runtime dependencies: the SDK, the interpreter and
+the docs are bundled into one file.
+
 ## Embedding
 
 ```ts
@@ -154,5 +174,8 @@ interpreter.run(parse('কোৱা(১০ * ১০)')); // prints 100
 2. Grammar: update `docs/GRAMMAR.md`, then `ast.ts` and `parser.ts`.
 3. Semantics: update `docs/LANGUAGE_SPEC.md`, then `interpreter.ts`.
 4. Errors: add codes to `diagnostic.ts` and `messages.ts` (the compiler enforces both languages), then
-   add an example to `scripts/generate-error-docs.mjs` and run `npm run docs:errors`.
-5. Tests for every new path, plus an example program if user-visible.
+   add an example to `scripts/generate-error-docs.mjs` and run `npm run docs:errors`. Add how to
+   fix it to `mcp/src/hints.ts` (the compiler enforces this too).
+5. MCP server: a new keyword needs a short example in `KEYWORD_USAGE` (`mcp/src/knowledge.ts`); the
+   compiler and `tests/mcp/` check it, and the guide picks up the keyword by itself.
+6. Tests for every new path, plus an example program if user-visible.

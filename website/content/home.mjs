@@ -88,6 +88,12 @@ const S = {
         'Extension',
         'ext',
       ],
+      [
+        'AI assistants',
+        'Claude, ChatGPT and Copilot write Asomiya for you, run it, and fix their own mistakes.',
+        'Use with AI',
+        'ai',
+      ],
     ],
     s1: {
       title: 'Keywords you already know, in the script you already read.',
@@ -218,6 +224,12 @@ const S = {
         'ৰং, লিখোঁতে ভুলৰ তলত ৰেখা, মাউছ ৰাখিলে সহায়, চলোৱা, আৰু Python ৰূপ।',
         'এক্সটেনশ্যন',
         'ext',
+      ],
+      [
+        'AI সহায়ক',
+        'Claude, ChatGPT আৰু Copilot-এ আপোনাৰ বাবে অসমীয়া লিখে, চলায় আৰু নিজৰ ভুল নিজে শুধৰায়।',
+        'AI-ৰ সৈতে',
+        'ai',
       ],
     ],
     s1: {
@@ -361,6 +373,7 @@ function body(lang) {
       pg: h.playground,
       install: h.link('learn/installation/'),
       ext: h.link('extension/'),
+      ai: h.link('ai/'),
       npm: SITE.npm,
       learn: h.link('learn/'),
     };

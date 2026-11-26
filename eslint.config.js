@@ -11,6 +11,8 @@ export default defineConfig(
     'website/dist/',
     'editors/vscode/dist/',
     'editors/vscode/dist-tools/',
+    'mcp/dist/',
+    'mcp/.view/',
     'node_modules/',
     'coverage/',
   ]),

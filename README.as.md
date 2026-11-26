@@ -226,6 +226,12 @@ VS Code, Cursor, Windsurf আৰু VSCodium ৰ বাবে **অসমীয�
 
 ![VS Code ত অসমীয়া](https://raw.githubusercontent.com/d43ash1sh/asomiya/main/editors/vscode/images/hover.png)
 
+## AI-ৰ সৈতে
+
+[asomiya-mcp](mcp/README.md) এটা [MCP](https://modelcontextprotocol.io) ছাৰ্ভাৰ। ইয়াৰ সহায়ত Claude,
+ChatGPT, VS Code Copilot, Cursor আদি AI এপে অসমীয়া প্ৰগ্ৰাম লিখিব, পৰীক্ষা কৰিব, চলাব আৰু বুজাব
+পাৰে। ইনষ্টল কৰাৰ নিয়ম: [asomiya.codes/as/ai](https://asomiya.codes/as/ai/)।
+
 ## অন্যান্য নিয়ম
 
 - মন্তব্য: `// শাৰীৰ শেষলৈকে` আৰু `/* … */`।

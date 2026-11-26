@@ -11,6 +11,7 @@ export const UI = {
       reference: 'Reference',
       playground: 'Playground',
       extension: 'VS Code',
+      ai: 'AI',
       community: 'Community',
     },
     quickstart: 'Quickstart',
@@ -28,6 +29,7 @@ export const UI = {
     changelog: 'Changelog',
     joinUs: 'Join us: test, hack, build',
     extension: 'VS Code extension',
+    aiFoot: 'Use with AI (MCP)',
     security: 'Security',
     copyright: (year) => `© ${year} Asomiya. Built in Assam, open source.`,
     madeWith:
@@ -52,6 +54,7 @@ export const UI = {
       reference: 'সন্দৰ্ভ',
       playground: 'প্লেগ্ৰাউণ্ড',
       extension: 'VS Code',
+      ai: 'AI',
       community: 'সমাজ',
     },
     quickstart: 'আৰম্ভণি',
@@ -69,6 +72,7 @@ export const UI = {
     changelog: 'সলনিৰ তালিকা',
     joinUs: 'যোগ দিয়ক',
     extension: 'VS Code এক্সটেনশ্যন',
+    aiFoot: 'AI-ৰ সৈতে (MCP)',
     security: 'সুৰক্ষা',
     copyright: (year) => `© ${year} অসমীয়া। অসমত বনোৱা, মুকলি উৎস।`,
     madeWith:

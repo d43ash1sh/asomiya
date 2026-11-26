@@ -1,12 +1,13 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  // The playground bundles examples/*.asom as text (see tsup.playground.config.ts); mirror that.
+  // The playground bundles examples/*.asom as text (see tsup.playground.config.ts), and the MCP
+  // server bundles docs/*.md and its built view (mcp/scripts/build.mjs); mirror that.
   plugins: [
     {
-      name: 'asom-as-text',
+      name: 'text-imports',
       transform(code, id) {
-        return id.endsWith('.asom') ? `export default ${JSON.stringify(code)};` : null;
+        return /\.(asom|md|html)$/.test(id) ? `export default ${JSON.stringify(code)};` : null;
       },
     },
   ],

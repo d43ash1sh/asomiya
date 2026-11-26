@@ -78,7 +78,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p website",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p website && tsc --noEmit -p mcp",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
@@ -87,18 +87,24 @@
     "check": "npm run typecheck && npm run lint && npm run format:check && npm test",
     "prepublishOnly": "npm run check && npm run build",
     "docs:errors": "npm run build && node scripts/generate-error-docs.mjs && prettier --write docs/ERRORS.md",
-    "website:build": "tsup --silent && tsup --config tsup.website.config.ts && node website/build.mjs",
+    "website:build": "tsup --silent && node mcp/scripts/build.mjs && tsup --config tsup.website.config.ts && node website/build.mjs",
     "website:serve": "npm run website:build && python3 -m http.server 8080 --directory website/dist",
     "vscode:grammar": "tsup editors/vscode/scripts/write-grammar.ts --format cjs --shims --out-dir editors/vscode/dist-tools --silent && node editors/vscode/dist-tools/write-grammar.cjs",
     "vscode:build": "tsup --config editors/vscode/tsup.config.ts",
     "vscode:package": "npm run vscode:build && cd editors/vscode && npx --yes @vscode/vsce@4.1.0 package --no-dependencies --out asomiya-vscode.vsix",
-    "website:og": "tsup --silent && node website/scripts/og-images.mjs"
+    "website:og": "tsup --silent && node website/scripts/og-images.mjs",
+    "mcp:build": "node mcp/scripts/build.mjs",
+    "mcp:pack": "npm run mcp:build && cd mcp && npx --yes @anthropic-ai/mcpb@2.1.2 pack . asomiya.mcpb"
   },
   "dependencies": {
     "commander": "14.0.3"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@modelcontextprotocol/client": "2.4.0",
+    "@modelcontextprotocol/core": "2.4.0",
+    "@modelcontextprotocol/ext-apps": "2.0.4",
+    "@modelcontextprotocol/server": "2.4.0",
     "@types/node": "20.19.43",
     "@types/vscode": "1.90.0",
     "eslint": "10.15.0",
@@ -109,7 +115,8 @@
     "typescript-eslint": "8.73.0",
     "vitest": "4.1.12",
     "vscode-oniguruma": "2.0.1",
-    "vscode-textmate": "9.3.2"
+    "vscode-textmate": "9.3.2",
+    "zod": "4.6.7"
   },
   "overrides": {
     "esbuild": "^0.28.2"

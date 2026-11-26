@@ -1,0 +1,312 @@
+/* Host variables (MCP Apps) come first, the asomiya.codes palette is the fallback. */
+:root {
+  color-scheme: light;
+  --bg: var(--color-background-primary, #ffffff);
+  --bg-2: var(--color-background-secondary, #fafaf9);
+  --ink: var(--color-text-primary, #292524);
+  --ink-2: var(--color-text-secondary, #57534e);
+  --ink-3: var(--color-text-tertiary, #a8a29e);
+  --line: var(--color-border-primary, #e7e5e4);
+  --accent: #3f40fa;
+  --accent-ink: #ffffff;
+  --danger: #dc2626;
+  --danger-bg: rgb(220 38 38 / 0.07);
+  --ok: #15803d;
+  --tok-kw: #3f40fa;
+  --tok-str: #4d7c0f;
+  --tok-num: #c2410c;
+  --tok-lit: #e11d74;
+  --tok-fn: #7c3aed;
+  --tok-com: #a8a29e;
+  --tok-op: #57534e;
+  --radius: var(--border-radius-lg, 14px);
+  --font: var(
+    --font-sans,
+    'Noto Sans Bengali',
+    'Bengali Sangam MN',
+    'Nirmala UI',
+    'Vrinda',
+    ui-sans-serif,
+    system-ui,
+    sans-serif
+  );
+  --mono:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Noto Sans Bengali', 'Bengali Sangam MN',
+    'Nirmala UI', monospace;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: var(--color-background-primary, #1c1917);
+  --bg-2: var(--color-background-secondary, #141210);
+  --ink: var(--color-text-primary, #f5f5f4);
+  --ink-2: var(--color-text-secondary, #d6d3d1);
+  --ink-3: var(--color-text-tertiary, #78716c);
+  --line: var(--color-border-primary, #2e2a27);
+  --accent: #7072ff;
+  --accent-ink: #141210;
+  --danger: #f87171;
+  --danger-bg: rgb(248 113 113 / 0.1);
+  --ok: #4ade80;
+  --tok-kw: #a5a6ff;
+  --tok-str: #a3e635;
+  --tok-num: #fdba74;
+  --tok-lit: #f472b6;
+  --tok-fn: #c4b5fd;
+  --tok-com: #78716c;
+  --tok-op: #d6d3d1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 14px/1.5 var(--font);
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand b {
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.brand span {
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.status {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.status[data-state='ok'] {
+  color: var(--ok);
+}
+
+.status[data-state='error'] {
+  color: var(--danger);
+}
+
+/*
+ * The highlighted copy is in the flow and sets the height; the transparent textarea lies exactly on
+ * top of it. Both wrap long lines the same way, so nothing scrolls sideways and nothing needs
+ * measuring from script. Only the outer box scrolls, for very long programs.
+ */
+.editor {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.layers {
+  position: relative;
+}
+
+.painted,
+.code {
+  margin: 0;
+  padding: 14px 16px;
+  font: 14px/1.7 var(--mono);
+  tab-size: 4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border: 0;
+  width: 100%;
+}
+
+.painted {
+  min-height: 120px;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.code {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--ink);
+  outline: none;
+}
+
+.code::selection {
+  background: rgb(63 64 250 / 0.22);
+  color: transparent;
+}
+
+.editor:focus-within {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.t-kw {
+  color: var(--tok-kw);
+  font-weight: 600;
+}
+.t-str {
+  color: var(--tok-str);
+}
+.t-num {
+  color: var(--tok-num);
+}
+.t-lit {
+  color: var(--tok-lit);
+}
+.t-fn {
+  color: var(--tok-fn);
+}
+.t-com {
+  color: var(--tok-com);
+  font-style: italic;
+}
+.t-op {
+  color: var(--tok-op);
+}
+
+.input-box {
+  padding: 0 16px 12px;
+}
+
+.input-box label {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-2);
+  margin-bottom: 4px;
+}
+
+.input-box textarea {
+  width: 100%;
+  font: 13px/1.5 var(--mono);
+  color: var(--ink);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+}
+
+button {
+  font: 600 13px/1 var(--font);
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button:focus-visible,
+.input-box textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.result {
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+  padding: 10px 16px 14px;
+}
+
+.result h2 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.output,
+.problem {
+  margin: 0;
+  font: 14px/1.6 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.output.empty::before {
+  content: '—';
+  color: var(--ink-3);
+}
+
+.problem {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--danger);
+  background: var(--danger-bg);
+  font-size: 13px;
+}
+
+.python {
+  border-top: 1px solid var(--line);
+  padding: 10px 16px 12px;
+}
+
+.python h2 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.python pre {
+  margin: 0;
+  font: 13px/1.6 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.python .note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+button[aria-expanded='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}

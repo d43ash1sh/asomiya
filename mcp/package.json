@@ -1,0 +1,47 @@
+{
+  "name": "asomiya-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Asomiya (অসমীয়া), the programming language in Assamese: lets Claude, ChatGPT, VS Code and other AI apps write, check, run and explain Asomiya code, with an in-chat playground.",
+  "mcpName": "io.github.d43ash1sh/asomiya",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "mcp-apps",
+    "asomiya",
+    "অসমীয়া",
+    "assamese",
+    "programming-language",
+    "education",
+    "learn-to-code",
+    "claude",
+    "ai"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Debashish Bordoloi",
+    "url": "https://github.com/d43ash1sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d43ash1sh/asomiya.git",
+    "directory": "mcp"
+  },
+  "homepage": "https://asomiya.codes/ai/",
+  "bugs": {
+    "url": "https://github.com/d43ash1sh/asomiya/issues"
+  },
+  "type": "module",
+  "bin": {
+    "asomiya-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

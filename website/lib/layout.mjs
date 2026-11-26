@@ -60,6 +60,7 @@ function navLinks(page, lang) {
     ['reference', `${prefix}reference/`, t.nav.reference],
     ['playground', `${prefix}playground/`, t.nav.playground],
     ['extension', `${prefix}extension/`, t.nav.extension],
+    ['ai', `${prefix}ai/`, t.nav.ai],
     ['community', `${prefix}community/`, t.nav.community],
   ];
   return items
@@ -153,6 +154,7 @@ function footer(page, lang, sections) {
     ${col(t.footMore, [
       [t.joinUs, lang === 'as' ? 'as/join/' : 'join/', false],
       [t.extension, lang === 'as' ? 'as/extension/' : 'extension/', false],
+      [t.aiFoot, lang === 'as' ? 'as/ai/' : 'ai/', false],
       ['GitHub', SITE.repo, true],
       ['npm', SITE.npm, true],
       [t.changelog, `${SITE.repo}/blob/main/CHANGELOG.md`, true],

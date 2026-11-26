@@ -25,3 +25,16 @@ shared playground link is meant to be safe, within these limits:
 
 Programs can still print anything they like that is written with visible characters, and a long
 but bounded program can keep the CPU busy until the step budget runs out (about a second).
+
+## The MCP server (asomiya-mcp)
+
+[asomiya-mcp](mcp/README.md) lets AI assistants run programs they write, so it runs code nobody has
+read. It relies on the same interpreter limits as above, plus:
+
+- **No other access.** Its tools only run, check, translate and look up Asomiya. It reads no files,
+  makes no network requests and starts no processes; it talks to its client over stdin/stdout only.
+- **Bounded input and output.** Programs are limited to 100,000 characters and 1,000 input lines;
+  results keep at most 20,000 characters of output.
+- **The in-chat playground** (an MCP App) runs in the host's sandboxed frame with no external
+  scripts, styles or requests. Code and output are inserted as text, never HTML.
+- **No dependencies at run time.** The published package is one bundled file.

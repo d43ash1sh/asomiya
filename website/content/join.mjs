@@ -58,6 +58,7 @@ const S = {
       'The playground at asomiya.codes: script injection, share-link tricks, getting around the Content Security Policy',
       'Hidden-code tricks (Trojan Source), terminal escape sequences, look-alike names',
       'The asomiya npm package and its CLI',
+      'The asomiya-mcp server for AI assistants: a program or tool call that escapes the sandbox, or makes the server crash or hang',
     ],
     outTitle: 'Please don’t',
     out: [
@@ -71,10 +72,10 @@ const S = {
     contrib: [
       `Read ${'{CONTRIB}'}: how the project is organised and how to run the tests.`,
       `Pick an issue on ${'{ISSUES}'}, or suggest your own idea first.`,
-      'Ideas we would love help with: a for-each loop, more built-in functions (text and lists), support for more editors (JetBrains, Zed, Neovim), and lessons for school students.',
+      'Ideas we would love help with: dictionaries, more built-in functions (text and lists), support for more editors (JetBrains, Zed, Neovim), and lessons for school students.',
     ],
     contribNote:
-      'The code is TypeScript with more than 360 tests. Every change runs them on Linux, macOS and Windows.',
+      'The code is TypeScript with more than 400 tests. Every change runs them on Linux, macOS and Windows.',
     wordsTitle: 'Help with the words',
     words: `Some keywords are still provisional, like যেতিয়ালৈকে (while), ফাংচন (function) and ঘূৰাইদিয়া (return). If you know a more natural Assamese word, or a romanised spelling we missed, ${'{ISSUE}'}. The full list is in the ${'{KW}'}.`,
     teamTitle: 'Who to talk to',
@@ -126,6 +127,7 @@ const S = {
       'asomiya.codes ৰ প্লেগ্ৰাউণ্ড: স্ক্ৰিপ্ট সুমুওৱা, শ্বেয়াৰ লিংকৰ কৌশল, Content Security Policy এৰাই চলা',
       'লুকুৱাই থোৱা ক’ডৰ কৌশল (Trojan Source), টাৰ্মিনেলৰ এস্কেপ ছিকুৱেন্স, একে যেন লগা নাম',
       'asomiya npm পেকেজ আৰু ইয়াৰ CLI',
+      'AI সহায়কৰ বাবে asomiya-mcp ছাৰ্ভাৰ: স্যাণ্ডবক্সৰ পৰা ওলাই যোৱা, বা ছাৰ্ভাৰ বিকল বা স্থবিৰ কৰা প্ৰগ্ৰাম বা টুল কল',
     ],
     outTitle: 'অনুগ্ৰহ কৰি এইবোৰ নকৰিব',
     out: [
@@ -139,10 +141,10 @@ const S = {
     contrib: [
       `${'{CONTRIB}'} পঢ়ক: প্ৰকল্পটো কেনেকৈ সজোৱা আৰু পৰীক্ষা কেনেকৈ চলাব।`,
       `${'{ISSUES}'}-ত এটা ইছ্যু বাছি লওক, বা আগতে নিজৰ ধাৰণা জনাওক।`,
-      'য’ত সহায় বিচাৰোঁ: for-each লুপ, অধিক অন্তৰ্নিৰ্মিত ফাংচন (পাঠ আৰু তালিকা), আন এডিটৰৰ বাবে সহায় (JetBrains, Zed, Neovim), আৰু স্কুলৰ ছাত্ৰ-ছাত্ৰীৰ বাবে পাঠ।',
+      'য’ত সহায় বিচাৰোঁ: ডিক্সনেৰী, অধিক অন্তৰ্নিৰ্মিত ফাংচন (পাঠ আৰু তালিকা), আন এডিটৰৰ বাবে সহায় (JetBrains, Zed, Neovim), আৰু স্কুলৰ ছাত্ৰ-ছাত্ৰীৰ বাবে পাঠ।',
     ],
     contribNote:
-      'ক’ডটো TypeScript ত, ৩৬০টাতকৈ অধিক পৰীক্ষাৰ সৈতে। প্ৰতিটো সলনিয়ে Linux, macOS আৰু Windows ত সেইবোৰ চলায়।',
+      'ক’ডটো TypeScript ত, ৪০০টাতকৈ অধিক পৰীক্ষাৰ সৈতে। প্ৰতিটো সলনিয়ে Linux, macOS আৰু Windows ত সেইবোৰ চলায়।',
     wordsTitle: 'শব্দৰ বাবে সহায়',
     words: `কিছুমান মূল শব্দ এতিয়াও অস্থায়ী, যেনে যেতিয়ালৈকে, ফাংচন আৰু ঘূৰাইদিয়া। অধিক স্বাভাৱিক অসমীয়া শব্দ বা আমি এৰি দিয়া ইংৰাজী বানান জানিলে ${'{ISSUE}'}। সম্পূৰ্ণ তালিকা ${'{KW}'}-ত আছে।`,
     teamTitle: 'কাৰ সৈতে কথা পাতিব',

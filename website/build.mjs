@@ -1,5 +1,6 @@
 // Static site generator for asomiya.codes. Run with `npm run website:build` (after the library and
 // the browser bundles are built). Writes HTML for every page in English (/) and Assamese (/as/).
+import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -107,6 +108,33 @@ ${urls.map((u) => `  <url><loc>${SITE.url}/${u}</loc></url>`).join('\n')}
 writeFileSync(
   join(OUT, 'robots.txt'),
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`,
+);
+
+// For AI assistants that read the web (https://llmstxt.org): an index, and the same tested guide the
+// MCP server gives them (printed by the built server, so the two can't differ).
+const guide = execFileSync(process.execPath, [join(ROOT, '../mcp/dist/index.js'), '--guide'], {
+  encoding: 'utf8',
+});
+writeFileSync(join(OUT, 'llms-full.txt'), guide);
+writeFileSync(
+  join(OUT, 'llms.txt'),
+  `# Asomiya (অসমীয়া)
+
+> A programming language whose keywords are Assamese words, written in Assamese script or in English
+> letters. Programs are sandboxed. Asomiya is not Python: read the guide before writing code.
+
+## Docs
+
+- [Guide for AI assistants](${SITE.url}/llms-full.txt): every keyword and built-in, the rules that differ from Python, and tested examples
+- [Language reference](${SITE.url}/reference/): syntax, keywords, built-in functions and errors
+- [Learn](${SITE.url}/learn/): lessons for beginners
+- [Playground](${SITE.url}/playground/): run code in the browser; share a program as ${SITE.url}/playground/#code=<base64url of the UTF-8 source>
+
+## Tools
+
+- [MCP server](${SITE.url}/ai/): \`npx -y asomiya-mcp\` lets an assistant run, check and explain Asomiya
+- [npm package](${SITE.npm}): the interpreter and the \`asomiya\` command
+`,
 );
 
 console.log(`Built ${urls.length} pages into website/dist`);

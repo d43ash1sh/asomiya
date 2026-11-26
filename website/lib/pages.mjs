@@ -1,5 +1,6 @@
 // Every page of the site, shared by the build (website/build.mjs) and the preview-image generator
 // (website/scripts/og-images.mjs).
+import { AI_PAGE } from '../content/ai.mjs';
 import { COMMUNITY } from '../content/community.mjs';
 import { EXTENSION_PAGE } from '../content/extension.mjs';
 import { HOME } from '../content/home.mjs';
@@ -27,7 +28,9 @@ export const SECTIONS = [LEARN, REFERENCE].map((section) => ({
 }));
 for (const s of SECTIONS) s.pages = s.groups.flatMap((g) => g.pages);
 
-export const SINGLE = [HOME, PLAYGROUND, COMMUNITY, JOIN, EXTENSION_PAGE, NOT_FOUND].map(prepare);
+export const SINGLE = [HOME, PLAYGROUND, COMMUNITY, JOIN, EXTENSION_PAGE, AI_PAGE, NOT_FOUND].map(
+  prepare,
+);
 
 /** Every page that gets built and listed in the sitemap, with its section (if any). */
 export function allPages() {

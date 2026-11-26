@@ -1,0 +1,29 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.d43ash1sh/asomiya",
+  "title": "Asomiya (অসমীয়া)",
+  "description": "Write, check and run code in Asomiya, the programming language in Assamese.",
+  "repository": {
+    "url": "https://github.com/d43ash1sh/asomiya",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "websiteUrl": "https://asomiya.codes/ai/",
+  "icons": [
+    {
+      "src": "https://asomiya.codes/favicon.svg",
+      "mimeType": "image/svg+xml"
+    }
+  ],
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "asomiya-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

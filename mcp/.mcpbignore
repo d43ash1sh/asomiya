@@ -1,0 +1,8 @@
+# Only the built server goes into the .mcpb bundle.
+src/
+scripts/
+.view/
+tsconfig.json
+server.json
+package.json
+*.mcpb

@@ -36,3 +36,7 @@ Thumbs.db
 # VS Code extension build output
 dist-tools/
 *.vsix
+
+# MCP server build output
+mcp/.view/
+mcp/*.mcpb

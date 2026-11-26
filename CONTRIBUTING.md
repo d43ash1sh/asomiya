@@ -43,11 +43,18 @@ Node.js 20+ is required.
 (needs Python 3). See [website/README.md](website/README.md). Keep logic out of the DOM scripts:
 put it in a DOM-free module and test it in `tests/website/`.
 
+## MCP server
+
+`mcp/` holds asomiya-mcp, the server that lets AI assistants use Asomiya. `npm run mcp:build` builds
+it, and `npx vitest run tests/mcp` tests it. To try it in an AI app, point the app at your build:
+`node /path/to/asomiya/mcp/dist/index.js`. See [mcp/README.md](mcp/README.md).
+
 ## Error messages
 
 Every diagnostic code needs an Assamese and an English message in `src/errors/messages.ts` (the
 compiler enforces this). After adding one, add an example to `scripts/generate-error-docs.mjs` and run
-`npm run docs:errors` to regenerate `docs/ERRORS.md`. A test fails if a code is missing there.
+`npm run docs:errors` to regenerate `docs/ERRORS.md`. A test fails if a code is missing there. Also add
+how to fix it to `mcp/src/hints.ts`, which the MCP server's `explain_error` tool uses.
 
 ## Tests
 
@@ -56,6 +63,7 @@ compiler enforces this). After adding one, add an example to `scripts/generate-e
 - `tests/integration/repl-tty.test.ts`: types into the REPL through a real pseudo-terminal
   (`tests/fixtures/pty-driver.py`). Needs Python 3 and is skipped on Windows.
 - `tests/regression`: one test per bug found in an audit.
+- `tests/mcp`: the MCP server, through a real MCP client (in memory and over stdio).
 - When you add an example program, add its expected output to `tests/integration/cli.test.ts`.
 
 ## Commit style

@@ -5,3 +5,5 @@ package-lock.json
 website/dist/
 editors/vscode/dist/
 editors/vscode/syntaxes/
+mcp/dist/
+mcp/.view/

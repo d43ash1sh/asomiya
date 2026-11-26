@@ -6,6 +6,27 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **asomiya-mcp**, an MCP server for AI assistants (Claude, ChatGPT, VS Code, Cursor…): tools to
+  run, check and explain Asomiya code and show it in Python, a tested guide for AI models, the
+  docs and examples as resources, lesson and translation prompts, and an in-chat playground (MCP
+  App). Published separately on npm; see [mcp/README.md](mcp/README.md).
+- Website: a "Use with AI" page (asomiya.codes/ai/), an AI card on the home page, an AI section in
+  Installation, and `llms.txt` / `llms-full.txt` so AI assistants that read the web find the same
+  tested guide the MCP server gives them.
+- Docs: the MCP server in ARCHITECTURE, CONTRIBUTING and SECURITY.
+
+### Changed
+
+- Website: the Join page's test count and help-wanted ideas are up to date (the for-each loop
+  shipped in 0.5.0).
+
+### Fixed
+
+- Website: the header no longer overflows between 920 and 1100 pixels wide; the menu button takes
+  over earlier.
+
 ## [0.5.0] — 2026-11-26
 
 ### Added

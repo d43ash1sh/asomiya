@@ -362,6 +362,12 @@ instead of a public issue. See [SECURITY.md](https://github.com/d43ash1sh/asomiy
 
 See all [contributors on GitHub](https://github.com/d43ash1sh/asomiya/graphs/contributors).
 
+## Support
+
+Asomiya is free and always will be. If it helps you or your students, you can
+[buy the maintainer a coffee ☕](https://buymeacoffee.com/debashishbordoloi007). It pays for the domain and hosting, and for time spent
+on lessons and tools for learners.
+
 ## Acknowledgements
 
 The idea of a playful language with native-language keywords was inspired by

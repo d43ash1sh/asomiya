@@ -28,6 +28,10 @@
     "directory": "mcp"
   },
   "homepage": "https://asomiya.codes/ai/",
+  "funding": {
+    "type": "buymeacoffee",
+    "url": "https://buymeacoffee.com/debashishbordoloi007"
+  },
   "bugs": {
     "url": "https://github.com/d43ash1sh/asomiya/issues"
   },

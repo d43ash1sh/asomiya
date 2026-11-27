@@ -115,3 +115,8 @@ Publishing is described in [PUBLISHING.md](PUBLISHING.md).
 ## License
 
 MIT. Part of the [Asomiya](https://github.com/d43ash1sh/asomiya) project.
+
+## Support
+
+Asomiya is free and open source. If it helps you or your students, you can
+[buy the maintainer a coffee ☕](https://buymeacoffee.com/debashishbordoloi007).

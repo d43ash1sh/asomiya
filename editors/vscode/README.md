@@ -76,3 +76,8 @@ from the beginning.
 Found a problem or a word that sounds wrong in Assamese?
 [Open an issue](https://github.com/d43ash1sh/asomiya/issues). The source is on
 [GitHub](https://github.com/d43ash1sh/asomiya/tree/main/editors/vscode).
+
+## Support
+
+Asomiya is free and open source. If it helps you or your students, you can
+[buy the maintainer a coffee ☕](https://buymeacoffee.com/debashishbordoloi007).

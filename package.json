@@ -43,6 +43,10 @@
     "url": "git+https://github.com/d43ash1sh/asomiya.git"
   },
   "homepage": "https://asomiya.codes",
+  "funding": {
+    "type": "buymeacoffee",
+    "url": "https://buymeacoffee.com/debashishbordoloi007"
+  },
   "bugs": {
     "url": "https://github.com/d43ash1sh/asomiya/issues"
   },

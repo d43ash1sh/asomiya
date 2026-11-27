@@ -1,5 +1,5 @@
 // Community page: the team, social links, and how to contribute.
-import { SITE, SOCIAL } from '../site.config.mjs';
+import { SITE, SOCIAL, SUPPORT } from '../site.config.mjs';
 import { teamGrid } from '../lib/team.mjs';
 
 const LABELS = {
@@ -18,6 +18,10 @@ const S = {
     follow: 'Follow along',
     followText: 'News, behind-the-scenes and new features:',
     contribute: 'Contribute',
+    support: 'Support Asomiya',
+    supportText:
+      'Asomiya is free and always will be. If it helped you or your students, a coffee pays for the domain and hosting, and for the time to write lessons and tools for learners.',
+    coffee: 'Buy me a coffee',
     contributeText:
       'Asomiya is open source and gets better with every voice. You don’t need to be an expert to help:',
     ways: [
@@ -47,6 +51,10 @@ const S = {
     follow: 'লগত থাকক',
     followText: 'বাতৰি, পিছফালৰ কাম-কাজ আৰু নতুন সুবিধা:',
     contribute: 'অৱদান আগবঢ়াওক',
+    support: 'অসমীয়াক সহায় কৰক',
+    supportText:
+      'অসমীয়া বিনামূলীয়া, আৰু সদায় থাকিব। ই যদি আপোনাক বা আপোনাৰ ছাত্ৰ-ছাত্ৰীক সহায় কৰিছে, একাপ কফিয়ে ডমেইন আৰু হ’ষ্টিঙৰ খৰচ, আৰু শিকাৰুৰ বাবে পাঠ আৰু সঁজুলি লিখাৰ সময় যোগায়।',
+    coffee: 'একাপ কফি খুৱাওক',
     contributeText:
       'অসমীয়া মুক্ত উৎসৰ, আৰু প্ৰতিজনৰ মতামতে ইয়াক উন্নত কৰে। সহায় কৰিবলৈ বিশেষজ্ঞ হ’ব নালাগে:',
     ways: [
@@ -103,6 +111,13 @@ function body(lang) {
     <a class="btn btn-primary" href="${SITE.repo}/issues" target="_blank" rel="noopener noreferrer">${icon('github')}${s.open}</a>
     <a class="btn btn-secondary" href="${SITE.repo}/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">${s.guide}</a>
     <a class="btn btn-ghost" href="${h.link('join/')}">${lang === 'en' ? 'Test, hack or build with us' : 'আমাৰ সৈতে পৰীক্ষা, হেক বা নিৰ্মাণ কৰক'}</a>
+  </div>
+</section>
+<section class="section narrow">
+  <h2 id="support">${s.support}</h2>
+  <p>${s.supportText}</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary coffee-cta" href="${esc(SUPPORT.coffee)}" target="_blank" rel="noopener noreferrer">${icon('coffee')}${s.coffee}</a>
   </div>
 </section>
 <section class="section narrow">

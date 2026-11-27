@@ -1825,6 +1825,31 @@ html[lang='as'] .page-hero h1 {
   text-decoration: none;
 }
 
+.coffee-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.coffee-btn:hover {
+  border-color: var(--gold);
+  text-decoration: none;
+}
+
+.coffee-btn svg,
+.coffee-cta svg {
+  width: 18px;
+  height: 18px;
+}
+
 /* ── join page ── */
 
 .join-hero .eyebrow {

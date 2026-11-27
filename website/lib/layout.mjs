@@ -1,7 +1,7 @@
 // Page shell: <head>, top navigation, sidebar, table of contents and footer.
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
-import { SITE, SOCIAL } from '../site.config.mjs';
+import { SITE, SOCIAL, SUPPORT } from '../site.config.mjs';
 import { UI } from '../content/ui.mjs';
 import { esc, rel } from './html.mjs';
 import { icon, logo } from './icons.mjs';
@@ -142,6 +142,7 @@ function footer(page, lang, sections) {
       <a class="brand" href="${rel(page.url, lang === 'as' ? 'as/' : '')}">${logo(34)}<span class="brand-name">asomiya</span></a>
       <p>${esc(t.footerTagline)}</p>
       <div class="socials">${socials}</div>
+      <a class="coffee-btn" href="${esc(SUPPORT.coffee)}" target="_blank" rel="noopener noreferrer">${icon('coffee')}<span>${esc(t.coffee)}</span></a>
     </div>
     ${sections
       .map((s) =>
@@ -157,6 +158,7 @@ function footer(page, lang, sections) {
       [t.aiFoot, lang === 'as' ? 'as/ai/' : 'ai/', false],
       ['GitHub', SITE.repo, true],
       ['npm', SITE.npm, true],
+      [t.coffee, SUPPORT.coffee, true],
       [t.changelog, `${SITE.repo}/blob/main/CHANGELOG.md`, true],
       [t.security, `${SITE.repo}/blob/main/SECURITY.md`, true],
     ])}

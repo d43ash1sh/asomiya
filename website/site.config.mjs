@@ -19,6 +19,11 @@ export const SOCIAL = {
   youtube: '',
 };
 
+/** Where people can support the project, shown in the footer and on the Community page. */
+export const SUPPORT = {
+  coffee: 'https://buymeacoffee.com/debashishbordoloi007',
+};
+
 /** The team, shown on the home and Community pages. Links that are empty are not shown. */
 export const TEAM = [
   {

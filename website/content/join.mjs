@@ -670,7 +670,7 @@ function toAssamese(n) {
 export const JOIN = {
   id: 'join',
   path: 'join/',
-  section: 'community',
+  section: 'join',
   layout: 'page',
   title: { en: 'Join us: test, hack, build', as: 'যোগ দিয়ক: পৰীক্ষা, হেক, নিৰ্মাণ' },
   description: {

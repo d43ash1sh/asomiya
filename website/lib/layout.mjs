@@ -72,6 +72,7 @@ function navLinks(page, lang) {
     ['extension', `${prefix}extension/`, t.nav.extension],
     ['ai', `${prefix}ai/`, t.nav.ai],
     ['community', `${prefix}community/`, t.nav.community],
+    ['join', `${prefix}join/`, t.nav.join],
   ];
   return items
     .map(

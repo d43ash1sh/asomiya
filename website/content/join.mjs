@@ -3,13 +3,15 @@
 // time from the real interpreter and repository, so the page can't drift out of date.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { formatDiagnostic, KEYWORD_GLOSSARY, runSource } from '../../dist/index.js';
 import { SITE } from '../site.config.mjs';
 import { esc, shareHash } from '../lib/html.mjs';
 import { highlight } from '../lib/highlight.mjs';
 import { icon } from '../lib/icons.mjs';
 
-const ROOT = new URL('../../', import.meta.url).pathname;
+// fileURLToPath, not URL.pathname: on Windows the pathname is "/D:/…", which breaks paths.
+const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const ADVISORY = `${SITE.repo}/security/advisories/new`;
 const WIKI = `${SITE.repo}/wiki`;
 const ext = (href, label, cls = '') =>

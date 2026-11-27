@@ -1,6 +1,13 @@
 // The playground page: editor, examples, input box, and running code in a Web Worker.
 import type { DigitSetting, MessageLanguage } from '../../../src/index';
 import { EXAMPLES } from '../playground/examples';
+import {
+  BAR_KEYS,
+  type Insert,
+  keyInsert,
+  newlineInsert,
+  prefersRoman,
+} from '../playground/keybar';
 import { highlightPython, splitPython } from '../playground/python-highlight';
 import { fromHash, toHash } from '../playground/share';
 import type { PythonRequest, PythonResponse, RunRequest, RunResponse } from './protocol';
@@ -81,6 +88,14 @@ const pythonHelpersCode = element('python-helpers-code', HTMLElement);
 const pythonCopy = element('python-copy', HTMLButtonElement);
 const pythonDownload = element('python-download', HTMLButtonElement);
 const pythonClose = element('python-close', HTMLButtonElement);
+const keybar = element('keybar', HTMLDivElement);
+const outputPanel = output.closest('.pg-output');
+
+/** Phones and narrow windows, where the output sits below the editor instead of beside it. */
+const narrow = matchMedia('(max-width: 920px)');
+/** A touch screen, where an on-screen keyboard covers the page. */
+const touch = matchMedia('(pointer: coarse)');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 // ── running ───────────────────────────────────────────────────────────────
 
@@ -312,6 +327,20 @@ function finish(result: RunResponse): void {
     result.error === null ? t.done(result.ms) : t.failed,
     result.error === null ? 'ok' : 'fail',
   );
+  revealOutput();
+}
+
+/** On a narrow screen the output is below the editor, so bring it into view after a run. */
+function revealOutput(): void {
+  if (!narrow.matches || outputPanel === null) return;
+  const top = outputPanel.getBoundingClientRect().top;
+  // Already on screen (below the sticky toolbar, in the upper half): leave the page where it is.
+  if (top > 0 && top < innerHeight / 2) return;
+  if (document.activeElement === editor) editor.blur();
+  outputPanel.scrollIntoView({
+    behavior: reducedMotion.matches ? 'auto' : 'smooth',
+    block: 'start',
+  });
 }
 
 /** Terminates the worker (the only way to interrupt running code) and starts fresh next time. */
@@ -355,11 +384,71 @@ function edited(): void {
   syncExampleMenu();
   save(SOURCE_KEY, editor.value);
   translateSoon();
+  if (!keybar.hidden) labelKeybar();
 }
 
 function insertAtCursor(text: string): void {
   editor.setRangeText(text, editor.selectionStart, editor.selectionEnd, 'end');
   edited();
+}
+
+/** Inserts text and places the cursor inside it (between brackets, on a new block's line). */
+function applyInsert(insert: Insert): void {
+  const start = editor.selectionStart;
+  editor.setRangeText(insert.text, start, editor.selectionEnd, 'end');
+  const at = start + insert.cursor;
+  editor.setSelectionRange(at, at);
+  edited();
+}
+
+// ── keyboard bar (phones) ─────────────────────────────────────────────────
+
+const barButtons: { button: HTMLButtonElement; key: (typeof BAR_KEYS)[number] }[] = [];
+
+function buildKeybar(): void {
+  for (const key of BAR_KEYS) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = key.roman === undefined ? 'key key-symbol' : 'key';
+    button.textContent = key.label;
+    // Keep the editor focused so the on-screen keyboard stays open.
+    button.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+    });
+    button.addEventListener('click', () => {
+      editor.focus();
+      applyInsert(keyInsert(key, editor.value, editor.selectionStart, prefersRoman(editor.value)));
+    });
+    barButtons.push({ button, key });
+    keybar.append(button);
+  }
+}
+
+/** Word keys follow the program: English letters if it is written in English letters. */
+function labelKeybar(): void {
+  const roman = prefersRoman(editor.value);
+  for (const { button, key } of barButtons) {
+    if (key.roman === undefined) continue;
+    const word = roman ? key.roman : key.label;
+    button.textContent = key.kind === 'call' ? `${word}()` : word;
+  }
+}
+
+/** Sits on top of the on-screen keyboard: the visual viewport ends where the keyboard begins. */
+function placeKeybar(): void {
+  const view = visualViewport;
+  const covered = view === null ? 0 : Math.max(0, innerHeight - view.height - view.offsetTop);
+  keybar.style.setProperty('--keyboard', `${Math.round(covered)}px`);
+}
+
+function showKeybar(show: boolean): void {
+  const wanted = show && touch.matches;
+  if (wanted) {
+    labelKeybar();
+    placeKeybar();
+  }
+  keybar.hidden = !wanted;
+  document.body.classList.toggle('has-keybar', wanted);
 }
 
 function syncExampleMenu(): void {
@@ -419,6 +508,16 @@ function init(): void {
     if (event.key === 'Tab' && !event.shiftKey && !event.isComposing) {
       event.preventDefault();
       insertAtCursor('    ');
+    } else if (
+      event.key === 'Enter' &&
+      !event.shiftKey &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.isComposing
+    ) {
+      event.preventDefault();
+      applyInsert(newlineInsert(editor.value, editor.selectionStart));
     }
   });
   document.addEventListener('keydown', (event) => {
@@ -445,6 +544,15 @@ function init(): void {
   digits.addEventListener('change', translate);
   errorLang.addEventListener('change', translate);
   if (load(PYTHON_KEY) === '1') setPythonOpen(true);
+  buildKeybar();
+  editor.addEventListener('focus', () => {
+    showKeybar(true);
+  });
+  editor.addEventListener('blur', () => {
+    showKeybar(false);
+  });
+  visualViewport?.addEventListener('resize', placeKeybar);
+  visualViewport?.addEventListener('scroll', placeKeybar);
   for (const chip of document.querySelectorAll<HTMLButtonElement>('[data-insert]')) {
     chip.addEventListener('click', () => {
       editor.focus();

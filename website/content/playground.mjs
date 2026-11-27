@@ -19,6 +19,7 @@ const S = {
     auto: 'Auto',
     keywords: 'Keywords',
     keywordsHint: 'Click to insert',
+    keybar: 'Quick keys',
     editorLabel: 'Program source',
     noscript: 'The playground needs JavaScript.',
     python: 'Python',
@@ -46,6 +47,7 @@ const S = {
     auto: 'স্বয়ংক্ৰিয়',
     keywords: 'মূল শব্দ',
     keywordsHint: 'ক্লিক কৰিলে এডিটৰত সোমাব',
+    keybar: 'সোনকালে লিখা চাবি',
     editorLabel: 'প্ৰগ্ৰাম',
     noscript: 'প্লেগ্ৰাউণ্ডৰ বাবে JavaScript লাগিব।',
     python: 'Python',
@@ -138,6 +140,7 @@ function body(lang) {
       </details>
     </aside>
   </div>
+  <div id="keybar" class="pg-keybar" role="toolbar" aria-label="${s.keybar}" hidden></div>
 </div>`;
 }
 

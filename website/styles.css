@@ -2392,6 +2392,95 @@ html[lang='as'] .page-hero h1 {
   }
 }
 
+/* Phones: one toolbar row (icon-only Python and Share), and a key bar above the on-screen keyboard. */
+@media (max-width: 560px) {
+  .pg-toolbar {
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding-inline: 12px;
+  }
+
+  .pg-toolbar .select {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .pg-toolbar .select select {
+    width: 100%;
+    max-width: none;
+  }
+
+  .pg-toolbar .pg-spacer {
+    display: none;
+  }
+
+  .pg-toolbar .btn-ghost {
+    padding-inline: 9px;
+  }
+
+  .pg-toolbar .btn-ghost span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+.pg-keybar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  border-top: 1px solid var(--line);
+  background: var(--cotton);
+  transform: translateY(calc(-1 * var(--keyboard, 0px)));
+}
+
+.pg-keybar[hidden] {
+  display: none;
+}
+
+.pg-keybar::-webkit-scrollbar {
+  display: none;
+}
+
+.key {
+  flex: none;
+  min-width: 44px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--tok-kw);
+  font: 600 0.95rem var(--mono);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.key-symbol {
+  color: var(--ink);
+}
+
+.key:active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Room for the key bar, so it never hides the last lines of the program. */
+body.has-keybar .pg-editor #editor {
+  padding-bottom: 72px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

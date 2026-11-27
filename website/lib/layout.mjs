@@ -5,6 +5,7 @@ import { ANALYTICS, SITE, SOCIAL, SUPPORT } from '../site.config.mjs';
 import { UI } from '../content/ui.mjs';
 import { esc, rel } from './html.mjs';
 import { icon, logo } from './icons.mjs';
+import { jsonLd, pageTitle } from './seo.mjs';
 
 /** Google's hosts for Analytics 4: the gtag script, and where it sends page views. */
 const GA_SCRIPT = 'https://www.googletagmanager.com';
@@ -216,8 +217,7 @@ export function renderPage({
   scriptDefault,
 }) {
   const t = UI[lang];
-  const title =
-    page.id === 'home' ? `Asomiya — ${page.title[lang]}` : `${page.title[lang]} · Asomiya`;
+  const title = pageTitle(page, lang);
   const description = page.description[lang];
   const canonical = `${SITE.url}/${page.url}`;
   const alternates = ['en', 'as']
@@ -225,7 +225,9 @@ export function renderPage({
       (l) =>
         `<link rel="alternate" hreflang="${l}" href="${SITE.url}/${l === 'en' ? page.basePath : `as/${page.basePath}`}" />`,
     )
+    .concat(`<link rel="alternate" hreflang="x-default" href="${SITE.url}/${page.basePath}" />`)
     .join('\n    ');
+  const notFound = page.id === 'not-found';
   const layout = page.layout ?? 'docs';
   let main;
   if (layout === 'docs') {
@@ -258,8 +260,13 @@ export function renderPage({
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(description)}" />
     ${ga ? `<meta name="ga-measurement-id" content="${esc(ANALYTICS.measurementId)}" />` : ''}
-    <link rel="canonical" href="${canonical}" />
-    ${alternates}
+    ${
+      notFound
+        ? '<meta name="robots" content="noindex" />'
+        : `<link rel="canonical" href="${canonical}" />
+    ${alternates}`
+    }
+    <script type="application/ld+json">${jsonLd(page, lang)}</script>
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Asomiya" />
     <meta property="og:title" content="${esc(title)}" />

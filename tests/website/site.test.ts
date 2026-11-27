@@ -10,7 +10,8 @@ function htmlFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
     const path = join(dir, name);
     if (statSync(path).isDirectory()) return htmlFiles(path);
-    return name.endsWith('.html') ? [path] : [];
+    // google*.html is Search Console's verification file, not a page.
+    return name.endsWith('.html') && !/^google[0-9a-f]+\.html$/.test(name) ? [path] : [];
   });
 }
 
@@ -44,7 +45,10 @@ describe('website security', () => {
 
   it('has no inline scripts or inline event handlers', () => {
     for (const { file, html } of pages) {
-      for (const tag of html.match(/<script\b[^>]*>/g) ?? []) expect(tag, file).toMatch(/\ssrc="/);
+      // Every script is a file of ours, except JSON-LD data blocks (data for search engines, never run).
+      for (const tag of html.match(/<script\b[^>]*>/g) ?? []) {
+        expect(tag, file).toMatch(/\ssrc="|^<script type="application\/ld\+json">$/);
+      }
       expect(html, file).not.toMatch(/\son[a-z]+\s*=\s*["']/i);
       expect(html, file).not.toMatch(/javascript:/i);
     }
@@ -59,6 +63,32 @@ describe('website security', () => {
         throw new Error(`Insecure URL ${url ?? ''} in ${file}`);
       }
     }
+  });
+});
+
+describe('search engines', () => {
+  it('every page has valid schema.org data and a title that says what Asomiya is', () => {
+    for (const { file, html } of pages) {
+      const data = /<script type="application\/ld\+json">([^<]*)<\/script>/.exec(html)?.[1];
+      expect(data, file).toBeDefined();
+      const parsed = JSON.parse(data ?? '') as { '@context': string; '@graph': unknown[] };
+      expect(parsed['@context'], file).toBe('https://schema.org');
+      expect(parsed['@graph'].length, file).toBeGreaterThan(0);
+      if (file.endsWith('404.html')) {
+        expect(html, file).toContain('<meta name="robots" content="noindex" />');
+        continue;
+      }
+      const title = /<title>([^<]*)<\/title>/.exec(html)?.[1] ?? '';
+      expect(title, file).toMatch(/Assamese|অসমীয়া/);
+      expect(html, file).toContain('hreflang="x-default"');
+    }
+  });
+
+  it('the sitemap lists both languages of every page', () => {
+    const sitemap = readFileSync(join(OUT, 'sitemap.xml'), 'utf8');
+    const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+    expect(locs.length).toBe(pages.length - 1);
+    expect(sitemap).toContain('hreflang="as" href="https://asomiya.codes/as/learn/"');
   });
 });
 

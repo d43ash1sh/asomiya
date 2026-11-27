@@ -100,8 +100,21 @@ for (const file of readdirSync(join(ROOT, 'public'))) {
 writeFileSync(
   join(OUT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${SITE.url}/${u}</loc></url>`).join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls
+  .map((u) => {
+    // Each page lists its English and Assamese versions, so Google shows the right one.
+    const base = u.replace(/^as\//, '');
+    const links = [
+      ['en', base],
+      ['as', `as/${base}`],
+      ['x-default', base],
+    ]
+      .map(([l, p]) => `<xhtml:link rel="alternate" hreflang="${l}" href="${SITE.url}/${p}"/>`)
+      .join('');
+    return `  <url><loc>${SITE.url}/${u}</loc>${links}</url>`;
+  })
+  .join('\n')}
 </urlset>
 `,
 );

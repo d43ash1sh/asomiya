@@ -7,3 +7,6 @@ editors/vscode/dist/
 editors/vscode/syntaxes/
 mcp/dist/
 mcp/.view/
+
+# Google Search Console verification file: must stay byte-for-byte as Google gave it
+website/public/google*.html

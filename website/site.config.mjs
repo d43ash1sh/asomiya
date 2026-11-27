@@ -19,6 +19,14 @@ export const SOCIAL = {
   youtube: '',
 };
 
+/**
+ * Google Analytics 4 for asomiya.codes (property "asomiya.codes"). Visitors with Do Not Track or
+ * Global Privacy Control on are not counted. Empty = no analytics, and the CSP blocks Google.
+ */
+export const ANALYTICS = {
+  measurementId: 'G-WZJW4YNNTP',
+};
+
 /** Where people can support the project, shown in the footer and on the Community page. */
 export const SUPPORT = {
   coffee: 'https://buymeacoffee.com/debashishbordoloi007',

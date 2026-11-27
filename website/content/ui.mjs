@@ -33,6 +33,8 @@ export const UI = {
     aiFoot: 'Use with AI (MCP)',
     security: 'Security',
     copyright: (year) => `© ${year} Asomiya. Built in Assam, open source.`,
+    privacy:
+      'We count visits with Google Analytics: no ads, nothing sold. Turn on Do Not Track to be left out.',
     madeWith:
       'Made with ❤️ in <a href="https://heyhireme.indevs.in/" target="_blank" rel="noopener noreferrer">heyhireme</a>',
     copy: 'Copy',
@@ -77,6 +79,8 @@ export const UI = {
     aiFoot: 'AI-ৰ সৈতে (MCP)',
     security: 'সুৰক্ষা',
     copyright: (year) => `© ${year} অসমীয়া। অসমত বনোৱা, মুকলি উৎস।`,
+    privacy:
+      'Google Analyticsৰে আমি কিমানজন আহিছে গণনা কৰোঁ: বিজ্ঞাপন নাই, একো বিক্ৰী নকৰোঁ। গণনাৰ পৰা বাদ পৰিবলৈ Do Not Track অন কৰক।',
     madeWith:
       '<a href="https://heyhireme.indevs.in/" target="_blank" rel="noopener noreferrer">heyhireme</a>-ত ❤️ সৈতে নিৰ্মিত',
     copy: 'কপি',

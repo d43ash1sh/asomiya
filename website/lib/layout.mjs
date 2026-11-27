@@ -1,25 +1,34 @@
 // Page shell: <head>, top navigation, sidebar, table of contents and footer.
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
-import { SITE, SOCIAL, SUPPORT } from '../site.config.mjs';
+import { ANALYTICS, SITE, SOCIAL, SUPPORT } from '../site.config.mjs';
 import { UI } from '../content/ui.mjs';
 import { esc, rel } from './html.mjs';
 import { icon, logo } from './icons.mjs';
 
+/** Google's hosts for Analytics 4: the gtag script, and where it sends page views. */
+const GA_SCRIPT = 'https://www.googletagmanager.com';
+const GA_COLLECT = [
+  'https://*.google-analytics.com',
+  'https://*.analytics.google.com',
+  'https://*.googletagmanager.com',
+];
+const ga = ANALYTICS.measurementId !== '';
+
 /**
  * Content Security Policy. GitHub Pages can't send headers, so it goes in a <meta> tag. Only our
- * own scripts run (no inline script), the playground worker comes from this site, and pages can't
- * make network requests.
+ * own scripts run (no inline script), plus Google Analytics when ANALYTICS is set; the playground
+ * worker comes from this site, and the only network requests allowed are Analytics page views.
  */
 const CSP = [
   "default-src 'none'",
-  "script-src 'self'",
+  ga ? `script-src 'self' ${GA_SCRIPT}` : "script-src 'self'",
   "worker-src 'self'",
   "style-src 'self' https://fonts.googleapis.com",
   'font-src https://fonts.gstatic.com',
-  "img-src 'self' data:",
+  ga ? `img-src 'self' data: ${GA_COLLECT.join(' ')}` : "img-src 'self' data:",
   "manifest-src 'self'",
-  "connect-src 'none'",
+  ga ? `connect-src ${GA_COLLECT.join(' ')}` : "connect-src 'none'",
   "base-uri 'none'",
   "form-action 'none'",
 ].join('; ');
@@ -164,7 +173,7 @@ function footer(page, lang, sections) {
     ])}
   </div>
   <div class="footer-bottom">
-    <p>${t.copyright(new Date().getFullYear())}</p>
+    <p>${t.copyright(new Date().getFullYear())}${ga ? ` ${t.privacy}` : ''}</p>
     <p>${t.madeWith}</p>
   </div>
   <div class="foot-mark" aria-hidden="true" data-reveal><span>asomiya</span></div>
@@ -248,6 +257,7 @@ export function renderPage({
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(description)}" />
+    ${ga ? `<meta name="ga-measurement-id" content="${esc(ANALYTICS.measurementId)}" />` : ''}
     <link rel="canonical" href="${canonical}" />
     ${alternates}
     <meta property="og:type" content="website" />

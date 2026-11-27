@@ -29,8 +29,14 @@ describe('website security', () => {
       const csp = /http-equiv="Content-Security-Policy" content="([^"]+)"/.exec(html)?.[1];
       expect(csp, file).toBeDefined();
       expect(csp, file).toContain("default-src 'none'");
-      expect(csp, file).toContain("script-src 'self'");
-      expect(csp, file).toContain("connect-src 'none'");
+      expect(csp, file).toMatch(/script-src 'self'( https:\/\/www\.googletagmanager\.com)?;/);
+      // The only network requests allowed are Google Analytics page views.
+      const connect = /connect-src ([^;]+)/.exec(csp ?? '')?.[1] ?? '';
+      for (const source of connect.split(' ')) {
+        expect(source, file).toMatch(
+          /^('none'|https:\/\/\*\.(google-analytics\.com|analytics\.google\.com|googletagmanager\.com))$/,
+        );
+      }
       expect(csp, file).not.toContain('unsafe-inline');
       expect(csp, file).not.toContain('unsafe-eval');
     }

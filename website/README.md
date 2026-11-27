@@ -41,6 +41,7 @@ Assamese text is shaped exactly as in a browser. A test fails if a page has no c
 
 ## Security
 
-Every page has a strict Content Security Policy (only this site's scripts, no inline script, no
-network requests). The playground runs code in a Web Worker and inserts output as text only.
+Every page has a strict Content Security Policy (only this site's scripts, no inline script). The
+one exception is Google Analytics (`ANALYTICS` in `site.config.mjs`): its script and page-view
+requests are allowed, and visitors with Do Not Track or Global Privacy Control on are not counted. The playground runs code in a Web Worker and inserts output as text only.
 `tests/website/site.test.ts` checks this, and that every internal link works, on every CI run.

@@ -6,6 +6,7 @@ import {
   type DigitSetting,
   type MessageLanguage,
 } from '../../../src/index';
+import { MAX_OUTPUT_LENGTH } from '../../../src/runtime/limits';
 import { toPython } from '../../../src/python/translate';
 
 export interface RunSettings {
@@ -36,6 +37,8 @@ export function runProgram(source: string, settings: RunSettings): RunOutcome {
     },
     readLine: () => lines.shift() ?? null,
     digits: settings.digits,
+    // Output is kept in memory and shown in the page, so a runaway print loop must stop early.
+    maxOutput: MAX_OUTPUT_LENGTH,
   });
   try {
     interpreter.run(parse(source));

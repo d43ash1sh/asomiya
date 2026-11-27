@@ -47,4 +47,5 @@ export const FIX_HINTS: Readonly<Record<DiagnosticCode, string>> = {
   R019: 'A value grew past the size limit, usually by doubling inside a loop. Check the loop that builds it.',
   R020: 'Built-ins cannot be reassigned. Declare your own variable with ধৰা, or use a different name.',
   R021: 'প্ৰতিটো loops over a list or text only. For counting, make a list ([১, ২, ৩]) or use যেতিয়ালৈকে with a counter.',
+  R022: 'The program printed more than the output limit, usually inside a loop that never ends. Check the loop condition.',
 };

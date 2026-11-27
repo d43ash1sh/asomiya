@@ -7,6 +7,14 @@
 /** Longest text value, in UTF-16 code units (~20 MB). */
 export const MAX_TEXT_LENGTH = 10_000_000;
 
+/**
+ * Most output a program may print when the host keeps it in memory (the playground, the MCP
+ * server, the VS Code extension): ~2 MB. Without it, `যেতিয়ালৈকে (সঁচা) { কোৱা("…") }` builds
+ * up hundreds of megabytes before the step budget stops it. The terminal streams its output and
+ * leaves this off.
+ */
+export const MAX_OUTPUT_LENGTH = 1_000_000;
+
 /** Longest list. */
 export const MAX_LIST_LENGTH = 1_000_000;
 

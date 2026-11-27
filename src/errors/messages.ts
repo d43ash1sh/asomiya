@@ -269,6 +269,12 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) =>
       `"${keywordWord('forEach')}" can only loop over a list or text, but got ${typeName(p.type, 'en')}`,
   },
+  R022: {
+    as: (p) =>
+      `প্ৰগ্ৰামটোৱে অতি বেছি ছপা কৰিলে — সৰ্বোচ্চ ${n(p.limit)} আখৰ; কোনো লুপ শেষ নোহোৱাকৈ চলি আছে নেকি চাওক`,
+    en: (p) =>
+      `The program printed too much output — the maximum is ${p.limit} characters; check for a loop that never ends`,
+  },
 };
 
 export const PHASE_LABELS: Readonly<Record<Phase, Readonly<Record<MessageLanguage, string>>>> = {

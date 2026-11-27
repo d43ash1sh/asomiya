@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Security
+
+- **R022, output limit.** A short print loop such as `যেতিয়ালৈকে (সঁচা) { কোৱা("…") }` could build
+  up ~1 GB of output before the step budget stopped it, freezing the playground tab or crashing
+  the MCP server. Hosts that keep output in memory now stop the program at 1,000,000 characters
+  with R022: `runSource`, the playground, the MCP server and the VS Code extension. The terminal
+  streams its output and is unchanged (`maxOutput` option, default `Infinity` on `Interpreter`).
+
 ### Added
 
 - **asomiya-mcp**, an MCP server for AI assistants (Claude, ChatGPT, VS Code, Cursor…): tools to

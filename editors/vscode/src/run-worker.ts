@@ -12,6 +12,7 @@ import { formatDiagnostic } from '../../../src/errors/format';
 import type { MessageLanguage } from '../../../src/language/types';
 import { parse } from '../../../src/parser/parser';
 import { Interpreter } from '../../../src/runtime/interpreter';
+import { MAX_OUTPUT_LENGTH } from '../../../src/runtime/limits';
 import type { DigitSetting } from '../../../src/runtime/values';
 import { INPUT_CAPACITY, INPUT_HEADER, type FromWorker } from './run-protocol';
 
@@ -50,6 +51,8 @@ const interpreter = new Interpreter({
   },
   readLine,
   digits: job.digits,
+  // The Asomiya panel keeps all output, so a runaway print loop must not grow it without end.
+  maxOutput: MAX_OUTPUT_LENGTH,
 });
 
 try {

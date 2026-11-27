@@ -263,3 +263,9 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 - **অসমীয়া:** "প্ৰতিটো" লুপে কেৱল তালিকা বা পাঠৰ ওপৰেৰে যাব পাৰে, কিন্তু ইয়াৰ প্ৰকাৰ সংখ্যা
 - **English:** "প্ৰতিটো" can only loop over a list or text, but got number
 - **Example:** `প্ৰতিটো ক ১০ মাজত { … }`
+
+### R022
+
+- **অসমীয়া:** প্ৰগ্ৰামটোৱে অতি বেছি ছপা কৰিলে — সৰ্বোচ্চ ১০০০০০০ আখৰ; কোনো লুপ শেষ নোহোৱাকৈ চলি আছে নেকি চাওক
+- **English:** The program printed too much output — the maximum is 1000000 characters; check for a loop that never ends
+- **Example:** `যেতিয়ালৈকে (সঁচা) { কোৱা("নমস্কাৰ") }`

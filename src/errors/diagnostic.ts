@@ -68,6 +68,7 @@ export interface DiagnosticParams {
   R018: Record<string, never>;
   R019: { readonly type: 'string' | 'list'; readonly limit: number };
   R020: { readonly name: string };
+  R022: { readonly limit: number };
   R021: { readonly type: ValueKind };
 }
 

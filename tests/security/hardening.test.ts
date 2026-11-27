@@ -82,3 +82,48 @@ describe('hidden control characters (Trojan Source, terminal escapes)', () => {
     expect(text.length).toBeLessThan(1000);
   });
 });
+
+describe('output size (R022)', () => {
+  const endless = 'যেতিয়ালৈকে (সঁচা) { কোৱা("' + 'আ'.repeat(5000) + '") }';
+
+  it('stops a print loop once the buffered output passes the limit', async () => {
+    const { runSource } = await import('../../src/run');
+    const { MAX_OUTPUT_LENGTH } = await import('../../src/runtime/limits');
+    const result = runSource(endless);
+    expect(result.error?.diagnostic.code).toBe('R022');
+    expect(result.output.length).toBeLessThanOrEqual(MAX_OUTPUT_LENGTH);
+    expect(result.output.length).toBeGreaterThan(MAX_OUTPUT_LENGTH - 6000);
+  });
+
+  it('counts prompts written by সোধা too', async () => {
+    const { runSource } = await import('../../src/run');
+    const result = runSource('যেতিয়ালৈকে (সঁচা) { সোধা("' + 'ক'.repeat(5000) + '") }', {
+      readLine: () => 'x',
+    });
+    expect(result.error?.diagnostic.code).toBe('R022');
+  });
+
+  it('is off for hosts that stream output (the terminal)', async () => {
+    const { Interpreter } = await import('../../src/runtime/interpreter');
+    const { parse } = await import('../../src/parser/parser');
+    let written = 0;
+    const interpreter = new Interpreter({
+      write: (text) => {
+        written += text.length;
+      },
+      maxSteps: 2_000,
+    });
+    expect(() => interpreter.run(parse(endless))).toThrow(/R008|step limit/);
+    expect(written).toBeGreaterThan(1_000_000);
+  });
+
+  it('applies in the playground and the MCP server', async () => {
+    const { runProgram } = await import('../../website/src/playground/runner');
+    expect(runProgram(endless, { lang: 'en', digits: 'auto', stdin: '' }).error).toContain('R022');
+    const mcp = await import('../../mcp/src/runner');
+    const report = mcp.runProgram(endless);
+    expect(report.ok).toBe(false);
+    expect(JSON.stringify(report.error)).toContain('R022');
+    expect(report.output.length).toBeLessThanOrEqual(mcp.MAX_OUTPUT_LENGTH + 200);
+  });
+});

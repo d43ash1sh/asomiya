@@ -41,6 +41,11 @@ export interface InterpreterOptions {
   /** Execution budget per `run` call. `Infinity` disables the limit. */
   readonly maxSteps?: number;
   readonly maxCallDepth?: number;
+  /**
+   * Most characters the program may print in all (R022). `Infinity` (the default) for hosts
+   * that stream output; hosts that keep it in memory should pass MAX_OUTPUT_LENGTH.
+   */
+  readonly maxOutput?: number;
   /** Default `auto`. */
   readonly digits?: DigitSetting;
   /** Lets top-level `ধৰা` re-declare a name (useful in the REPL). */
@@ -63,7 +68,9 @@ const CONTINUE: Completion = { type: 'continue' };
  */
 export class Interpreter {
   readonly globals: Environment;
-  private readonly write: (text: string) => void;
+  private readonly hostWrite: (text: string) => void;
+  private readonly maxOutput: number;
+  private outputLength = 0;
   private readonly readLine: (() => string | null) | null;
   private readonly maxSteps: number;
   private readonly maxCallDepth: number;
@@ -77,7 +84,8 @@ export class Interpreter {
   private lastCallSpan: Span | null = null;
 
   constructor(options: InterpreterOptions = {}) {
-    this.write = options.write ?? (() => undefined);
+    this.hostWrite = options.write ?? (() => undefined);
+    this.maxOutput = options.maxOutput ?? Infinity;
     this.readLine = options.readLine ?? null;
     this.maxSteps = options.maxSteps ?? DEFAULT_MAX_STEPS;
     this.maxCallDepth = options.maxCallDepth ?? DEFAULT_MAX_CALL_DEPTH;
@@ -90,6 +98,15 @@ export class Interpreter {
       builtinScope.declare(name, fn, { start: zero, end: zero });
     }
     this.globals = new Environment(builtinScope);
+  }
+
+  /** Sends output to the host, stopping the program (R022) once it has printed too much. */
+  private emit(text: string, span: Span): void {
+    this.outputLength += text.length;
+    if (this.outputLength > this.maxOutput) {
+      throw runtimeError('R022', { limit: this.maxOutput }, span);
+    }
+    this.hostWrite(text);
   }
 
   /**
@@ -269,7 +286,7 @@ export class Interpreter {
         };
       case 'PrintStatement': {
         const parts = statement.args.map((arg) => this.show(this.evaluate(arg, env), arg.span));
-        this.write(parts.join(' ') + '\n');
+        this.emit(parts.join(' ') + '\n', statement.span);
         return NORMAL;
       }
       case 'BlockStatement':
@@ -482,7 +499,9 @@ export class Interpreter {
         chargeFor: (size) => {
           this.charge(size, expression.span);
         },
-        write: this.write,
+        write: (text) => {
+          this.emit(text, expression.span);
+        },
         readLine: this.readLine,
         roman: this.roman,
       };

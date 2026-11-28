@@ -73,8 +73,9 @@ describe('romanised built-ins', () => {
       'dhora l = [1, 2]',
       'xonjojon(l, 3)',
       'kowa(doirghyo(l), prokar(l), xonkhya("৪২") + 1, path(7) + "!", purnanko(3.9))',
+      'kowa(poromman(-5), axonno(2.5), xorbosso(4, 9, 2), xorbonimno(4, 9, -2))',
     ].join('\n');
-    expect(run(source)).toBe('3 talika 43 7! 3\n');
+    expect(run(source)).toBe('3 talika 43 7! 3\n5 3 9 -2\n');
   });
 
   it('xudha reads input', () => {

@@ -7,7 +7,7 @@ import { InMemoryTransport } from '@modelcontextprotocol/server';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { tokenize } from '../../src/lexer/lexer';
 import { runSource } from '../../src/run';
-import { KEYWORD_GLOSSARY } from '../../src/language/glossary';
+import { BUILTIN_NAMES, KEYWORD_GLOSSARY } from '../../src/language/glossary';
 import { MESSAGES } from '../../src/errors/messages';
 import { fromHash } from '../../website/src/playground/share';
 import {
@@ -250,7 +250,9 @@ describe('lookup_keyword', () => {
   });
 
   it('lists everything for an empty query, and nothing for nonsense', async () => {
-    expect((await lookup('')).matches.length).toBe(KEYWORD_GLOSSARY.length + 7 + 6);
+    expect((await lookup('')).matches.length).toBe(
+      KEYWORD_GLOSSARY.length + Object.keys(BUILTIN_NAMES).length + 6,
+    );
     const none = await call('lookup_keyword', { query: 'zzzz' });
     expect((none.result.structuredContent as { matches: unknown[] }).matches).toEqual([]);
     expect(none.text).toContain('Nothing matches');

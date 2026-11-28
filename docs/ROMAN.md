@@ -69,15 +69,19 @@ Because these are keywords, they can't be used as variable names (`dhora jodi = 
 
 Built-in names are case-sensitive, like other names.
 
-| Assamese | Roman spellings                             | Meaning     |
-| -------- | ------------------------------------------- | ----------- |
-| `দৈৰ্ঘ্য`  | `doirghyo`, `dairghya`, `doirgho`           | length      |
-| `প্ৰকাৰ`  | `prokar`, `prakar`                          | type        |
-| `সংখ্যা`  | `xonkhya`, `sonkhya`, `sankhya`, `xongkhya` | to number   |
-| `পাঠ`    | `path`, `paath`                             | to text     |
-| `পূৰ্ণাংক` | `purnanko`, `purnanka`, `purnank`           | truncate    |
-| `সংযোজন` | `xonjojon`, `sonjojon`, `sanjojan`          | append      |
-| `সোধা`   | `xudha`, `sudha`, `xodha`, `sodha`          | read a line |
+| Assamese  | Roman spellings                                    | Meaning        |
+| --------- | -------------------------------------------------- | -------------- |
+| `দৈৰ্ঘ্য`   | `doirghyo`, `dairghya`, `doirgho`                  | length         |
+| `প্ৰকাৰ`   | `prokar`, `prakar`                                 | type           |
+| `সংখ্যা`   | `xonkhya`, `sonkhya`, `sankhya`, `xongkhya`        | to number      |
+| `পাঠ`     | `path`, `paath`                                    | to text        |
+| `পূৰ্ণাংক`  | `purnanko`, `purnanka`, `purnank`                  | truncate       |
+| `পৰমমান`  | `poromman`, `paramman`, `porom`                    | absolute value |
+| `আসন্ন`    | `axonno`, `asonno`, `asanna`                       | round          |
+| `সৰ্বোচ্চ`  | `xorbosso`, `sorbosso`, `xorbochcho`, `sorbochcho` | maximum        |
+| `সৰ্বনিম্ন` | `xorbonimno`, `sorbonimno`, `sarbanimna`           | minimum        |
+| `সংযোজন`  | `xonjojon`, `sonjojon`, `sanjojan`                 | append         |
+| `সোধা`    | `xudha`, `sudha`, `xodha`, `sodha`                 | read a line    |
 
 ## Output
 

@@ -61,15 +61,19 @@ These are **not** keywords yet. They are listed here so they are not given confl
 Built-ins are ordinary names, not keywords. A program can shadow them with its own `ধৰা` declaration,
 but cannot reassign them (R020).
 
-| Name     | Meaning     | Behaviour                                                                   |
-| -------- | ----------- | --------------------------------------------------------------------------- |
-| `দৈৰ্ঘ্য`  | "length"    | `দৈৰ্ঘ্য(x)` — length of a পাঠ (in grapheme clusters) or a তালিকা.            |
-| `প্ৰকাৰ`  | "type/kind" | `প্ৰকাৰ(x)` — the type name of `x` as a পাঠ, e.g. `"সংখ্যা"`.                 |
-| `সংখ্যা`  | "number"    | `সংখ্যা(x)` — converts a পাঠ to a সংখ্যা. Returns `খালী` if it can't.         |
-| `পাঠ`    | "text"      | `পাঠ(x)` — converts any value to its display text.                          |
-| `পূৰ্ণাংক` | "integer"   | `পূৰ্ণাংক(x)` — drops the fractional part (truncates toward zero).            |
-| `সংযোজন` | "appending" | `সংযোজন(তালিকা, মান)` — adds a value to the end of a list.                  |
-| `সোধা`   | "ask"       | `সোধা()` or `সোধা(প্ৰশ্ন)` — reads one line of input. `খালী` at end of input. |
+| Name      | Meaning          | Behaviour                                                                   |
+| --------- | ---------------- | --------------------------------------------------------------------------- |
+| `দৈৰ্ঘ্য`   | "length"         | `দৈৰ্ঘ্য(x)` — length of a পাঠ (in grapheme clusters) or a তালিকা.            |
+| `প্ৰকাৰ`   | "type/kind"      | `প্ৰকাৰ(x)` — the type name of `x` as a পাঠ, e.g. `"সংখ্যা"`.                 |
+| `সংখ্যা`   | "number"         | `সংখ্যা(x)` — converts a পাঠ to a সংখ্যা. Returns `খালী` if it can't.         |
+| `পাঠ`     | "text"           | `পাঠ(x)` — converts any value to its display text.                          |
+| `পূৰ্ণাংক`  | "integer"        | `পূৰ্ণাংক(x)` — drops the fractional part (truncates toward zero).            |
+| `পৰমমান`  | "absolute value" | `পৰমমান(x)` — non-negative magnitude of a সংখ্যা.                            |
+| `আসন্ন`    | "rounded"        | `আসন্ন(x)` — rounds to the nearest whole number (halves round up).           |
+| `সৰ্বোচ্চ`  | "maximum"        | `সৰ্বোচ্চ(a, b, …)` — largest of two or more numbers.                         |
+| `সৰ্বনিম্ন` | "minimum"        | `সৰ্বনিম্ন(a, b, …)` — smallest of two or more numbers.                       |
+| `সংযোজন`  | "appending"      | `সংযোজন(তালিকা, মান)` — adds a value to the end of a list.                  |
+| `সোধা`    | "ask"            | `সোধা()` or `সোধা(প্ৰশ্ন)` — reads one line of input. `খালী` at end of input. |
 
 ## Type names — মানৰ প্ৰকাৰ
 

@@ -16,6 +16,10 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- **Maths built-ins** (#8): `পৰমমান` (`poromman`, absolute value), `আসন্ন` (`axonno`, round to
+  nearest whole number), `সৰ্বোচ্চ` (`xorbosso`, largest of two or more numbers), and `সৰ্বনিম্ন`
+  (`xorbonimno`, smallest of two or more numbers), with Python translation, editor support, and
+  docs.
 - **asomiya-mcp**, an MCP server for AI assistants (Claude, ChatGPT, VS Code, Cursor…): tools to
   run, check and explain Asomiya code and show it in Python, a tested guide for AI models, the
   docs and examples as resources, lesson and translation prompts, and an in-chat playground (MCP

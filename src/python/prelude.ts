@@ -470,6 +470,66 @@ def integer(value):
     ['math'],
   ),
 
+  abs_num: h(
+    `
+def abs_num(value):
+    """পৰমমান: absolute value of a number."""
+    if kind(value) != "number":
+        fail("R014", f"abs needs a number, not {kind(value)}")
+    result = abs(value)
+    return 0.0 if result == 0 else result`,
+    ['kind', 'fail'],
+  ),
+
+  round_num: h(
+    `
+def round_num(value):
+    """আসন্ন: rounds to the nearest whole number (halves round toward +infinity)."""
+    if kind(value) != "number":
+        fail("R014", f"round needs a number, not {kind(value)}")
+    if value != value or value in (math.inf, -math.inf) or abs(value) >= 4503599627370496.0:
+        return 0.0 if value == 0 else value
+    f = math.floor(value)
+    r = f + 1.0 if value - f >= 0.5 else f
+    return 0.0 if r == 0 else float(r)`,
+    ['kind', 'fail'],
+    ['math'],
+  ),
+
+  max_num: h(
+    `
+def max_num(*args):
+    """সৰ্বোচ্চ: largest of two or more numbers."""
+    if len(args) < 2:
+        fail("R006", f"max expects at least 2 arguments, got {len(args)}")
+    for v in args:
+        if kind(v) != "number":
+            fail("R014", f"max needs numbers, not {kind(v)}")
+    for v in args:
+        if v != v:
+            return v
+    result = max(args)
+    return 0.0 if result == 0 else result`,
+    ['kind', 'fail'],
+  ),
+
+  min_num: h(
+    `
+def min_num(*args):
+    """সৰ্বনিম্ন: smallest of two or more numbers."""
+    if len(args) < 2:
+        fail("R006", f"min expects at least 2 arguments, got {len(args)}")
+    for v in args:
+        if kind(v) != "number":
+            fail("R014", f"min needs numbers, not {kind(v)}")
+    for v in args:
+        if v != v:
+            return v
+    result = min(args)
+    return 0.0 if result == 0 else result`,
+    ['kind', 'fail'],
+  ),
+
   append: h(
     `
 def append(items, value):

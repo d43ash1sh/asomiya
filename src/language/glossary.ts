@@ -205,6 +205,10 @@ export const BUILTIN_NAMES = {
   toNumber: 'সংখ্যা',
   toText: 'পাঠ',
   toInteger: 'পূৰ্ণাংক',
+  abs: 'পৰমমান',
+  round: 'আসন্ন',
+  max: 'সৰ্বোচ্চ',
+  min: 'সৰ্বনিম্ন',
   append: 'সংযোজন',
   input: 'সোধা',
 } as const;
@@ -218,6 +222,10 @@ export const BUILTIN_ROMAN: Readonly<Record<BuiltinKey, readonly string[]>> = {
   toNumber: ['xonkhya', 'sonkhya', 'sankhya', 'xongkhya'],
   toText: ['path', 'paath'],
   toInteger: ['purnanko', 'purnanka', 'purnank'],
+  abs: ['poromman', 'paramman', 'porom'],
+  round: ['axonno', 'asonno', 'asanna'],
+  max: ['xorbosso', 'sorbosso', 'xorbochcho', 'sorbochcho'],
+  min: ['xorbonimno', 'sorbonimno', 'sarbanimna'],
   append: ['xonjojon', 'sonjojon', 'sanjojan'],
   input: ['xudha', 'sudha', 'xodha', 'sodha'],
 };

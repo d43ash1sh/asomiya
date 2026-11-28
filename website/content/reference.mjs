@@ -54,6 +54,26 @@ const BUILTIN_DOCS = {
     en: 'Drops the decimal part (towards zero).',
     as: 'দশমিকৰ পিছৰ অংশ বাদ দিয়ে।',
   },
+  abs: {
+    sig: '(x)',
+    en: 'Absolute value of a number.',
+    as: 'সংখ্যা এটাৰ পৰম মান উলিয়ায়।',
+  },
+  round: {
+    sig: '(x)',
+    en: 'Rounds a number to the nearest whole number.',
+    as: 'সংখ্যা এটাক ওচৰৰ পূৰ্ণ সংখ্যালৈ নিয়ে (আসন্ন মান)।',
+  },
+  max: {
+    sig: '(a, b, …)',
+    en: 'Largest of two or more numbers.',
+    as: 'দুটা বা ততোধিক সংখ্যাৰ ভিতৰত আটাইতকৈ ডাঙৰটো।',
+  },
+  min: {
+    sig: '(a, b, …)',
+    en: 'Smallest of two or more numbers.',
+    as: 'দুটা বা ততোধিক সংখ্যাৰ ভিতৰত আটাইতকৈ সৰুটো।',
+  },
   append: { sig: '(list, x)', en: 'Adds x to the end of a list.', as: 'তালিকাৰ শেষত x যোগ কৰে।' },
   input: {
     sig: '(question?)',
@@ -79,7 +99,7 @@ const overview = {
     en: (h) => `
 <div class="card-grid">
   <a class="card" href="${h.link('reference/keywords/')}"><strong>Keywords</strong><span>All 17 keywords, in Assamese and English letters.</span></a>
-  <a class="card" href="${h.link('reference/builtins/')}"><strong>Built-in functions</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, সংযোজন, সোধা.</span></a>
+  <a class="card" href="${h.link('reference/builtins/')}"><strong>Built-in functions</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, পৰমমান, আসন্ন, সৰ্বোচ্চ, সৰ্বনিম্ন, সংযোজন, সোধা.</span></a>
   <a class="card" href="${h.link('reference/errors/')}"><strong>Error codes</strong><span>Every error, with its message and an example.</span></a>
   <a class="card" href="${h.link('reference/cli/')}"><strong>CLI and REPL</strong><span>Commands, options and exit codes.</span></a>
   <a class="card" href="${h.link('reference/javascript-api/')}"><strong>JavaScript API</strong><span>Run Asomiya from your own code.</span></a>
@@ -88,7 +108,7 @@ const overview = {
     as: (h) => `
 <div class="card-grid">
   <a class="card" href="${h.link('reference/keywords/')}"><strong>মূল শব্দ</strong><span>১৭টা মূল শব্দ, অসমীয়া আৰু ইংৰাজী আখৰত।</span></a>
-  <a class="card" href="${h.link('reference/builtins/')}"><strong>অন্তৰ্নিৰ্মিত ফাংচন</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, সংযোজন, সোধা।</span></a>
+  <a class="card" href="${h.link('reference/builtins/')}"><strong>অন্তৰ্নিৰ্মিত ফাংচন</strong><span>দৈৰ্ঘ্য, প্ৰকাৰ, সংখ্যা, পাঠ, পূৰ্ণাংক, পৰমমান, আসন্ন, সৰ্বোচ্চ, সৰ্বনিম্ন, সংযোজন, সোধা।</span></a>
   <a class="card" href="${h.link('reference/errors/')}"><strong>ভুলৰ ক’ড</strong><span>প্ৰতিটো ভুল, বাৰ্তা আৰু উদাহৰণসহ।</span></a>
   <a class="card" href="${h.link('reference/cli/')}"><strong>CLI আৰু REPL</strong><span>কমাণ্ড, বিকল্প আৰু এক্সিট ক’ড।</span></a>
   <a class="card" href="${h.link('reference/javascript-api/')}"><strong>JavaScript API</strong><span>নিজৰ ক’ডৰ পৰা অসমীয়া চলাওক।</span></a>
@@ -161,8 +181,8 @@ const builtins = {
   path: 'reference/builtins/',
   title: { en: 'Built-in functions', as: 'অন্তৰ্নিৰ্মিত ফাংচন' },
   description: {
-    en: 'The seven built-in functions of Asomiya, with examples.',
-    as: 'অসমীয়াৰ সাতটা অন্তৰ্নিৰ্মিত ফাংচন, উদাহৰণসহ।',
+    en: 'The built-in functions of Asomiya, with examples.',
+    as: 'অসমীয়াৰ অন্তৰ্নিৰ্মিত ফাংচনবোৰ, উদাহৰণসহ।',
   },
   intro: {
     en: 'Built-in functions are always available. Unlike keywords, they are ordinary names: you can create your own variable with the same name inside a block, but you can’t reassign them (<code>R020</code>).',

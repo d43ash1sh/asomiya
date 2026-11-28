@@ -87,7 +87,7 @@
         },
         {
           "name": "support.function.builtin.asomiya",
-          "match": "(?<![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])(?:dairghya|doirghyo|purnanka|purnanko|sanjojan|sonjojon|xongkhya|xonjojon|পূৰ্ণাংক|doirgho|purnank|sankhya|sonkhya|xonkhya|দৈৰ্ঘ্য|সংযোজন|prakar|prokar|প্ৰকাৰ|সংখ্যা|সংযোজন|paath|sodha|sudha|xodha|xudha|কোৱা|সোধা|kowa|kuwa|path|কোৱা|সোধা|koa|kua|পাঠ)(?![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])"
+          "match": "(?<![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])(?:sarbanimna|sorbochcho|sorbonimno|xorbochcho|xorbonimno|সৰ্বনিম্ন|সৰ্বোচ্চ|dairghya|doirghyo|paramman|poromman|purnanka|purnanko|sanjojan|sonjojon|sorbosso|xongkhya|xonjojon|xorbosso|পূৰ্ণাংক|সৰ্বোচ্চ|doirgho|purnank|sankhya|sonkhya|xonkhya|দৈৰ্ঘ্য|সংযোজন|asanna|asonno|axonno|prakar|prokar|পৰমমান|প্ৰকাৰ|সংখ্যা|সংযোজন|paath|porom|sodha|sudha|xodha|xudha|আসন্ন|কোৱা|সোধা|kowa|kuwa|path|কোৱা|সোধা|koa|kua|পাঠ)(?![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])"
         }
       ]
     },

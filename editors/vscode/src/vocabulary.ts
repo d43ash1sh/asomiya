@@ -118,6 +118,30 @@ const BUILTIN_INFO: Readonly<
     as: 'দশমিকৰ পিছৰ অংশ বাদ দিয়ে।',
     python: 'int()',
   },
+  abs: {
+    signature: '(x)',
+    en: 'Absolute value of a number.',
+    as: 'সংখ্যা এটাৰ পৰম মান উলিয়ায়।',
+    python: 'abs()',
+  },
+  round: {
+    signature: '(x)',
+    en: 'Rounds a number to the nearest whole number.',
+    as: 'সংখ্যা এটাক ওচৰৰ পূৰ্ণ সংখ্যালৈ নিয়া (আসন্ন মান)।',
+    python: 'round()',
+  },
+  max: {
+    signature: '(a, b, …)',
+    en: 'Largest of two or more numbers.',
+    as: 'দুটা বা ততোধিক সংখ্যাৰ ভিতৰত আটাইতকৈ ডাঙৰটো।',
+    python: 'max()',
+  },
+  min: {
+    signature: '(a, b, …)',
+    en: 'Smallest of two or more numbers.',
+    as: 'দুটা বা ততোধিক সংখ্যাৰ ভিতৰত আটাইতকৈ সৰুটো।',
+    python: 'min()',
+  },
   append: {
     signature: '(list, x)',
     en: 'Adds x to the end of a list.',

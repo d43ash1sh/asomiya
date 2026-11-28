@@ -73,6 +73,10 @@ const BUILTIN_RESULT: Readonly<Record<BuiltinKey, bigint>> = {
   toNumber: NUM | NULL,
   toText: STR,
   toInteger: NUM,
+  abs: NUM,
+  round: NUM,
+  max: NUM,
+  min: NUM,
   append: NULL,
   input: STR | NULL,
 };
@@ -83,6 +87,10 @@ const BUILTIN_HELPER: Readonly<Record<BuiltinKey, string>> = {
   toNumber: 'number',
   toText: 'text',
   toInteger: 'integer',
+  abs: 'abs_num',
+  round: 'round_num',
+  max: 'max_num',
+  min: 'min_num',
   append: 'append',
   input: 'ask',
 };

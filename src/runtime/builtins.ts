@@ -87,6 +87,42 @@ const toInteger = builtin(BUILTIN_NAMES.toInteger, 1, 1, (args, ctx) => {
   return num(Math.trunc(x.value) + 0); // `+ 0` turns -0 into 0
 });
 
+const abs = builtin(BUILTIN_NAMES.abs, 1, 1, (args, ctx) => {
+  const x = argAt(args, 0);
+  if (x.kind !== 'number') return typeError(BUILTIN_NAMES.abs, 0, ['number'], x, ctx);
+  return num(Math.abs(x.value) + 0);
+});
+
+const round = builtin(BUILTIN_NAMES.round, 1, 1, (args, ctx) => {
+  const x = argAt(args, 0);
+  if (x.kind !== 'number') return typeError(BUILTIN_NAMES.round, 0, ['number'], x, ctx);
+  return num(Math.round(x.value) + 0);
+});
+
+function extrema(
+  name: string,
+  pick: (...values: number[]) => number,
+  args: readonly Value[],
+  ctx: BuiltinContext,
+): NumberValue {
+  const numbers: number[] = [];
+  for (let i = 0; i < args.length; i++) {
+    const v = argAt(args, i);
+    if (v.kind !== 'number') return typeError(name, i, ['number'], v, ctx);
+    numbers.push(v.value);
+  }
+  const result = pick(...numbers);
+  return num(result === 0 ? 0 : result);
+}
+
+const max = builtin(BUILTIN_NAMES.max, 2, Infinity, (args, ctx) =>
+  extrema(BUILTIN_NAMES.max, Math.max, args, ctx),
+);
+
+const min = builtin(BUILTIN_NAMES.min, 2, Infinity, (args, ctx) =>
+  extrema(BUILTIN_NAMES.min, Math.min, args, ctx),
+);
+
 const append = builtin(BUILTIN_NAMES.append, 2, 2, (args, ctx) => {
   const target = argAt(args, 0);
   if (target.kind !== 'list') return typeError(BUILTIN_NAMES.append, 0, ['list'], target, ctx);
@@ -118,6 +154,10 @@ export function createBuiltins(): ReadonlyMap<string, BuiltinFunctionValue> {
     toNumber,
     toText,
     toInteger,
+    abs,
+    round,
+    max,
+    min,
     append,
     input,
   };

@@ -62,6 +62,7 @@ const types = (kinds: readonly ValueKind[], lang: MessageLanguage): string =>
   kinds.map((k) => typeName(k, lang)).join(lang === 'as' ? ' বা ' : ' or ');
 
 const arityText = (min: number, max: number, lang: MessageLanguage): string => {
+  if (max === Infinity) return lang === 'as' ? `অন্ততঃ ${n(min)}টা` : `at least ${min}`;
   if (lang === 'as') return min === max ? `${n(min)}টা` : `${n(min)}ৰ পৰা ${n(max)}টা`;
   return min === max ? `${min}` : `${min} to ${max}`;
 };

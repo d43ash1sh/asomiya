@@ -60,7 +60,8 @@ export class RunSession {
       this.receive(message);
     });
     this.worker.on('error', (error) => {
-      this.finish('error', `internal error: ${error.message}`);
+      const message = error instanceof Error ? error.message : String(error);
+      this.finish('error', `internal error: ${message}`);
     });
     this.worker.on('exit', () => {
       // An exit without "done" (it crashed or was terminated) still ends the run.

@@ -27,6 +27,8 @@ All notable changes to this project are documented here. The format follows
 
 ### Changed
 
+- Docs: recorded Assamese-speaker language review notes on provisional keywords in
+  `docs/KEYWORDS.md` (#5).
 - Website: the Join page's test count and help-wanted ideas are up to date (the for-each loop
   shipped in 0.5.0).
 

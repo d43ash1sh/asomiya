@@ -1,0 +1,19 @@
+// Student marks calculator (same program in English letters)
+dhora nomborbor = [85, 72, 91, 64, 88]
+dhora muth = 0
+
+protito nombor nomborbor majot {
+    muth = muth + nombor
+}
+
+fangchon sreni(gor) {
+    jodi (gor >= 80) { ghuraidiya "Prothom Sreni (Star)" }
+    jodi (gor >= 60) { ghuraidiya "Prothom Sreni" }
+    jodi (gor >= 45) { ghuraidiya "Ditiyo Sreni" }
+    ghuraidiya "Tritiyo Sreni"
+}
+
+dhora gor = muth / doirghyo(nomborbor)
+kowa("Muth nombor:", muth)
+kowa("Gor:", gor)
+kowa("Folafol:", sreni(gor))

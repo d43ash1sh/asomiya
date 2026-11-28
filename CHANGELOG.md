@@ -16,6 +16,9 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- Examples: added `examples/guess.asom` (number-guessing game with `সোধা`), `examples/text.asom`
+  (text indexing and grapheme clusters), `examples/marks.asom`, and `examples/marks_roman.asom`
+  (student marks calculator in both scripts) (#7).
 - **asomiya-mcp**, an MCP server for AI assistants (Claude, ChatGPT, VS Code, Cursor…): tools to
   run, check and explain Asomiya code and show it in Python, a tested guide for AI models, the
   docs and examples as resources, lesson and translation prompts, and an in-chat playground (MCP

@@ -81,6 +81,18 @@ const EXPECTED: Record<string, string> = {
     '["প্ৰা", "প্ত", "ব", "য়", "স্ক"]',
     '',
   ].join('\n'),
+  'text.asom': [
+    'পাঠ: অসমীয়া ভাষা',
+    'মুঠ আখৰ: ৭',
+    'প্ৰথম আখৰ: অ আৰু শেষৰ আখৰ: ষা',
+    'প্ৰকাশ → শকাপ্ৰ',
+    'মা দৈৰ্ঘ্য: ১',
+    '',
+  ].join('\n'),
+  'marks.asom': ['মুঠ নম্বৰ: ৪০০', 'গড়: ৮০', 'ফলাফল: প্ৰথম শ্ৰেণী (তাৰকা)', ''].join('\n'),
+  'marks_roman.asom': ['Muth nombor: 400', 'Gor: 80', 'Folafol: Prothom Sreni (Star)', ''].join(
+    '\n',
+  ),
 };
 
 describe('running the example programs', () => {
@@ -100,6 +112,20 @@ describe('running the example programs', () => {
   it('greet.asom handles end of input', () => {
     const result = cli(['run', 'examples/greet.asom'], '');
     expect(result.stdout).toBe("আপোনাৰ নাম কি? কোনো নাম দিয়া নহ'ল\n");
+  });
+
+  it('guess.asom plays a guessing game from standard input', () => {
+    const result = cli(['run', 'examples/guess.asom'], 'abc\n৫\n৮\n৭\n');
+    expect(result.stdout).toBe(
+      [
+        '১ৰ পৰা ১০লৈ এটা সংখ্যা অনুমান কৰক: অনুগ্ৰহ কৰি এটা সংখ্যা লিখক।',
+        '১ৰ পৰা ১০লৈ এটা সংখ্যা অনুমান কৰক: অলপ ডাঙৰ সংখ্যা কওক।',
+        '১ৰ পৰা ১০লৈ এটা সংখ্যা অনুমান কৰক: অলপ সৰু সংখ্যা কওক।',
+        '১ৰ পৰা ১০লৈ এটা সংখ্যা অনুমান কৰক: শুদ্ধ! আপুনি ৩ বাৰত পালে।',
+        '',
+      ].join('\n'),
+    );
+    expect(result.status).toBe(0);
   });
 });
 

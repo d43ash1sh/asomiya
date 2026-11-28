@@ -75,6 +75,10 @@
         },
         {
           "name": "keyword.control.asomiya",
+          "match": "(?<![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])(?:ঘূৰাই|ghurai)[ \\t]+(?:দিয়া|দিয়া|diya|dia)(?![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])"
+        },
+        {
+          "name": "keyword.control.asomiya",
           "match": "(?<![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])(?:jetiyaloike|zetiyaloike|যেতিয়ালৈকে|ghuraidiya|jetialoike|zetialoike|ঘূৰাইদিয়া|যেতিয়ালৈকে|ghuraidia|jetialoke|ঘূৰাইদিয়া|aagbaara|প্ৰতিটো|aagbara|agbarha|agobara|pratito|protito|protitu|আগবাঢ়া|প্ৰতিটো|agbara|maajot|majhot|nahale|nahole|noh'le|noh’le|nohole|আগবাঢ়া|majat|majot|nhole|nohle|rakha|rokha|নহ'লে|নহ’লে|jadi|jodi|zodi|নহলে|মাজত|যদি|ৰখা)(?![\\p{L}\\p{M}\\p{N}_\\x{200C}\\x{200D}])"
         },
         {

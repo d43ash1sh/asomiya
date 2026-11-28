@@ -50,6 +50,16 @@ describe('romanised keywords', () => {
   it('cannot use a Roman keyword as a variable name', () => {
     expect(fail('dhora jodi = 1').diagnostic.code).toBe('P009');
   });
+
+  it('accepts the two-word Roman return form ghurai diya / ghurai dia', () => {
+    expect(types('ghurai diya')).toEqual(['Return']);
+    expect(types('ghurai  dia')).toEqual(['Return']);
+    expect(types('ghurai\ndiya')).toEqual(['Identifier', 'Newline', 'Identifier']);
+    expect(types('Ghurai diya')).toEqual(['Identifier', 'Identifier']);
+    expect(types('ghurai Diya')).toEqual(['Identifier', 'Identifier']);
+    expect(run('fangchon add(a, b) {\n  ghurai diya a + b\n}\nkowa(add(2, 3))')).toBe('5\n');
+    expect(run('ফাংচন যোগ(ক, খ) {\n  ঘূৰাই দিয়া ক + খ\n}\nকোৱা(যোগ(২, ৩))')).toBe('৫\n');
+  });
 });
 
 describe('digits for romanised programs', () => {

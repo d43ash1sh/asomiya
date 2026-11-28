@@ -277,6 +277,42 @@ export class Lexer {
   }
 
   private scanIdentifier(start: Position): void {
+    this.scanIdentifierWord();
+    const span = this.spanFrom(start);
+    const lexeme = this.source.slice(start.offset, span.end.offset);
+    const name = normalizeIdentifier(lexeme);
+
+    if (name === 'ঘূৰাই' || name === 'ghurai') {
+      const savedOffset = this.offset;
+      const savedLine = this.line;
+      const savedColumn = this.column;
+      while (this.isHorizontalWhitespace(this.peek())) this.advance();
+      if (this.offset > savedOffset && isIdentifierStart(this.peek())) {
+        const secondStart = this.offset;
+        this.scanIdentifierWord();
+        const secondName = normalizeIdentifier(this.source.slice(secondStart, this.offset));
+        if (
+          (name === 'ঘূৰাই' && secondName === 'দিয়া') ||
+          (name === 'ghurai' && (secondName === 'diya' || secondName === 'dia'))
+        ) {
+          this.pushSimple('Return', start);
+          return;
+        }
+      }
+      this.offset = savedOffset;
+      this.line = savedLine;
+      this.column = savedColumn;
+    }
+
+    const keyword = keywordTokenType(name);
+    if (keyword !== undefined) {
+      this.tokens.push({ type: keyword, lexeme, span });
+    } else {
+      this.tokens.push({ type: 'Identifier', lexeme, name, span });
+    }
+  }
+
+  private scanIdentifierWord(): void {
     this.advance();
     for (;;) {
       const ch = this.peek();
@@ -292,15 +328,10 @@ export class Lexer {
         break;
       }
     }
-    const span = this.spanFrom(start);
-    const lexeme = this.source.slice(start.offset, span.end.offset);
-    const name = normalizeIdentifier(lexeme);
-    const keyword = keywordTokenType(name);
-    if (keyword !== undefined) {
-      this.tokens.push({ type: keyword, lexeme, span });
-    } else {
-      this.tokens.push({ type: 'Identifier', lexeme, name, span });
-    }
+  }
+
+  private isHorizontalWhitespace(ch: string): boolean {
+    return ch !== '' && ch !== '\n' && ch !== '\r' && isWhitespace(ch);
   }
 
   private scanOperator(start: Position, ch: string): void {

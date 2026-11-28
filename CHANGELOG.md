@@ -16,6 +16,9 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- **Two-word `ঘূৰাই দিয়া` for return** (`ghurai diya`, `ghurai dia`): the lexer now joins `ঘূৰাই`
+  followed by horizontal whitespace and `দিয়া` into the same `return` token as `ঘূৰাইদিয়া`, while
+  keeping the one-word form working (#4).
 - **asomiya-mcp**, an MCP server for AI assistants (Claude, ChatGPT, VS Code, Cursor…): tools to
   run, check and explain Asomiya code and show it in Python, a tested guide for AI models, the
   docs and examples as resources, lesson and translation prompts, and an in-chat playground (MCP

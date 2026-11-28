@@ -19,6 +19,12 @@ function words(entries: readonly Word[]): string {
   return `(?<!${NAME_CHAR})(?:${sorted.map(escape).join('|')})(?!${NAME_CHAR})`;
 }
 
+function twoWordReturn(): string {
+  const first = [...spellings('ঘূৰাই'), 'ghurai'].map(escape).join('|');
+  const second = [...spellings('দিয়া'), 'diya', 'dia'].map(escape).join('|');
+  return `(?<!${NAME_CHAR})(?:${first})[ \\t]+(?:${second})(?!${NAME_CHAR})`;
+}
+
 const pick = (...ids: string[]): Word[] => WORDS.filter((w) => ids.includes(w.id));
 
 export function buildGrammar(): object {
@@ -61,6 +67,7 @@ export function buildGrammar(): object {
       keywords: {
         patterns: [
           { name: 'storage.type.asomiya', match: words(pick('let', 'function')) },
+          { name: 'keyword.control.asomiya', match: twoWordReturn() },
           {
             name: 'keyword.control.asomiya',
             match: words(

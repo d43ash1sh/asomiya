@@ -147,7 +147,7 @@ again as usual. Same placement rules as `ৰখা` (P011 outside a loop).
 - A call must pass exactly as many arguments as there are parameters (R006). Arguments are evaluated
   left to right before the body runs.
 - Each call gets a fresh scope whose parent is the scope where the function was declared.
-- `ঘূৰাইদিয়া মান` returns `মান`. A bare `ঘূৰাইদিয়া`, or reaching the end of the body, returns `খালী`.
+- `ঘূৰাইদিয়া মান` (or two-word `ঘূৰাই দিয়া মান`) returns `মান`. A bare `ঘূৰাইদিয়া` / `ঘূৰাই দিয়া`, or reaching the end of the body, returns `খালী`.
   `ঘূৰাইদিয়া` outside a function is a syntax error (P005).
 - Recursion is supported, up to a maximum call depth (default 500, R009). If the host stack runs out first (only possible when the limit is raised) the error is R018.
 

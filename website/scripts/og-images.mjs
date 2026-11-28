@@ -46,7 +46,15 @@ function label(def, lang, section) {
 }
 
 /** Plain text of a description (some contain <code> tags). */
-const plain = (html) => html.replace(/<[^>]+>/g, '');
+const plain = (html) => {
+  let text = html;
+  let previous;
+  do {
+    previous = text;
+    text = text.replace(/<[^<>]*>/g, '');
+  } while (text !== previous);
+  return text.replace(/[<>]/g, '');
+};
 
 // The sample on every card: the for-each loop, highlighted like the site's code blocks.
 const kw = (s) => `<span class="kw">${s}</span>`;

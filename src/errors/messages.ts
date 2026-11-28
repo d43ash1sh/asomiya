@@ -288,6 +288,11 @@ export function renderMessage<C extends DiagnosticCode>(
   params: DiagnosticParams[C],
   lang: MessageLanguage,
 ): string {
+  // `code` comes from the public API, so plain JavaScript callers can pass anything: only look up
+  // the table's own entries (never inherited ones like `constructor`).
+  if (!Object.hasOwn(MESSAGES, code)) {
+    throw new TypeError(`Unknown message code: ${code}`);
+  }
   const def: MessageDef<C> = MESSAGES[code];
   return def[lang](params);
 }

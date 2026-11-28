@@ -46,7 +46,7 @@ describe('website security', () => {
   it('has no inline scripts or inline event handlers', () => {
     for (const { file, html } of pages) {
       // Every script is a file of ours, except JSON-LD data blocks (data for search engines, never run).
-      for (const tag of html.match(/<script\b[^>]*>/g) ?? []) {
+      for (const tag of html.match(/<script\b[^>]*>/gi) ?? []) {
         expect(tag, file).toMatch(/\ssrc="|^<script type="application\/ld\+json">$/);
       }
       expect(html, file).not.toMatch(/\son[a-z]+\s*=\s*["']/i);

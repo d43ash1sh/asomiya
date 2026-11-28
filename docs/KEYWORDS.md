@@ -38,15 +38,14 @@ Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi`
 
 - **`যেতিয়ালৈকে`** — With a negated clause, `…লৈকে` can mean "until" (_তুমি নহালৈকে_ = "until you
   come"), which is the opposite of what a loop does. In this language the condition is always read
-  positively: the loop runs **as long as** it is `সঁচা`. Candidates that have been considered: `যিমানলৈকে`.
+  positively: the loop runs **as long as** it is `সঁচা` (as in everyday Assamese _যেতিয়ালৈকে বৰষুণ দি থাকিব, ঘৰতে থাকা_ = "while it keeps raining, stay home"). Better than `যিমানলৈকে`, which refers more to extent/amount than time/condition.
 - **`প্ৰতিটো` … `মাজত`** — Follows Assamese word order: the postposition `মাজত` comes after the list,
   as in _ফলবোৰৰ মাজত_ ("among the fruits"). The genitive `ৰ` is left off so the list can be any
   expression (`প্ৰতিটো ক [১, ২] মাজত`). Writing it in English order (`প্ৰতিটো ক মাজত ল`) is error P013,
   which shows the right order.
-- **`ফাংচন`** — Chosen because programmers recognise it straight away. Native candidates: `ফলন` (the
-  mathematics term) and `কাৰ্য` ("task / act"). Needs review.
-- **`ঘূৰাইদিয়া`** — A keyword has to be one token, so the two words are joined. A two-word form
-  `ঘূৰাই দিয়া` could be supported later.
+- **`ফাংচন`** — Chosen because learners and SEBA/AHSEC computer-science students recognise it straight away (e.g. _এই ফাংচনটোৱে দুটা সংখ্যা যোগ কৰে_). Native candidates `ফলন` (mathematical function) and `কাৰ্য` ("task / act") remain useful notes for future aliases if desired.
+- **`ঘূৰাইদিয়া`** — Standard Assamese spelling is two words, **ঘূৰাই দিয়া** (_কিতাপখন ঘূৰাই দিয়া_ = "return the book"); supporting the two-word form addresses the main naturalness concern while keeping `ঘূৰাইদিয়া` working.
+- **`আগবাঢ়া`** — Natural everyday imperative ("go ahead / move forward", as in _এইটো এৰি আগবাঢ়া_ = "skip this and move on"); clear for advancing to the next loop round.
 
 ### Words reserved for later
 

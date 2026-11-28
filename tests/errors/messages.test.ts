@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { formatDiagnostic } from '../../src/errors/format';
-import { MESSAGES } from '../../src/errors/messages';
+import { MESSAGES, renderMessage } from '../../src/errors/messages';
 import { fail } from '../helpers';
 
 describe('message catalogue', () => {
@@ -39,5 +39,20 @@ describe('formatDiagnostic', () => {
     expect(formatDiagnostic(diagnostic, { lang: 'as' })).toBe(
       'চলোৱাৰ সময়ৰ ভুল [R004]: শূন্যৰে হৰণ কৰিব নোৱাৰি\n  --> <input>:1:8',
     );
+  });
+});
+
+describe('renderMessage with values from plain JavaScript', () => {
+  // The public API is typed, but JavaScript callers can pass anything.
+  const render = renderMessage as (code: string, params: object, lang: string) => string;
+
+  it('rejects names that are not message codes, including inherited ones', () => {
+    for (const code of ['constructor', '__proto__', 'toString', 'X999']) {
+      expect(() => render(code, {}, 'en'), code).toThrow(TypeError);
+    }
+  });
+
+  it('never calls a method named by the language argument', () => {
+    expect(render('R004', {}, 'constructor')).toBe(render('R004', {}, 'as'));
   });
 });

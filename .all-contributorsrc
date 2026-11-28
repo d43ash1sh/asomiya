@@ -1,0 +1,67 @@
+{
+  "projectName": "asomiya",
+  "projectOwner": "d43ash1sh",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 80,
+  "commit": false,
+  "commitConvention": "none",
+  "contributorsPerLine": 6,
+  "linkToUsage": false,
+  "contributors": [
+    {
+      "login": "d43ash1sh",
+      "name": "Debashish Bordoloi",
+      "avatar_url": "https://avatars.githubusercontent.com/d43ash1sh",
+      "profile": "https://github.com/d43ash1sh",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance",
+        "infra"
+      ]
+    },
+    {
+      "login": "arnabsmh",
+      "name": "Arnab Sharmah",
+      "avatar_url": "https://avatars.githubusercontent.com/arnabsmh",
+      "profile": "https://github.com/arnabsmh",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "siddharthaborah",
+      "name": "Siddhartha Borah",
+      "avatar_url": "https://avatars.githubusercontent.com/siddharthaborah",
+      "profile": "https://github.com/siddharthaborah",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "saikiabigratom-design",
+      "name": "Bigratom Saikia",
+      "avatar_url": "https://avatars.githubusercontent.com/saikiabigratom-design",
+      "profile": "https://github.com/saikiabigratom-design",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Nitishsarma45678",
+      "name": "Nitish",
+      "avatar_url": "https://avatars.githubusercontent.com/Nitishsarma45678",
+      "profile": "https://github.com/Nitishsarma45678",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    }
+  ]
+}

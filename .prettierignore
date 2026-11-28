@@ -10,3 +10,6 @@ mcp/.view/
 
 # Google Search Console verification file: must stay byte-for-byte as Google gave it
 website/public/google*.html
+
+# Written by the All Contributors bot in its own format.
+.all-contributorsrc

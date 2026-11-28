@@ -352,13 +352,32 @@ instead of a public issue. See [SECURITY.md](https://github.com/d43ash1sh/asomiy
 
 ## People
 
-|                                                                                                                                         |             |
-| --------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh), ORCID [0009-0006-0473-0774](https://orcid.org/0009-0006-0473-0774)) | Creator     |
-| **Arnab Sharmah** ([@arnabsmh](https://github.com/arnabsmh))                                                                            | Contributor |
-| **Siddhartha Borah** ([@siddharthaborah](https://github.com/siddharthaborah))                                                           | Contributor |
-| **Bigratom Saikia** ([@saikiabigratom-design](https://github.com/saikiabigratom-design))                                                | Contributor |
-| **Nitish** ([@Nitishsarma45678](https://github.com/Nitishsarma45678))                                                                   | Contributor |
+Created by **Debashish Bordoloi** ([@d43ash1sh](https://github.com/d43ash1sh), ORCID
+[0009-0006-0473-0774](https://orcid.org/0009-0006-0473-0774)). Everyone who has helped, including
+people who reviewed words or wrote lessons ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/d43ash1sh"><img src="https://avatars.githubusercontent.com/d43ash1sh?s=80" width="80px;" alt="Debashish Bordoloi"/><br /><sub><b>Debashish Bordoloi</b></sub></a><br /><a href="https://github.com/d43ash1sh/asomiya/commits?author=d43ash1sh" title="Code">💻</a> <a href="https://github.com/d43ash1sh/asomiya/commits?author=d43ash1sh" title="Documentation">📖</a> <a href="#design-d43ash1sh" title="Design">🎨</a> <a href="#ideas-d43ash1sh" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-d43ash1sh" title="Maintenance">🚧</a> <a href="#infra-d43ash1sh" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/arnabsmh"><img src="https://avatars.githubusercontent.com/arnabsmh?s=80" width="80px;" alt="Arnab Sharmah"/><br /><sub><b>Arnab Sharmah</b></sub></a><br /><a href="https://github.com/d43ash1sh/asomiya/commits?author=arnabsmh" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/siddharthaborah"><img src="https://avatars.githubusercontent.com/siddharthaborah?s=80" width="80px;" alt="Siddhartha Borah"/><br /><sub><b>Siddhartha Borah</b></sub></a><br /><a href="https://github.com/d43ash1sh/asomiya/commits?author=siddharthaborah" title="Code">💻</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/saikiabigratom-design"><img src="https://avatars.githubusercontent.com/saikiabigratom-design?s=80" width="80px;" alt="Bigratom Saikia"/><br /><sub><b>Bigratom Saikia</b></sub></a><br /><a href="https://github.com/d43ash1sh/asomiya/commits?author=saikiabigratom-design" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/Nitishsarma45678"><img src="https://avatars.githubusercontent.com/Nitishsarma45678?s=80" width="80px;" alt="Nitish"/><br /><sub><b>Nitish</b></sub></a><br /><a href="https://github.com/d43ash1sh/asomiya/commits?author=Nitishsarma45678" title="Code">💻</a> <a href="https://github.com/d43ash1sh/asomiya/commits?author=Nitishsarma45678" title="Tests">⚠️</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+To add someone, comment on any issue or pull request:
+`@all-contributors please add @username for code, doc`
 
 See all [contributors on GitHub](https://github.com/d43ash1sh/asomiya/graphs/contributors).
 

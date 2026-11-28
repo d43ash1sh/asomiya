@@ -1,0 +1,36 @@
+name: Welcome
+
+# Thanks people on their first issue or pull request. pull_request_target runs this repository's
+# copy of the workflow (never the contributor's), and the job checks nothing out and runs no code
+# from the pull request.
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions: {}
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/first-interaction@1c4688942c71f71d4f5502a26ea67c331730fa4d # v3.1.0
+        with:
+          issue_message: |
+            নমস্কাৰ! Thank you for opening your first issue in Asomiya 🙏
+
+            A maintainer will reply soon. Meanwhile:
+            - The [roadmap](https://github.com/users/d43ash1sh/projects/4) shows what's planned and what's ready to pick up.
+            - Issues labelled [`language-review`](https://github.com/d43ash1sh/asomiya/labels/language-review) need Assamese speakers, no coding required.
+          pr_message: |
+            নমস্কাৰ! Thank you for your first pull request to Asomiya 🙏
+
+            A maintainer will review it soon. Before then, please check:
+            - `npm run check` passes (typecheck, lint, format and tests).
+            - Language changes follow the checklist in [CONTRIBUTING.md](https://github.com/d43ash1sh/asomiya/blob/main/CONTRIBUTING.md).
+
+            Once it's merged you'll be added to the contributors list in the README.

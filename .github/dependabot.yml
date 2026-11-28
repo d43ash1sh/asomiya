@@ -1,0 +1,29 @@
+# Dependabot opens pull requests that update dependencies. Review and merge them like any PR:
+# CI runs the full check on each one.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # One PR a week for the small dev-tool bumps instead of one per package.
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: deps
+    labels: [dependencies]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']
+    commit-message:
+      prefix: ci
+    labels: [dependencies]

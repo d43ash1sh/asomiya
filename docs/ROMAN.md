@@ -43,25 +43,25 @@ The spellings live in one place, [`src/language/glossary.ts`](../src/language/gl
 
 ## Keywords
 
-| Assamese     | Roman spellings (first = preferred)                                   | Meaning  |
-| ------------ | --------------------------------------------------------------------- | -------- |
-| `ধৰা`        | `dhora`, `dhara`                                                      | let      |
-| `কোৱা`       | `kowa`, `kuwa`, `kua`, `koa`                                          | print    |
-| `যদি`        | `jodi`, `zodi`, `jadi`                                                | if       |
-| `নহ'লে`      | `nohole`, `noh'le`, `nohle`, `nhole`, `nahole`, `nahale`              | else     |
-| `যেতিয়ালৈকে` | `jetialoike`, `zetialoike`, `jetiyaloike`, `zetiyaloike`, `jetialoke` | while    |
-| `প্ৰতিটো`     | `protito`, `pratito`, `protitu`                                       | for each |
-| `মাজত`       | `majot`, `majat`, `maajot`, `majhot`                                  | in       |
-| `ফাংচন`      | `fangchon`, `phangchon`, `fanchon`                                    | function |
-| `ঘূৰাইদিয়া`   | `ghuraidiya`, `ghuraidia`                                             | return   |
-| `ৰখা`        | `rokha`, `rakha`                                                      | break    |
-| `আগবাঢ়া`     | `aagbara`, `agbara`, `agobara`, `aagbaara`, `agbarha`                 | continue |
-| `সঁচা`        | `xosa`, `xocha`, `hosa`, `sosa`, `socha`, `sacha`                     | true     |
-| `মিছা`       | `misa`, `micha`, `misha`                                              | false    |
-| `খালী`       | `khali`, `khaali`                                                     | null     |
-| `আৰু`         | `aru`, `aaru`                                                         | and      |
-| `বা`         | `ba`, `baa`                                                           | or       |
-| `নহয়`        | `nohoy`, `nohoi`, `nahoy`                                             | not      |
+| Assamese                 | Roman spellings (first = preferred)                                   | Meaning  |
+| ------------------------ | --------------------------------------------------------------------- | -------- |
+| `ধৰা`                    | `dhora`, `dhara`                                                      | let      |
+| `কোৱা`                   | `kowa`, `kuwa`, `kua`, `koa`                                          | print    |
+| `যদি`                    | `jodi`, `zodi`, `jadi`                                                | if       |
+| `নহ'লে`                  | `nohole`, `noh'le`, `nohle`, `nhole`, `nahole`, `nahale`              | else     |
+| `যেতিয়ালৈকে`             | `jetialoike`, `zetialoike`, `jetiyaloike`, `zetiyaloike`, `jetialoke` | while    |
+| `প্ৰতিটো`                 | `protito`, `pratito`, `protitu`                                       | for each |
+| `মাজত`                   | `majot`, `majat`, `maajot`, `majhot`                                  | in       |
+| `ফাংচন`                  | `fangchon`, `phangchon`, `fanchon`                                    | function |
+| `ঘূৰাইদিয়া` / `ঘূৰাই দিয়া` | `ghuraidiya`, `ghuraidia`, `ghurai diya`, `ghurai dia`                | return   |
+| `ৰখা`                    | `rokha`, `rakha`                                                      | break    |
+| `আগবাঢ়া`                 | `aagbara`, `agbara`, `agobara`, `aagbaara`, `agbarha`                 | continue |
+| `সঁচা`                    | `xosa`, `xocha`, `hosa`, `sosa`, `socha`, `sacha`                     | true     |
+| `মিছা`                   | `misa`, `micha`, `misha`                                              | false    |
+| `খালী`                   | `khali`, `khaali`                                                     | null     |
+| `আৰু`                     | `aru`, `aaru`                                                         | and      |
+| `বা`                     | `ba`, `baa`                                                           | or       |
+| `নহয়`                    | `nohoy`, `nohoi`, `nahoy`                                             | not      |
 
 Because these are keywords, they can't be used as variable names (`dhora jodi = 1` is an error).
 

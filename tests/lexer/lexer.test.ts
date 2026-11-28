@@ -46,6 +46,17 @@ describe('keywords', () => {
     expect(only('নহ’লে').type).toBe('Else');
   });
 
+  it('accepts the two-word return form ঘূৰাই দিয়া', () => {
+    for (const source of ['ঘূৰাই দিয়া', 'ঘূৰাই   দিয়া', 'ঘূৰাই\tদিয়া', 'ঘূৰাই দিয়া']) {
+      const token = only(source);
+      expect(token.type, source).toBe('Return');
+      expect(token.lexeme, source).toBe(source);
+    }
+    expect(types('ঘূৰাই দিয়া ১')).toEqual(['Return', 'Number']);
+    expect(types('ঘূৰাই\nদিয়া')).toEqual(['Identifier', 'Newline', 'Identifier']);
+    expect(types('ধৰা ঘূৰাই = ১')).toEqual(['Let', 'Identifier', 'Equal', 'Number']);
+  });
+
   it('does not split identifiers that merely start or end with a keyword', () => {
     for (const word of ['ধৰাটো', 'যদিও', 'কোৱাকুই', 'খালীঘৰ', 'বাটি', 'মিছামিছি', 'অৰখা']) {
       const token = only(word);

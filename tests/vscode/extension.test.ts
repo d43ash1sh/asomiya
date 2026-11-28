@@ -67,11 +67,13 @@ describe('VS Code extension: syntax colours', () => {
     expect(tokens(line).some(([, s]) => s === 'comment.line.double-slash.asomiya')).toBe(true);
     expect(scopeOf("} নহ'লে {", "নহ'লে")).toBe('keyword.control.asomiya');
     expect(scopeOf('যদি (সঁচা আৰু মিছা) {', 'সঁচা')).toBe('constant.language.asomiya');
+    expect(scopeOf('ঘূৰাই দিয়া ১', 'ঘূৰাই দিয়া')).toBe('keyword.control.asomiya');
   });
 
   it('colours keywords written in English letters', () => {
     expect(scopeOf('dhora x = 5', 'dhora')).toBe('storage.type.asomiya');
     expect(scopeOf('jodi (x > 1) {', 'jodi')).toBe('keyword.control.asomiya');
+    expect(scopeOf('ghurai diya 1', 'ghurai diya')).toBe('keyword.control.asomiya');
     expect(scopeOf('kowa(x)', 'kowa')).toBe('support.function.builtin.asomiya');
     expect(scopeOf('fangchon jog(a, b) {', 'jog')).toBe('entity.name.function.asomiya');
   });

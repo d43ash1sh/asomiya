@@ -11,25 +11,25 @@ This glossary is the source of truth for the language vocabulary. The same data 
 
 ## Keywords — মূল শব্দ
 
-| Keyword      | Concept                     | Literal meaning / usage                                                                                  | Status      |
-| ------------ | --------------------------- | -------------------------------------------------------------------------------------------------------- | ----------- |
-| `ধৰা`        | variable declaration        | "suppose / let". Assamese maths texts say _ধৰা হওক x = ৫_ ("let x = 5"). `ধৰা ক = ৫` reads the same way. | stable      |
-| `কোৱা`       | print a line                | "say / tell" (imperative of কোৱ).                                                                        | stable      |
-| `যদি`        | if                          | "if" — the ordinary conditional conjunction.                                                             | stable      |
-| `নহ'লে`      | else                        | "otherwise / if not" (নহয় + হ'লে). Also accepted: `নহলে`, and `নহ’লে` with a typographic apostrophe.     | stable      |
-| `যেতিয়ালৈকে` | while loop                  | "for as long as". With a positive clause (_মই যেতিয়ালৈকে জীয়াই থাকিম_) it means "as long as".            | provisional |
-| `প্ৰতিটো`     | for-each loop               | "each one / every". `প্ৰতিটো ফল ফলবোৰ মাজত { … }` reads "each fruit among the fruits".                    | provisional |
-| `মাজত`       | ends a for-each header      | "among / in the midst of", the postposition in _ফলবোৰৰ মাজত_. Written after the list.                    | provisional |
-| `ফাংচন`      | function declaration        | Loanword ("function"), widely understood in Assamese technical writing.                                  | provisional |
-| `ঘূৰাইদিয়া`   | return from a function      | "give back". Standard spelling is two words (ঘূৰাই দিয়া); written as one token here.                      | provisional |
-| `ৰখা`        | break out of a loop         | "stop / halt" (imperative of ৰখ).                                                                        | stable      |
-| `আগবাঢ়া`     | skip to the next iteration  | "go ahead / move forward" (imperative of আগবাঢ়).                                                         | provisional |
-| `সঁচা`        | boolean true                | "true".                                                                                                  | stable      |
-| `মিছা`       | boolean false               | "false / untrue".                                                                                        | stable      |
-| `খালী`       | null (absence of a value)   | "empty".                                                                                                 | stable      |
-| `আৰু`         | logical AND (same as `&&`)  | "and".                                                                                                   | stable      |
-| `বা`         | logical OR (same as `\|\|`) | "or".                                                                                                    | stable      |
-| `নহয়`        | logical NOT (same as `!`)   | "not / is not".                                                                                          | stable      |
+| Keyword                  | Concept                     | Literal meaning / usage                                                                                  | Status      |
+| ------------------------ | --------------------------- | -------------------------------------------------------------------------------------------------------- | ----------- |
+| `ধৰা`                    | variable declaration        | "suppose / let". Assamese maths texts say _ধৰা হওক x = ৫_ ("let x = 5"). `ধৰা ক = ৫` reads the same way. | stable      |
+| `কোৱা`                   | print a line                | "say / tell" (imperative of কোৱ).                                                                        | stable      |
+| `যদি`                    | if                          | "if" — the ordinary conditional conjunction.                                                             | stable      |
+| `নহ'লে`                  | else                        | "otherwise / if not" (নহয় + হ'লে). Also accepted: `নহলে`, and `নহ’লে` with a typographic apostrophe.     | stable      |
+| `যেতিয়ালৈকে`             | while loop                  | "for as long as". With a positive clause (_মই যেতিয়ালৈকে জীয়াই থাকিম_) it means "as long as".            | provisional |
+| `প্ৰতিটো`                 | for-each loop               | "each one / every". `প্ৰতিটো ফল ফলবোৰ মাজত { … }` reads "each fruit among the fruits".                    | provisional |
+| `মাজত`                   | ends a for-each header      | "among / in the midst of", the postposition in _ফলবোৰৰ মাজত_. Written after the list.                    | provisional |
+| `ফাংচন`                  | function declaration        | Loanword ("function"), widely understood in Assamese technical writing.                                  | provisional |
+| `ঘূৰাইদিয়া` / `ঘূৰাই দিয়া` | return from a function      | "give back". Both the two-word spelling (`ঘূৰাই দিয়া`) and the joined spelling (`ঘূৰাইদিয়া`) are accepted. | provisional |
+| `ৰখা`                    | break out of a loop         | "stop / halt" (imperative of ৰখ).                                                                        | stable      |
+| `আগবাঢ়া`                 | skip to the next iteration  | "go ahead / move forward" (imperative of আগবাঢ়).                                                         | provisional |
+| `সঁচা`                    | boolean true                | "true".                                                                                                  | stable      |
+| `মিছা`                   | boolean false               | "false / untrue".                                                                                        | stable      |
+| `খালী`                   | null (absence of a value)   | "empty".                                                                                                 | stable      |
+| `আৰু`                     | logical AND (same as `&&`)  | "and".                                                                                                   | stable      |
+| `বা`                     | logical OR (same as `\|\|`) | "or".                                                                                                    | stable      |
+| `নহয়`                    | logical NOT (same as `!`)   | "not / is not".                                                                                          | stable      |
 
 Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi` …), listed in
 [ROMAN.md](ROMAN.md).
@@ -45,8 +45,7 @@ Every keyword and built-in also has romanised spellings (`dhora`, `kowa`, `jodi`
   which shows the right order.
 - **`ফাংচন`** — Chosen because programmers recognise it straight away. Native candidates: `ফলন` (the
   mathematics term) and `কাৰ্য` ("task / act"). Needs review.
-- **`ঘূৰাইদিয়া`** — A keyword has to be one token, so the two words are joined. A two-word form
-  `ঘূৰাই দিয়া` could be supported later.
+- **`ঘূৰাইদিয়া` / `ঘূৰাই দিয়া`** — Both the two-word form (`ঘূৰাই দিয়া`, Roman `ghurai diya` / `ghurai dia`) and the joined form (`ঘূৰাইদিয়া`) are accepted by the lexer. `ঘূৰাই` on its own remains usable as an ordinary identifier.
 
 ### Words reserved for later
 

@@ -33,7 +33,7 @@ forEachStmt    = "প্ৰতিটো" , ( forEachHead | "(" , forEachHead , "
 forEachHead    = IDENT , expression , "মাজত" ;
 breakStmt      = "ৰখা" ;                    (* only inside a loop *)
 continueStmt   = "আগবাঢ়া" ;                 (* only inside a loop *)
-returnStmt     = "ঘূৰাইদিয়া" , [ expression ] ; (* only inside a function *)
+returnStmt     = ( "ঘূৰাইদিয়া" | "ঘূৰাই দিয়া" ) , [ expression ] ; (* only inside a function *)
 printStmt      = "কোৱা" , "(" , [ exprList ] , ")" ;
 block          = "{" , statementList , "}" ;
 exprStmt       = expression ;
@@ -123,7 +123,9 @@ escape      = "\" , ( "n" | "t" | "r" | '"' | "\" ) ;
 3. Source positions (line and column) always refer to the original, un-normalised text.
 4. Keywords also have romanised spellings (`jodi` = `যদি`, see [ROMAN.md](ROMAN.md)). They are
    matched exactly and are lower-case only, so `Jodi` is an ordinary identifier.
-5. ZWJ (U+200D) and ZWNJ (U+200C) may appear in an identifier only right after an Assamese
+5. `ঘূৰাই` followed by horizontal whitespace and `দিয়া` (and Roman `ghurai diya` / `ghurai dia`)
+   joins into the same return token as `ঘূৰাইদিয়া`. It does not join across a line break.
+6. ZWJ (U+200D) and ZWNJ (U+200C) may appear in an identifier only right after an Assamese
    character, where they shape conjuncts (`ক্‍ষ`). Elsewhere they are an error (L001), so two names
    that look the same are the same name.
 

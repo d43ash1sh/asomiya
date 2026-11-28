@@ -30,6 +30,9 @@ All notable changes to this project are documented here. The format follows
 
 ### Changed
 
+- Errors: polished Assamese diagnostic wording in `src/errors/messages.ts` (`L004`, `L006`, `P003`,
+  `P006`, `R008`–`R011`, `R018`, `R021`) into clearer, more natural student-friendly Assamese and
+  regenerated `docs/ERRORS.md` (#6).
 - Website: the Join page's test count and help-wanted ideas are up to date (the for-each loop
   shipped in 0.5.0).
 

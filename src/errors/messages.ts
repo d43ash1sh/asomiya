@@ -80,7 +80,7 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: () => `Unterminated block comment — a closing */ is required`,
   },
   L004: {
-    as: (p) => `অবৈধ এস্কেপ চিহ্ন "\\${p.sequence}"। ব্যৱহাৰ কৰিব পাৰি: \\n \\t \\r \\" \\\\`,
+    as: (p) => `অগ্ৰাহ্য এস্কেপ চিহ্ন "\\${p.sequence}"। ব্যৱহাৰ কৰিব পৰা চিহ্নবোৰ: \\n \\t \\r \\" \\\\`,
     en: (p) => `Invalid escape sequence "\\${p.sequence}". Allowed: \\n \\t \\r \\" \\\\`,
   },
   L005: {
@@ -88,7 +88,7 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `A number cannot mix Assamese and ASCII digits: ${p.text}`,
   },
   L006: {
-    as: (p) => `অবৈধ সংখ্যা: ${p.text}`,
+    as: (p) => `ভুল সংখ্যা: ${p.text}`,
     en: (p) => `Malformed number: ${p.text}`,
   },
   L007: {
@@ -111,7 +111,7 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `Expected an expression but found ${found(p.found, 'en')}`,
   },
   P003: {
-    as: () => `"="ৰ বাওঁফালে কেৱল চলকৰ নাম বা তালিকাৰ উপাদান থাকিব পাৰে`,
+    as: () => `মান সলনি কৰিবলৈ "="ৰ বাওঁফালে কেৱল চলকৰ নাম বা তালিকাৰ উপাদানহে থাকিব পাৰে`,
     en: () =>
       `Invalid assignment target — only a variable or a list element may appear left of "="`,
   },
@@ -125,7 +125,7 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: () => `"${keywordWord('return')}" (return) can only be used inside a function`,
   },
   P006: {
-    as: (p) => `প্ৰাচল "${p.name}" এবাৰতকৈ বেছি লিখা হৈছে`,
+    as: (p) => `ফাংচনত "${p.name}" নামৰ প্ৰাচলটো এবাৰতকৈ বেছি ব্যৱহাৰ কৰা হৈছে`,
     en: (p) => `Duplicate parameter "${p.name}"`,
   },
   P007: {
@@ -205,19 +205,20 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `A condition must be a boolean (সঁচা/মিছা) but got ${typeName(p.type, 'en')}`,
   },
   R008: {
-    as: (p) => `${n(p.limit)}টা পদক্ষেপৰ সীমা পাৰ হ'ল — হয়তো লুপটো কেতিয়াও শেষ নহয়`,
+    as: (p) => `${n(p.limit)}টা পদক্ষেপৰ সীমা পাৰ হ'ল — হয়তো লুপটো শেষ নোহোৱাকৈ চলি আছে`,
     en: (p) => `Execution step limit of ${p.limit} exceeded — possible infinite loop`,
   },
   R009: {
-    as: (p) => `ফাংচন মতাৰ গভীৰতা ${n(p.limit)} পাৰ হ'ল — হয়তো ৰিকাৰ্চন কেতিয়াও শেষ নহয়`,
+    as: (p) =>
+      `ফাংচন মতাৰ গভীৰতা ${n(p.limit)} পাৰ হ'ল — হয়তো ফাংচনটোৱে শেষ নোহোৱাকৈ নিজকে মাতি আছে`,
     en: (p) => `Maximum call depth of ${p.limit} exceeded — possible infinite recursion`,
   },
   R010: {
-    as: (p) => `সূচী ${n(p.index)} সীমাৰ বাহিৰত; দৈৰ্ঘ্য ${n(p.length)}`,
+    as: (p) => `${n(p.index)} নম্বৰ সূচীটো সীমাৰ বাহিৰত আছে; মুঠ দৈৰ্ঘ্য ${n(p.length)}`,
     en: (p) => `Index ${p.index} is out of range for length ${p.length}`,
   },
   R011: {
-    as: (p) => `সূচী এটা অখণ্ড সংখ্যা হ'ব লাগিব, কিন্তু পোৱা গ'ল ${p.value}`,
+    as: (p) => `সূচী এটা পূৰ্ণ সংখ্যা হ'ব লাগিব, কিন্তু পোৱা গ'ল ${p.value}`,
     en: (p) => `An index must be a whole number but got ${p.value}`,
   },
   R012: {
@@ -247,7 +248,8 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
     en: (p) => `Operands of "${p.op}" must be boolean but got ${typeName(p.type, 'en')}`,
   },
   R018: {
-    as: () => `প্ৰগ্ৰামটো অতি গভীৰলৈ সোমাই গ'ল আৰু ইন্টাৰপ্ৰেটাৰৰ ষ্টেক শেষ হ'ল; ৰিকাৰ্চনৰ গভীৰতা কমাওক`,
+    as: () =>
+      `ফাংচন মতাৰ গভীৰতা অতি বেছি হোৱাত মেমৰি শেষ হ'ল; নিজকে বাৰে বাৰে মতাৰ (ৰিকাৰ্চন) গভীৰতা কমাওক`,
     en: () =>
       `Nesting too deep: the interpreter ran out of stack space; reduce the recursion depth`,
   },
@@ -265,7 +267,7 @@ export const MESSAGES: { readonly [C in DiagnosticCode]: MessageDef<C> } = {
   },
   R021: {
     as: (p) =>
-      `"${keywordWord('forEach')}" লুপে কেৱল তালিকা বা পাঠৰ ওপৰেৰে যাব পাৰে, কিন্তু ইয়াৰ প্ৰকাৰ ${typeName(p.type, 'as')}`,
+      `"${keywordWord('forEach')}" লুপে কেৱল তালিকা বা পাঠৰ উপাদানবোৰহে ঘূৰাব পাৰে, কিন্তু পোৱা গ'ল ${typeName(p.type, 'as')}`,
     en: (p) =>
       `"${keywordWord('forEach')}" can only loop over a list or text, but got ${typeName(p.type, 'en')}`,
   },

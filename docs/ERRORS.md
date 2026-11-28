@@ -28,7 +28,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### L004
 
-- **অসমীয়া:** অবৈধ এস্কেপ চিহ্ন "\q"। ব্যৱহাৰ কৰিব পাৰি: \n \t \r \" \\
+- **অসমীয়া:** অগ্ৰাহ্য এস্কেপ চিহ্ন "\q"। ব্যৱহাৰ কৰিব পৰা চিহ্নবোৰ: \n \t \r \" \\
 - **English:** Invalid escape sequence "\q". Allowed: \n \t \r \" \\
 - **Example:** `"\q"`
 
@@ -40,7 +40,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### L006
 
-- **অসমীয়া:** অবৈধ সংখ্যা: ১২ক
+- **অসমীয়া:** ভুল সংখ্যা: ১২ক
 - **English:** Malformed number: ১২ক
 - **Example:** `ধৰা ক = ১২ক`
 
@@ -72,7 +72,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### P003
 
-- **অসমীয়া:** "="ৰ বাওঁফালে কেৱল চলকৰ নাম বা তালিকাৰ উপাদান থাকিব পাৰে
+- **অসমীয়া:** মান সলনি কৰিবলৈ "="ৰ বাওঁফালে কেৱল চলকৰ নাম বা তালিকাৰ উপাদানহে থাকিব পাৰে
 - **English:** Invalid assignment target — only a variable or a list element may appear left of "="
 - **Example:** `১ = ২`
 
@@ -90,7 +90,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### P006
 
-- **অসমীয়া:** প্ৰাচল "ক" এবাৰতকৈ বেছি লিখা হৈছে
+- **অসমীয়া:** ফাংচনত "ক" নামৰ প্ৰাচলটো এবাৰতকৈ বেছি ব্যৱহাৰ কৰা হৈছে
 - **English:** Duplicate parameter "ক"
 - **Example:** `ফাংচন ফ(ক, ক) { }`
 
@@ -182,25 +182,25 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### R008
 
-- **অসমীয়া:** ১০০০০০০০টা পদক্ষেপৰ সীমা পাৰ হ'ল — হয়তো লুপটো কেতিয়াও শেষ নহয়
+- **অসমীয়া:** ১০০০০০০০টা পদক্ষেপৰ সীমা পাৰ হ'ল — হয়তো লুপটো শেষ নোহোৱাকৈ চলি আছে
 - **English:** Execution step limit of 10000000 exceeded — possible infinite loop
 - **Example:** `যেতিয়ালৈকে (সঁচা) { }`
 
 ### R009
 
-- **অসমীয়া:** ফাংচন মতাৰ গভীৰতা ৫০০ পাৰ হ'ল — হয়তো ৰিকাৰ্চন কেতিয়াও শেষ নহয়
+- **অসমীয়া:** ফাংচন মতাৰ গভীৰতা ৫০০ পাৰ হ'ল — হয়তো ফাংচনটোৱে শেষ নোহোৱাকৈ নিজকে মাতি আছে
 - **English:** Maximum call depth of 500 exceeded — possible infinite recursion
 - **Example:** `ফাংচন ফ() { ঘূৰাইদিয়া ফ() }`
 
 ### R010
 
-- **অসমীয়া:** সূচী ৩ সীমাৰ বাহিৰত; দৈৰ্ঘ্য ৩
+- **অসমীয়া:** ৩ নম্বৰ সূচীটো সীমাৰ বাহিৰত আছে; মুঠ দৈৰ্ঘ্য ৩
 - **English:** Index 3 is out of range for length 3
 - **Example:** `[১, ২, ৩][৩]`
 
 ### R011
 
-- **অসমীয়া:** সূচী এটা অখণ্ড সংখ্যা হ'ব লাগিব, কিন্তু পোৱা গ'ল ০.৫
+- **অসমীয়া:** সূচী এটা পূৰ্ণ সংখ্যা হ'ব লাগিব, কিন্তু পোৱা গ'ল ০.৫
 - **English:** An index must be a whole number but got ০.৫
 - **Example:** `ল[০.৫]`
 
@@ -242,7 +242,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### R018
 
-- **অসমীয়া:** প্ৰগ্ৰামটো অতি গভীৰলৈ সোমাই গ'ল আৰু ইন্টাৰপ্ৰেটাৰৰ ষ্টেক শেষ হ'ল; ৰিকাৰ্চনৰ গভীৰতা কমাওক
+- **অসমীয়া:** ফাংচন মতাৰ গভীৰতা অতি বেছি হোৱাত মেমৰি শেষ হ'ল; নিজকে বাৰে বাৰে মতাৰ (ৰিকাৰ্চন) গভীৰতা কমাওক
 - **English:** Nesting too deep: the interpreter ran out of stack space; reduce the recursion depth
 - **Example:** `very deep recursion with a raised --max-depth`
 
@@ -260,7 +260,7 @@ Exit codes: `0` success · `1` the program had an error · `2` bad command-line 
 
 ### R021
 
-- **অসমীয়া:** "প্ৰতিটো" লুপে কেৱল তালিকা বা পাঠৰ ওপৰেৰে যাব পাৰে, কিন্তু ইয়াৰ প্ৰকাৰ সংখ্যা
+- **অসমীয়া:** "প্ৰতিটো" লুপে কেৱল তালিকা বা পাঠৰ উপাদানবোৰহে ঘূৰাব পাৰে, কিন্তু পোৱা গ'ল সংখ্যা
 - **English:** "প্ৰতিটো" can only loop over a list or text, but got number
 - **Example:** `প্ৰতিটো ক ১০ মাজত { … }`
 
